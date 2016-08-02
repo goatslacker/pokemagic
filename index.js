@@ -121,38 +121,53 @@ function calculate(pokemonName, cp, hp, Level) {
   const ECpM = LevelToCPM[String(Level)]
 
   // TODO what if this has a length of more than 1, or a length or 0?
-  const IndSta = calcIndSta(hp, BaseSta, ECpM)[0]
+  const IndStaValues = calcIndSta(hp, BaseSta, ECpM)
 
   const possibleValues = []
-  for (let IndAtk = 0; IndAtk < 15; IndAtk += 1) {
-    for (let IndDef = 0; IndDef < 15; IndDef += 1) {
-      const CP_RAW = (
-        (BaseAtk + IndAtk) *
-        Math.pow((BaseDef + IndDef), 0.5) *
-        Math.pow((BaseSta + IndSta), 0.5) *
-        Math.pow(ECpM, 2) /
-        10
-      )
-      const CP = Math.floor(CP_RAW)
-      const Total = IndAtk + IndDef
+  IndStaValues.forEach((IndSta) => {
+    for (let IndAtk = 0; IndAtk < 15; IndAtk += 1) {
+      for (let IndDef = 0; IndDef < 15; IndDef += 1) {
+        const CP_RAW = (
+          (BaseAtk + IndAtk) *
+          Math.pow((BaseDef + IndDef), 0.5) *
+          Math.pow((BaseSta + IndSta), 0.5) *
+          Math.pow(ECpM, 2) /
+          10
+        )
+        const CP = Math.floor(CP_RAW)
+        const Total = IndAtk + IndDef
 
-      const Perfect = Math.round((Total + IndSta) / 45 * 100)
+        const Perfect = Math.round((Total + IndSta) / 45 * 100)
 
-      if (cp === CP) {
-        possibleValues.push({
-          pokemonName,
-          IndAtk,
-          IndDef,
-          IndSta,
-          Total,
-          CP_RAW,
-          Perfect,
-        })
+        if (cp === CP) {
+          possibleValues.push({
+            pokemonName,
+            IndAtk,
+            IndDef,
+            IndSta,
+            Total,
+            CP_RAW,
+            Perfect,
+          })
+        }
       }
     }
-  }
+  })
 
   return possibleValues
+}
+
+function calcIVS(pokemonName, hp, Level) {
+  const mon = find(Pokemon, x => x.name === pokemonName.toUpperCase())
+
+  const BaseAtk = mon.stats.attack
+  const BaseDef = mon.stats.defense
+  const BaseSta = mon.stats.stamina
+
+  const ECpM = LevelToCPM[String(Level)]
+
+  // XXX pretty sure they pop the value...
+  return calcIndSta(hp, BaseSta, ECpM)
 }
 
 //console.log(ivStaminaFromHP(62))
@@ -162,4 +177,5 @@ function calculate(pokemonName, cp, hp, Level) {
 
 // Ok mostly works...
 //console.log(calculate('bulbasaur', 596, 62, 20))
-console.log(calculate('omastar', 1622, 103, 26))
+console.log(calculate('growlithe', 666, 65, 19))
+//console.log(calcIVS('growlithe', 65, 19))
