@@ -40,10 +40,10 @@ const DustToLevel = {
 // A good pokemon is in the 80th percentile for Atk, CP, HP, and IV.
 // This 80th percentile thing was made up by me.
 const isGoodPokemon = (
-  v => v.percent.PercentAtk > 80 &&
-       v.percent.PercentCP > 80 &&
-       v.percent.PerfectIV > 80 &&
-       v.percent.PercentHP > 80
+  v => v.percent.PercentAtk >= 80 &&
+       v.percent.PercentCP >= 80 &&
+       v.percent.PerfectIV >= 80 &&
+       v.percent.PercentHP >= 80
 )
 
 function percentInRange(num, min, max) {
@@ -293,9 +293,9 @@ function magic(pokemon) {
 
 // And the magic happens here...
 magic({
-  name: 'bulbasaur',
-  cp: 596,
-  hp: 62,
-  stardust: 2500,
-  level: 20,
+  name: 'omastar',
+  cp: 1622,
+  hp: 103,
+  stardust: 4000,
+  level: 25.5,
 })
