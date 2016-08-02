@@ -42,7 +42,7 @@ function percentInRange(num, min, max) {
 }
 
 function calcIndSta(hp, BaseSta, ECpM) {
-  return Array.from(Array(15))
+  return Array.from(Array(16))
     .map((_, i) => i)
     .filter(IndSta => hp === Math.floor(ECpM * (BaseSta + IndSta)))
 }
@@ -233,9 +233,9 @@ function magic(pokemon) {
 
 // And the magic happens here...
 magic({
-  name: 'venonat',
-  cp: 647,
-  hp: 84,
-  stardust: 3500,
-//  level: 20,
+  name: 'eevee',
+  cp: 483,
+  hp: 66,
+  stardust: 1900,
+  level: 16,
 })
