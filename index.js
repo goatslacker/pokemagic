@@ -47,6 +47,10 @@ function calcIndSta(hp, BaseSta, ECpM) {
     .filter(IndSta => hp === Math.floor(ECpM * (BaseSta + IndSta)))
 }
 
+function getAttackPercentage(IndAtk, IndDef) {
+  return Math.round((IndAtk + IndDef) / 30 * 100)
+}
+
 function getHP(mon, IndSta, ECpM) {
   const BaseSta = mon.stats.stamina
   return Math.floor(ECpM * (BaseSta + IndSta))
@@ -134,6 +138,7 @@ function getAllPossibleValues(pokemon, mon, ECpM) {
         }, ECpM)
 
         const PerfectIV = Math.round((IndAtk + IndDef + IndSta) / 45 * 100)
+        const PercentAtk = getAttackPercentage(IndAtk, IndDef)
 
         if (pokemon.cp === CP) {
           possibleValues.push({
@@ -145,6 +150,7 @@ function getAllPossibleValues(pokemon, mon, ECpM) {
               IndSta,
             },
             percent: {
+              PercentAtk,
               PercentCP,
               PercentHP,
               PerfectIV,
@@ -191,10 +197,11 @@ function magic(pokemon) {
     return
   }
 
-  // A good pokemon is in the 80th percentile for CP, HP, and IV.
+  // A good pokemon is in the 80th percentile for Atk, CP, HP, and IV.
   // This 80th percentile thing was made up by me.
   const isGoodPokemon = (
-    v => v.percent.PercentCP > 80 &&
+    v => v.percent.PercentAtk > 80 &&
+         v.percent.PercentCP > 80 &&
          v.percent.PerfectIV > 80 &&
          v.percent.PercentHP > 80
   )
@@ -203,6 +210,7 @@ function magic(pokemon) {
   const maybe = values.some(isGoodPokemon)
 
   const init = {
+    atk: [Infinity, -Infinity],
     cp: [Infinity, -Infinity],
     hp: [Infinity, -Infinity],
     iv: [Infinity, -Infinity],
@@ -212,6 +220,10 @@ function magic(pokemon) {
   }
   const ValuesRange = values.reduce((obj, v) => {
     return {
+      atk: [
+        Math.min(v.percent.PercentAtk, obj.atk[0]),
+        Math.max(v.percent.PercentAtk, obj.atk[1]),
+      ],
       cp: [
         Math.min(v.percent.PercentCP, obj.cp[0]),
         Math.max(v.percent.PercentCP, obj.cp[1]),
