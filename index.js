@@ -125,8 +125,8 @@ function calculate(pokemonName, cp, hp, Level) {
 
   const possibleValues = []
   IndStaValues.forEach((IndSta) => {
-    for (let IndAtk = 0; IndAtk < 15; IndAtk += 1) {
-      for (let IndDef = 0; IndDef < 15; IndDef += 1) {
+    for (let IndAtk = 0; IndAtk <= 15; IndAtk += 1) {
+      for (let IndDef = 0; IndDef <= 15; IndDef += 1) {
         const CP_RAW = (
           (BaseAtk + IndAtk) *
           Math.pow((BaseDef + IndDef), 0.5) *
