@@ -76,17 +76,10 @@ function getMaxCPForLevel(mon, ECpM) {
   }, ECpM)
 }
 
-function calculate(pokemon) {
-  const mon = findPokemon(pokemon.name)
+function getAllPossibleValues(pokemon, mon, ECpM) {
   const Name = pokemon.name.toUpperCase()
 
   const BaseSta = mon.stats.stamina
-
-  const ECpM = LevelToCPM[String(pokemon.level)]
-
-  if (DustToLevel[pokemon.stardust].indexOf(pokemon.level) === -1) {
-    throw new Error('Stardust does not match level')
-  }
 
   const IndStaValues = calcIndSta(pokemon.hp, BaseSta, ECpM)
 
@@ -133,6 +126,23 @@ function calculate(pokemon) {
   return possibleValues
 }
 
+function calculate(pokemon) {
+  const mon = findPokemon(pokemon.name)
+
+  if (pokemon.level) {
+    if (DustToLevel[pokemon.stardust].indexOf(pokemon.level) === -1) {
+      throw new Error('Stardust does not match level')
+    }
+    const ECpM = LevelToCPM[String(pokemon.level)]
+    return getAllPossibleValues(pokemon, mon, ECpM)
+  }
+
+  return DustToLevel[pokemon.stardust].reduce((arr, level) => {
+    const ECpM = LevelToCPM[String(level)]
+    return arr.concat(getAllPossibleValues(pokemon, mon, ECpM))
+  }, [])
+}
+
 function magic(pokemon) {
   const values = calculate(pokemon)
   const res = values.every(v => v.percent.PercentCP > 90 && v.percent.PerfectIV > 80)
@@ -151,9 +161,9 @@ function magic(pokemon) {
 
 // And the magic happens here...
 console.log(magic({
-  name: 'pikachu',
-  cp: 487,
-  hp: 48,
-  stardust: 2500,
-  level: 20,
+  name: 'charmander',
+  cp: 537,
+  hp: 58,
+  stardust: 3500,
+//  level: 23,
 }))
