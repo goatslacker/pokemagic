@@ -133,7 +133,18 @@ function calculate(pokemonName, cp, hp, stardust, Level) {
   return possibleValues
 }
 
+function shouldIKeepIt(pokemonName, cp, hp, stardust, Level) {
+  const values = calculate(pokemonName, cp, hp, stardust, Level)
+  const res = values.every(v => v.percent.PercentCP > 90 && v.percent.PerfectIV > 80)
+
+  if (res) {
+    return `Yes, keep your ${cp} CP ${pokemonName}`
+  } else {
+    return `Send ${pokemonName} CP ${cp} the Willow grinder`
+  }
+}
+
 // Ok mostly works...
-//console.log(calculate('bulbasaur', 596, 62, 20))
-//console.log(calculate('growlithe', 666, 65, 19))
-console.log(calculate('omastar', 1622, 103, 4000, 25.5))
+console.log(shouldIKeepIt('bulbasaur', 596, 62, 2500, 20))
+console.log(shouldIKeepIt('growlithe', 666, 65, 2500, 19))
+console.log(shouldIKeepIt('omastar', 1622, 103, 4000, 25.5))
