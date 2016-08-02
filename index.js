@@ -185,66 +185,57 @@ function calculate(pokemon) {
 
 function magic(pokemon) {
   const values = calculate(pokemon)
+
   if (!values.length) {
-    console.log('I have no idea.')
+    console.log('I have no idea. You might have entered the wrong values.')
     return
   }
 
-  const yes = values.every(v => v.percent.PercentCP > 80 && v.percent.PerfectIV > 80)
-  const maybe = values.some(v => v.percent.PercentCP > 80 && v.percent.PerfectIV > 80)
+  // A good pokemon is in the 80th percentile for CP, HP, and IV.
+  // This 80th percentile thing was made up by me.
+  const isGoodPokemon = (
+    v => v.percent.PercentCP > 80 &&
+         v.percent.PerfectIV > 80 &&
+         v.percent.PercentHP > 80
+  )
+
+  const yes = values.every(isGoodPokemon)
+  const maybe = values.some(isGoodPokemon)
 
   const init = {
-    cp: {
-      low: Infinity,
-      high: -Infinity,
-    },
-    hp: {
-      low: Infinity,
-      high: -Infinity,
-    },
-    iv: {
-      low: Infinity,
-      high: -Infinity,
-    },
-    iva: {
-      low: Infinity,
-      high: -Infinity,
-    },
-    ivd: {
-      low: Infinity,
-      high: -Infinity,
-    },
-    ivs: {
-      low: Infinity,
-      high: -Infinity,
-    },
+    cp: [Infinity, -Infinity],
+    hp: [Infinity, -Infinity],
+    iv: [Infinity, -Infinity],
+    iva: [Infinity, -Infinity],
+    ivd: [Infinity, -Infinity],
+    ivs: [Infinity, -Infinity],
   }
-  const IVRange = values.reduce((obj, v) => {
+  const ValuesRange = values.reduce((obj, v) => {
     return {
-      cp: {
-        low: Math.min(v.percent.PercentCP, obj.cp.low),
-        high: Math.max(v.percent.PercentCP, obj.cp.high),
-      },
-      hp: {
-        low: Math.min(v.percent.PercentHP, obj.hp.low),
-        high: Math.max(v.percent.PercentHP, obj.hp.high),
-      },
-      iv: {
-        low: Math.min(v.percent.PerfectIV, obj.iv.low),
-        high: Math.max(v.percent.PerfectIV, obj.iv.high),
-      },
-      iva: {
-        low: Math.min(v.ivs.IndAtk, obj.iva.low),
-        high: Math.max(v.ivs.IndAtk, obj.iva.high),
-      },
-      ivd: {
-        low: Math.min(v.ivs.IndDef, obj.ivd.low),
-        high: Math.max(v.ivs.IndDef, obj.ivd.high),
-      },
-      ivs: {
-        low: Math.min(v.ivs.IndSta, obj.ivs.low),
-        high: Math.max(v.ivs.IndSta, obj.ivs.high),
-      },
+      cp: [
+        Math.min(v.percent.PercentCP, obj.cp[0]),
+        Math.max(v.percent.PercentCP, obj.cp[1]),
+      ],
+      hp: [
+        Math.min(v.percent.PercentHP, obj.hp[0]),
+        Math.max(v.percent.PercentHP, obj.hp[1]),
+      ],
+      iv: [
+        Math.min(v.percent.PerfectIV, obj.iv[0]),
+        Math.max(v.percent.PerfectIV, obj.iv[1]),
+      ],
+      iva: [
+        Math.min(v.ivs.IndAtk, obj.iva[0]),
+        Math.max(v.ivs.IndAtk, obj.iva[1]),
+      ],
+      ivd: [
+        Math.min(v.ivs.IndDef, obj.ivd[0]),
+        Math.max(v.ivs.IndDef, obj.ivd[1]),
+      ],
+      ivs: [
+        Math.min(v.ivs.IndSta, obj.ivs[0]),
+        Math.max(v.ivs.IndSta, obj.ivs[1]),
+      ],
     }
   }, init)
 
@@ -252,8 +243,8 @@ function magic(pokemon) {
 
   console.log()
 
-  console.log('IV % range')
-  console.log(IVRange)
+  console.log('Range in values')
+  console.log(ValuesRange)
 
   if (yes) {
     console.log(`Yes, keep your ${pokemon.cp} CP ${pokemon.name}.`)
