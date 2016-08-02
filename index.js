@@ -158,6 +158,7 @@ function getAllPossibleValues(pokemon, mon, ECpM) {
           def: IndDef,
           sta: IndSta,
         }, ECpM)
+        const HP = pokemon.hp
 
         const PerfectIV = Math.round((IndAtk + IndDef + IndSta) / 45 * 100)
         const PercentAtk = getAttackPercentage(IndAtk, IndDef)
@@ -166,6 +167,7 @@ function getAllPossibleValues(pokemon, mon, ECpM) {
           possibleValues.push({
             Name,
             CP,
+            HP,
             ivs: {
               IndAtk,
               IndDef,
@@ -272,12 +274,22 @@ function magic(pokemon) {
   }, init)
 
   // Begin logging
-  console.log(values)
+  if (values.length === 1) {
+    console.log('Congrats! Here are your Pokemon\'s IVs')
+    console.log()
+    const pokemon = values[0]
+    console.log(`IVs: ${pokemon.ivs.IndAtk}/${pokemon.ivs.IndDef}/${pokemon.ivs.IndSta}`)
+    console.log(`Attack: ${pokemon.ivs.IndAtk + pokemon.ivs.IndDef} (${pokemon.percent.PercentAtk}%)`)
+    console.log(`CP: ${pokemon.CP} (${pokemon.percent.PercentCP}%)`)
+    console.log(`HP: ${pokemon.HP} (${pokemon.percent.PercentHP}%)`)
+  } else {
+    console.log(values)
 
-  console.log()
+    console.log()
 
-  console.log('Range in values')
-  console.log(ValuesRange)
+    console.log('Range in values')
+    console.log(ValuesRange)
+  }
 
   console.log()
 
