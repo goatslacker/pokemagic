@@ -145,14 +145,17 @@ function calculate(pokemon) {
 
 function magic(pokemon) {
   const values = calculate(pokemon)
-  const res = values.every(v => v.percent.PercentCP > 90 && v.percent.PerfectIV > 80)
+  const yes = values.every(v => v.percent.PercentCP > 90 && v.percent.PerfectIV > 80)
+  const maybe = values.some(v => v.percent.PercentCP > 90 && v.percent.PerfectIV > 80)
 
   console.log(values)
 
   console.log()
 
-  if (res) {
+  if (yes) {
     return `Yes, keep your ${pokemon.cp} CP ${pokemon.name}.`
+  } else if (maybe) {
+    return `Maybe you should keep your ${pokemon.cp} CP ${pokemon.name} around.`
   } else {
     return `Send ${pokemon.name} CP ${pokemon.cp} the Willow grinder.`
   }
@@ -162,8 +165,8 @@ function magic(pokemon) {
 // And the magic happens here...
 console.log(magic({
   name: 'charmander',
-  cp: 537,
-  hp: 58,
-  stardust: 3500,
+  cp: 512,
+  hp: 54,
+  stardust: 2500,
 //  level: 23,
 }))
