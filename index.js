@@ -246,21 +246,23 @@ function magic(pokemon) {
   console.log('Range in values')
   console.log(ValuesRange)
 
+  console.log()
+
   if (yes) {
-    console.log(`Yes, keep your ${pokemon.cp} CP ${pokemon.name}.`)
+    console.log(`>> Yes, keep your ${pokemon.cp} CP ${pokemon.name}.`)
   } else if (maybe) {
-    console.log(`Maybe you should keep your ${pokemon.cp} CP ${pokemon.name} around.`)
+    console.log(`>> Maybe you should keep your ${pokemon.cp} CP ${pokemon.name} around.`)
   } else {
-    console.log(`Send ${pokemon.name} CP ${pokemon.cp} the Willow grinder.`)
+    console.log(`>> Send ${pokemon.name} CP ${pokemon.cp} the Willow grinder.`)
   }
 }
 
 
 // And the magic happens here...
 magic({
-  name: 'growlithe',
-  cp: 518,
-  hp: 59,
-  stardust: 1600,
-//  level: 20,
+  name: 'bulbasaur',
+  cp: 596,
+  hp: 62,
+  stardust: 2500,
+  level: 20,
 })
