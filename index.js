@@ -76,24 +76,24 @@ function getMaxCPForLevel(mon, ECpM) {
   }, ECpM)
 }
 
-function calculate(pokemonName, cp, hp, stardust, Level) {
-  const mon = findPokemon(pokemonName)
-  const Name = pokemonName.toUpperCase()
+function calculate(pokemon) {
+  const mon = findPokemon(pokemon.name)
+  const Name = pokemon.name.toUpperCase()
 
   const BaseSta = mon.stats.stamina
 
-  const ECpM = LevelToCPM[String(Level)]
+  const ECpM = LevelToCPM[String(pokemon.level)]
 
-  if (DustToLevel[stardust].indexOf(Level) === -1) {
+  if (DustToLevel[pokemon.stardust].indexOf(pokemon.level) === -1) {
     throw new Error('Stardust does not match level')
   }
 
-  const IndStaValues = calcIndSta(hp, BaseSta, ECpM)
+  const IndStaValues = calcIndSta(pokemon.hp, BaseSta, ECpM)
 
   const MaxCP = getMaxCP(mon)
   const MaxLevelCP = getMaxCPForLevel(mon, ECpM)
 
-  const PercentCP = Math.round(cp / MaxLevelCP * 100)
+  const PercentCP = Math.round(pokemon.cp / MaxLevelCP * 100)
 
   const possibleValues = []
   IndStaValues.forEach((IndSta) => {
@@ -107,7 +107,7 @@ function calculate(pokemonName, cp, hp, stardust, Level) {
 
         const PerfectIV = Math.round((IndAtk + IndDef + IndSta) / 45 * 100)
 
-        if (cp === CP) {
+        if (pokemon.cp === CP) {
           possibleValues.push({
             Name,
             CP,
@@ -133,18 +133,27 @@ function calculate(pokemonName, cp, hp, stardust, Level) {
   return possibleValues
 }
 
-function shouldIKeepIt(pokemonName, cp, hp, stardust, Level) {
-  const values = calculate(pokemonName, cp, hp, stardust, Level)
+function magic(pokemon) {
+  const values = calculate(pokemon)
   const res = values.every(v => v.percent.PercentCP > 90 && v.percent.PerfectIV > 80)
 
+  console.log(values)
+
+  console.log()
+
   if (res) {
-    return `Yes, keep your ${cp} CP ${pokemonName}`
+    return `Yes, keep your ${pokemon.cp} CP ${pokemon.name}.`
   } else {
-    return `Send ${pokemonName} CP ${cp} the Willow grinder`
+    return `Send ${pokemon.name} CP ${pokemon.cp} the Willow grinder.`
   }
 }
 
-// Ok mostly works...
-console.log(shouldIKeepIt('bulbasaur', 596, 62, 2500, 20))
-console.log(shouldIKeepIt('growlithe', 666, 65, 2500, 19))
-console.log(shouldIKeepIt('omastar', 1622, 103, 4000, 25.5))
+
+// And the magic happens here...
+console.log(magic({
+  name: 'pikachu',
+  cp: 487,
+  hp: 48,
+  stardust: 2500,
+  level: 20,
+}))
