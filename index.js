@@ -148,9 +148,46 @@ function magic(pokemon) {
   const yes = values.every(v => v.percent.PercentCP > 90 && v.percent.PerfectIV > 80)
   const maybe = values.some(v => v.percent.PercentCP > 90 && v.percent.PerfectIV > 80)
 
+  const init = {
+    low: Infinity,
+    high: -Infinity,
+    iva: {
+      low: Infinity,
+      high: -Infinity,
+    },
+    ivd: {
+      low: Infinity,
+      high: -Infinity,
+    },
+    ivs: {
+      low: Infinity,
+      high: -Infinity,
+    },
+  }
+  const IVRange = values.reduce((obj, v) => {
+    return {
+      low: Math.min(v.percent.PerfectIV, obj.low),
+      high: Math.max(v.percent.PerfectIV, obj.high),
+      iva: {
+        low: Math.min(v.ivs.IndAtk, obj.iva.low),
+        high: Math.max(v.ivs.IndAtk, obj.iva.high),
+      },
+      ivd: {
+        low: Math.min(v.ivs.IndDef, obj.ivd.low),
+        high: Math.max(v.ivs.IndDef, obj.ivd.high),
+      },
+      ivs: {
+        low: Math.min(v.ivs.IndSta, obj.ivs.low),
+        high: Math.max(v.ivs.IndSta, obj.ivs.high),
+      },
+    }
+  }, init)
+
   console.log(values)
 
   console.log()
+
+  console.log('IV % range', IVRange)
 
   if (yes) {
     return `Yes, keep your ${pokemon.cp} CP ${pokemon.name}.`
@@ -164,9 +201,9 @@ function magic(pokemon) {
 
 // And the magic happens here...
 console.log(magic({
-  name: 'charmander',
-  cp: 512,
-  hp: 54,
+  name: 'raticate',
+  cp: 821,
+  hp: 74,
   stardust: 2500,
-//  level: 23,
+//  level: 20,
 }))
