@@ -37,6 +37,15 @@ const DustToLevel = {
   10000: [39, 39.5, 40, 40.5],
 }
 
+// A good pokemon is in the 80th percentile for Atk, CP, HP, and IV.
+// This 80th percentile thing was made up by me.
+const isGoodPokemon = (
+  v => v.percent.PercentAtk > 80 &&
+       v.percent.PercentCP > 80 &&
+       v.percent.PerfectIV > 80 &&
+       v.percent.PercentHP > 80
+)
+
 function percentInRange(num, min, max) {
   return ((num - min) * 100) / (max - min)
 }
@@ -196,15 +205,6 @@ function magic(pokemon) {
     console.log('I have no idea. You might have entered the wrong values.')
     return
   }
-
-  // A good pokemon is in the 80th percentile for Atk, CP, HP, and IV.
-  // This 80th percentile thing was made up by me.
-  const isGoodPokemon = (
-    v => v.percent.PercentAtk > 80 &&
-         v.percent.PercentCP > 80 &&
-         v.percent.PerfectIV > 80 &&
-         v.percent.PercentHP > 80
-  )
 
   const yes = values.every(isGoodPokemon)
   const maybe = values.some(isGoodPokemon)
