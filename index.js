@@ -60,7 +60,7 @@ function getCP(mon, ivs, ECpM) {
   )
 }
 
-function maxCP(mon) {
+function getMaxCP(mon) {
   return getCP(mon, {
     atk: 15,
     def: 15,
@@ -68,8 +68,17 @@ function maxCP(mon) {
   }, 0.790300)
 }
 
+function getMaxCPForLevel(mon, ECpM) {
+  return getCP(mon, {
+    atk: 15,
+    def: 15,
+    sta: 15,
+  }, ECpM)
+}
+
 function calculate(pokemonName, cp, hp, stardust, Level) {
   const mon = findPokemon(pokemonName)
+  const Name = pokemonName.toUpperCase()
 
   const BaseSta = mon.stats.stamina
 
@@ -81,6 +90,11 @@ function calculate(pokemonName, cp, hp, stardust, Level) {
 
   const IndStaValues = calcIndSta(hp, BaseSta, ECpM)
 
+  const MaxCP = getMaxCP(mon)
+  const MaxLevelCP = getMaxCPForLevel(mon, ECpM)
+
+  const PercentCP = Math.round(cp / MaxLevelCP * 100)
+
   const possibleValues = []
   IndStaValues.forEach((IndSta) => {
     for (let IndAtk = 0; IndAtk <= 15; IndAtk += 1) {
@@ -90,18 +104,26 @@ function calculate(pokemonName, cp, hp, stardust, Level) {
           def: IndDef,
           sta: IndSta,
         }, ECpM)
-        const Total = IndAtk + IndDef
 
-        const Perfect = Math.round((Total + IndSta) / 45 * 100)
+        const PerfectIV = Math.round((IndAtk + IndDef + IndSta) / 45 * 100)
 
         if (cp === CP) {
           possibleValues.push({
-            pokemonName,
-            IndAtk,
-            IndDef,
-            IndSta,
-            Total,
-            Perfect,
+            Name,
+            CP,
+            ivs: {
+              IndAtk,
+              IndDef,
+              IndSta,
+            },
+            percent: {
+              PercentCP,
+              PerfectIV,
+            },
+            meta: {
+              MaxLevelCP,
+              MaxCP,
+            },
           })
         }
       }
