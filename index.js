@@ -168,6 +168,10 @@ function magic(pokemon) {
   const maybe = values.some(v => v.percent.PercentCP > 80 && v.percent.PerfectIV > 80)
 
   const init = {
+    cp: {
+      low: Infinity,
+      high: -Infinity,
+    },
     iv: {
       low: Infinity,
       high: -Infinity,
@@ -187,7 +191,10 @@ function magic(pokemon) {
   }
   const IVRange = values.reduce((obj, v) => {
     return {
-      cp: v.percent.PercentCP,
+      cp: {
+        low: Math.min(v.percent.PercentCP, obj.cp.low),
+        high: Math.max(v.percent.PercentCP, obj.cp.high),
+      },
       iv: {
         low: Math.min(v.percent.PerfectIV, obj.iv.low),
         high: Math.max(v.percent.PerfectIV, obj.iv.high),
@@ -226,9 +233,9 @@ function magic(pokemon) {
 
 // And the magic happens here...
 magic({
-  name: 'bulbasaur',
-  cp: 550,
-  hp: 58,
-  stardust: 2500,
-  level: 20,
+  name: 'venonat',
+  cp: 647,
+  hp: 84,
+  stardust: 3500,
+//  level: 20,
 })
