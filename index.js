@@ -56,27 +56,33 @@ function calcIndSta(hp, BaseSta, ECpM) {
     .filter(IndSta => hp === Math.floor(ECpM * (BaseSta + IndSta)))
 }
 
+// A formula that determines in which percentile you are for Atk + Def
 function getAttackPercentage(IndAtk, IndDef) {
   return Math.round((IndAtk + IndDef) / 30 * 100)
 }
 
+// Formula to calculate the HP given the IV stamina and ECpM
 function getHP(mon, IndSta, ECpM) {
   const BaseSta = mon.stats.stamina
   return Math.floor(ECpM * (BaseSta + IndSta))
 }
 
+// The minimum HP for a Pokemon that has perfect IVs
 function getMaxHP(mon) {
   return getHP(mon, 15, 0.790300)
 }
 
+// The maximum HP for your Pokemon's current level
 function getMaxHPForLevel(mon, ECpM) {
   return getHP(mon, 15, ECpM)
 }
 
+// The minimum HP for your Pokemon's current level
 function getMinHPForLevel(mon, ECpM) {
   return getHP(mon, 0, ECpM)
 }
 
+// Formula to calculate the CP given the IVs and ECpM
 function getCP(mon, ivs, ECpM) {
   const BaseAtk = mon.stats.attack
   const BaseDef = mon.stats.defense
@@ -94,6 +100,7 @@ function getCP(mon, ivs, ECpM) {
   )
 }
 
+// The maximum possible CP for a Pokemon that has perfect IVs
 function getMaxCP(mon) {
   return getCP(mon, {
     atk: 15,
@@ -102,6 +109,7 @@ function getMaxCP(mon) {
   }, 0.790300)
 }
 
+// The minimum CP for your Pokemon's level
 function getMinCPForLevel(mon, ECpM) {
   return getCP(mon, {
     atk: 0,
@@ -110,6 +118,7 @@ function getMinCPForLevel(mon, ECpM) {
   }, ECpM)
 }
 
+// The maximum CP for your Pokemon's level
 function getMaxCPForLevel(mon, ECpM) {
   return getCP(mon, {
     atk: 15,
@@ -136,6 +145,10 @@ function getAllPossibleValues(pokemon, mon, ECpM) {
   const PercentHP = Math.round(percentInRange(pokemon.hp, MinLevelHP, MaxLevelHP))
   const PercentCP = Math.round(percentInRange(pokemon.cp, MinLevelCP, MaxLevelCP))
 
+  // Brute force find the IVs.
+  // For every possible IndSta we'll loop through IndAtk and IndDef until we
+  // find CPs that match your Pokemon's CP. Those are possible matches and are
+  // returned by this function.
   const possibleValues = []
   IndStaValues.forEach((IndSta) => {
     for (let IndAtk = 0; IndAtk <= 15; IndAtk += 1) {
@@ -182,8 +195,11 @@ function getAllPossibleValues(pokemon, mon, ECpM) {
 }
 
 function calculate(pokemon) {
+  // Get the pokemon's base stats
   const mon = findPokemon(pokemon.name)
 
+  // If the level has been provided then we can get a better accurate reading
+  // since we'll be able to determine the exact ECpM.
   if (pokemon.level) {
     if (DustToLevel[pokemon.stardust].indexOf(pokemon.level) === -1) {
       throw new Error('Stardust does not match level')
@@ -192,6 +208,8 @@ function calculate(pokemon) {
     return getAllPossibleValues(pokemon, mon, ECpM)
   }
 
+  // If we're just going on stardust then we'll have to iterate through
+  // each level and concatenate all possible values
   return DustToLevel[pokemon.stardust].reduce((arr, level) => {
     const ECpM = LevelToCPM[String(level)]
     return arr.concat(getAllPossibleValues(pokemon, mon, ECpM))
@@ -218,6 +236,8 @@ function magic(pokemon) {
     ivd: [Infinity, -Infinity],
     ivs: [Infinity, -Infinity],
   }
+
+  // Calculate the min/max range of values for atk, cp, hp, and ivs
   const ValuesRange = values.reduce((obj, v) => {
     return {
       atk: [
@@ -251,6 +271,7 @@ function magic(pokemon) {
     }
   }, init)
 
+  // Begin logging
   console.log(values)
 
   console.log()
