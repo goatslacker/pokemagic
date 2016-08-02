@@ -37,6 +37,10 @@ const DustToLevel = {
   10000: [39, 39.5, 40, 40.5],
 }
 
+function percentInRange(num, min, max) {
+  return ((num - min) * 100) / (max - min)
+}
+
 function calcIndSta(hp, BaseSta, ECpM) {
   return Array.from(Array(15))
     .map((_, i) => i)
@@ -68,6 +72,14 @@ function getMaxCP(mon) {
   }, 0.790300)
 }
 
+function getMinCPForLevel(mon, ECpM) {
+  return getCP(mon, {
+    atk: 0,
+    def: 0,
+    sta: 0,
+  }, ECpM)
+}
+
 function getMaxCPForLevel(mon, ECpM) {
   return getCP(mon, {
     atk: 15,
@@ -85,8 +97,9 @@ function getAllPossibleValues(pokemon, mon, ECpM) {
 
   const MaxCP = getMaxCP(mon)
   const MaxLevelCP = getMaxCPForLevel(mon, ECpM)
+  const MinLevelCP = getMinCPForLevel(mon, ECpM)
 
-  const PercentCP = Math.round(pokemon.cp / MaxLevelCP * 100)
+  const PercentCP = Math.round(percentInRange(pokemon.cp, MinLevelCP, MaxLevelCP))
 
   const possibleValues = []
   IndStaValues.forEach((IndSta) => {
@@ -115,6 +128,7 @@ function getAllPossibleValues(pokemon, mon, ECpM) {
             },
             meta: {
               MaxLevelCP,
+              MinLevelCP,
               MaxCP,
             },
           })
@@ -145,12 +159,19 @@ function calculate(pokemon) {
 
 function magic(pokemon) {
   const values = calculate(pokemon)
-  const yes = values.every(v => v.percent.PercentCP > 90 && v.percent.PerfectIV > 80)
-  const maybe = values.some(v => v.percent.PercentCP > 90 && v.percent.PerfectIV > 80)
+  if (!values.length) {
+    console.log('I have no idea.')
+    return
+  }
+
+  const yes = values.every(v => v.percent.PercentCP > 80 && v.percent.PerfectIV > 80)
+  const maybe = values.some(v => v.percent.PercentCP > 80 && v.percent.PerfectIV > 80)
 
   const init = {
-    low: Infinity,
-    high: -Infinity,
+    iv: {
+      low: Infinity,
+      high: -Infinity,
+    },
     iva: {
       low: Infinity,
       high: -Infinity,
@@ -166,8 +187,11 @@ function magic(pokemon) {
   }
   const IVRange = values.reduce((obj, v) => {
     return {
-      low: Math.min(v.percent.PerfectIV, obj.low),
-      high: Math.max(v.percent.PerfectIV, obj.high),
+      cp: v.percent.PercentCP,
+      iv: {
+        low: Math.min(v.percent.PerfectIV, obj.iv.low),
+        high: Math.max(v.percent.PerfectIV, obj.iv.high),
+      },
       iva: {
         low: Math.min(v.ivs.IndAtk, obj.iva.low),
         high: Math.max(v.ivs.IndAtk, obj.iva.high),
@@ -187,23 +211,24 @@ function magic(pokemon) {
 
   console.log()
 
-  console.log('IV % range', IVRange)
+  console.log('IV % range')
+  console.log(IVRange)
 
   if (yes) {
-    return `Yes, keep your ${pokemon.cp} CP ${pokemon.name}.`
+    console.log(`Yes, keep your ${pokemon.cp} CP ${pokemon.name}.`)
   } else if (maybe) {
-    return `Maybe you should keep your ${pokemon.cp} CP ${pokemon.name} around.`
+    console.log(`Maybe you should keep your ${pokemon.cp} CP ${pokemon.name} around.`)
   } else {
-    return `Send ${pokemon.name} CP ${pokemon.cp} the Willow grinder.`
+    console.log(`Send ${pokemon.name} CP ${pokemon.cp} the Willow grinder.`)
   }
 }
 
 
 // And the magic happens here...
-console.log(magic({
-  name: 'raticate',
-  cp: 821,
-  hp: 74,
+magic({
+  name: 'bulbasaur',
+  cp: 550,
+  hp: 58,
   stardust: 2500,
-//  level: 20,
-}))
+  level: 20,
+})
