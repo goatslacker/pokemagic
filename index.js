@@ -47,6 +47,23 @@ function calcIndSta(hp, BaseSta, ECpM) {
     .filter(IndSta => hp === Math.floor(ECpM * (BaseSta + IndSta)))
 }
 
+function getHP(mon, IndSta, ECpM) {
+  const BaseSta = mon.stats.stamina
+  return Math.floor(ECpM * (BaseSta + IndSta))
+}
+
+function getMaxHP(mon) {
+  return getHP(mon, 15, 0.790300)
+}
+
+function getMaxHPForLevel(mon, ECpM) {
+  return getHP(mon, 15, ECpM)
+}
+
+function getMinHPForLevel(mon, ECpM) {
+  return getHP(mon, 0, ECpM)
+}
+
 function getCP(mon, ivs, ECpM) {
   const BaseAtk = mon.stats.attack
   const BaseDef = mon.stats.defense
@@ -99,6 +116,11 @@ function getAllPossibleValues(pokemon, mon, ECpM) {
   const MaxLevelCP = getMaxCPForLevel(mon, ECpM)
   const MinLevelCP = getMinCPForLevel(mon, ECpM)
 
+  const MaxHP = getMaxHP(mon)
+  const MaxLevelHP = getMaxHPForLevel(mon, ECpM)
+  const MinLevelHP = getMinHPForLevel(mon, ECpM)
+
+  const PercentHP = Math.round(percentInRange(pokemon.hp, MinLevelHP, MaxLevelHP))
   const PercentCP = Math.round(percentInRange(pokemon.cp, MinLevelCP, MaxLevelCP))
 
   const possibleValues = []
@@ -124,12 +146,16 @@ function getAllPossibleValues(pokemon, mon, ECpM) {
             },
             percent: {
               PercentCP,
+              PercentHP,
               PerfectIV,
             },
             meta: {
-              MaxLevelCP,
               MinLevelCP,
+              MaxLevelCP,
+              MinLevelHP,
+              MaxLevelHP,
               MaxCP,
+              MaxHP,
             },
           })
         }
@@ -172,6 +198,10 @@ function magic(pokemon) {
       low: Infinity,
       high: -Infinity,
     },
+    hp: {
+      low: Infinity,
+      high: -Infinity,
+    },
     iv: {
       low: Infinity,
       high: -Infinity,
@@ -194,6 +224,10 @@ function magic(pokemon) {
       cp: {
         low: Math.min(v.percent.PercentCP, obj.cp.low),
         high: Math.max(v.percent.PercentCP, obj.cp.high),
+      },
+      hp: {
+        low: Math.min(v.percent.PercentHP, obj.hp.low),
+        high: Math.max(v.percent.PercentHP, obj.hp.high),
       },
       iv: {
         low: Math.min(v.percent.PerfectIV, obj.iv.low),
@@ -233,9 +267,9 @@ function magic(pokemon) {
 
 // And the magic happens here...
 magic({
-  name: 'eevee',
-  cp: 483,
-  hp: 66,
-  stardust: 1900,
-  level: 16,
+  name: 'growlithe',
+  cp: 518,
+  hp: 59,
+  stardust: 1600,
+//  level: 20,
 })
