@@ -47,6 +47,26 @@ const DustToLevel = {
 // hp: 264,
 // stardust: 1900,
 // level: 15,
+//
+//
+//
+// { Name: 'CHANSEY',
+//   CP: 284,
+//     HP: 264,
+//       ivs: { IndAtk: 15, IndDef: 13, IndSta: 12 },
+//         percent: { PercentAtk: 93, PercentCP: 95, PercentHP: 75, PerfectIV: 89 },
+//           meta:
+//              { MinLevelCP: 185,
+//                   MaxLevelCP: 289,
+//                        MinLevelHP: 258,
+//                             MaxLevelHP: 266,
+//                                  MaxCP: 675,
+//                                       MaxHP: 407 } }
+
+
+//v.HP
+
+
 const isGoodPokemon = (
   v => v.percent.PercentAtk >= 80 &&
        v.percent.PercentCP >= 80 &&
@@ -168,6 +188,12 @@ function getAllPossibleValues(pokemon, mon, ECpM) {
         }, ECpM)
         const HP = pokemon.hp
 
+        const BaseAtk = mon.stats.attack
+        const Atk = (BaseAtk + IndAtk) * ECpM
+
+        const BaseDef = mon.stats.defense
+        const Def = (BaseDef + IndDef) * ECpM
+
         const PerfectIV = Math.round((IndAtk + IndDef + IndSta) / 45 * 100)
         const PercentAtk = getAttackPercentage(IndAtk, IndDef)
 
@@ -176,6 +202,8 @@ function getAllPossibleValues(pokemon, mon, ECpM) {
             Name,
             CP,
             HP,
+            Atk,
+            Def,
             ivs: {
               IndAtk,
               IndDef,
