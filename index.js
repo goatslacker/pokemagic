@@ -355,6 +355,8 @@ function magic(pokemon) {
 
   const pokemonId = `${pokemon.name.toUpperCase()} ${pokemon.cp}`
 
+  console.log(`There are ${values.length} possibilities.`)
+
   if (yes) {
     console.log(`>> Yes, keep your ${pokemonId}.`)
   } else if (maybe) {
@@ -409,12 +411,13 @@ function pokemonsEvolvedCP() {
 // 7. list number of matches or confidence level!
 
 // And the magic happens here...
+console.log(process.argv)
 magic({
-  name: 'rhyhorn',
-  cp: 634,
-  hp: 103,
-  stardust: 2500,
-//  level: 20,
+  name: process.argv[2] || 'rhyhorn',
+  cp: Number(process.argv[3]) || 634,
+  hp: Number(process.argv[4]) || 103,
+  stardust: Number(process.argv[5]) || 2500,
+  level: process.argv[6] ? Number(process.argv[6]) : null,
 })
 
 /*
