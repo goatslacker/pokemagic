@@ -3,6 +3,7 @@
 const Pokemon = require('./pokemon.json')
 const Moves = require('./moves.json')
 const LevelToCPM = require('./level-to-cpm.json')
+const Levels = require('./levels')
 
 function findPokemon(name) {
   const fmtName = name.toUpperCase()
@@ -39,6 +40,13 @@ const DustToLevel = {
 
 // A good pokemon is in the 80th percentile for Atk, CP, HP, and IV.
 // This 80th percentile thing was made up by me.
+// XXX this formula sucks ass...lets make this Chansey a good pokemon:
+//
+// name: 'chansey',
+// cp: 284,
+// hp: 264,
+// stardust: 1900,
+// level: 15,
 const isGoodPokemon = (
   v => v.percent.PercentAtk >= 80 &&
        v.percent.PercentCP >= 80 &&
@@ -319,6 +327,31 @@ function magic(pokemon) {
   }
 }
 
+function howMuchStardust(currentLevel, trainerLevel) {
+  const maxPokemonLevel = trainerLevel + 1.5
+
+  // Returns the candy cost of upgrading to the current maximum Pokemon level
+  // cap based on the trainer's level
+  return Object.keys(DustToLevel).reduce((sum, dust) => {
+    const levels = DustToLevel[dust]
+    const stardustIncrease = levels.reduce((num, level) => {
+      return level > currentLevel && level <= maxPokemonLevel
+        ? num + Number(dust)
+        : num
+    }, 0)
+
+    return sum + stardustIncrease
+  }, 0)
+}
+
+// XXX
+function howMuchCandy(currentLevel, trainerLevel) {
+}
+
+// XXX
+function pokemonsEvolvedCP() {
+}
+
 // What this does.
 // 1. Tells you if your Pokemon is "good" or not. ie: can you transfer this Pokemon?
 // 2. Tells you the Pokemon's IVs.
@@ -334,9 +367,11 @@ function magic(pokemon) {
 
 // And the magic happens here...
 magic({
-  name: 'alakazam',
-  cp: 523,
-  hp: 54,
-  stardust: 1300,
-//  level: 20,
+  name: 'chansey',
+  cp: 284,
+  hp: 264,
+  stardust: 1900,
+  level: 15,
 })
+
+//console.log(howMuchStardust(25.5, 25))
