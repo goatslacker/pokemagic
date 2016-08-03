@@ -216,6 +216,7 @@ function getAllPossibleValues(pokemon, mon, ECpM) {
             HP,
             Atk,
             Def,
+            ECpM,
             ivs: {
               IndAtk,
               IndDef,
@@ -411,7 +412,6 @@ function pokemonsEvolvedCP() {
 // 7. list number of matches or confidence level!
 
 // And the magic happens here...
-console.log(process.argv)
 magic({
   name: process.argv[2] || 'rhyhorn',
   cp: Number(process.argv[3]) || 634,
