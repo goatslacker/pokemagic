@@ -43,7 +43,7 @@ const DustToLevel = {
 // XXX this formula still sucks ass...
 const isGoodPokemon = (
   v => v.percent.PercentAtk >= 80 &&
-       v.percent.PercentCP >= 90 &&
+       v.percent.PercentCP >= 80 &&
        v.percent.PerfectIV >= 80 &&
        v.percent.PercentHP >= 70
 )
@@ -405,11 +405,11 @@ function pokemonsEvolvedCP() {
 
 // And the magic happens here...
 magic({
-  name: 'chansey',
-  cp: 284,
-  hp: 264,
-  stardust: 1900,
-  level: 15,
+  name: 'eevee',
+  cp: 418,
+  hp: 60,
+  stardust: 1600,
+//  level: 15,
 })
 
 /*
