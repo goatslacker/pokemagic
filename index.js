@@ -40,38 +40,12 @@ const DustToLevel = {
 
 // A good pokemon is in the 80th percentile for Atk, CP, HP, and IV.
 // This 80th percentile thing was made up by me.
-// XXX this formula sucks ass...lets make this Chansey a good pokemon:
-//
-// name: 'chansey',
-// cp: 284,
-// hp: 264,
-// stardust: 1900,
-// level: 15,
-//
-//
-//
-// { Name: 'CHANSEY',
-//   CP: 284,
-//     HP: 264,
-//       ivs: { IndAtk: 15, IndDef: 13, IndSta: 12 },
-//         percent: { PercentAtk: 93, PercentCP: 95, PercentHP: 75, PerfectIV: 89 },
-//           meta:
-//              { MinLevelCP: 185,
-//                   MaxLevelCP: 289,
-//                        MinLevelHP: 258,
-//                             MaxLevelHP: 266,
-//                                  MaxCP: 675,
-//                                       MaxHP: 407 } }
-
-
-//v.HP
-
-
+// XXX this formula still sucks ass...
 const isGoodPokemon = (
   v => v.percent.PercentAtk >= 80 &&
-       v.percent.PercentCP >= 80 &&
+       v.percent.PercentCP >= 90 &&
        v.percent.PerfectIV >= 80 &&
-       v.percent.PercentHP >= 80
+       v.percent.PercentHP >= 70
 )
 
 function percentInRange(num, min, max) {
@@ -155,21 +129,8 @@ function getMaxCPForLevel(mon, ECpM) {
   }, ECpM)
 }
 
-function getPokemonDataForStats(pokemon, IndAtk, IndDef, IndSta) {
-  const mon = findPokemon(pokemon.name)
-
-  const ECpM = LevelToCPM[String(pokemon.level)]
-
-  const Name = pokemon.name.toUpperCase()
-
-//  const MaxLevelCP = getMaxCPForLevel(mon, ECpM)
-//  const MinLevelCP = getMinCPForLevel(mon, ECpM)
-//
-//  const MaxLevelHP = getMaxHPForLevel(mon, ECpM)
-//  const MinLevelHP = getMinHPForLevel(mon, ECpM)
-//
-//  const PercentHP = Math.round(percentInRange(pokemon.hp, MinLevelHP, MaxLevelHP))
-//  const PercentCP = Math.round(percentInRange(pokemon.cp, MinLevelCP, MaxLevelCP))
+function getPokemonDataForStats(mon, level, IndAtk, IndDef, IndSta) {
+  const ECpM = LevelToCPM[String(level)]
 
   const CP = getCP(mon, {
     atk: IndAtk,
@@ -188,7 +149,6 @@ function getPokemonDataForStats(pokemon, IndAtk, IndDef, IndSta) {
   const PercentAtk = getAttackPercentage(IndAtk, IndDef)
 
   return {
-    Name,
     CP,
     HP,
     Atk,
@@ -199,8 +159,6 @@ function getPokemonDataForStats(pokemon, IndAtk, IndDef, IndSta) {
       IndSta,
     },
     percent: {
-//      PercentCP,
-//      PercentHP,
       PercentAtk,
       PerfectIV,
     },
@@ -455,13 +413,12 @@ magic({
 })
 
 /*
-console.log(getPokemonDataForStats({
-  name: 'chansey',
-  cp: 284,
-  hp: 264,
-  stardust: 1900,
-  level: 15,
-}, 15, 15, 15))
+console.log(
+  getPokemonDataForStats(
+    findPokemon('chansey'),
+    15, 15, 15, 15
+  )
+)
 */
 
 //console.log(howMuchStardust(25.5, 25))
