@@ -155,6 +155,58 @@ function getMaxCPForLevel(mon, ECpM) {
   }, ECpM)
 }
 
+function getPokemonDataForStats(pokemon, IndAtk, IndDef, IndSta) {
+  const mon = findPokemon(pokemon.name)
+
+  const ECpM = LevelToCPM[String(pokemon.level)]
+
+  const Name = pokemon.name.toUpperCase()
+
+//  const MaxLevelCP = getMaxCPForLevel(mon, ECpM)
+//  const MinLevelCP = getMinCPForLevel(mon, ECpM)
+//
+//  const MaxLevelHP = getMaxHPForLevel(mon, ECpM)
+//  const MinLevelHP = getMinHPForLevel(mon, ECpM)
+//
+//  const PercentHP = Math.round(percentInRange(pokemon.hp, MinLevelHP, MaxLevelHP))
+//  const PercentCP = Math.round(percentInRange(pokemon.cp, MinLevelCP, MaxLevelCP))
+
+  const CP = getCP(mon, {
+    atk: IndAtk,
+    def: IndDef,
+    sta: IndSta,
+  }, ECpM)
+  const HP = getHP(mon, IndSta, ECpM)
+
+  const BaseAtk = mon.stats.attack
+  const Atk = (BaseAtk + IndAtk) * ECpM
+
+  const BaseDef = mon.stats.defense
+  const Def = (BaseDef + IndDef) * ECpM
+
+  const PerfectIV = Math.round((IndAtk + IndDef + IndSta) / 45 * 100)
+  const PercentAtk = getAttackPercentage(IndAtk, IndDef)
+
+  return {
+    Name,
+    CP,
+    HP,
+    Atk,
+    Def,
+    ivs: {
+      IndAtk,
+      IndDef,
+      IndSta,
+    },
+    percent: {
+//      PercentCP,
+//      PercentHP,
+      PercentAtk,
+      PerfectIV,
+    },
+  }
+}
+
 function getAllPossibleValues(pokemon, mon, ECpM) {
   const Name = pokemon.name.toUpperCase()
 
@@ -401,5 +453,15 @@ magic({
   stardust: 1900,
   level: 15,
 })
+
+/*
+console.log(getPokemonDataForStats({
+  name: 'chansey',
+  cp: 284,
+  hp: 264,
+  stardust: 1900,
+  level: 15,
+}, 15, 15, 15))
+*/
 
 //console.log(howMuchStardust(25.5, 25))
