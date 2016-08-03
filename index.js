@@ -304,16 +304,18 @@ function magic(pokemon) {
 
   console.log()
 
+  const pokemonId = `${pokemon.name.toUpperCase()} ${pokemon.cp}`
+
   if (yes) {
-    console.log(`>> Yes, keep your ${pokemon.cp} CP ${pokemon.name}.`)
+    console.log(`>> Yes, keep your ${pokemonId}.`)
   } else if (maybe) {
     console.log(
-      `>> Maybe you should keep your ${pokemon.cp} CP ${pokemon.name} around.`,
+      `>> Maybe you should keep ${pokemonId} around.`,
       '\n  ',
       `There is a ${Math.round(maybeValues.length / values.length * 100)}% chance you've got a winner.`
     )
   } else {
-    console.log(`>> Send ${pokemon.name} CP ${pokemon.cp} the Willow grinder.`)
+    console.log(`>> Send ${pokemonId} to Willow's grinder.`)
   }
 }
 
@@ -332,9 +334,9 @@ function magic(pokemon) {
 
 // And the magic happens here...
 magic({
-  name: 'shellder',
-  cp: 447,
-  hp: 43,
-  stardust: 2500,
-  level: 20,
+  name: 'alakazam',
+  cp: 523,
+  hp: 54,
+  stardust: 1300,
+//  level: 20,
 })
