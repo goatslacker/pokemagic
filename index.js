@@ -335,6 +335,7 @@ function magic(pokemon) {
     console.log(`CP: ${pokemon.CP} (${pokemon.percent.PercentCP}%)`)
     console.log(`HP: ${pokemon.HP} (${pokemon.percent.PercentHP}%)`)
   } else {
+    console.log('Your possible Pokemon\'s values')
     console.log(values)
 
     console.log()
@@ -344,7 +345,7 @@ function magic(pokemon) {
 
     console.log()
 
-    console.log('Best possible Pokemon')
+    console.log('Best possible Pokemon\'s values')
     console.log(bestPossible)
   }
 
@@ -406,10 +407,10 @@ function pokemonsEvolvedCP() {
 // And the magic happens here...
 magic({
   name: 'eevee',
-  cp: 418,
-  hp: 60,
-  stardust: 1600,
-//  level: 15,
+  cp: 593,
+  hp: 70,
+  stardust: 2500,
+//  level: 14,
 })
 
 /*
