@@ -45,8 +45,10 @@ const isGoodPokemon = (
   v => v.percent.PercentAtk >= 80 &&
        v.percent.PercentCP >= 80 &&
        v.percent.PerfectIV >= 80 &&
-       v.percent.PercentHP >= 70
+       v.percent.PercentHP >= 55
 )
+
+// 90 + 55 Atk + HP?
 
 function percentInRange(num, min, max) {
   return ((num - min) * 100) / (max - min)
@@ -403,14 +405,15 @@ function pokemonsEvolvedCP() {
 // 3. DPS values WITH moves. Plus a ranking if its a great pokemon (ideal movesets)
 // 4. How much candy + stardust would it take to "max it out" according to current trainer level.
 // 5. Is it worth "maxing out" my current Pokemon vs finding a better one? What are the probabilities of finding a better Pokemon?
+// 6. A function for best pokemon for that specific type, and a comparison/diff of how far you're off from that pokemon
 
 // And the magic happens here...
 magic({
-  name: 'eevee',
-  cp: 593,
-  hp: 70,
+  name: 'meowth',
+  cp: 390,
+  hp: 54,
   stardust: 2500,
-//  level: 14,
+//  level: 20,
 })
 
 /*
