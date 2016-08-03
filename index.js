@@ -406,12 +406,13 @@ function pokemonsEvolvedCP() {
 // 4. How much candy + stardust would it take to "max it out" according to current trainer level.
 // 5. Is it worth "maxing out" my current Pokemon vs finding a better one? What are the probabilities of finding a better Pokemon?
 // 6. A function for best pokemon for that specific type, and a comparison/diff of how far you're off from that pokemon
+// 7. list number of matches or confidence level!
 
 // And the magic happens here...
 magic({
-  name: 'meowth',
-  cp: 390,
-  hp: 54,
+  name: 'rhyhorn',
+  cp: 634,
+  hp: 103,
   stardust: 2500,
 //  level: 20,
 })
