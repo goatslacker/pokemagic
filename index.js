@@ -226,8 +226,14 @@ function magic(pokemon) {
     return
   }
 
+  const bestPossible = values.reduce((best, mon) => {
+    if (!best) return mon
+    return mon.percent.PerfectIV > best.percent.PerfectIV ? mon : best
+  }, null)
+
   const yes = values.every(isGoodPokemon)
-  const maybe = values.some(isGoodPokemon)
+  const maybeValues = values.filter(isGoodPokemon)
+  const maybe = maybeValues.length > 0
 
   const init = {
     atk: [Infinity, -Infinity],
@@ -289,6 +295,11 @@ function magic(pokemon) {
 
     console.log('Range in values')
     console.log(ValuesRange)
+
+    console.log()
+
+    console.log('Best possible Pokemon')
+    console.log(bestPossible)
   }
 
   console.log()
@@ -296,18 +307,34 @@ function magic(pokemon) {
   if (yes) {
     console.log(`>> Yes, keep your ${pokemon.cp} CP ${pokemon.name}.`)
   } else if (maybe) {
-    console.log(`>> Maybe you should keep your ${pokemon.cp} CP ${pokemon.name} around.`)
+    console.log(
+      `>> Maybe you should keep your ${pokemon.cp} CP ${pokemon.name} around.`,
+      '\n  ',
+      `There is a ${Math.round(maybeValues.length / values.length * 100)}% chance you've got a winner.`
+    )
   } else {
     console.log(`>> Send ${pokemon.name} CP ${pokemon.cp} the Willow grinder.`)
   }
 }
 
+// What this does.
+// 1. Tells you if your Pokemon is "good" or not. ie: can you transfer this Pokemon?
+// 2. Tells you the Pokemon's IVs.
+// 3. What CP percentile it is in.
+// 4. What HP percentile it is in.
+
+// TODO
+// 1. how much CP would it have if I evolved it right now to its highest form
+// 2. DPS values (sans moves)
+// 3. DPS values WITH moves. Plus a ranking if its a great pokemon (ideal movesets)
+// 4. How much candy + stardust would it take to "max it out" according to current trainer level.
+// 5. Is it worth "maxing out" my current Pokemon vs finding a better one? What are the probabilities of finding a better Pokemon?
 
 // And the magic happens here...
 magic({
-  name: 'omastar',
-  cp: 1622,
-  hp: 103,
-  stardust: 4000,
-  level: 25.5,
+  name: 'shellder',
+  cp: 447,
+  hp: 43,
+  stardust: 2500,
+  level: 20,
 })
