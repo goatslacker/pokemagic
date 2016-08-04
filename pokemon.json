@@ -11,8 +11,50 @@
     },
     "candy": 25,
     "family": "FAMILY_BULBASAUR",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 221,
+        "Name": "TACKLE_FAST",
+        "Power": 12,
+        "DurationMs": 1100,
+        "Energy": 7,
+        "DPS": 10.909090909090908
+      },
+      {
+        "Id": 214,
+        "Name": "VINE_WHIP_FAST",
+        "Power": 7,
+        "DurationMs": 650,
+        "Energy": 7,
+        "DPS": 13.46153846153846
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 118,
+        "Name": "POWER_WHIP",
+        "Power": 70,
+        "DurationMs": 2800,
+        "Energy": -100,
+        "DPS": 31.25
+      },
+      {
+        "Id": 59,
+        "Name": "SEED_BOMB",
+        "Power": 40,
+        "DurationMs": 2400,
+        "Energy": -33,
+        "DPS": 20.833333333333336
+      },
+      {
+        "Id": 90,
+        "Name": "SLUDGE_BOMB",
+        "Power": 55,
+        "DurationMs": 2600,
+        "Energy": -50,
+        "DPS": 26.442307692307693
+      }
+    ]
   },
   {
     "id": 2,
@@ -26,8 +68,50 @@
     },
     "candy": 100,
     "family": "FAMILY_BULBASAUR",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 215,
+        "Name": "RAZOR_LEAF_FAST",
+        "Power": 15,
+        "DurationMs": 1450,
+        "Energy": 7,
+        "DPS": 12.931034482758621
+      },
+      {
+        "Id": 214,
+        "Name": "VINE_WHIP_FAST",
+        "Power": 7,
+        "DurationMs": 650,
+        "Energy": 7,
+        "DPS": 13.46153846153846
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 118,
+        "Name": "POWER_WHIP",
+        "Power": 70,
+        "DurationMs": 2800,
+        "Energy": -100,
+        "DPS": 31.25
+      },
+      {
+        "Id": 90,
+        "Name": "SLUDGE_BOMB",
+        "Power": 55,
+        "DurationMs": 2600,
+        "Energy": -50,
+        "DPS": 26.442307692307693
+      },
+      {
+        "Id": 116,
+        "Name": "SOLAR_BEAM",
+        "Power": 120,
+        "DurationMs": 4900,
+        "Energy": -100,
+        "DPS": 30.612244897959183
+      }
+    ]
   },
   {
     "id": 3,
@@ -40,8 +124,50 @@
       "defense": 200
     },
     "family": "FAMILY_BULBASAUR",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 215,
+        "Name": "RAZOR_LEAF_FAST",
+        "Power": 15,
+        "DurationMs": 1450,
+        "Energy": 7,
+        "DPS": 12.931034482758621
+      },
+      {
+        "Id": 214,
+        "Name": "VINE_WHIP_FAST",
+        "Power": 7,
+        "DurationMs": 650,
+        "Energy": 7,
+        "DPS": 13.46153846153846
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 47,
+        "Name": "PETAL_BLIZZARD",
+        "Power": 65,
+        "DurationMs": 3200,
+        "Energy": -50,
+        "DPS": 25.390625
+      },
+      {
+        "Id": 90,
+        "Name": "SLUDGE_BOMB",
+        "Power": 55,
+        "DurationMs": 2600,
+        "Energy": -50,
+        "DPS": 26.442307692307693
+      },
+      {
+        "Id": 116,
+        "Name": "SOLAR_BEAM",
+        "Power": 120,
+        "DurationMs": 4900,
+        "Energy": -100,
+        "DPS": 30.612244897959183
+      }
+    ]
   },
   {
     "id": 4,
@@ -54,8 +180,50 @@
     },
     "candy": 25,
     "family": "FAMILY_CHARMANDER",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 209,
+        "Name": "EMBER_FAST",
+        "Power": 10,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 11.904761904761905
+      },
+      {
+        "Id": 220,
+        "Name": "SCRATCH_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 102,
+        "Name": "FLAME_BURST",
+        "Power": 30,
+        "DurationMs": 2100,
+        "Energy": -25,
+        "DPS": 17.857142857142854
+      },
+      {
+        "Id": 101,
+        "Name": "FLAME_CHARGE",
+        "Power": 20,
+        "DurationMs": 3100,
+        "Energy": -20,
+        "DPS": 8.064516129032258
+      },
+      {
+        "Id": 24,
+        "Name": "FLAMETHROWER",
+        "Power": 55,
+        "DurationMs": 2900,
+        "Energy": -50,
+        "DPS": 23.706896551724135
+      }
+    ]
   },
   {
     "id": 5,
@@ -68,8 +236,50 @@
     },
     "candy": 100,
     "family": "FAMILY_CHARMANDER",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 209,
+        "Name": "EMBER_FAST",
+        "Power": 10,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 11.904761904761905
+      },
+      {
+        "Id": 220,
+        "Name": "SCRATCH_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 115,
+        "Name": "FIRE_PUNCH",
+        "Power": 40,
+        "DurationMs": 2800,
+        "Energy": -33,
+        "DPS": 17.857142857142858
+      },
+      {
+        "Id": 102,
+        "Name": "FLAME_BURST",
+        "Power": 30,
+        "DurationMs": 2100,
+        "Energy": -25,
+        "DPS": 17.857142857142854
+      },
+      {
+        "Id": 24,
+        "Name": "FLAMETHROWER",
+        "Power": 55,
+        "DurationMs": 2900,
+        "Energy": -50,
+        "DPS": 23.706896551724135
+      }
+    ]
   },
   {
     "id": 6,
@@ -82,8 +292,50 @@
       "defense": 182
     },
     "family": "FAMILY_CHARMANDER",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 209,
+        "Name": "EMBER_FAST",
+        "Power": 10,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 11.904761904761905
+      },
+      {
+        "Id": 210,
+        "Name": "WING_ATTACK_FAST",
+        "Power": 9,
+        "DurationMs": 750,
+        "Energy": 7,
+        "DPS": 15
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 83,
+        "Name": "DRAGON_CLAW",
+        "Power": 35,
+        "DurationMs": 1500,
+        "Energy": -50,
+        "DPS": 23.333333333333332
+      },
+      {
+        "Id": 103,
+        "Name": "FIRE_BLAST",
+        "Power": 100,
+        "DurationMs": 4100,
+        "Energy": -100,
+        "DPS": 30.48780487804878
+      },
+      {
+        "Id": 24,
+        "Name": "FLAMETHROWER",
+        "Power": 55,
+        "DurationMs": 2900,
+        "Energy": -50,
+        "DPS": 23.706896551724135
+      }
+    ]
   },
   {
     "id": 7,
@@ -96,8 +348,50 @@
     },
     "candy": 25,
     "family": "FAMILY_SQUIRTLE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 237,
+        "Name": "BUBBLE_FAST",
+        "Power": 25,
+        "DurationMs": 2300,
+        "Energy": 15,
+        "DPS": 13.58695652173913
+      },
+      {
+        "Id": 221,
+        "Name": "TACKLE_FAST",
+        "Power": 12,
+        "DurationMs": 1100,
+        "Energy": 7,
+        "DPS": 10.909090909090908
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 57,
+        "Name": "AQUA_JET",
+        "Power": 25,
+        "DurationMs": 2350,
+        "Energy": -20,
+        "DPS": 13.297872340425531
+      },
+      {
+        "Id": 58,
+        "Name": "AQUA_TAIL",
+        "Power": 45,
+        "DurationMs": 2350,
+        "Energy": -50,
+        "DPS": 23.936170212765955
+      },
+      {
+        "Id": 105,
+        "Name": "WATER_PULSE",
+        "Power": 35,
+        "DurationMs": 3300,
+        "Energy": -25,
+        "DPS": 13.25757575757576
+      }
+    ]
   },
   {
     "id": 8,
@@ -110,8 +404,50 @@
     },
     "candy": 100,
     "family": "FAMILY_SQUIRTLE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 202,
+        "Name": "BITE_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12
+      },
+      {
+        "Id": 230,
+        "Name": "WATER_GUN_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 15
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 57,
+        "Name": "AQUA_JET",
+        "Power": 25,
+        "DurationMs": 2350,
+        "Energy": -20,
+        "DPS": 13.297872340425531
+      },
+      {
+        "Id": 107,
+        "Name": "HYDRO_PUMP",
+        "Power": 90,
+        "DurationMs": 3800,
+        "Energy": -100,
+        "DPS": 29.60526315789474
+      },
+      {
+        "Id": 39,
+        "Name": "ICE_BEAM",
+        "Power": 65,
+        "DurationMs": 3650,
+        "Energy": -50,
+        "DPS": 17.808219178082194
+      }
+    ]
   },
   {
     "id": 9,
@@ -123,8 +459,50 @@
       "defense": 222
     },
     "family": "FAMILY_SQUIRTLE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 202,
+        "Name": "BITE_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12
+      },
+      {
+        "Id": 230,
+        "Name": "WATER_GUN_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 15
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 36,
+        "Name": "FLASH_CANNON",
+        "Power": 60,
+        "DurationMs": 3900,
+        "Energy": -33,
+        "DPS": 15.384615384615385
+      },
+      {
+        "Id": 107,
+        "Name": "HYDRO_PUMP",
+        "Power": 90,
+        "DurationMs": 3800,
+        "Energy": -100,
+        "DPS": 29.60526315789474
+      },
+      {
+        "Id": 39,
+        "Name": "ICE_BEAM",
+        "Power": 65,
+        "DurationMs": 3650,
+        "Energy": -50,
+        "DPS": 17.808219178082194
+      }
+    ]
   },
   {
     "id": 10,
@@ -137,8 +515,34 @@
     },
     "candy": 12,
     "family": "FAMILY_CATERPIE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 201,
+        "Name": "BUG_BITE_FAST",
+        "Power": 5,
+        "DurationMs": 450,
+        "Energy": 7,
+        "DPS": 13.88888888888889
+      },
+      {
+        "Id": 221,
+        "Name": "TACKLE_FAST",
+        "Power": 12,
+        "DurationMs": 1100,
+        "Energy": 7,
+        "DPS": 10.909090909090908
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 133,
+        "Name": "STRUGGLE",
+        "Power": 15,
+        "DurationMs": 1695,
+        "Energy": -20,
+        "DPS": 8.849557522123893
+      }
+    ]
   },
   {
     "id": 11,
@@ -151,8 +555,34 @@
     },
     "candy": 50,
     "family": "FAMILY_CATERPIE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 201,
+        "Name": "BUG_BITE_FAST",
+        "Power": 5,
+        "DurationMs": 450,
+        "Energy": 7,
+        "DPS": 13.88888888888889
+      },
+      {
+        "Id": 221,
+        "Name": "TACKLE_FAST",
+        "Power": 12,
+        "DurationMs": 1100,
+        "Energy": 7,
+        "DPS": 10.909090909090908
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 133,
+        "Name": "STRUGGLE",
+        "Power": 15,
+        "DurationMs": 1695,
+        "Energy": -20,
+        "DPS": 8.849557522123893
+      }
+    ]
   },
   {
     "id": 12,
@@ -165,8 +595,50 @@
       "defense": 144
     },
     "family": "FAMILY_CATERPIE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 201,
+        "Name": "BUG_BITE_FAST",
+        "Power": 5,
+        "DurationMs": 450,
+        "Energy": 7,
+        "DPS": 13.88888888888889
+      },
+      {
+        "Id": 235,
+        "Name": "CONFUSION_FAST",
+        "Power": 15,
+        "DurationMs": 1510,
+        "Energy": 7,
+        "DPS": 9.933774834437086
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 49,
+        "Name": "BUG_BUZZ",
+        "Power": 75,
+        "DurationMs": 4250,
+        "Energy": -50,
+        "DPS": 22.058823529411768
+      },
+      {
+        "Id": 108,
+        "Name": "PSYCHIC",
+        "Power": 55,
+        "DurationMs": 2800,
+        "Energy": -50,
+        "DPS": 19.642857142857142
+      },
+      {
+        "Id": 99,
+        "Name": "SIGNAL_BEAM",
+        "Power": 45,
+        "DurationMs": 3100,
+        "Energy": -33,
+        "DPS": 18.14516129032258
+      }
+    ]
   },
   {
     "id": 13,
@@ -180,8 +652,34 @@
     },
     "candy": 12,
     "family": "FAMILY_WEEDLE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 201,
+        "Name": "BUG_BITE_FAST",
+        "Power": 5,
+        "DurationMs": 450,
+        "Energy": 7,
+        "DPS": 13.88888888888889
+      },
+      {
+        "Id": 236,
+        "Name": "POISON_STING_FAST",
+        "Power": 6,
+        "DurationMs": 575,
+        "Energy": 4,
+        "DPS": 13.043478260869566
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 133,
+        "Name": "STRUGGLE",
+        "Power": 15,
+        "DurationMs": 1695,
+        "Energy": -20,
+        "DPS": 8.849557522123893
+      }
+    ]
   },
   {
     "id": 14,
@@ -195,8 +693,34 @@
     },
     "candy": 50,
     "family": "FAMILY_WEEDLE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 201,
+        "Name": "BUG_BITE_FAST",
+        "Power": 5,
+        "DurationMs": 450,
+        "Energy": 7,
+        "DPS": 13.88888888888889
+      },
+      {
+        "Id": 236,
+        "Name": "POISON_STING_FAST",
+        "Power": 6,
+        "DurationMs": 575,
+        "Energy": 4,
+        "DPS": 13.043478260869566
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 133,
+        "Name": "STRUGGLE",
+        "Power": 15,
+        "DurationMs": 1695,
+        "Energy": -20,
+        "DPS": 8.849557522123893
+      }
+    ]
   },
   {
     "id": 15,
@@ -209,8 +733,50 @@
       "defense": 130
     },
     "family": "FAMILY_WEEDLE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 201,
+        "Name": "BUG_BITE_FAST",
+        "Power": 5,
+        "DurationMs": 450,
+        "Energy": 7,
+        "DPS": 13.88888888888889
+      },
+      {
+        "Id": 224,
+        "Name": "POISON_JAB_FAST",
+        "Power": 15,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 17.857142857142854
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 45,
+        "Name": "AERIAL_ACE",
+        "Power": 30,
+        "DurationMs": 2900,
+        "Energy": -25,
+        "DPS": 10.344827586206897
+      },
+      {
+        "Id": 90,
+        "Name": "SLUDGE_BOMB",
+        "Power": 55,
+        "DurationMs": 2600,
+        "Energy": -50,
+        "DPS": 26.442307692307693
+      },
+      {
+        "Id": 100,
+        "Name": "X_SCISSOR",
+        "Power": 35,
+        "DurationMs": 2100,
+        "Energy": -33,
+        "DPS": 20.83333333333333
+      }
+    ]
   },
   {
     "id": 16,
@@ -224,8 +790,50 @@
     },
     "candy": 12,
     "family": "FAMILY_PIDGEY",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 219,
+        "Name": "QUICK_ATTACK_FAST",
+        "Power": 10,
+        "DurationMs": 1330,
+        "Energy": 7,
+        "DPS": 9.398496240601503
+      },
+      {
+        "Id": 221,
+        "Name": "TACKLE_FAST",
+        "Power": 12,
+        "DurationMs": 1100,
+        "Energy": 7,
+        "DPS": 13.636363636363635
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 45,
+        "Name": "AERIAL_ACE",
+        "Power": 30,
+        "DurationMs": 2900,
+        "Energy": -25,
+        "DPS": 12.931034482758621
+      },
+      {
+        "Id": 121,
+        "Name": "AIR_CUTTER",
+        "Power": 30,
+        "DurationMs": 3300,
+        "Energy": -25,
+        "DPS": 11.363636363636365
+      },
+      {
+        "Id": 80,
+        "Name": "TWISTER",
+        "Power": 25,
+        "DurationMs": 2700,
+        "Energy": -20,
+        "DPS": 9.25925925925926
+      }
+    ]
   },
   {
     "id": 17,
@@ -239,8 +847,50 @@
     },
     "candy": 50,
     "family": "FAMILY_PIDGEY",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 239,
+        "Name": "STEEL_WING_FAST",
+        "Power": 15,
+        "DurationMs": 1330,
+        "Energy": 4,
+        "DPS": 11.278195488721805
+      },
+      {
+        "Id": 210,
+        "Name": "WING_ATTACK_FAST",
+        "Power": 9,
+        "DurationMs": 750,
+        "Energy": 7,
+        "DPS": 15
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 45,
+        "Name": "AERIAL_ACE",
+        "Power": 30,
+        "DurationMs": 2900,
+        "Energy": -25,
+        "DPS": 12.931034482758621
+      },
+      {
+        "Id": 121,
+        "Name": "AIR_CUTTER",
+        "Power": 30,
+        "DurationMs": 3300,
+        "Energy": -25,
+        "DPS": 11.363636363636365
+      },
+      {
+        "Id": 80,
+        "Name": "TWISTER",
+        "Power": 25,
+        "DurationMs": 2700,
+        "Energy": -20,
+        "DPS": 9.25925925925926
+      }
+    ]
   },
   {
     "id": 18,
@@ -253,8 +903,50 @@
       "defense": 166
     },
     "family": "FAMILY_PIDGEY",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 239,
+        "Name": "STEEL_WING_FAST",
+        "Power": 15,
+        "DurationMs": 1330,
+        "Energy": 4,
+        "DPS": 11.278195488721805
+      },
+      {
+        "Id": 210,
+        "Name": "WING_ATTACK_FAST",
+        "Power": 9,
+        "DurationMs": 750,
+        "Energy": 7,
+        "DPS": 15
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 45,
+        "Name": "AERIAL_ACE",
+        "Power": 30,
+        "DurationMs": 2900,
+        "Energy": -25,
+        "DPS": 12.931034482758621
+      },
+      {
+        "Id": 121,
+        "Name": "AIR_CUTTER",
+        "Power": 30,
+        "DurationMs": 3300,
+        "Energy": -25,
+        "DPS": 11.363636363636365
+      },
+      {
+        "Id": 122,
+        "Name": "HURRICANE",
+        "Power": 80,
+        "DurationMs": 3200,
+        "Energy": -100,
+        "DPS": 31.25
+      }
+    ]
   },
   {
     "id": 19,
@@ -267,8 +959,50 @@
     },
     "candy": 25,
     "family": "FAMILY_RATTATA",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 219,
+        "Name": "QUICK_ATTACK_FAST",
+        "Power": 10,
+        "DurationMs": 1330,
+        "Energy": 7,
+        "DPS": 9.398496240601503
+      },
+      {
+        "Id": 221,
+        "Name": "TACKLE_FAST",
+        "Power": 12,
+        "DurationMs": 1100,
+        "Energy": 7,
+        "DPS": 13.636363636363635
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 131,
+        "Name": "BODY_SLAM",
+        "Power": 40,
+        "DurationMs": 1560,
+        "Energy": -50,
+        "DPS": 32.05128205128205
+      },
+      {
+        "Id": 26,
+        "Name": "DIG",
+        "Power": 70,
+        "DurationMs": 5800,
+        "Energy": -33,
+        "DPS": 12.068965517241379
+      },
+      {
+        "Id": 129,
+        "Name": "HYPER_FANG",
+        "Power": 35,
+        "DurationMs": 2100,
+        "Energy": -33,
+        "DPS": 20.83333333333333
+      }
+    ]
   },
   {
     "id": 20,
@@ -280,8 +1014,50 @@
       "defense": 150
     },
     "family": "FAMILY_RATTATA",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 202,
+        "Name": "BITE_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12
+      },
+      {
+        "Id": 219,
+        "Name": "QUICK_ATTACK_FAST",
+        "Power": 10,
+        "DurationMs": 1330,
+        "Energy": 7,
+        "DPS": 9.398496240601503
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 26,
+        "Name": "DIG",
+        "Power": 70,
+        "DurationMs": 5800,
+        "Energy": -33,
+        "DPS": 12.068965517241379
+      },
+      {
+        "Id": 14,
+        "Name": "HYPER_BEAM",
+        "Power": 120,
+        "DurationMs": 5000,
+        "Energy": -100,
+        "DPS": 30
+      },
+      {
+        "Id": 129,
+        "Name": "HYPER_FANG",
+        "Power": 35,
+        "DurationMs": 2100,
+        "Energy": -33,
+        "DPS": 20.83333333333333
+      }
+    ]
   },
   {
     "id": 21,
@@ -295,8 +1071,50 @@
     },
     "candy": 50,
     "family": "FAMILY_SPEAROW",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 211,
+        "Name": "PECK_FAST",
+        "Power": 10,
+        "DurationMs": 1150,
+        "Energy": 10,
+        "DPS": 10.869565217391306
+      },
+      {
+        "Id": 219,
+        "Name": "QUICK_ATTACK_FAST",
+        "Power": 10,
+        "DurationMs": 1330,
+        "Energy": 7,
+        "DPS": 9.398496240601503
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 45,
+        "Name": "AERIAL_ACE",
+        "Power": 30,
+        "DurationMs": 2900,
+        "Energy": -25,
+        "DPS": 12.931034482758621
+      },
+      {
+        "Id": 38,
+        "Name": "DRILL_PECK",
+        "Power": 40,
+        "DurationMs": 2700,
+        "Energy": -33,
+        "DPS": 18.518518518518515
+      },
+      {
+        "Id": 80,
+        "Name": "TWISTER",
+        "Power": 25,
+        "DurationMs": 2700,
+        "Energy": -20,
+        "DPS": 9.25925925925926
+      }
+    ]
   },
   {
     "id": 22,
@@ -309,8 +1127,50 @@
       "defense": 146
     },
     "family": "FAMILY_SPEAROW",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 211,
+        "Name": "PECK_FAST",
+        "Power": 10,
+        "DurationMs": 1150,
+        "Energy": 10,
+        "DPS": 10.869565217391306
+      },
+      {
+        "Id": 239,
+        "Name": "STEEL_WING_FAST",
+        "Power": 15,
+        "DurationMs": 1330,
+        "Energy": 4,
+        "DPS": 11.278195488721805
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 45,
+        "Name": "AERIAL_ACE",
+        "Power": 30,
+        "DurationMs": 2900,
+        "Energy": -25,
+        "DPS": 12.931034482758621
+      },
+      {
+        "Id": 46,
+        "Name": "DRILL_RUN",
+        "Power": 50,
+        "DurationMs": 3400,
+        "Energy": -33,
+        "DPS": 14.705882352941178
+      },
+      {
+        "Id": 80,
+        "Name": "TWISTER",
+        "Power": 25,
+        "DurationMs": 2700,
+        "Energy": -20,
+        "DPS": 9.25925925925926
+      }
+    ]
   },
   {
     "id": 23,
@@ -323,8 +1183,50 @@
     },
     "candy": 50,
     "family": "FAMILY_EKANS",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 225,
+        "Name": "ACID_FAST",
+        "Power": 10,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 11.904761904761905
+      },
+      {
+        "Id": 236,
+        "Name": "POISON_STING_FAST",
+        "Power": 6,
+        "DurationMs": 575,
+        "Energy": 4,
+        "DPS": 13.043478260869566
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 92,
+        "Name": "GUNK_SHOT",
+        "Power": 65,
+        "DurationMs": 3000,
+        "Energy": -100,
+        "DPS": 27.083333333333336
+      },
+      {
+        "Id": 90,
+        "Name": "SLUDGE_BOMB",
+        "Power": 55,
+        "DurationMs": 2600,
+        "Energy": -50,
+        "DPS": 26.442307692307693
+      },
+      {
+        "Id": 13,
+        "Name": "WRAP",
+        "Power": 25,
+        "DurationMs": 4000,
+        "Energy": -20,
+        "DPS": 6.25
+      }
+    ]
   },
   {
     "id": 24,
@@ -336,8 +1238,50 @@
       "defense": 166
     },
     "family": "FAMILY_EKANS",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 225,
+        "Name": "ACID_FAST",
+        "Power": 10,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 11.904761904761905
+      },
+      {
+        "Id": 202,
+        "Name": "BITE_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 16,
+        "Name": "DARK_PULSE",
+        "Power": 45,
+        "DurationMs": 3500,
+        "Energy": -33,
+        "DPS": 12.857142857142858
+      },
+      {
+        "Id": 92,
+        "Name": "GUNK_SHOT",
+        "Power": 65,
+        "DurationMs": 3000,
+        "Energy": -100,
+        "DPS": 27.083333333333336
+      },
+      {
+        "Id": 91,
+        "Name": "SLUDGE_WAVE",
+        "Power": 70,
+        "DurationMs": 3400,
+        "Energy": -100,
+        "DPS": 25.73529411764706
+      }
+    ]
   },
   {
     "id": 25,
@@ -350,8 +1294,50 @@
     },
     "candy": 50,
     "family": "FAMILY_PIKACHU",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 219,
+        "Name": "QUICK_ATTACK_FAST",
+        "Power": 10,
+        "DurationMs": 1330,
+        "Energy": 7,
+        "DPS": 7.518796992481203
+      },
+      {
+        "Id": 205,
+        "Name": "THUNDER_SHOCK_FAST",
+        "Power": 5,
+        "DurationMs": 600,
+        "Energy": 7,
+        "DPS": 10.416666666666668
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 35,
+        "Name": "DISCHARGE",
+        "Power": 35,
+        "DurationMs": 2500,
+        "Energy": -33,
+        "DPS": 17.5
+      },
+      {
+        "Id": 78,
+        "Name": "THUNDER",
+        "Power": 100,
+        "DurationMs": 4300,
+        "Energy": -100,
+        "DPS": 29.069767441860467
+      },
+      {
+        "Id": 79,
+        "Name": "THUNDERBOLT",
+        "Power": 55,
+        "DurationMs": 2700,
+        "Energy": -50,
+        "DPS": 25.462962962962962
+      }
+    ]
   },
   {
     "id": 26,
@@ -363,8 +1349,50 @@
       "defense": 154
     },
     "family": "FAMILY_PIKACHU",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 206,
+        "Name": "SPARK_FAST",
+        "Power": 7,
+        "DurationMs": 700,
+        "Energy": 4,
+        "DPS": 12.5
+      },
+      {
+        "Id": 205,
+        "Name": "THUNDER_SHOCK_FAST",
+        "Power": 5,
+        "DurationMs": 600,
+        "Energy": 7,
+        "DPS": 10.416666666666668
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 123,
+        "Name": "BRICK_BREAK",
+        "Power": 30,
+        "DurationMs": 1600,
+        "Energy": -33,
+        "DPS": 18.75
+      },
+      {
+        "Id": 78,
+        "Name": "THUNDER",
+        "Power": 100,
+        "DurationMs": 4300,
+        "Energy": -100,
+        "DPS": 29.069767441860467
+      },
+      {
+        "Id": 77,
+        "Name": "THUNDER_PUNCH",
+        "Power": 40,
+        "DurationMs": 2400,
+        "Energy": -33,
+        "DPS": 20.833333333333336
+      }
+    ]
   },
   {
     "id": 27,
@@ -377,8 +1405,50 @@
     },
     "candy": 50,
     "family": "FAMILY_SANDSHREW",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 216,
+        "Name": "MUD_SHOT_FAST",
+        "Power": 6,
+        "DurationMs": 550,
+        "Energy": 7,
+        "DPS": 13.636363636363635
+      },
+      {
+        "Id": 220,
+        "Name": "SCRATCH_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 26,
+        "Name": "DIG",
+        "Power": 70,
+        "DurationMs": 5800,
+        "Energy": -33,
+        "DPS": 15.086206896551724
+      },
+      {
+        "Id": 64,
+        "Name": "ROCK_SLIDE",
+        "Power": 50,
+        "DurationMs": 3200,
+        "Energy": -33,
+        "DPS": 15.625
+      },
+      {
+        "Id": 63,
+        "Name": "ROCK_TOMB",
+        "Power": 30,
+        "DurationMs": 3400,
+        "Energy": -25,
+        "DPS": 8.823529411764707
+      }
+    ]
   },
   {
     "id": 28,
@@ -390,8 +1460,50 @@
       "defense": 172
     },
     "family": "FAMILY_SANDSHREW",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 228,
+        "Name": "METAL_CLAW_FAST",
+        "Power": 8,
+        "DurationMs": 630,
+        "Energy": 7,
+        "DPS": 12.698412698412698
+      },
+      {
+        "Id": 216,
+        "Name": "MUD_SHOT_FAST",
+        "Power": 6,
+        "DurationMs": 550,
+        "Energy": 7,
+        "DPS": 13.636363636363635
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 95,
+        "Name": "BULLDOZE",
+        "Power": 35,
+        "DurationMs": 3400,
+        "Energy": -25,
+        "DPS": 12.86764705882353
+      },
+      {
+        "Id": 31,
+        "Name": "EARTHQUAKE",
+        "Power": 100,
+        "DurationMs": 4200,
+        "Energy": -100,
+        "DPS": 29.761904761904763
+      },
+      {
+        "Id": 63,
+        "Name": "ROCK_TOMB",
+        "Power": 30,
+        "DurationMs": 3400,
+        "Energy": -25,
+        "DPS": 8.823529411764707
+      }
+    ]
   },
   {
     "id": 29,
@@ -404,8 +1516,50 @@
     },
     "candy": 25,
     "family": "FAMILY_NIDORAN_FEMALE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 202,
+        "Name": "BITE_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12
+      },
+      {
+        "Id": 236,
+        "Name": "POISON_STING_FAST",
+        "Power": 6,
+        "DurationMs": 575,
+        "Energy": 4,
+        "DPS": 13.043478260869566
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 131,
+        "Name": "BODY_SLAM",
+        "Power": 40,
+        "DurationMs": 1560,
+        "Energy": -50,
+        "DPS": 25.64102564102564
+      },
+      {
+        "Id": 50,
+        "Name": "POISON_FANG",
+        "Power": 25,
+        "DurationMs": 2400,
+        "Energy": -20,
+        "DPS": 13.020833333333336
+      },
+      {
+        "Id": 90,
+        "Name": "SLUDGE_BOMB",
+        "Power": 55,
+        "DurationMs": 2600,
+        "Energy": -50,
+        "DPS": 26.442307692307693
+      }
+    ]
   },
   {
     "id": 30,
@@ -418,8 +1572,50 @@
     },
     "candy": 100,
     "family": "FAMILY_NIDORAN_FEMALE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 202,
+        "Name": "BITE_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12
+      },
+      {
+        "Id": 236,
+        "Name": "POISON_STING_FAST",
+        "Power": 6,
+        "DurationMs": 575,
+        "Energy": 4,
+        "DPS": 13.043478260869566
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 26,
+        "Name": "DIG",
+        "Power": 70,
+        "DurationMs": 5800,
+        "Energy": -33,
+        "DPS": 12.068965517241379
+      },
+      {
+        "Id": 50,
+        "Name": "POISON_FANG",
+        "Power": 25,
+        "DurationMs": 2400,
+        "Energy": -20,
+        "DPS": 13.020833333333336
+      },
+      {
+        "Id": 90,
+        "Name": "SLUDGE_BOMB",
+        "Power": 55,
+        "DurationMs": 2600,
+        "Energy": -50,
+        "DPS": 26.442307692307693
+      }
+    ]
   },
   {
     "id": 31,
@@ -432,8 +1628,50 @@
       "defense": 190
     },
     "family": "FAMILY_NIDORAN_FEMALE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 202,
+        "Name": "BITE_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12
+      },
+      {
+        "Id": 224,
+        "Name": "POISON_JAB_FAST",
+        "Power": 15,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 17.857142857142854
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 31,
+        "Name": "EARTHQUAKE",
+        "Power": 100,
+        "DurationMs": 4200,
+        "Energy": -100,
+        "DPS": 29.761904761904763
+      },
+      {
+        "Id": 91,
+        "Name": "SLUDGE_WAVE",
+        "Power": 70,
+        "DurationMs": 3400,
+        "Energy": -100,
+        "DPS": 25.73529411764706
+      },
+      {
+        "Id": 32,
+        "Name": "STONE_EDGE",
+        "Power": 80,
+        "DurationMs": 3100,
+        "Energy": -100,
+        "DPS": 25.806451612903224
+      }
+    ]
   },
   {
     "id": 32,
@@ -446,8 +1684,50 @@
     },
     "candy": 25,
     "family": "FAMILY_NIDORAN_MALE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 211,
+        "Name": "PECK_FAST",
+        "Power": 10,
+        "DurationMs": 1150,
+        "Energy": 10,
+        "DPS": 8.695652173913045
+      },
+      {
+        "Id": 236,
+        "Name": "POISON_STING_FAST",
+        "Power": 6,
+        "DurationMs": 575,
+        "Energy": 4,
+        "DPS": 13.043478260869566
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 131,
+        "Name": "BODY_SLAM",
+        "Power": 40,
+        "DurationMs": 1560,
+        "Energy": -50,
+        "DPS": 25.64102564102564
+      },
+      {
+        "Id": 126,
+        "Name": "HORN_ATTACK",
+        "Power": 25,
+        "DurationMs": 2200,
+        "Energy": -25,
+        "DPS": 11.363636363636363
+      },
+      {
+        "Id": 90,
+        "Name": "SLUDGE_BOMB",
+        "Power": 55,
+        "DurationMs": 2600,
+        "Energy": -50,
+        "DPS": 26.442307692307693
+      }
+    ]
   },
   {
     "id": 33,
@@ -460,8 +1740,50 @@
     },
     "candy": 100,
     "family": "FAMILY_NIDORAN_MALE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 202,
+        "Name": "BITE_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12
+      },
+      {
+        "Id": 224,
+        "Name": "POISON_JAB_FAST",
+        "Power": 15,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 17.857142857142854
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 26,
+        "Name": "DIG",
+        "Power": 70,
+        "DurationMs": 5800,
+        "Energy": -33,
+        "DPS": 12.068965517241379
+      },
+      {
+        "Id": 126,
+        "Name": "HORN_ATTACK",
+        "Power": 25,
+        "DurationMs": 2200,
+        "Energy": -25,
+        "DPS": 11.363636363636363
+      },
+      {
+        "Id": 90,
+        "Name": "SLUDGE_BOMB",
+        "Power": 55,
+        "DurationMs": 2600,
+        "Energy": -50,
+        "DPS": 26.442307692307693
+      }
+    ]
   },
   {
     "id": 34,
@@ -474,8 +1796,50 @@
       "defense": 170
     },
     "family": "FAMILY_NIDORAN_MALE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 200,
+        "Name": "FURY_CUTTER_FAST",
+        "Power": 3,
+        "DurationMs": 400,
+        "Energy": 12,
+        "DPS": 7.5
+      },
+      {
+        "Id": 224,
+        "Name": "POISON_JAB_FAST",
+        "Power": 15,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 17.857142857142854
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 31,
+        "Name": "EARTHQUAKE",
+        "Power": 100,
+        "DurationMs": 4200,
+        "Energy": -100,
+        "DPS": 29.761904761904763
+      },
+      {
+        "Id": 22,
+        "Name": "MEGAHORN",
+        "Power": 80,
+        "DurationMs": 3200,
+        "Energy": -100,
+        "DPS": 25
+      },
+      {
+        "Id": 91,
+        "Name": "SLUDGE_WAVE",
+        "Power": 70,
+        "DurationMs": 3400,
+        "Energy": -100,
+        "DPS": 25.73529411764706
+      }
+    ]
   },
   {
     "id": 35,
@@ -488,8 +1852,50 @@
     },
     "candy": 50,
     "family": "FAMILY_CLEFAIRY",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 222,
+        "Name": "POUND_FAST",
+        "Power": 7,
+        "DurationMs": 540,
+        "Energy": 7,
+        "DPS": 12.962962962962962
+      },
+      {
+        "Id": 234,
+        "Name": "ZEN_HEADBUTT_FAST",
+        "Power": 12,
+        "DurationMs": 1050,
+        "Energy": 4,
+        "DPS": 11.428571428571429
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 131,
+        "Name": "BODY_SLAM",
+        "Power": 40,
+        "DurationMs": 1560,
+        "Energy": -50,
+        "DPS": 25.64102564102564
+      },
+      {
+        "Id": 84,
+        "Name": "DISARMING_VOICE",
+        "Power": 25,
+        "DurationMs": 3900,
+        "Energy": -20,
+        "DPS": 8.012820512820513
+      },
+      {
+        "Id": 87,
+        "Name": "MOONBLAST",
+        "Power": 85,
+        "DurationMs": 4100,
+        "Energy": -100,
+        "DPS": 25.914634146341466
+      }
+    ]
   },
   {
     "id": 36,
@@ -501,8 +1907,50 @@
       "defense": 178
     },
     "family": "FAMILY_CLEFAIRY",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 222,
+        "Name": "POUND_FAST",
+        "Power": 7,
+        "DurationMs": 540,
+        "Energy": 7,
+        "DPS": 12.962962962962962
+      },
+      {
+        "Id": 234,
+        "Name": "ZEN_HEADBUTT_FAST",
+        "Power": 12,
+        "DurationMs": 1050,
+        "Energy": 4,
+        "DPS": 11.428571428571429
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 86,
+        "Name": "DAZZLING_GLEAM",
+        "Power": 55,
+        "DurationMs": 4200,
+        "Energy": -33,
+        "DPS": 16.36904761904762
+      },
+      {
+        "Id": 87,
+        "Name": "MOONBLAST",
+        "Power": 85,
+        "DurationMs": 4100,
+        "Energy": -100,
+        "DPS": 25.914634146341466
+      },
+      {
+        "Id": 108,
+        "Name": "PSYCHIC",
+        "Power": 55,
+        "DurationMs": 2800,
+        "Energy": -50,
+        "DPS": 19.642857142857142
+      }
+    ]
   },
   {
     "id": 37,
@@ -515,8 +1963,50 @@
     },
     "candy": 50,
     "family": "FAMILY_VULPIX",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 209,
+        "Name": "EMBER_FAST",
+        "Power": 10,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 11.904761904761905
+      },
+      {
+        "Id": 219,
+        "Name": "QUICK_ATTACK_FAST",
+        "Power": 10,
+        "DurationMs": 1330,
+        "Energy": 7,
+        "DPS": 7.518796992481203
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 131,
+        "Name": "BODY_SLAM",
+        "Power": 40,
+        "DurationMs": 1560,
+        "Energy": -50,
+        "DPS": 25.64102564102564
+      },
+      {
+        "Id": 101,
+        "Name": "FLAME_CHARGE",
+        "Power": 20,
+        "DurationMs": 3100,
+        "Energy": -20,
+        "DPS": 8.064516129032258
+      },
+      {
+        "Id": 24,
+        "Name": "FLAMETHROWER",
+        "Power": 55,
+        "DurationMs": 2900,
+        "Energy": -50,
+        "DPS": 23.706896551724135
+      }
+    ]
   },
   {
     "id": 38,
@@ -528,8 +2018,50 @@
       "defense": 194
     },
     "family": "FAMILY_VULPIX",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 209,
+        "Name": "EMBER_FAST",
+        "Power": 10,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 11.904761904761905
+      },
+      {
+        "Id": 238,
+        "Name": "FEINT_ATTACK_FAST",
+        "Power": 12,
+        "DurationMs": 1040,
+        "Energy": 7,
+        "DPS": 11.538461538461538
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 103,
+        "Name": "FIRE_BLAST",
+        "Power": 100,
+        "DurationMs": 4100,
+        "Energy": -100,
+        "DPS": 30.48780487804878
+      },
+      {
+        "Id": 24,
+        "Name": "FLAMETHROWER",
+        "Power": 55,
+        "DurationMs": 2900,
+        "Energy": -50,
+        "DPS": 23.706896551724135
+      },
+      {
+        "Id": 42,
+        "Name": "HEAT_WAVE",
+        "Power": 80,
+        "DurationMs": 3800,
+        "Energy": -100,
+        "DPS": 26.315789473684212
+      }
+    ]
   },
   {
     "id": 39,
@@ -543,8 +2075,50 @@
     },
     "candy": 50,
     "family": "FAMILY_JIGGLYPUFF",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 238,
+        "Name": "FEINT_ATTACK_FAST",
+        "Power": 12,
+        "DurationMs": 1040,
+        "Energy": 7,
+        "DPS": 11.538461538461538
+      },
+      {
+        "Id": 222,
+        "Name": "POUND_FAST",
+        "Power": 7,
+        "DurationMs": 540,
+        "Energy": 7,
+        "DPS": 16.203703703703702
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 131,
+        "Name": "BODY_SLAM",
+        "Power": 40,
+        "DurationMs": 1560,
+        "Energy": -50,
+        "DPS": 32.05128205128205
+      },
+      {
+        "Id": 84,
+        "Name": "DISARMING_VOICE",
+        "Power": 25,
+        "DurationMs": 3900,
+        "Energy": -20,
+        "DPS": 8.012820512820513
+      },
+      {
+        "Id": 88,
+        "Name": "PLAY_ROUGH",
+        "Power": 55,
+        "DurationMs": 2900,
+        "Energy": -50,
+        "DPS": 23.706896551724135
+      }
+    ]
   },
   {
     "id": 40,
@@ -557,8 +2131,50 @@
       "defense": 108
     },
     "family": "FAMILY_JIGGLYPUFF",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 238,
+        "Name": "FEINT_ATTACK_FAST",
+        "Power": 12,
+        "DurationMs": 1040,
+        "Energy": 7,
+        "DPS": 11.538461538461538
+      },
+      {
+        "Id": 222,
+        "Name": "POUND_FAST",
+        "Power": 7,
+        "DurationMs": 540,
+        "Energy": 7,
+        "DPS": 16.203703703703702
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 86,
+        "Name": "DAZZLING_GLEAM",
+        "Power": 55,
+        "DurationMs": 4200,
+        "Energy": -33,
+        "DPS": 16.36904761904762
+      },
+      {
+        "Id": 14,
+        "Name": "HYPER_BEAM",
+        "Power": 120,
+        "DurationMs": 5000,
+        "Energy": -100,
+        "DPS": 30
+      },
+      {
+        "Id": 88,
+        "Name": "PLAY_ROUGH",
+        "Power": 55,
+        "DurationMs": 2900,
+        "Energy": -50,
+        "DPS": 23.706896551724135
+      }
+    ]
   },
   {
     "id": 41,
@@ -572,8 +2188,50 @@
     },
     "candy": 50,
     "family": "FAMILY_ZUBAT",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 202,
+        "Name": "BITE_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12
+      },
+      {
+        "Id": 219,
+        "Name": "QUICK_ATTACK_FAST",
+        "Power": 10,
+        "DurationMs": 1330,
+        "Energy": 7,
+        "DPS": 7.518796992481203
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 121,
+        "Name": "AIR_CUTTER",
+        "Power": 30,
+        "DurationMs": 3300,
+        "Energy": -25,
+        "DPS": 11.363636363636365
+      },
+      {
+        "Id": 50,
+        "Name": "POISON_FANG",
+        "Power": 25,
+        "DurationMs": 2400,
+        "Energy": -20,
+        "DPS": 13.020833333333336
+      },
+      {
+        "Id": 90,
+        "Name": "SLUDGE_BOMB",
+        "Power": 55,
+        "DurationMs": 2600,
+        "Energy": -50,
+        "DPS": 26.442307692307693
+      }
+    ]
   },
   {
     "id": 42,
@@ -586,8 +2244,50 @@
       "defense": 164
     },
     "family": "FAMILY_ZUBAT",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 202,
+        "Name": "BITE_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12
+      },
+      {
+        "Id": 210,
+        "Name": "WING_ATTACK_FAST",
+        "Power": 9,
+        "DurationMs": 750,
+        "Energy": 7,
+        "DPS": 15
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 121,
+        "Name": "AIR_CUTTER",
+        "Power": 30,
+        "DurationMs": 3300,
+        "Energy": -25,
+        "DPS": 11.363636363636365
+      },
+      {
+        "Id": 69,
+        "Name": "OMINOUS_WIND",
+        "Power": 30,
+        "DurationMs": 3100,
+        "Energy": -25,
+        "DPS": 9.67741935483871
+      },
+      {
+        "Id": 50,
+        "Name": "POISON_FANG",
+        "Power": 25,
+        "DurationMs": 2400,
+        "Energy": -20,
+        "DPS": 13.020833333333336
+      }
+    ]
   },
   {
     "id": 43,
@@ -601,8 +2301,50 @@
     },
     "candy": 25,
     "family": "FAMILY_ODDISH",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 225,
+        "Name": "ACID_FAST",
+        "Power": 10,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 11.904761904761905
+      },
+      {
+        "Id": 215,
+        "Name": "RAZOR_LEAF_FAST",
+        "Power": 15,
+        "DurationMs": 1450,
+        "Energy": 7,
+        "DPS": 12.931034482758621
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 87,
+        "Name": "MOONBLAST",
+        "Power": 85,
+        "DurationMs": 4100,
+        "Energy": -100,
+        "DPS": 20.731707317073173
+      },
+      {
+        "Id": 59,
+        "Name": "SEED_BOMB",
+        "Power": 40,
+        "DurationMs": 2400,
+        "Energy": -33,
+        "DPS": 20.833333333333336
+      },
+      {
+        "Id": 90,
+        "Name": "SLUDGE_BOMB",
+        "Power": 55,
+        "DurationMs": 2600,
+        "Energy": -50,
+        "DPS": 26.442307692307693
+      }
+    ]
   },
   {
     "id": 44,
@@ -616,8 +2358,50 @@
     },
     "candy": 100,
     "family": "FAMILY_ODDISH",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 225,
+        "Name": "ACID_FAST",
+        "Power": 10,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 11.904761904761905
+      },
+      {
+        "Id": 215,
+        "Name": "RAZOR_LEAF_FAST",
+        "Power": 15,
+        "DurationMs": 1450,
+        "Energy": 7,
+        "DPS": 12.931034482758621
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 87,
+        "Name": "MOONBLAST",
+        "Power": 85,
+        "DurationMs": 4100,
+        "Energy": -100,
+        "DPS": 20.731707317073173
+      },
+      {
+        "Id": 47,
+        "Name": "PETAL_BLIZZARD",
+        "Power": 65,
+        "DurationMs": 3200,
+        "Energy": -50,
+        "DPS": 25.390625
+      },
+      {
+        "Id": 90,
+        "Name": "SLUDGE_BOMB",
+        "Power": 55,
+        "DurationMs": 2600,
+        "Energy": -50,
+        "DPS": 26.442307692307693
+      }
+    ]
   },
   {
     "id": 45,
@@ -630,8 +2414,50 @@
       "defense": 190
     },
     "family": "FAMILY_ODDISH",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 225,
+        "Name": "ACID_FAST",
+        "Power": 10,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 11.904761904761905
+      },
+      {
+        "Id": 215,
+        "Name": "RAZOR_LEAF_FAST",
+        "Power": 15,
+        "DurationMs": 1450,
+        "Energy": 7,
+        "DPS": 12.931034482758621
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 87,
+        "Name": "MOONBLAST",
+        "Power": 85,
+        "DurationMs": 4100,
+        "Energy": -100,
+        "DPS": 20.731707317073173
+      },
+      {
+        "Id": 47,
+        "Name": "PETAL_BLIZZARD",
+        "Power": 65,
+        "DurationMs": 3200,
+        "Energy": -50,
+        "DPS": 25.390625
+      },
+      {
+        "Id": 116,
+        "Name": "SOLAR_BEAM",
+        "Power": 120,
+        "DurationMs": 4900,
+        "Energy": -100,
+        "DPS": 30.612244897959183
+      }
+    ]
   },
   {
     "id": 46,
@@ -645,8 +2471,50 @@
     },
     "candy": 50,
     "family": "FAMILY_PARAS",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 201,
+        "Name": "BUG_BITE_FAST",
+        "Power": 5,
+        "DurationMs": 450,
+        "Energy": 7,
+        "DPS": 13.88888888888889
+      },
+      {
+        "Id": 220,
+        "Name": "SCRATCH_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 89,
+        "Name": "CROSS_POISON",
+        "Power": 25,
+        "DurationMs": 1500,
+        "Energy": -25,
+        "DPS": 16.666666666666668
+      },
+      {
+        "Id": 59,
+        "Name": "SEED_BOMB",
+        "Power": 40,
+        "DurationMs": 2400,
+        "Energy": -33,
+        "DPS": 20.833333333333336
+      },
+      {
+        "Id": 100,
+        "Name": "X_SCISSOR",
+        "Power": 35,
+        "DurationMs": 2100,
+        "Energy": -33,
+        "DPS": 20.83333333333333
+      }
+    ]
   },
   {
     "id": 47,
@@ -659,8 +2527,50 @@
       "defense": 170
     },
     "family": "FAMILY_PARAS",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 201,
+        "Name": "BUG_BITE_FAST",
+        "Power": 5,
+        "DurationMs": 450,
+        "Energy": 7,
+        "DPS": 13.88888888888889
+      },
+      {
+        "Id": 200,
+        "Name": "FURY_CUTTER_FAST",
+        "Power": 3,
+        "DurationMs": 400,
+        "Energy": 12,
+        "DPS": 9.375
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 89,
+        "Name": "CROSS_POISON",
+        "Power": 25,
+        "DurationMs": 1500,
+        "Energy": -25,
+        "DPS": 16.666666666666668
+      },
+      {
+        "Id": 116,
+        "Name": "SOLAR_BEAM",
+        "Power": 120,
+        "DurationMs": 4900,
+        "Energy": -100,
+        "DPS": 30.612244897959183
+      },
+      {
+        "Id": 100,
+        "Name": "X_SCISSOR",
+        "Power": 35,
+        "DurationMs": 2100,
+        "Energy": -33,
+        "DPS": 20.83333333333333
+      }
+    ]
   },
   {
     "id": 48,
@@ -674,8 +2584,50 @@
     },
     "candy": 50,
     "family": "FAMILY_VENONAT",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 201,
+        "Name": "BUG_BITE_FAST",
+        "Power": 5,
+        "DurationMs": 450,
+        "Energy": 7,
+        "DPS": 13.88888888888889
+      },
+      {
+        "Id": 235,
+        "Name": "CONFUSION_FAST",
+        "Power": 15,
+        "DurationMs": 1510,
+        "Energy": 7,
+        "DPS": 9.933774834437086
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 50,
+        "Name": "POISON_FANG",
+        "Power": 25,
+        "DurationMs": 2400,
+        "Energy": -20,
+        "DPS": 13.020833333333336
+      },
+      {
+        "Id": 30,
+        "Name": "PSYBEAM",
+        "Power": 40,
+        "DurationMs": 3800,
+        "Energy": -25,
+        "DPS": 10.526315789473685
+      },
+      {
+        "Id": 99,
+        "Name": "SIGNAL_BEAM",
+        "Power": 45,
+        "DurationMs": 3100,
+        "Energy": -33,
+        "DPS": 18.14516129032258
+      }
+    ]
   },
   {
     "id": 49,
@@ -688,8 +2640,50 @@
       "defense": 154
     },
     "family": "FAMILY_VENONAT",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 201,
+        "Name": "BUG_BITE_FAST",
+        "Power": 5,
+        "DurationMs": 450,
+        "Energy": 7,
+        "DPS": 13.88888888888889
+      },
+      {
+        "Id": 235,
+        "Name": "CONFUSION_FAST",
+        "Power": 15,
+        "DurationMs": 1510,
+        "Energy": 7,
+        "DPS": 9.933774834437086
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 49,
+        "Name": "BUG_BUZZ",
+        "Power": 75,
+        "DurationMs": 4250,
+        "Energy": -50,
+        "DPS": 22.058823529411768
+      },
+      {
+        "Id": 50,
+        "Name": "POISON_FANG",
+        "Power": 25,
+        "DurationMs": 2400,
+        "Energy": -20,
+        "DPS": 13.020833333333336
+      },
+      {
+        "Id": 108,
+        "Name": "PSYCHIC",
+        "Power": 55,
+        "DurationMs": 2800,
+        "Energy": -50,
+        "DPS": 19.642857142857142
+      }
+    ]
   },
   {
     "id": 50,
@@ -702,8 +2696,50 @@
     },
     "candy": 50,
     "family": "FAMILY_DIGLETT",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 216,
+        "Name": "MUD_SHOT_FAST",
+        "Power": 6,
+        "DurationMs": 550,
+        "Energy": 7,
+        "DPS": 13.636363636363635
+      },
+      {
+        "Id": 220,
+        "Name": "SCRATCH_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 26,
+        "Name": "DIG",
+        "Power": 70,
+        "DurationMs": 5800,
+        "Energy": -33,
+        "DPS": 15.086206896551724
+      },
+      {
+        "Id": 96,
+        "Name": "MUD_BOMB",
+        "Power": 30,
+        "DurationMs": 2600,
+        "Energy": -25,
+        "DPS": 14.423076923076923
+      },
+      {
+        "Id": 63,
+        "Name": "ROCK_TOMB",
+        "Power": 30,
+        "DurationMs": 3400,
+        "Energy": -25,
+        "DPS": 8.823529411764707
+      }
+    ]
   },
   {
     "id": 51,
@@ -715,8 +2751,50 @@
       "defense": 140
     },
     "family": "FAMILY_DIGLETT",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 216,
+        "Name": "MUD_SHOT_FAST",
+        "Power": 6,
+        "DurationMs": 550,
+        "Energy": 7,
+        "DPS": 13.636363636363635
+      },
+      {
+        "Id": 203,
+        "Name": "SUCKER_PUNCH_FAST",
+        "Power": 7,
+        "DurationMs": 700,
+        "Energy": 4,
+        "DPS": 10
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 31,
+        "Name": "EARTHQUAKE",
+        "Power": 100,
+        "DurationMs": 4200,
+        "Energy": -100,
+        "DPS": 29.761904761904763
+      },
+      {
+        "Id": 96,
+        "Name": "MUD_BOMB",
+        "Power": 30,
+        "DurationMs": 2600,
+        "Energy": -25,
+        "DPS": 14.423076923076923
+      },
+      {
+        "Id": 32,
+        "Name": "STONE_EDGE",
+        "Power": 80,
+        "DurationMs": 3100,
+        "Energy": -100,
+        "DPS": 25.806451612903224
+      }
+    ]
   },
   {
     "id": 52,
@@ -729,8 +2807,50 @@
     },
     "candy": 50,
     "family": "FAMILY_MEOWTH",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 202,
+        "Name": "BITE_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12
+      },
+      {
+        "Id": 220,
+        "Name": "SCRATCH_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 15
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 131,
+        "Name": "BODY_SLAM",
+        "Power": 40,
+        "DurationMs": 1560,
+        "Energy": -50,
+        "DPS": 32.05128205128205
+      },
+      {
+        "Id": 16,
+        "Name": "DARK_PULSE",
+        "Power": 45,
+        "DurationMs": 3500,
+        "Energy": -33,
+        "DPS": 12.857142857142858
+      },
+      {
+        "Id": 51,
+        "Name": "NIGHT_SLASH",
+        "Power": 30,
+        "DurationMs": 2700,
+        "Energy": -25,
+        "DPS": 11.11111111111111
+      }
+    ]
   },
   {
     "id": 53,
@@ -742,8 +2862,50 @@
       "defense": 146
     },
     "family": "FAMILY_MEOWTH",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 238,
+        "Name": "FEINT_ATTACK_FAST",
+        "Power": 12,
+        "DurationMs": 1040,
+        "Energy": 7,
+        "DPS": 11.538461538461538
+      },
+      {
+        "Id": 220,
+        "Name": "SCRATCH_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 15
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 51,
+        "Name": "NIGHT_SLASH",
+        "Power": 30,
+        "DurationMs": 2700,
+        "Energy": -25,
+        "DPS": 11.11111111111111
+      },
+      {
+        "Id": 88,
+        "Name": "PLAY_ROUGH",
+        "Power": 55,
+        "DurationMs": 2900,
+        "Energy": -50,
+        "DPS": 18.96551724137931
+      },
+      {
+        "Id": 65,
+        "Name": "POWER_GEM",
+        "Power": 40,
+        "DurationMs": 2900,
+        "Energy": -33,
+        "DPS": 13.793103448275863
+      }
+    ]
   },
   {
     "id": 54,
@@ -756,8 +2918,50 @@
     },
     "candy": 50,
     "family": "FAMILY_PSYDUCK",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 230,
+        "Name": "WATER_GUN_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 15
+      },
+      {
+        "Id": 234,
+        "Name": "ZEN_HEADBUTT_FAST",
+        "Power": 12,
+        "DurationMs": 1050,
+        "Energy": 4,
+        "DPS": 11.428571428571429
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 58,
+        "Name": "AQUA_TAIL",
+        "Power": 45,
+        "DurationMs": 2350,
+        "Energy": -50,
+        "DPS": 23.936170212765955
+      },
+      {
+        "Id": 28,
+        "Name": "CROSS_CHOP",
+        "Power": 60,
+        "DurationMs": 2000,
+        "Energy": -100,
+        "DPS": 30
+      },
+      {
+        "Id": 30,
+        "Name": "PSYBEAM",
+        "Power": 40,
+        "DurationMs": 3800,
+        "Energy": -25,
+        "DPS": 10.526315789473685
+      }
+    ]
   },
   {
     "id": 55,
@@ -769,8 +2973,50 @@
       "defense": 176
     },
     "family": "FAMILY_PSYDUCK",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 235,
+        "Name": "CONFUSION_FAST",
+        "Power": 15,
+        "DurationMs": 1510,
+        "Energy": 7,
+        "DPS": 9.933774834437086
+      },
+      {
+        "Id": 230,
+        "Name": "WATER_GUN_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 15
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 107,
+        "Name": "HYDRO_PUMP",
+        "Power": 90,
+        "DurationMs": 3800,
+        "Energy": -100,
+        "DPS": 29.60526315789474
+      },
+      {
+        "Id": 39,
+        "Name": "ICE_BEAM",
+        "Power": 65,
+        "DurationMs": 3650,
+        "Energy": -50,
+        "DPS": 17.808219178082194
+      },
+      {
+        "Id": 108,
+        "Name": "PSYCHIC",
+        "Power": 55,
+        "DurationMs": 2800,
+        "Energy": -50,
+        "DPS": 19.642857142857142
+      }
+    ]
   },
   {
     "id": 56,
@@ -783,8 +3029,50 @@
     },
     "candy": 50,
     "family": "FAMILY_MANKEY",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 208,
+        "Name": "KARATE_CHOP_FAST",
+        "Power": 6,
+        "DurationMs": 800,
+        "Energy": 7,
+        "DPS": 9.375
+      },
+      {
+        "Id": 220,
+        "Name": "SCRATCH_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 123,
+        "Name": "BRICK_BREAK",
+        "Power": 30,
+        "DurationMs": 1600,
+        "Energy": -33,
+        "DPS": 23.4375
+      },
+      {
+        "Id": 28,
+        "Name": "CROSS_CHOP",
+        "Power": 60,
+        "DurationMs": 2000,
+        "Energy": -100,
+        "DPS": 37.5
+      },
+      {
+        "Id": 56,
+        "Name": "LOW_SWEEP",
+        "Power": 30,
+        "DurationMs": 2250,
+        "Energy": -25,
+        "DPS": 16.666666666666668
+      }
+    ]
   },
   {
     "id": 57,
@@ -796,8 +3084,50 @@
       "defense": 150
     },
     "family": "FAMILY_MANKEY",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 208,
+        "Name": "KARATE_CHOP_FAST",
+        "Power": 6,
+        "DurationMs": 800,
+        "Energy": 7,
+        "DPS": 9.375
+      },
+      {
+        "Id": 207,
+        "Name": "LOW_KICK_FAST",
+        "Power": 5,
+        "DurationMs": 600,
+        "Energy": 7,
+        "DPS": 10.416666666666668
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 28,
+        "Name": "CROSS_CHOP",
+        "Power": 60,
+        "DurationMs": 2000,
+        "Energy": -100,
+        "DPS": 37.5
+      },
+      {
+        "Id": 56,
+        "Name": "LOW_SWEEP",
+        "Power": 30,
+        "DurationMs": 2250,
+        "Energy": -25,
+        "DPS": 16.666666666666668
+      },
+      {
+        "Id": 51,
+        "Name": "NIGHT_SLASH",
+        "Power": 30,
+        "DurationMs": 2700,
+        "Energy": -25,
+        "DPS": 11.11111111111111
+      }
+    ]
   },
   {
     "id": 58,
@@ -810,8 +3140,50 @@
     },
     "candy": 50,
     "family": "FAMILY_GROWLITHE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 202,
+        "Name": "BITE_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12
+      },
+      {
+        "Id": 209,
+        "Name": "EMBER_FAST",
+        "Power": 10,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 11.904761904761905
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 131,
+        "Name": "BODY_SLAM",
+        "Power": 40,
+        "DurationMs": 1560,
+        "Energy": -50,
+        "DPS": 25.64102564102564
+      },
+      {
+        "Id": 21,
+        "Name": "FLAME_WHEEL",
+        "Power": 40,
+        "DurationMs": 4600,
+        "Energy": -25,
+        "DPS": 10.869565217391306
+      },
+      {
+        "Id": 24,
+        "Name": "FLAMETHROWER",
+        "Power": 55,
+        "DurationMs": 2900,
+        "Energy": -50,
+        "DPS": 23.706896551724135
+      }
+    ]
   },
   {
     "id": 59,
@@ -823,8 +3195,50 @@
       "defense": 180
     },
     "family": "FAMILY_GROWLITHE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 202,
+        "Name": "BITE_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12
+      },
+      {
+        "Id": 240,
+        "Name": "FIRE_FANG_FAST",
+        "Power": 10,
+        "DurationMs": 840,
+        "Energy": 4,
+        "DPS": 14.880952380952381
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 95,
+        "Name": "BULLDOZE",
+        "Power": 35,
+        "DurationMs": 3400,
+        "Energy": -25,
+        "DPS": 10.294117647058824
+      },
+      {
+        "Id": 103,
+        "Name": "FIRE_BLAST",
+        "Power": 100,
+        "DurationMs": 4100,
+        "Energy": -100,
+        "DPS": 30.48780487804878
+      },
+      {
+        "Id": 24,
+        "Name": "FLAMETHROWER",
+        "Power": 55,
+        "DurationMs": 2900,
+        "Energy": -50,
+        "DPS": 23.706896551724135
+      }
+    ]
   },
   {
     "id": 60,
@@ -837,8 +3251,50 @@
     },
     "candy": 25,
     "family": "FAMILY_POLIWAG",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 237,
+        "Name": "BUBBLE_FAST",
+        "Power": 25,
+        "DurationMs": 2300,
+        "Energy": 15,
+        "DPS": 13.58695652173913
+      },
+      {
+        "Id": 216,
+        "Name": "MUD_SHOT_FAST",
+        "Power": 6,
+        "DurationMs": 550,
+        "Energy": 7,
+        "DPS": 10.909090909090908
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 131,
+        "Name": "BODY_SLAM",
+        "Power": 40,
+        "DurationMs": 1560,
+        "Energy": -50,
+        "DPS": 25.64102564102564
+      },
+      {
+        "Id": 53,
+        "Name": "BUBBLE_BEAM",
+        "Power": 30,
+        "DurationMs": 2900,
+        "Energy": -25,
+        "DPS": 12.931034482758621
+      },
+      {
+        "Id": 96,
+        "Name": "MUD_BOMB",
+        "Power": 30,
+        "DurationMs": 2600,
+        "Energy": -25,
+        "DPS": 11.538461538461538
+      }
+    ]
   },
   {
     "id": 61,
@@ -851,8 +3307,50 @@
     },
     "candy": 100,
     "family": "FAMILY_POLIWAG",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 237,
+        "Name": "BUBBLE_FAST",
+        "Power": 25,
+        "DurationMs": 2300,
+        "Energy": 15,
+        "DPS": 13.58695652173913
+      },
+      {
+        "Id": 216,
+        "Name": "MUD_SHOT_FAST",
+        "Power": 6,
+        "DurationMs": 550,
+        "Energy": 7,
+        "DPS": 10.909090909090908
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 53,
+        "Name": "BUBBLE_BEAM",
+        "Power": 30,
+        "DurationMs": 2900,
+        "Energy": -25,
+        "DPS": 12.931034482758621
+      },
+      {
+        "Id": 96,
+        "Name": "MUD_BOMB",
+        "Power": 30,
+        "DurationMs": 2600,
+        "Energy": -25,
+        "DPS": 11.538461538461538
+      },
+      {
+        "Id": 106,
+        "Name": "SCALD",
+        "Power": 55,
+        "DurationMs": 4000,
+        "Energy": -33,
+        "DPS": 17.1875
+      }
+    ]
   },
   {
     "id": 62,
@@ -865,8 +3363,50 @@
       "defense": 202
     },
     "family": "FAMILY_POLIWAG",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 237,
+        "Name": "BUBBLE_FAST",
+        "Power": 25,
+        "DurationMs": 2300,
+        "Energy": 15,
+        "DPS": 13.58695652173913
+      },
+      {
+        "Id": 216,
+        "Name": "MUD_SHOT_FAST",
+        "Power": 6,
+        "DurationMs": 550,
+        "Energy": 7,
+        "DPS": 10.909090909090908
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 107,
+        "Name": "HYDRO_PUMP",
+        "Power": 90,
+        "DurationMs": 3800,
+        "Energy": -100,
+        "DPS": 29.60526315789474
+      },
+      {
+        "Id": 33,
+        "Name": "ICE_PUNCH",
+        "Power": 45,
+        "DurationMs": 3500,
+        "Energy": -33,
+        "DPS": 12.857142857142858
+      },
+      {
+        "Id": 54,
+        "Name": "SUBMISSION",
+        "Power": 30,
+        "DurationMs": 2100,
+        "Energy": -33,
+        "DPS": 17.857142857142854
+      }
+    ]
   },
   {
     "id": 63,
@@ -879,8 +3419,42 @@
     },
     "candy": 25,
     "family": "FAMILY_ABRA",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 234,
+        "Name": "ZEN_HEADBUTT_FAST",
+        "Power": 12,
+        "DurationMs": 1050,
+        "Energy": 4,
+        "DPS": 14.285714285714286
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 60,
+        "Name": "PSYSHOCK",
+        "Power": 40,
+        "DurationMs": 2700,
+        "Energy": -33,
+        "DPS": 18.518518518518515
+      },
+      {
+        "Id": 70,
+        "Name": "SHADOW_BALL",
+        "Power": 45,
+        "DurationMs": 3080,
+        "Energy": -33,
+        "DPS": 14.61038961038961
+      },
+      {
+        "Id": 99,
+        "Name": "SIGNAL_BEAM",
+        "Power": 45,
+        "DurationMs": 3100,
+        "Energy": -33,
+        "DPS": 14.516129032258064
+      }
+    ]
   },
   {
     "id": 64,
@@ -893,8 +3467,50 @@
     },
     "candy": 100,
     "family": "FAMILY_ABRA",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 235,
+        "Name": "CONFUSION_FAST",
+        "Power": 15,
+        "DurationMs": 1510,
+        "Energy": 7,
+        "DPS": 12.417218543046358
+      },
+      {
+        "Id": 226,
+        "Name": "PSYCHO_CUT_FAST",
+        "Power": 7,
+        "DurationMs": 570,
+        "Energy": 7,
+        "DPS": 15.350877192982457
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 86,
+        "Name": "DAZZLING_GLEAM",
+        "Power": 55,
+        "DurationMs": 4200,
+        "Energy": -33,
+        "DPS": 13.095238095238095
+      },
+      {
+        "Id": 30,
+        "Name": "PSYBEAM",
+        "Power": 40,
+        "DurationMs": 3800,
+        "Energy": -25,
+        "DPS": 13.157894736842106
+      },
+      {
+        "Id": 70,
+        "Name": "SHADOW_BALL",
+        "Power": 45,
+        "DurationMs": 3080,
+        "Energy": -33,
+        "DPS": 14.61038961038961
+      }
+    ]
   },
   {
     "id": 65,
@@ -906,8 +3522,50 @@
       "defense": 152
     },
     "family": "FAMILY_ABRA",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 235,
+        "Name": "CONFUSION_FAST",
+        "Power": 15,
+        "DurationMs": 1510,
+        "Energy": 7,
+        "DPS": 12.417218543046358
+      },
+      {
+        "Id": 226,
+        "Name": "PSYCHO_CUT_FAST",
+        "Power": 7,
+        "DurationMs": 570,
+        "Energy": 7,
+        "DPS": 15.350877192982457
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 86,
+        "Name": "DAZZLING_GLEAM",
+        "Power": 55,
+        "DurationMs": 4200,
+        "Energy": -33,
+        "DPS": 13.095238095238095
+      },
+      {
+        "Id": 108,
+        "Name": "PSYCHIC",
+        "Power": 55,
+        "DurationMs": 2800,
+        "Energy": -50,
+        "DPS": 24.553571428571427
+      },
+      {
+        "Id": 70,
+        "Name": "SHADOW_BALL",
+        "Power": 45,
+        "DurationMs": 3080,
+        "Energy": -33,
+        "DPS": 14.61038961038961
+      }
+    ]
   },
   {
     "id": 66,
@@ -920,8 +3578,50 @@
     },
     "candy": 25,
     "family": "FAMILY_MACHOP",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 208,
+        "Name": "KARATE_CHOP_FAST",
+        "Power": 6,
+        "DurationMs": 800,
+        "Energy": 7,
+        "DPS": 9.375
+      },
+      {
+        "Id": 207,
+        "Name": "LOW_KICK_FAST",
+        "Power": 5,
+        "DurationMs": 600,
+        "Energy": 7,
+        "DPS": 10.416666666666668
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 123,
+        "Name": "BRICK_BREAK",
+        "Power": 30,
+        "DurationMs": 1600,
+        "Energy": -33,
+        "DPS": 23.4375
+      },
+      {
+        "Id": 28,
+        "Name": "CROSS_CHOP",
+        "Power": 60,
+        "DurationMs": 2000,
+        "Energy": -100,
+        "DPS": 37.5
+      },
+      {
+        "Id": 56,
+        "Name": "LOW_SWEEP",
+        "Power": 30,
+        "DurationMs": 2250,
+        "Energy": -25,
+        "DPS": 16.666666666666668
+      }
+    ]
   },
   {
     "id": 67,
@@ -934,8 +3634,50 @@
     },
     "candy": 100,
     "family": "FAMILY_MACHOP",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 208,
+        "Name": "KARATE_CHOP_FAST",
+        "Power": 6,
+        "DurationMs": 800,
+        "Energy": 7,
+        "DPS": 9.375
+      },
+      {
+        "Id": 207,
+        "Name": "LOW_KICK_FAST",
+        "Power": 5,
+        "DurationMs": 600,
+        "Energy": 7,
+        "DPS": 10.416666666666668
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 123,
+        "Name": "BRICK_BREAK",
+        "Power": 30,
+        "DurationMs": 1600,
+        "Energy": -33,
+        "DPS": 23.4375
+      },
+      {
+        "Id": 28,
+        "Name": "CROSS_CHOP",
+        "Power": 60,
+        "DurationMs": 2000,
+        "Energy": -100,
+        "DPS": 37.5
+      },
+      {
+        "Id": 54,
+        "Name": "SUBMISSION",
+        "Power": 30,
+        "DurationMs": 2100,
+        "Energy": -33,
+        "DPS": 17.857142857142854
+      }
+    ]
   },
   {
     "id": 68,
@@ -947,8 +3689,50 @@
       "defense": 180
     },
     "family": "FAMILY_MACHOP",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 229,
+        "Name": "BULLET_PUNCH_FAST",
+        "Power": 10,
+        "DurationMs": 1200,
+        "Energy": 7,
+        "DPS": 8.333333333333334
+      },
+      {
+        "Id": 208,
+        "Name": "KARATE_CHOP_FAST",
+        "Power": 6,
+        "DurationMs": 800,
+        "Energy": 7,
+        "DPS": 9.375
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 28,
+        "Name": "CROSS_CHOP",
+        "Power": 60,
+        "DurationMs": 2000,
+        "Energy": -100,
+        "DPS": 37.5
+      },
+      {
+        "Id": 32,
+        "Name": "STONE_EDGE",
+        "Power": 80,
+        "DurationMs": 3100,
+        "Energy": -100,
+        "DPS": 25.806451612903224
+      },
+      {
+        "Id": 54,
+        "Name": "SUBMISSION",
+        "Power": 30,
+        "DurationMs": 2100,
+        "Energy": -33,
+        "DPS": 17.857142857142854
+      }
+    ]
   },
   {
     "id": 69,
@@ -962,8 +3746,50 @@
     },
     "candy": 25,
     "family": "FAMILY_BELLSPROUT",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 225,
+        "Name": "ACID_FAST",
+        "Power": 10,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 11.904761904761905
+      },
+      {
+        "Id": 214,
+        "Name": "VINE_WHIP_FAST",
+        "Power": 7,
+        "DurationMs": 650,
+        "Energy": 7,
+        "DPS": 13.46153846153846
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 118,
+        "Name": "POWER_WHIP",
+        "Power": 70,
+        "DurationMs": 2800,
+        "Energy": -100,
+        "DPS": 31.25
+      },
+      {
+        "Id": 90,
+        "Name": "SLUDGE_BOMB",
+        "Power": 55,
+        "DurationMs": 2600,
+        "Energy": -50,
+        "DPS": 26.442307692307693
+      },
+      {
+        "Id": 13,
+        "Name": "WRAP",
+        "Power": 25,
+        "DurationMs": 4000,
+        "Energy": -20,
+        "DPS": 6.25
+      }
+    ]
   },
   {
     "id": 70,
@@ -977,8 +3803,50 @@
     },
     "candy": 100,
     "family": "FAMILY_BELLSPROUT",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 225,
+        "Name": "ACID_FAST",
+        "Power": 10,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 11.904761904761905
+      },
+      {
+        "Id": 215,
+        "Name": "RAZOR_LEAF_FAST",
+        "Power": 15,
+        "DurationMs": 1450,
+        "Energy": 7,
+        "DPS": 12.931034482758621
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 118,
+        "Name": "POWER_WHIP",
+        "Power": 70,
+        "DurationMs": 2800,
+        "Energy": -100,
+        "DPS": 31.25
+      },
+      {
+        "Id": 59,
+        "Name": "SEED_BOMB",
+        "Power": 40,
+        "DurationMs": 2400,
+        "Energy": -33,
+        "DPS": 20.833333333333336
+      },
+      {
+        "Id": 90,
+        "Name": "SLUDGE_BOMB",
+        "Power": 55,
+        "DurationMs": 2600,
+        "Energy": -50,
+        "DPS": 26.442307692307693
+      }
+    ]
   },
   {
     "id": 71,
@@ -991,8 +3859,50 @@
       "defense": 152
     },
     "family": "FAMILY_BELLSPROUT",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 225,
+        "Name": "ACID_FAST",
+        "Power": 10,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 11.904761904761905
+      },
+      {
+        "Id": 215,
+        "Name": "RAZOR_LEAF_FAST",
+        "Power": 15,
+        "DurationMs": 1450,
+        "Energy": 7,
+        "DPS": 12.931034482758621
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 117,
+        "Name": "LEAF_BLADE",
+        "Power": 55,
+        "DurationMs": 2800,
+        "Energy": -50,
+        "DPS": 24.553571428571427
+      },
+      {
+        "Id": 90,
+        "Name": "SLUDGE_BOMB",
+        "Power": 55,
+        "DurationMs": 2600,
+        "Energy": -50,
+        "DPS": 26.442307692307693
+      },
+      {
+        "Id": 116,
+        "Name": "SOLAR_BEAM",
+        "Power": 120,
+        "DurationMs": 4900,
+        "Energy": -100,
+        "DPS": 30.612244897959183
+      }
+    ]
   },
   {
     "id": 72,
@@ -1006,8 +3916,50 @@
     },
     "candy": 50,
     "family": "FAMILY_TENTACOOL",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 237,
+        "Name": "BUBBLE_FAST",
+        "Power": 25,
+        "DurationMs": 2300,
+        "Energy": 15,
+        "DPS": 13.58695652173913
+      },
+      {
+        "Id": 236,
+        "Name": "POISON_STING_FAST",
+        "Power": 6,
+        "DurationMs": 575,
+        "Energy": 4,
+        "DPS": 13.043478260869566
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 53,
+        "Name": "BUBBLE_BEAM",
+        "Power": 30,
+        "DurationMs": 2900,
+        "Energy": -25,
+        "DPS": 12.931034482758621
+      },
+      {
+        "Id": 105,
+        "Name": "WATER_PULSE",
+        "Power": 35,
+        "DurationMs": 3300,
+        "Energy": -25,
+        "DPS": 13.25757575757576
+      },
+      {
+        "Id": 13,
+        "Name": "WRAP",
+        "Power": 25,
+        "DurationMs": 4000,
+        "Energy": -20,
+        "DPS": 6.25
+      }
+    ]
   },
   {
     "id": 73,
@@ -1020,8 +3972,50 @@
       "defense": 196
     },
     "family": "FAMILY_TENTACOOL",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 225,
+        "Name": "ACID_FAST",
+        "Power": 10,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 11.904761904761905
+      },
+      {
+        "Id": 224,
+        "Name": "POISON_JAB_FAST",
+        "Power": 15,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 17.857142857142854
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 40,
+        "Name": "BLIZZARD",
+        "Power": 100,
+        "DurationMs": 3900,
+        "Energy": -100,
+        "DPS": 25.641025641025642
+      },
+      {
+        "Id": 107,
+        "Name": "HYDRO_PUMP",
+        "Power": 90,
+        "DurationMs": 3800,
+        "Energy": -100,
+        "DPS": 29.60526315789474
+      },
+      {
+        "Id": 91,
+        "Name": "SLUDGE_WAVE",
+        "Power": 70,
+        "DurationMs": 3400,
+        "Energy": -100,
+        "DPS": 25.73529411764706
+      }
+    ]
   },
   {
     "id": 74,
@@ -1035,8 +4029,50 @@
     },
     "candy": 25,
     "family": "FAMILY_GEODUDE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 227,
+        "Name": "ROCK_THROW_FAST",
+        "Power": 12,
+        "DurationMs": 1360,
+        "Energy": 7,
+        "DPS": 11.02941176470588
+      },
+      {
+        "Id": 221,
+        "Name": "TACKLE_FAST",
+        "Power": 12,
+        "DurationMs": 1100,
+        "Energy": 7,
+        "DPS": 10.909090909090908
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 26,
+        "Name": "DIG",
+        "Power": 70,
+        "DurationMs": 5800,
+        "Energy": -33,
+        "DPS": 15.086206896551724
+      },
+      {
+        "Id": 64,
+        "Name": "ROCK_SLIDE",
+        "Power": 50,
+        "DurationMs": 3200,
+        "Energy": -33,
+        "DPS": 19.53125
+      },
+      {
+        "Id": 63,
+        "Name": "ROCK_TOMB",
+        "Power": 30,
+        "DurationMs": 3400,
+        "Energy": -25,
+        "DPS": 11.029411764705884
+      }
+    ]
   },
   {
     "id": 75,
@@ -1050,8 +4086,50 @@
     },
     "candy": 100,
     "family": "FAMILY_GEODUDE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 216,
+        "Name": "MUD_SHOT_FAST",
+        "Power": 6,
+        "DurationMs": 550,
+        "Energy": 7,
+        "DPS": 13.636363636363635
+      },
+      {
+        "Id": 227,
+        "Name": "ROCK_THROW_FAST",
+        "Power": 12,
+        "DurationMs": 1360,
+        "Energy": 7,
+        "DPS": 11.02941176470588
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 26,
+        "Name": "DIG",
+        "Power": 70,
+        "DurationMs": 5800,
+        "Energy": -33,
+        "DPS": 15.086206896551724
+      },
+      {
+        "Id": 64,
+        "Name": "ROCK_SLIDE",
+        "Power": 50,
+        "DurationMs": 3200,
+        "Energy": -33,
+        "DPS": 19.53125
+      },
+      {
+        "Id": 32,
+        "Name": "STONE_EDGE",
+        "Power": 80,
+        "DurationMs": 3100,
+        "Energy": -100,
+        "DPS": 32.25806451612903
+      }
+    ]
   },
   {
     "id": 76,
@@ -1064,8 +4142,50 @@
       "defense": 198
     },
     "family": "FAMILY_GEODUDE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 216,
+        "Name": "MUD_SHOT_FAST",
+        "Power": 6,
+        "DurationMs": 550,
+        "Energy": 7,
+        "DPS": 13.636363636363635
+      },
+      {
+        "Id": 227,
+        "Name": "ROCK_THROW_FAST",
+        "Power": 12,
+        "DurationMs": 1360,
+        "Energy": 7,
+        "DPS": 11.02941176470588
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 62,
+        "Name": "ANCIENT_POWER",
+        "Power": 35,
+        "DurationMs": 3600,
+        "Energy": -25,
+        "DPS": 12.152777777777777
+      },
+      {
+        "Id": 31,
+        "Name": "EARTHQUAKE",
+        "Power": 100,
+        "DurationMs": 4200,
+        "Energy": -100,
+        "DPS": 29.761904761904763
+      },
+      {
+        "Id": 32,
+        "Name": "STONE_EDGE",
+        "Power": 80,
+        "DurationMs": 3100,
+        "Energy": -100,
+        "DPS": 32.25806451612903
+      }
+    ]
   },
   {
     "id": 77,
@@ -1078,8 +4198,50 @@
     },
     "candy": 50,
     "family": "FAMILY_PONYTA",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 209,
+        "Name": "EMBER_FAST",
+        "Power": 10,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 11.904761904761905
+      },
+      {
+        "Id": 221,
+        "Name": "TACKLE_FAST",
+        "Power": 12,
+        "DurationMs": 1100,
+        "Energy": 7,
+        "DPS": 10.909090909090908
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 103,
+        "Name": "FIRE_BLAST",
+        "Power": 100,
+        "DurationMs": 4100,
+        "Energy": -100,
+        "DPS": 30.48780487804878
+      },
+      {
+        "Id": 101,
+        "Name": "FLAME_CHARGE",
+        "Power": 20,
+        "DurationMs": 3100,
+        "Energy": -20,
+        "DPS": 8.064516129032258
+      },
+      {
+        "Id": 21,
+        "Name": "FLAME_WHEEL",
+        "Power": 40,
+        "DurationMs": 4600,
+        "Energy": -25,
+        "DPS": 10.869565217391306
+      }
+    ]
   },
   {
     "id": 78,
@@ -1091,8 +4253,50 @@
       "defense": 170
     },
     "family": "FAMILY_PONYTA",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 209,
+        "Name": "EMBER_FAST",
+        "Power": 10,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 11.904761904761905
+      },
+      {
+        "Id": 207,
+        "Name": "LOW_KICK_FAST",
+        "Power": 5,
+        "DurationMs": 600,
+        "Energy": 7,
+        "DPS": 8.333333333333334
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 46,
+        "Name": "DRILL_RUN",
+        "Power": 50,
+        "DurationMs": 3400,
+        "Energy": -33,
+        "DPS": 14.705882352941178
+      },
+      {
+        "Id": 103,
+        "Name": "FIRE_BLAST",
+        "Power": 100,
+        "DurationMs": 4100,
+        "Energy": -100,
+        "DPS": 30.48780487804878
+      },
+      {
+        "Id": 42,
+        "Name": "HEAT_WAVE",
+        "Power": 80,
+        "DurationMs": 3800,
+        "Energy": -100,
+        "DPS": 26.315789473684212
+      }
+    ]
   },
   {
     "id": 79,
@@ -1106,8 +4310,50 @@
     },
     "candy": 50,
     "family": "FAMILY_SLOWPOKE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 235,
+        "Name": "CONFUSION_FAST",
+        "Power": 15,
+        "DurationMs": 1510,
+        "Energy": 7,
+        "DPS": 12.417218543046358
+      },
+      {
+        "Id": 230,
+        "Name": "WATER_GUN_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 15
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 108,
+        "Name": "PSYCHIC",
+        "Power": 55,
+        "DurationMs": 2800,
+        "Energy": -50,
+        "DPS": 24.553571428571427
+      },
+      {
+        "Id": 60,
+        "Name": "PSYSHOCK",
+        "Power": 40,
+        "DurationMs": 2700,
+        "Energy": -33,
+        "DPS": 18.518518518518515
+      },
+      {
+        "Id": 105,
+        "Name": "WATER_PULSE",
+        "Power": 35,
+        "DurationMs": 3300,
+        "Energy": -25,
+        "DPS": 13.25757575757576
+      }
+    ]
   },
   {
     "id": 80,
@@ -1120,8 +4366,50 @@
       "defense": 198
     },
     "family": "FAMILY_SLOWPOKE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 235,
+        "Name": "CONFUSION_FAST",
+        "Power": 15,
+        "DurationMs": 1510,
+        "Energy": 7,
+        "DPS": 12.417218543046358
+      },
+      {
+        "Id": 230,
+        "Name": "WATER_GUN_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 15
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 39,
+        "Name": "ICE_BEAM",
+        "Power": 65,
+        "DurationMs": 3650,
+        "Energy": -50,
+        "DPS": 17.808219178082194
+      },
+      {
+        "Id": 108,
+        "Name": "PSYCHIC",
+        "Power": 55,
+        "DurationMs": 2800,
+        "Energy": -50,
+        "DPS": 24.553571428571427
+      },
+      {
+        "Id": 105,
+        "Name": "WATER_PULSE",
+        "Power": 35,
+        "DurationMs": 3300,
+        "Energy": -25,
+        "DPS": 13.25757575757576
+      }
+    ]
   },
   {
     "id": 81,
@@ -1135,8 +4423,50 @@
     },
     "candy": 50,
     "family": "FAMILY_MAGNEMITE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 206,
+        "Name": "SPARK_FAST",
+        "Power": 7,
+        "DurationMs": 700,
+        "Energy": 4,
+        "DPS": 12.5
+      },
+      {
+        "Id": 205,
+        "Name": "THUNDER_SHOCK_FAST",
+        "Power": 5,
+        "DurationMs": 600,
+        "Energy": 7,
+        "DPS": 10.416666666666668
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 35,
+        "Name": "DISCHARGE",
+        "Power": 35,
+        "DurationMs": 2500,
+        "Energy": -33,
+        "DPS": 17.5
+      },
+      {
+        "Id": 72,
+        "Name": "MAGNET_BOMB",
+        "Power": 30,
+        "DurationMs": 2800,
+        "Energy": -25,
+        "DPS": 13.392857142857144
+      },
+      {
+        "Id": 79,
+        "Name": "THUNDERBOLT",
+        "Power": 55,
+        "DurationMs": 2700,
+        "Energy": -50,
+        "DPS": 25.462962962962962
+      }
+    ]
   },
   {
     "id": 82,
@@ -1149,8 +4479,50 @@
       "defense": 180
     },
     "family": "FAMILY_MAGNEMITE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 206,
+        "Name": "SPARK_FAST",
+        "Power": 7,
+        "DurationMs": 700,
+        "Energy": 4,
+        "DPS": 12.5
+      },
+      {
+        "Id": 205,
+        "Name": "THUNDER_SHOCK_FAST",
+        "Power": 5,
+        "DurationMs": 600,
+        "Energy": 7,
+        "DPS": 10.416666666666668
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 35,
+        "Name": "DISCHARGE",
+        "Power": 35,
+        "DurationMs": 2500,
+        "Energy": -33,
+        "DPS": 17.5
+      },
+      {
+        "Id": 36,
+        "Name": "FLASH_CANNON",
+        "Power": 60,
+        "DurationMs": 3900,
+        "Energy": -33,
+        "DPS": 19.23076923076923
+      },
+      {
+        "Id": 72,
+        "Name": "MAGNET_BOMB",
+        "Power": 30,
+        "DurationMs": 2800,
+        "Energy": -25,
+        "DPS": 13.392857142857144
+      }
+    ]
   },
   {
     "id": 83,
@@ -1163,8 +4535,50 @@
       "defense": 132
     },
     "family": "FAMILY_FARFETCHD",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 223,
+        "Name": "CUT_FAST",
+        "Power": 12,
+        "DurationMs": 1130,
+        "Energy": 7,
+        "DPS": 13.274336283185841
+      },
+      {
+        "Id": 200,
+        "Name": "FURY_CUTTER_FAST",
+        "Power": 3,
+        "DurationMs": 400,
+        "Energy": 12,
+        "DPS": 7.5
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 45,
+        "Name": "AERIAL_ACE",
+        "Power": 30,
+        "DurationMs": 2900,
+        "Energy": -25,
+        "DPS": 12.931034482758621
+      },
+      {
+        "Id": 121,
+        "Name": "AIR_CUTTER",
+        "Power": 30,
+        "DurationMs": 3300,
+        "Energy": -25,
+        "DPS": 11.363636363636365
+      },
+      {
+        "Id": 117,
+        "Name": "LEAF_BLADE",
+        "Power": 55,
+        "DurationMs": 2800,
+        "Energy": -50,
+        "DPS": 19.642857142857142
+      }
+    ]
   },
   {
     "id": 84,
@@ -1178,8 +4592,50 @@
     },
     "candy": 50,
     "family": "FAMILY_DODUO",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 211,
+        "Name": "PECK_FAST",
+        "Power": 10,
+        "DurationMs": 1150,
+        "Energy": 10,
+        "DPS": 10.869565217391306
+      },
+      {
+        "Id": 219,
+        "Name": "QUICK_ATTACK_FAST",
+        "Power": 10,
+        "DurationMs": 1330,
+        "Energy": 7,
+        "DPS": 9.398496240601503
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 45,
+        "Name": "AERIAL_ACE",
+        "Power": 30,
+        "DurationMs": 2900,
+        "Energy": -25,
+        "DPS": 12.931034482758621
+      },
+      {
+        "Id": 38,
+        "Name": "DRILL_PECK",
+        "Power": 40,
+        "DurationMs": 2700,
+        "Energy": -33,
+        "DPS": 18.518518518518515
+      },
+      {
+        "Id": 125,
+        "Name": "SWIFT",
+        "Power": 30,
+        "DurationMs": 3000,
+        "Energy": -25,
+        "DPS": 12.5
+      }
+    ]
   },
   {
     "id": 85,
@@ -1192,8 +4648,50 @@
       "defense": 150
     },
     "family": "FAMILY_DODUO",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 238,
+        "Name": "FEINT_ATTACK_FAST",
+        "Power": 12,
+        "DurationMs": 1040,
+        "Energy": 7,
+        "DPS": 11.538461538461538
+      },
+      {
+        "Id": 239,
+        "Name": "STEEL_WING_FAST",
+        "Power": 15,
+        "DurationMs": 1330,
+        "Energy": 4,
+        "DPS": 11.278195488721805
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 45,
+        "Name": "AERIAL_ACE",
+        "Power": 30,
+        "DurationMs": 2900,
+        "Energy": -25,
+        "DPS": 12.931034482758621
+      },
+      {
+        "Id": 121,
+        "Name": "AIR_CUTTER",
+        "Power": 30,
+        "DurationMs": 3300,
+        "Energy": -25,
+        "DPS": 11.363636363636365
+      },
+      {
+        "Id": 38,
+        "Name": "DRILL_PECK",
+        "Power": 40,
+        "DurationMs": 2700,
+        "Energy": -33,
+        "DPS": 18.518518518518515
+      }
+    ]
   },
   {
     "id": 86,
@@ -1206,8 +4704,50 @@
     },
     "candy": 50,
     "family": "FAMILY_SEEL",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 217,
+        "Name": "ICE_SHARD_FAST",
+        "Power": 15,
+        "DurationMs": 1400,
+        "Energy": 7,
+        "DPS": 10.714285714285715
+      },
+      {
+        "Id": 230,
+        "Name": "WATER_GUN_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 15
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 57,
+        "Name": "AQUA_JET",
+        "Power": 25,
+        "DurationMs": 2350,
+        "Energy": -20,
+        "DPS": 13.297872340425531
+      },
+      {
+        "Id": 58,
+        "Name": "AQUA_TAIL",
+        "Power": 45,
+        "DurationMs": 2350,
+        "Energy": -50,
+        "DPS": 23.936170212765955
+      },
+      {
+        "Id": 111,
+        "Name": "ICY_WIND",
+        "Power": 25,
+        "DurationMs": 3800,
+        "Energy": -20,
+        "DPS": 6.578947368421053
+      }
+    ]
   },
   {
     "id": 87,
@@ -1220,8 +4760,50 @@
       "defense": 192
     },
     "family": "FAMILY_SEEL",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 218,
+        "Name": "FROST_BREATH_FAST",
+        "Power": 9,
+        "DurationMs": 810,
+        "Energy": 7,
+        "DPS": 13.88888888888889
+      },
+      {
+        "Id": 217,
+        "Name": "ICE_SHARD_FAST",
+        "Power": 15,
+        "DurationMs": 1400,
+        "Energy": 7,
+        "DPS": 13.392857142857144
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 57,
+        "Name": "AQUA_JET",
+        "Power": 25,
+        "DurationMs": 2350,
+        "Energy": -20,
+        "DPS": 13.297872340425531
+      },
+      {
+        "Id": 40,
+        "Name": "BLIZZARD",
+        "Power": 100,
+        "DurationMs": 3900,
+        "Energy": -100,
+        "DPS": 32.05128205128205
+      },
+      {
+        "Id": 111,
+        "Name": "ICY_WIND",
+        "Power": 25,
+        "DurationMs": 3800,
+        "Energy": -20,
+        "DPS": 8.223684210526317
+      }
+    ]
   },
   {
     "id": 88,
@@ -1234,8 +4816,50 @@
     },
     "candy": 50,
     "family": "FAMILY_GRIMER",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 225,
+        "Name": "ACID_FAST",
+        "Power": 10,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 11.904761904761905
+      },
+      {
+        "Id": 233,
+        "Name": "MUD_SLAP_FAST",
+        "Power": 15,
+        "DurationMs": 1350,
+        "Energy": 9,
+        "DPS": 11.11111111111111
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 96,
+        "Name": "MUD_BOMB",
+        "Power": 30,
+        "DurationMs": 2600,
+        "Energy": -25,
+        "DPS": 11.538461538461538
+      },
+      {
+        "Id": 18,
+        "Name": "SLUDGE",
+        "Power": 30,
+        "DurationMs": 2600,
+        "Energy": -25,
+        "DPS": 14.423076923076923
+      },
+      {
+        "Id": 90,
+        "Name": "SLUDGE_BOMB",
+        "Power": 55,
+        "DurationMs": 2600,
+        "Energy": -50,
+        "DPS": 26.442307692307693
+      }
+    ]
   },
   {
     "id": 89,
@@ -1247,8 +4871,50 @@
       "defense": 188
     },
     "family": "FAMILY_GRIMER",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 225,
+        "Name": "ACID_FAST",
+        "Power": 10,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 11.904761904761905
+      },
+      {
+        "Id": 224,
+        "Name": "POISON_JAB_FAST",
+        "Power": 15,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 17.857142857142854
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 16,
+        "Name": "DARK_PULSE",
+        "Power": 45,
+        "DurationMs": 3500,
+        "Energy": -33,
+        "DPS": 12.857142857142858
+      },
+      {
+        "Id": 90,
+        "Name": "SLUDGE_BOMB",
+        "Power": 55,
+        "DurationMs": 2600,
+        "Energy": -50,
+        "DPS": 26.442307692307693
+      },
+      {
+        "Id": 91,
+        "Name": "SLUDGE_WAVE",
+        "Power": 70,
+        "DurationMs": 3400,
+        "Energy": -100,
+        "DPS": 25.73529411764706
+      }
+    ]
   },
   {
     "id": 90,
@@ -1261,8 +4927,50 @@
     },
     "candy": 50,
     "family": "FAMILY_SHELLDER",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 217,
+        "Name": "ICE_SHARD_FAST",
+        "Power": 15,
+        "DurationMs": 1400,
+        "Energy": 7,
+        "DPS": 10.714285714285715
+      },
+      {
+        "Id": 221,
+        "Name": "TACKLE_FAST",
+        "Power": 12,
+        "DurationMs": 1100,
+        "Energy": 7,
+        "DPS": 10.909090909090908
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 53,
+        "Name": "BUBBLE_BEAM",
+        "Power": 30,
+        "DurationMs": 2900,
+        "Energy": -25,
+        "DPS": 12.931034482758621
+      },
+      {
+        "Id": 111,
+        "Name": "ICY_WIND",
+        "Power": 25,
+        "DurationMs": 3800,
+        "Energy": -20,
+        "DPS": 6.578947368421053
+      },
+      {
+        "Id": 105,
+        "Name": "WATER_PULSE",
+        "Power": 35,
+        "DurationMs": 3300,
+        "Energy": -25,
+        "DPS": 13.25757575757576
+      }
+    ]
   },
   {
     "id": 91,
@@ -1275,8 +4983,50 @@
       "defense": 196
     },
     "family": "FAMILY_SHELLDER",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 218,
+        "Name": "FROST_BREATH_FAST",
+        "Power": 9,
+        "DurationMs": 810,
+        "Energy": 7,
+        "DPS": 13.88888888888889
+      },
+      {
+        "Id": 217,
+        "Name": "ICE_SHARD_FAST",
+        "Power": 15,
+        "DurationMs": 1400,
+        "Energy": 7,
+        "DPS": 13.392857142857144
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 40,
+        "Name": "BLIZZARD",
+        "Power": 100,
+        "DurationMs": 3900,
+        "Energy": -100,
+        "DPS": 32.05128205128205
+      },
+      {
+        "Id": 107,
+        "Name": "HYDRO_PUMP",
+        "Power": 90,
+        "DurationMs": 3800,
+        "Energy": -100,
+        "DPS": 29.60526315789474
+      },
+      {
+        "Id": 111,
+        "Name": "ICY_WIND",
+        "Power": 25,
+        "DurationMs": 3800,
+        "Energy": -20,
+        "DPS": 8.223684210526317
+      }
+    ]
   },
   {
     "id": 92,
@@ -1290,8 +5040,50 @@
     },
     "candy": 25,
     "family": "FAMILY_GASTLY",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 212,
+        "Name": "LICK_FAST",
+        "Power": 5,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12.5
+      },
+      {
+        "Id": 203,
+        "Name": "SUCKER_PUNCH_FAST",
+        "Power": 7,
+        "DurationMs": 700,
+        "Energy": 4,
+        "DPS": 10
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 16,
+        "Name": "DARK_PULSE",
+        "Power": 45,
+        "DurationMs": 3500,
+        "Energy": -33,
+        "DPS": 12.857142857142858
+      },
+      {
+        "Id": 69,
+        "Name": "OMINOUS_WIND",
+        "Power": 30,
+        "DurationMs": 3100,
+        "Energy": -25,
+        "DPS": 12.096774193548388
+      },
+      {
+        "Id": 90,
+        "Name": "SLUDGE_BOMB",
+        "Power": 55,
+        "DurationMs": 2600,
+        "Energy": -50,
+        "DPS": 26.442307692307693
+      }
+    ]
   },
   {
     "id": 93,
@@ -1305,8 +5097,50 @@
     },
     "candy": 100,
     "family": "FAMILY_GASTLY",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 212,
+        "Name": "LICK_FAST",
+        "Power": 5,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12.5
+      },
+      {
+        "Id": 213,
+        "Name": "SHADOW_CLAW_FAST",
+        "Power": 11,
+        "DurationMs": 950,
+        "Energy": 7,
+        "DPS": 14.473684210526317
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 16,
+        "Name": "DARK_PULSE",
+        "Power": 45,
+        "DurationMs": 3500,
+        "Energy": -33,
+        "DPS": 12.857142857142858
+      },
+      {
+        "Id": 70,
+        "Name": "SHADOW_BALL",
+        "Power": 45,
+        "DurationMs": 3080,
+        "Energy": -33,
+        "DPS": 18.26298701298701
+      },
+      {
+        "Id": 90,
+        "Name": "SLUDGE_BOMB",
+        "Power": 55,
+        "DurationMs": 2600,
+        "Energy": -50,
+        "DPS": 26.442307692307693
+      }
+    ]
   },
   {
     "id": 94,
@@ -1319,8 +5153,50 @@
       "defense": 156
     },
     "family": "FAMILY_GASTLY",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 213,
+        "Name": "SHADOW_CLAW_FAST",
+        "Power": 11,
+        "DurationMs": 950,
+        "Energy": 7,
+        "DPS": 14.473684210526317
+      },
+      {
+        "Id": 203,
+        "Name": "SUCKER_PUNCH_FAST",
+        "Power": 7,
+        "DurationMs": 700,
+        "Energy": 4,
+        "DPS": 10
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 16,
+        "Name": "DARK_PULSE",
+        "Power": 45,
+        "DurationMs": 3500,
+        "Energy": -33,
+        "DPS": 12.857142857142858
+      },
+      {
+        "Id": 70,
+        "Name": "SHADOW_BALL",
+        "Power": 45,
+        "DurationMs": 3080,
+        "Energy": -33,
+        "DPS": 18.26298701298701
+      },
+      {
+        "Id": 91,
+        "Name": "SLUDGE_WAVE",
+        "Power": 70,
+        "DurationMs": 3400,
+        "Energy": -100,
+        "DPS": 25.73529411764706
+      }
+    ]
   },
   {
     "id": 95,
@@ -1333,8 +5209,50 @@
       "defense": 186
     },
     "family": "FAMILY_ONIX",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 227,
+        "Name": "ROCK_THROW_FAST",
+        "Power": 12,
+        "DurationMs": 1360,
+        "Energy": 7,
+        "DPS": 11.02941176470588
+      },
+      {
+        "Id": 221,
+        "Name": "TACKLE_FAST",
+        "Power": 12,
+        "DurationMs": 1100,
+        "Energy": 7,
+        "DPS": 10.909090909090908
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 74,
+        "Name": "IRON_HEAD",
+        "Power": 30,
+        "DurationMs": 2000,
+        "Energy": -33,
+        "DPS": 15
+      },
+      {
+        "Id": 64,
+        "Name": "ROCK_SLIDE",
+        "Power": 50,
+        "DurationMs": 3200,
+        "Energy": -33,
+        "DPS": 19.53125
+      },
+      {
+        "Id": 32,
+        "Name": "STONE_EDGE",
+        "Power": 80,
+        "DurationMs": 3100,
+        "Energy": -100,
+        "DPS": 32.25806451612903
+      }
+    ]
   },
   {
     "id": 96,
@@ -1347,8 +5265,50 @@
     },
     "candy": 50,
     "family": "FAMILY_DROWZEE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 235,
+        "Name": "CONFUSION_FAST",
+        "Power": 15,
+        "DurationMs": 1510,
+        "Energy": 7,
+        "DPS": 12.417218543046358
+      },
+      {
+        "Id": 222,
+        "Name": "POUND_FAST",
+        "Power": 7,
+        "DurationMs": 540,
+        "Energy": 7,
+        "DPS": 12.962962962962962
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 30,
+        "Name": "PSYBEAM",
+        "Power": 40,
+        "DurationMs": 3800,
+        "Energy": -25,
+        "DPS": 13.157894736842106
+      },
+      {
+        "Id": 108,
+        "Name": "PSYCHIC",
+        "Power": 55,
+        "DurationMs": 2800,
+        "Energy": -50,
+        "DPS": 24.553571428571427
+      },
+      {
+        "Id": 60,
+        "Name": "PSYSHOCK",
+        "Power": 40,
+        "DurationMs": 2700,
+        "Energy": -33,
+        "DPS": 18.518518518518515
+      }
+    ]
   },
   {
     "id": 97,
@@ -1360,8 +5320,50 @@
       "defense": 196
     },
     "family": "FAMILY_DROWZEE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 235,
+        "Name": "CONFUSION_FAST",
+        "Power": 15,
+        "DurationMs": 1510,
+        "Energy": 7,
+        "DPS": 12.417218543046358
+      },
+      {
+        "Id": 234,
+        "Name": "ZEN_HEADBUTT_FAST",
+        "Power": 12,
+        "DurationMs": 1050,
+        "Energy": 4,
+        "DPS": 14.285714285714286
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 108,
+        "Name": "PSYCHIC",
+        "Power": 55,
+        "DurationMs": 2800,
+        "Energy": -50,
+        "DPS": 24.553571428571427
+      },
+      {
+        "Id": 60,
+        "Name": "PSYSHOCK",
+        "Power": 40,
+        "DurationMs": 2700,
+        "Energy": -33,
+        "DPS": 18.518518518518515
+      },
+      {
+        "Id": 70,
+        "Name": "SHADOW_BALL",
+        "Power": 45,
+        "DurationMs": 3080,
+        "Energy": -33,
+        "DPS": 14.61038961038961
+      }
+    ]
   },
   {
     "id": 98,
@@ -1374,8 +5376,50 @@
     },
     "candy": 50,
     "family": "FAMILY_KRABBY",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 237,
+        "Name": "BUBBLE_FAST",
+        "Power": 25,
+        "DurationMs": 2300,
+        "Energy": 15,
+        "DPS": 13.58695652173913
+      },
+      {
+        "Id": 216,
+        "Name": "MUD_SHOT_FAST",
+        "Power": 6,
+        "DurationMs": 550,
+        "Energy": 7,
+        "DPS": 10.909090909090908
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 53,
+        "Name": "BUBBLE_BEAM",
+        "Power": 30,
+        "DurationMs": 2900,
+        "Energy": -25,
+        "DPS": 12.931034482758621
+      },
+      {
+        "Id": 20,
+        "Name": "VICE_GRIP",
+        "Power": 25,
+        "DurationMs": 2100,
+        "Energy": -20,
+        "DPS": 11.904761904761905
+      },
+      {
+        "Id": 105,
+        "Name": "WATER_PULSE",
+        "Power": 35,
+        "DurationMs": 3300,
+        "Energy": -25,
+        "DPS": 13.25757575757576
+      }
+    ]
   },
   {
     "id": 99,
@@ -1387,8 +5431,50 @@
       "defense": 168
     },
     "family": "FAMILY_KRABBY",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 228,
+        "Name": "METAL_CLAW_FAST",
+        "Power": 8,
+        "DurationMs": 630,
+        "Energy": 7,
+        "DPS": 12.698412698412698
+      },
+      {
+        "Id": 216,
+        "Name": "MUD_SHOT_FAST",
+        "Power": 6,
+        "DurationMs": 550,
+        "Energy": 7,
+        "DPS": 10.909090909090908
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 20,
+        "Name": "VICE_GRIP",
+        "Power": 25,
+        "DurationMs": 2100,
+        "Energy": -20,
+        "DPS": 11.904761904761905
+      },
+      {
+        "Id": 105,
+        "Name": "WATER_PULSE",
+        "Power": 35,
+        "DurationMs": 3300,
+        "Energy": -25,
+        "DPS": 13.25757575757576
+      },
+      {
+        "Id": 100,
+        "Name": "X_SCISSOR",
+        "Power": 35,
+        "DurationMs": 2100,
+        "Energy": -33,
+        "DPS": 16.666666666666664
+      }
+    ]
   },
   {
     "id": 100,
@@ -1401,8 +5487,50 @@
     },
     "candy": 50,
     "family": "FAMILY_VOLTORB",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 206,
+        "Name": "SPARK_FAST",
+        "Power": 7,
+        "DurationMs": 700,
+        "Energy": 4,
+        "DPS": 12.5
+      },
+      {
+        "Id": 221,
+        "Name": "TACKLE_FAST",
+        "Power": 12,
+        "DurationMs": 1100,
+        "Energy": 7,
+        "DPS": 10.909090909090908
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 35,
+        "Name": "DISCHARGE",
+        "Power": 35,
+        "DurationMs": 2500,
+        "Energy": -33,
+        "DPS": 17.5
+      },
+      {
+        "Id": 99,
+        "Name": "SIGNAL_BEAM",
+        "Power": 45,
+        "DurationMs": 3100,
+        "Energy": -33,
+        "DPS": 14.516129032258064
+      },
+      {
+        "Id": 79,
+        "Name": "THUNDERBOLT",
+        "Power": 55,
+        "DurationMs": 2700,
+        "Energy": -50,
+        "DPS": 25.462962962962962
+      }
+    ]
   },
   {
     "id": 101,
@@ -1414,8 +5542,50 @@
       "defense": 174
     },
     "family": "FAMILY_VOLTORB",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 206,
+        "Name": "SPARK_FAST",
+        "Power": 7,
+        "DurationMs": 700,
+        "Energy": 4,
+        "DPS": 12.5
+      },
+      {
+        "Id": 221,
+        "Name": "TACKLE_FAST",
+        "Power": 12,
+        "DurationMs": 1100,
+        "Energy": 7,
+        "DPS": 10.909090909090908
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 35,
+        "Name": "DISCHARGE",
+        "Power": 35,
+        "DurationMs": 2500,
+        "Energy": -33,
+        "DPS": 17.5
+      },
+      {
+        "Id": 14,
+        "Name": "HYPER_BEAM",
+        "Power": 120,
+        "DurationMs": 5000,
+        "Energy": -100,
+        "DPS": 24
+      },
+      {
+        "Id": 79,
+        "Name": "THUNDERBOLT",
+        "Power": 55,
+        "DurationMs": 2700,
+        "Energy": -50,
+        "DPS": 25.462962962962962
+      }
+    ]
   },
   {
     "id": 102,
@@ -1429,8 +5599,42 @@
     },
     "candy": 50,
     "family": "FAMILY_EXEGGCUTE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 235,
+        "Name": "CONFUSION_FAST",
+        "Power": 15,
+        "DurationMs": 1510,
+        "Energy": 7,
+        "DPS": 12.417218543046358
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 62,
+        "Name": "ANCIENT_POWER",
+        "Power": 35,
+        "DurationMs": 3600,
+        "Energy": -25,
+        "DPS": 9.722222222222221
+      },
+      {
+        "Id": 108,
+        "Name": "PSYCHIC",
+        "Power": 55,
+        "DurationMs": 2800,
+        "Energy": -50,
+        "DPS": 24.553571428571427
+      },
+      {
+        "Id": 59,
+        "Name": "SEED_BOMB",
+        "Power": 40,
+        "DurationMs": 2400,
+        "Energy": -33,
+        "DPS": 20.833333333333336
+      }
+    ]
   },
   {
     "id": 103,
@@ -1443,8 +5647,50 @@
       "defense": 164
     },
     "family": "FAMILY_EXEGGCUTE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 235,
+        "Name": "CONFUSION_FAST",
+        "Power": 15,
+        "DurationMs": 1510,
+        "Energy": 7,
+        "DPS": 12.417218543046358
+      },
+      {
+        "Id": 234,
+        "Name": "ZEN_HEADBUTT_FAST",
+        "Power": 12,
+        "DurationMs": 1050,
+        "Energy": 4,
+        "DPS": 14.285714285714286
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 108,
+        "Name": "PSYCHIC",
+        "Power": 55,
+        "DurationMs": 2800,
+        "Energy": -50,
+        "DPS": 24.553571428571427
+      },
+      {
+        "Id": 59,
+        "Name": "SEED_BOMB",
+        "Power": 40,
+        "DurationMs": 2400,
+        "Energy": -33,
+        "DPS": 20.833333333333336
+      },
+      {
+        "Id": 116,
+        "Name": "SOLAR_BEAM",
+        "Power": 120,
+        "DurationMs": 4900,
+        "Energy": -100,
+        "DPS": 30.612244897959183
+      }
+    ]
   },
   {
     "id": 104,
@@ -1457,8 +5703,50 @@
     },
     "candy": 50,
     "family": "FAMILY_CUBONE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 233,
+        "Name": "MUD_SLAP_FAST",
+        "Power": 15,
+        "DurationMs": 1350,
+        "Energy": 9,
+        "DPS": 13.88888888888889
+      },
+      {
+        "Id": 241,
+        "Name": "ROCK_SMASH_FAST",
+        "Power": 15,
+        "DurationMs": 1410,
+        "Energy": 7,
+        "DPS": 10.638297872340425
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 94,
+        "Name": "BONE_CLUB",
+        "Power": 25,
+        "DurationMs": 1600,
+        "Energy": -25,
+        "DPS": 19.53125
+      },
+      {
+        "Id": 95,
+        "Name": "BULLDOZE",
+        "Power": 35,
+        "DurationMs": 3400,
+        "Energy": -25,
+        "DPS": 12.86764705882353
+      },
+      {
+        "Id": 26,
+        "Name": "DIG",
+        "Power": 70,
+        "DurationMs": 5800,
+        "Energy": -33,
+        "DPS": 15.086206896551724
+      }
+    ]
   },
   {
     "id": 105,
@@ -1470,8 +5758,50 @@
       "defense": 202
     },
     "family": "FAMILY_CUBONE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 233,
+        "Name": "MUD_SLAP_FAST",
+        "Power": 15,
+        "DurationMs": 1350,
+        "Energy": 9,
+        "DPS": 13.88888888888889
+      },
+      {
+        "Id": 241,
+        "Name": "ROCK_SMASH_FAST",
+        "Power": 15,
+        "DurationMs": 1410,
+        "Energy": 7,
+        "DPS": 10.638297872340425
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 94,
+        "Name": "BONE_CLUB",
+        "Power": 25,
+        "DurationMs": 1600,
+        "Energy": -25,
+        "DPS": 19.53125
+      },
+      {
+        "Id": 26,
+        "Name": "DIG",
+        "Power": 70,
+        "DurationMs": 5800,
+        "Energy": -33,
+        "DPS": 15.086206896551724
+      },
+      {
+        "Id": 31,
+        "Name": "EARTHQUAKE",
+        "Power": 100,
+        "DurationMs": 4200,
+        "Energy": -100,
+        "DPS": 29.761904761904763
+      }
+    ]
   },
   {
     "id": 106,
@@ -1483,8 +5813,50 @@
       "defense": 172
     },
     "family": "FAMILY_HITMONLEE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 207,
+        "Name": "LOW_KICK_FAST",
+        "Power": 5,
+        "DurationMs": 600,
+        "Energy": 7,
+        "DPS": 10.416666666666668
+      },
+      {
+        "Id": 241,
+        "Name": "ROCK_SMASH_FAST",
+        "Power": 15,
+        "DurationMs": 1410,
+        "Energy": 7,
+        "DPS": 13.297872340425531
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 56,
+        "Name": "LOW_SWEEP",
+        "Power": 30,
+        "DurationMs": 2250,
+        "Energy": -25,
+        "DPS": 16.666666666666668
+      },
+      {
+        "Id": 127,
+        "Name": "STOMP",
+        "Power": 30,
+        "DurationMs": 2100,
+        "Energy": -25,
+        "DPS": 14.285714285714285
+      },
+      {
+        "Id": 32,
+        "Name": "STONE_EDGE",
+        "Power": 80,
+        "DurationMs": 3100,
+        "Energy": -100,
+        "DPS": 25.806451612903224
+      }
+    ]
   },
   {
     "id": 107,
@@ -1496,8 +5868,58 @@
       "defense": 204
     },
     "family": "FAMILY_HITMONCHAN",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 229,
+        "Name": "BULLET_PUNCH_FAST",
+        "Power": 10,
+        "DurationMs": 1200,
+        "Energy": 7,
+        "DPS": 8.333333333333334
+      },
+      {
+        "Id": 241,
+        "Name": "ROCK_SMASH_FAST",
+        "Power": 15,
+        "DurationMs": 1410,
+        "Energy": 7,
+        "DPS": 13.297872340425531
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 123,
+        "Name": "BRICK_BREAK",
+        "Power": 30,
+        "DurationMs": 1600,
+        "Energy": -33,
+        "DPS": 23.4375
+      },
+      {
+        "Id": 115,
+        "Name": "FIRE_PUNCH",
+        "Power": 40,
+        "DurationMs": 2800,
+        "Energy": -33,
+        "DPS": 14.285714285714286
+      },
+      {
+        "Id": 33,
+        "Name": "ICE_PUNCH",
+        "Power": 45,
+        "DurationMs": 3500,
+        "Energy": -33,
+        "DPS": 12.857142857142858
+      },
+      {
+        "Id": 77,
+        "Name": "THUNDER_PUNCH",
+        "Power": 40,
+        "DurationMs": 2400,
+        "Energy": -33,
+        "DPS": 16.666666666666668
+      }
+    ]
   },
   {
     "id": 108,
@@ -1509,8 +5931,50 @@
       "defense": 160
     },
     "family": "FAMILY_LICKITUNG",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 212,
+        "Name": "LICK_FAST",
+        "Power": 5,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 10
+      },
+      {
+        "Id": 234,
+        "Name": "ZEN_HEADBUTT_FAST",
+        "Power": 12,
+        "DurationMs": 1050,
+        "Energy": 4,
+        "DPS": 11.428571428571429
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 14,
+        "Name": "HYPER_BEAM",
+        "Power": 120,
+        "DurationMs": 5000,
+        "Energy": -100,
+        "DPS": 30
+      },
+      {
+        "Id": 118,
+        "Name": "POWER_WHIP",
+        "Power": 70,
+        "DurationMs": 2800,
+        "Energy": -100,
+        "DPS": 25
+      },
+      {
+        "Id": 127,
+        "Name": "STOMP",
+        "Power": 30,
+        "DurationMs": 2100,
+        "Energy": -25,
+        "DPS": 17.857142857142854
+      }
+    ]
   },
   {
     "id": 109,
@@ -1523,8 +5987,50 @@
     },
     "candy": 50,
     "family": "FAMILY_KOFFING",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 225,
+        "Name": "ACID_FAST",
+        "Power": 10,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 11.904761904761905
+      },
+      {
+        "Id": 221,
+        "Name": "TACKLE_FAST",
+        "Power": 12,
+        "DurationMs": 1100,
+        "Energy": 7,
+        "DPS": 10.909090909090908
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 16,
+        "Name": "DARK_PULSE",
+        "Power": 45,
+        "DurationMs": 3500,
+        "Energy": -33,
+        "DPS": 12.857142857142858
+      },
+      {
+        "Id": 18,
+        "Name": "SLUDGE",
+        "Power": 30,
+        "DurationMs": 2600,
+        "Energy": -25,
+        "DPS": 14.423076923076923
+      },
+      {
+        "Id": 90,
+        "Name": "SLUDGE_BOMB",
+        "Power": 55,
+        "DurationMs": 2600,
+        "Energy": -50,
+        "DPS": 26.442307692307693
+      }
+    ]
   },
   {
     "id": 110,
@@ -1536,8 +6042,50 @@
       "defense": 198
     },
     "family": "FAMILY_KOFFING",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 225,
+        "Name": "ACID_FAST",
+        "Power": 10,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 11.904761904761905
+      },
+      {
+        "Id": 221,
+        "Name": "TACKLE_FAST",
+        "Power": 12,
+        "DurationMs": 1100,
+        "Energy": 7,
+        "DPS": 10.909090909090908
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 16,
+        "Name": "DARK_PULSE",
+        "Power": 45,
+        "DurationMs": 3500,
+        "Energy": -33,
+        "DPS": 12.857142857142858
+      },
+      {
+        "Id": 70,
+        "Name": "SHADOW_BALL",
+        "Power": 45,
+        "DurationMs": 3080,
+        "Energy": -33,
+        "DPS": 14.61038961038961
+      },
+      {
+        "Id": 90,
+        "Name": "SLUDGE_BOMB",
+        "Power": 55,
+        "DurationMs": 2600,
+        "Energy": -50,
+        "DPS": 26.442307692307693
+      }
+    ]
   },
   {
     "id": 111,
@@ -1551,8 +6099,50 @@
     },
     "candy": 50,
     "family": "FAMILY_RHYHORN",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 233,
+        "Name": "MUD_SLAP_FAST",
+        "Power": 15,
+        "DurationMs": 1350,
+        "Energy": 9,
+        "DPS": 13.88888888888889
+      },
+      {
+        "Id": 241,
+        "Name": "ROCK_SMASH_FAST",
+        "Power": 15,
+        "DurationMs": 1410,
+        "Energy": 7,
+        "DPS": 10.638297872340425
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 95,
+        "Name": "BULLDOZE",
+        "Power": 35,
+        "DurationMs": 3400,
+        "Energy": -25,
+        "DPS": 12.86764705882353
+      },
+      {
+        "Id": 126,
+        "Name": "HORN_ATTACK",
+        "Power": 25,
+        "DurationMs": 2200,
+        "Energy": -25,
+        "DPS": 11.363636363636363
+      },
+      {
+        "Id": 127,
+        "Name": "STOMP",
+        "Power": 30,
+        "DurationMs": 2100,
+        "Energy": -25,
+        "DPS": 14.285714285714285
+      }
+    ]
   },
   {
     "id": 112,
@@ -1565,8 +6155,50 @@
       "defense": 160
     },
     "family": "FAMILY_RHYHORN",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 233,
+        "Name": "MUD_SLAP_FAST",
+        "Power": 15,
+        "DurationMs": 1350,
+        "Energy": 9,
+        "DPS": 13.88888888888889
+      },
+      {
+        "Id": 241,
+        "Name": "ROCK_SMASH_FAST",
+        "Power": 15,
+        "DurationMs": 1410,
+        "Energy": 7,
+        "DPS": 10.638297872340425
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 31,
+        "Name": "EARTHQUAKE",
+        "Power": 100,
+        "DurationMs": 4200,
+        "Energy": -100,
+        "DPS": 29.761904761904763
+      },
+      {
+        "Id": 22,
+        "Name": "MEGAHORN",
+        "Power": 80,
+        "DurationMs": 3200,
+        "Energy": -100,
+        "DPS": 25
+      },
+      {
+        "Id": 32,
+        "Name": "STONE_EDGE",
+        "Power": 80,
+        "DurationMs": 3100,
+        "Energy": -100,
+        "DPS": 32.25806451612903
+      }
+    ]
   },
   {
     "id": 113,
@@ -1578,8 +6210,50 @@
       "defense": 60
     },
     "family": "FAMILY_CHANSEY",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 222,
+        "Name": "POUND_FAST",
+        "Power": 7,
+        "DurationMs": 540,
+        "Energy": 7,
+        "DPS": 16.203703703703702
+      },
+      {
+        "Id": 234,
+        "Name": "ZEN_HEADBUTT_FAST",
+        "Power": 12,
+        "DurationMs": 1050,
+        "Energy": 4,
+        "DPS": 11.428571428571429
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 86,
+        "Name": "DAZZLING_GLEAM",
+        "Power": 55,
+        "DurationMs": 4200,
+        "Energy": -33,
+        "DPS": 13.095238095238095
+      },
+      {
+        "Id": 30,
+        "Name": "PSYBEAM",
+        "Power": 40,
+        "DurationMs": 3800,
+        "Energy": -25,
+        "DPS": 10.526315789473685
+      },
+      {
+        "Id": 108,
+        "Name": "PSYCHIC",
+        "Power": 55,
+        "DurationMs": 2800,
+        "Energy": -50,
+        "DPS": 19.642857142857142
+      }
+    ]
   },
   {
     "id": 114,
@@ -1591,8 +6265,42 @@
       "defense": 152
     },
     "family": "FAMILY_TANGELA",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 214,
+        "Name": "VINE_WHIP_FAST",
+        "Power": 7,
+        "DurationMs": 650,
+        "Energy": 7,
+        "DPS": 13.46153846153846
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 118,
+        "Name": "POWER_WHIP",
+        "Power": 70,
+        "DurationMs": 2800,
+        "Energy": -100,
+        "DPS": 31.25
+      },
+      {
+        "Id": 90,
+        "Name": "SLUDGE_BOMB",
+        "Power": 55,
+        "DurationMs": 2600,
+        "Energy": -50,
+        "DPS": 21.153846153846153
+      },
+      {
+        "Id": 116,
+        "Name": "SOLAR_BEAM",
+        "Power": 120,
+        "DurationMs": 4900,
+        "Energy": -100,
+        "DPS": 30.612244897959183
+      }
+    ]
   },
   {
     "id": 115,
@@ -1604,8 +6312,50 @@
       "defense": 178
     },
     "family": "FAMILY_KANGASKHAN",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 207,
+        "Name": "LOW_KICK_FAST",
+        "Power": 5,
+        "DurationMs": 600,
+        "Energy": 7,
+        "DPS": 8.333333333333334
+      },
+      {
+        "Id": 233,
+        "Name": "MUD_SLAP_FAST",
+        "Power": 15,
+        "DurationMs": 1350,
+        "Energy": 9,
+        "DPS": 11.11111111111111
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 123,
+        "Name": "BRICK_BREAK",
+        "Power": 30,
+        "DurationMs": 1600,
+        "Energy": -33,
+        "DPS": 18.75
+      },
+      {
+        "Id": 31,
+        "Name": "EARTHQUAKE",
+        "Power": 100,
+        "DurationMs": 4200,
+        "Energy": -100,
+        "DPS": 23.80952380952381
+      },
+      {
+        "Id": 127,
+        "Name": "STOMP",
+        "Power": 30,
+        "DurationMs": 2100,
+        "Energy": -25,
+        "DPS": 17.857142857142854
+      }
+    ]
   },
   {
     "id": 116,
@@ -1618,8 +6368,50 @@
     },
     "candy": 50,
     "family": "FAMILY_HORSEA",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 237,
+        "Name": "BUBBLE_FAST",
+        "Power": 25,
+        "DurationMs": 2300,
+        "Energy": 15,
+        "DPS": 13.58695652173913
+      },
+      {
+        "Id": 230,
+        "Name": "WATER_GUN_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 15
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 53,
+        "Name": "BUBBLE_BEAM",
+        "Power": 30,
+        "DurationMs": 2900,
+        "Energy": -25,
+        "DPS": 12.931034482758621
+      },
+      {
+        "Id": 82,
+        "Name": "DRAGON_PULSE",
+        "Power": 65,
+        "DurationMs": 3600,
+        "Energy": -50,
+        "DPS": 18.055555555555554
+      },
+      {
+        "Id": 36,
+        "Name": "FLASH_CANNON",
+        "Power": 60,
+        "DurationMs": 3900,
+        "Energy": -33,
+        "DPS": 15.384615384615385
+      }
+    ]
   },
   {
     "id": 117,
@@ -1631,8 +6423,50 @@
       "defense": 150
     },
     "family": "FAMILY_HORSEA",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 204,
+        "Name": "DRAGON_BREATH_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12
+      },
+      {
+        "Id": 230,
+        "Name": "WATER_GUN_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 15
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 40,
+        "Name": "BLIZZARD",
+        "Power": 100,
+        "DurationMs": 3900,
+        "Energy": -100,
+        "DPS": 25.641025641025642
+      },
+      {
+        "Id": 82,
+        "Name": "DRAGON_PULSE",
+        "Power": 65,
+        "DurationMs": 3600,
+        "Energy": -50,
+        "DPS": 18.055555555555554
+      },
+      {
+        "Id": 107,
+        "Name": "HYDRO_PUMP",
+        "Power": 90,
+        "DurationMs": 3800,
+        "Energy": -100,
+        "DPS": 29.60526315789474
+      }
+    ]
   },
   {
     "id": 118,
@@ -1645,8 +6479,50 @@
     },
     "candy": 50,
     "family": "FAMILY_GOLDEEN",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 216,
+        "Name": "MUD_SHOT_FAST",
+        "Power": 6,
+        "DurationMs": 550,
+        "Energy": 7,
+        "DPS": 10.909090909090908
+      },
+      {
+        "Id": 211,
+        "Name": "PECK_FAST",
+        "Power": 10,
+        "DurationMs": 1150,
+        "Energy": 10,
+        "DPS": 8.695652173913045
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 58,
+        "Name": "AQUA_TAIL",
+        "Power": 45,
+        "DurationMs": 2350,
+        "Energy": -50,
+        "DPS": 23.936170212765955
+      },
+      {
+        "Id": 126,
+        "Name": "HORN_ATTACK",
+        "Power": 25,
+        "DurationMs": 2200,
+        "Energy": -25,
+        "DPS": 11.363636363636363
+      },
+      {
+        "Id": 105,
+        "Name": "WATER_PULSE",
+        "Power": 35,
+        "DurationMs": 3300,
+        "Energy": -25,
+        "DPS": 13.25757575757576
+      }
+    ]
   },
   {
     "id": 119,
@@ -1658,8 +6534,50 @@
       "defense": 160
     },
     "family": "FAMILY_GOLDEEN",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 211,
+        "Name": "PECK_FAST",
+        "Power": 10,
+        "DurationMs": 1150,
+        "Energy": 10,
+        "DPS": 8.695652173913045
+      },
+      {
+        "Id": 224,
+        "Name": "POISON_JAB_FAST",
+        "Power": 15,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 14.285714285714285
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 46,
+        "Name": "DRILL_RUN",
+        "Power": 50,
+        "DurationMs": 3400,
+        "Energy": -33,
+        "DPS": 14.705882352941178
+      },
+      {
+        "Id": 111,
+        "Name": "ICY_WIND",
+        "Power": 25,
+        "DurationMs": 3800,
+        "Energy": -20,
+        "DPS": 6.578947368421053
+      },
+      {
+        "Id": 22,
+        "Name": "MEGAHORN",
+        "Power": 80,
+        "DurationMs": 3200,
+        "Energy": -100,
+        "DPS": 25
+      }
+    ]
   },
   {
     "id": 120,
@@ -1672,8 +6590,50 @@
     },
     "candy": 50,
     "family": "FAMILY_STARYU",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 219,
+        "Name": "QUICK_ATTACK_FAST",
+        "Power": 10,
+        "DurationMs": 1330,
+        "Energy": 7,
+        "DPS": 7.518796992481203
+      },
+      {
+        "Id": 230,
+        "Name": "WATER_GUN_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 15
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 53,
+        "Name": "BUBBLE_BEAM",
+        "Power": 30,
+        "DurationMs": 2900,
+        "Energy": -25,
+        "DPS": 12.931034482758621
+      },
+      {
+        "Id": 65,
+        "Name": "POWER_GEM",
+        "Power": 40,
+        "DurationMs": 2900,
+        "Energy": -33,
+        "DPS": 13.793103448275863
+      },
+      {
+        "Id": 125,
+        "Name": "SWIFT",
+        "Power": 30,
+        "DurationMs": 3000,
+        "Energy": -25,
+        "DPS": 10
+      }
+    ]
   },
   {
     "id": 121,
@@ -1686,8 +6646,50 @@
       "defense": 192
     },
     "family": "FAMILY_STARYU",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 219,
+        "Name": "QUICK_ATTACK_FAST",
+        "Power": 10,
+        "DurationMs": 1330,
+        "Energy": 7,
+        "DPS": 7.518796992481203
+      },
+      {
+        "Id": 230,
+        "Name": "WATER_GUN_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 15
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 107,
+        "Name": "HYDRO_PUMP",
+        "Power": 90,
+        "DurationMs": 3800,
+        "Energy": -100,
+        "DPS": 29.60526315789474
+      },
+      {
+        "Id": 65,
+        "Name": "POWER_GEM",
+        "Power": 40,
+        "DurationMs": 2900,
+        "Energy": -33,
+        "DPS": 13.793103448275863
+      },
+      {
+        "Id": 30,
+        "Name": "PSYBEAM",
+        "Power": 40,
+        "DurationMs": 3800,
+        "Energy": -25,
+        "DPS": 13.157894736842106
+      }
+    ]
   },
   {
     "id": 122,
@@ -1700,8 +6702,50 @@
       "defense": 196
     },
     "family": "FAMILY_MR_MIME",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 235,
+        "Name": "CONFUSION_FAST",
+        "Power": 15,
+        "DurationMs": 1510,
+        "Energy": 7,
+        "DPS": 12.417218543046358
+      },
+      {
+        "Id": 234,
+        "Name": "ZEN_HEADBUTT_FAST",
+        "Power": 12,
+        "DurationMs": 1050,
+        "Energy": 4,
+        "DPS": 14.285714285714286
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 30,
+        "Name": "PSYBEAM",
+        "Power": 40,
+        "DurationMs": 3800,
+        "Energy": -25,
+        "DPS": 13.157894736842106
+      },
+      {
+        "Id": 108,
+        "Name": "PSYCHIC",
+        "Power": 55,
+        "DurationMs": 2800,
+        "Energy": -50,
+        "DPS": 24.553571428571427
+      },
+      {
+        "Id": 70,
+        "Name": "SHADOW_BALL",
+        "Power": 45,
+        "DurationMs": 3080,
+        "Energy": -33,
+        "DPS": 14.61038961038961
+      }
+    ]
   },
   {
     "id": 123,
@@ -1714,8 +6758,50 @@
       "defense": 180
     },
     "family": "FAMILY_SCYTHER",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 200,
+        "Name": "FURY_CUTTER_FAST",
+        "Power": 3,
+        "DurationMs": 400,
+        "Energy": 12,
+        "DPS": 9.375
+      },
+      {
+        "Id": 239,
+        "Name": "STEEL_WING_FAST",
+        "Power": 15,
+        "DurationMs": 1330,
+        "Energy": 4,
+        "DPS": 11.278195488721805
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 49,
+        "Name": "BUG_BUZZ",
+        "Power": 75,
+        "DurationMs": 4250,
+        "Energy": -50,
+        "DPS": 22.058823529411768
+      },
+      {
+        "Id": 51,
+        "Name": "NIGHT_SLASH",
+        "Power": 30,
+        "DurationMs": 2700,
+        "Energy": -25,
+        "DPS": 11.11111111111111
+      },
+      {
+        "Id": 100,
+        "Name": "X_SCISSOR",
+        "Power": 35,
+        "DurationMs": 2100,
+        "Energy": -33,
+        "DPS": 20.83333333333333
+      }
+    ]
   },
   {
     "id": 124,
@@ -1728,8 +6814,50 @@
       "defense": 134
     },
     "family": "FAMILY_JYNX",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 218,
+        "Name": "FROST_BREATH_FAST",
+        "Power": 9,
+        "DurationMs": 810,
+        "Energy": 7,
+        "DPS": 13.88888888888889
+      },
+      {
+        "Id": 222,
+        "Name": "POUND_FAST",
+        "Power": 7,
+        "DurationMs": 540,
+        "Energy": 7,
+        "DPS": 12.962962962962962
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 85,
+        "Name": "DRAINING_KISS",
+        "Power": 25,
+        "DurationMs": 2800,
+        "Energy": -20,
+        "DPS": 8.928571428571429
+      },
+      {
+        "Id": 33,
+        "Name": "ICE_PUNCH",
+        "Power": 45,
+        "DurationMs": 3500,
+        "Energy": -33,
+        "DPS": 16.071428571428573
+      },
+      {
+        "Id": 60,
+        "Name": "PSYSHOCK",
+        "Power": 40,
+        "DurationMs": 2700,
+        "Energy": -33,
+        "DPS": 18.518518518518515
+      }
+    ]
   },
   {
     "id": 125,
@@ -1741,8 +6869,50 @@
       "defense": 160
     },
     "family": "FAMILY_ELECTABUZZ",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 207,
+        "Name": "LOW_KICK_FAST",
+        "Power": 5,
+        "DurationMs": 600,
+        "Energy": 7,
+        "DPS": 8.333333333333334
+      },
+      {
+        "Id": 205,
+        "Name": "THUNDER_SHOCK_FAST",
+        "Power": 5,
+        "DurationMs": 600,
+        "Energy": 7,
+        "DPS": 10.416666666666668
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 78,
+        "Name": "THUNDER",
+        "Power": 100,
+        "DurationMs": 4300,
+        "Energy": -100,
+        "DPS": 29.069767441860467
+      },
+      {
+        "Id": 77,
+        "Name": "THUNDER_PUNCH",
+        "Power": 40,
+        "DurationMs": 2400,
+        "Energy": -33,
+        "DPS": 20.833333333333336
+      },
+      {
+        "Id": 79,
+        "Name": "THUNDERBOLT",
+        "Power": 55,
+        "DurationMs": 2700,
+        "Energy": -50,
+        "DPS": 25.462962962962962
+      }
+    ]
   },
   {
     "id": 126,
@@ -1754,8 +6924,50 @@
       "defense": 158
     },
     "family": "FAMILY_MAGMAR",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 209,
+        "Name": "EMBER_FAST",
+        "Power": 10,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 11.904761904761905
+      },
+      {
+        "Id": 208,
+        "Name": "KARATE_CHOP_FAST",
+        "Power": 6,
+        "DurationMs": 800,
+        "Energy": 7,
+        "DPS": 7.5
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 103,
+        "Name": "FIRE_BLAST",
+        "Power": 100,
+        "DurationMs": 4100,
+        "Energy": -100,
+        "DPS": 30.48780487804878
+      },
+      {
+        "Id": 115,
+        "Name": "FIRE_PUNCH",
+        "Power": 40,
+        "DurationMs": 2800,
+        "Energy": -33,
+        "DPS": 17.857142857142858
+      },
+      {
+        "Id": 24,
+        "Name": "FLAMETHROWER",
+        "Power": 55,
+        "DurationMs": 2900,
+        "Energy": -50,
+        "DPS": 23.706896551724135
+      }
+    ]
   },
   {
     "id": 127,
@@ -1767,8 +6979,50 @@
       "defense": 186
     },
     "family": "FAMILY_PINSIR",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 200,
+        "Name": "FURY_CUTTER_FAST",
+        "Power": 3,
+        "DurationMs": 400,
+        "Energy": 12,
+        "DPS": 9.375
+      },
+      {
+        "Id": 241,
+        "Name": "ROCK_SMASH_FAST",
+        "Power": 15,
+        "DurationMs": 1410,
+        "Energy": 7,
+        "DPS": 10.638297872340425
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 54,
+        "Name": "SUBMISSION",
+        "Power": 30,
+        "DurationMs": 2100,
+        "Energy": -33,
+        "DPS": 14.285714285714285
+      },
+      {
+        "Id": 20,
+        "Name": "VICE_GRIP",
+        "Power": 25,
+        "DurationMs": 2100,
+        "Energy": -20,
+        "DPS": 11.904761904761905
+      },
+      {
+        "Id": 100,
+        "Name": "X_SCISSOR",
+        "Power": 35,
+        "DurationMs": 2100,
+        "Energy": -33,
+        "DPS": 20.83333333333333
+      }
+    ]
   },
   {
     "id": 128,
@@ -1780,8 +7034,50 @@
       "defense": 184
     },
     "family": "FAMILY_TAUROS",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 221,
+        "Name": "TACKLE_FAST",
+        "Power": 12,
+        "DurationMs": 1100,
+        "Energy": 7,
+        "DPS": 13.636363636363635
+      },
+      {
+        "Id": 234,
+        "Name": "ZEN_HEADBUTT_FAST",
+        "Power": 12,
+        "DurationMs": 1050,
+        "Energy": 4,
+        "DPS": 11.428571428571429
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 31,
+        "Name": "EARTHQUAKE",
+        "Power": 100,
+        "DurationMs": 4200,
+        "Energy": -100,
+        "DPS": 23.80952380952381
+      },
+      {
+        "Id": 126,
+        "Name": "HORN_ATTACK",
+        "Power": 25,
+        "DurationMs": 2200,
+        "Energy": -25,
+        "DPS": 14.204545454545453
+      },
+      {
+        "Id": 74,
+        "Name": "IRON_HEAD",
+        "Power": 30,
+        "DurationMs": 2000,
+        "Energy": -33,
+        "DPS": 15
+      }
+    ]
   },
   {
     "id": 129,
@@ -1794,8 +7090,25 @@
     },
     "candy": 400,
     "family": "FAMILY_MAGIKARP",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 231,
+        "Name": "SPLASH_FAST",
+        "DurationMs": 1230,
+        "Energy": 7,
+        "DPS": null
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 133,
+        "Name": "STRUGGLE",
+        "Power": 15,
+        "DurationMs": 1695,
+        "Energy": -20,
+        "DPS": 8.849557522123893
+      }
+    ]
   },
   {
     "id": 130,
@@ -1808,8 +7121,50 @@
       "defense": 196
     },
     "family": "FAMILY_MAGIKARP",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 202,
+        "Name": "BITE_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12
+      },
+      {
+        "Id": 204,
+        "Name": "DRAGON_BREATH_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 82,
+        "Name": "DRAGON_PULSE",
+        "Power": 65,
+        "DurationMs": 3600,
+        "Energy": -50,
+        "DPS": 18.055555555555554
+      },
+      {
+        "Id": 107,
+        "Name": "HYDRO_PUMP",
+        "Power": 90,
+        "DurationMs": 3800,
+        "Energy": -100,
+        "DPS": 29.60526315789474
+      },
+      {
+        "Id": 80,
+        "Name": "TWISTER",
+        "Power": 25,
+        "DurationMs": 2700,
+        "Energy": -20,
+        "DPS": 9.25925925925926
+      }
+    ]
   },
   {
     "id": 131,
@@ -1822,8 +7177,50 @@
       "defense": 190
     },
     "family": "FAMILY_LAPRAS",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 218,
+        "Name": "FROST_BREATH_FAST",
+        "Power": 9,
+        "DurationMs": 810,
+        "Energy": 7,
+        "DPS": 13.88888888888889
+      },
+      {
+        "Id": 217,
+        "Name": "ICE_SHARD_FAST",
+        "Power": 15,
+        "DurationMs": 1400,
+        "Energy": 7,
+        "DPS": 13.392857142857144
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 40,
+        "Name": "BLIZZARD",
+        "Power": 100,
+        "DurationMs": 3900,
+        "Energy": -100,
+        "DPS": 32.05128205128205
+      },
+      {
+        "Id": 82,
+        "Name": "DRAGON_PULSE",
+        "Power": 65,
+        "DurationMs": 3600,
+        "Energy": -50,
+        "DPS": 18.055555555555554
+      },
+      {
+        "Id": 39,
+        "Name": "ICE_BEAM",
+        "Power": 65,
+        "DurationMs": 3650,
+        "Energy": -50,
+        "DPS": 22.260273972602743
+      }
+    ]
   },
   {
     "id": 132,
@@ -1835,8 +7232,26 @@
       "defense": 110
     },
     "family": "FAMILY_DITTO",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 222,
+        "Name": "POUND_FAST",
+        "Power": 7,
+        "DurationMs": 540,
+        "Energy": 7,
+        "DPS": 16.203703703703702
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 133,
+        "Name": "STRUGGLE",
+        "Power": 15,
+        "DurationMs": 1695,
+        "Energy": -20,
+        "DPS": 11.061946902654867
+      }
+    ]
   },
   {
     "id": 133,
@@ -1849,8 +7264,50 @@
     },
     "candy": 25,
     "family": "FAMILY_EEVEE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 219,
+        "Name": "QUICK_ATTACK_FAST",
+        "Power": 10,
+        "DurationMs": 1330,
+        "Energy": 7,
+        "DPS": 9.398496240601503
+      },
+      {
+        "Id": 221,
+        "Name": "TACKLE_FAST",
+        "Power": 12,
+        "DurationMs": 1100,
+        "Energy": 7,
+        "DPS": 13.636363636363635
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 131,
+        "Name": "BODY_SLAM",
+        "Power": 40,
+        "DurationMs": 1560,
+        "Energy": -50,
+        "DPS": 32.05128205128205
+      },
+      {
+        "Id": 26,
+        "Name": "DIG",
+        "Power": 70,
+        "DurationMs": 5800,
+        "Energy": -33,
+        "DPS": 12.068965517241379
+      },
+      {
+        "Id": 125,
+        "Name": "SWIFT",
+        "Power": 30,
+        "DurationMs": 3000,
+        "Energy": -25,
+        "DPS": 12.5
+      }
+    ]
   },
   {
     "id": 134,
@@ -1862,8 +7319,42 @@
       "defense": 168
     },
     "family": "FAMILY_EEVEE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 230,
+        "Name": "WATER_GUN_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 15
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 58,
+        "Name": "AQUA_TAIL",
+        "Power": 45,
+        "DurationMs": 2350,
+        "Energy": -50,
+        "DPS": 23.936170212765955
+      },
+      {
+        "Id": 107,
+        "Name": "HYDRO_PUMP",
+        "Power": 90,
+        "DurationMs": 3800,
+        "Energy": -100,
+        "DPS": 29.60526315789474
+      },
+      {
+        "Id": 105,
+        "Name": "WATER_PULSE",
+        "Power": 35,
+        "DurationMs": 3300,
+        "Energy": -25,
+        "DPS": 13.25757575757576
+      }
+    ]
   },
   {
     "id": 135,
@@ -1875,8 +7366,42 @@
       "defense": 174
     },
     "family": "FAMILY_EEVEE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 205,
+        "Name": "THUNDER_SHOCK_FAST",
+        "Power": 5,
+        "DurationMs": 600,
+        "Energy": 7,
+        "DPS": 10.416666666666668
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 35,
+        "Name": "DISCHARGE",
+        "Power": 35,
+        "DurationMs": 2500,
+        "Energy": -33,
+        "DPS": 17.5
+      },
+      {
+        "Id": 78,
+        "Name": "THUNDER",
+        "Power": 100,
+        "DurationMs": 4300,
+        "Energy": -100,
+        "DPS": 29.069767441860467
+      },
+      {
+        "Id": 79,
+        "Name": "THUNDERBOLT",
+        "Power": 55,
+        "DurationMs": 2700,
+        "Energy": -50,
+        "DPS": 25.462962962962962
+      }
+    ]
   },
   {
     "id": 136,
@@ -1888,8 +7413,42 @@
       "defense": 178
     },
     "family": "FAMILY_EEVEE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 209,
+        "Name": "EMBER_FAST",
+        "Power": 10,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 11.904761904761905
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 103,
+        "Name": "FIRE_BLAST",
+        "Power": 100,
+        "DurationMs": 4100,
+        "Energy": -100,
+        "DPS": 30.48780487804878
+      },
+      {
+        "Id": 24,
+        "Name": "FLAMETHROWER",
+        "Power": 55,
+        "DurationMs": 2900,
+        "Energy": -50,
+        "DPS": 23.706896551724135
+      },
+      {
+        "Id": 42,
+        "Name": "HEAT_WAVE",
+        "Power": 80,
+        "DurationMs": 3800,
+        "Energy": -100,
+        "DPS": 26.315789473684212
+      }
+    ]
   },
   {
     "id": 137,
@@ -1901,8 +7460,50 @@
       "defense": 158
     },
     "family": "FAMILY_PORYGON",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 219,
+        "Name": "QUICK_ATTACK_FAST",
+        "Power": 10,
+        "DurationMs": 1330,
+        "Energy": 7,
+        "DPS": 9.398496240601503
+      },
+      {
+        "Id": 221,
+        "Name": "TACKLE_FAST",
+        "Power": 12,
+        "DurationMs": 1100,
+        "Energy": 7,
+        "DPS": 13.636363636363635
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 35,
+        "Name": "DISCHARGE",
+        "Power": 35,
+        "DurationMs": 2500,
+        "Energy": -33,
+        "DPS": 14
+      },
+      {
+        "Id": 30,
+        "Name": "PSYBEAM",
+        "Power": 40,
+        "DurationMs": 3800,
+        "Energy": -25,
+        "DPS": 10.526315789473685
+      },
+      {
+        "Id": 99,
+        "Name": "SIGNAL_BEAM",
+        "Power": 45,
+        "DurationMs": 3100,
+        "Energy": -33,
+        "DPS": 14.516129032258064
+      }
+    ]
   },
   {
     "id": 138,
@@ -1916,8 +7517,50 @@
     },
     "candy": 50,
     "family": "FAMILY_OMANYTE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 216,
+        "Name": "MUD_SHOT_FAST",
+        "Power": 6,
+        "DurationMs": 550,
+        "Energy": 7,
+        "DPS": 10.909090909090908
+      },
+      {
+        "Id": 230,
+        "Name": "WATER_GUN_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 15
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 62,
+        "Name": "ANCIENT_POWER",
+        "Power": 35,
+        "DurationMs": 3600,
+        "Energy": -25,
+        "DPS": 12.152777777777777
+      },
+      {
+        "Id": 104,
+        "Name": "BRINE",
+        "Power": 15,
+        "DurationMs": 2400,
+        "Energy": -25,
+        "DPS": 7.8125
+      },
+      {
+        "Id": 63,
+        "Name": "ROCK_TOMB",
+        "Power": 30,
+        "DurationMs": 3400,
+        "Energy": -25,
+        "DPS": 11.029411764705884
+      }
+    ]
   },
   {
     "id": 139,
@@ -1930,8 +7573,50 @@
       "defense": 202
     },
     "family": "FAMILY_OMANYTE",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 227,
+        "Name": "ROCK_THROW_FAST",
+        "Power": 12,
+        "DurationMs": 1360,
+        "Energy": 7,
+        "DPS": 11.02941176470588
+      },
+      {
+        "Id": 230,
+        "Name": "WATER_GUN_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 15
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 62,
+        "Name": "ANCIENT_POWER",
+        "Power": 35,
+        "DurationMs": 3600,
+        "Energy": -25,
+        "DPS": 12.152777777777777
+      },
+      {
+        "Id": 107,
+        "Name": "HYDRO_PUMP",
+        "Power": 90,
+        "DurationMs": 3800,
+        "Energy": -100,
+        "DPS": 29.60526315789474
+      },
+      {
+        "Id": 64,
+        "Name": "ROCK_SLIDE",
+        "Power": 50,
+        "DurationMs": 3200,
+        "Energy": -33,
+        "DPS": 19.53125
+      }
+    ]
   },
   {
     "id": 140,
@@ -1945,8 +7630,50 @@
     },
     "candy": 50,
     "family": "FAMILY_KABUTO",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 216,
+        "Name": "MUD_SHOT_FAST",
+        "Power": 6,
+        "DurationMs": 550,
+        "Energy": 7,
+        "DPS": 10.909090909090908
+      },
+      {
+        "Id": 220,
+        "Name": "SCRATCH_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 62,
+        "Name": "ANCIENT_POWER",
+        "Power": 35,
+        "DurationMs": 3600,
+        "Energy": -25,
+        "DPS": 12.152777777777777
+      },
+      {
+        "Id": 57,
+        "Name": "AQUA_JET",
+        "Power": 25,
+        "DurationMs": 2350,
+        "Energy": -20,
+        "DPS": 13.297872340425531
+      },
+      {
+        "Id": 63,
+        "Name": "ROCK_TOMB",
+        "Power": 30,
+        "DurationMs": 3400,
+        "Energy": -25,
+        "DPS": 11.029411764705884
+      }
+    ]
   },
   {
     "id": 141,
@@ -1959,8 +7686,50 @@
       "defense": 190
     },
     "family": "FAMILY_KABUTO",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 200,
+        "Name": "FURY_CUTTER_FAST",
+        "Power": 3,
+        "DurationMs": 400,
+        "Energy": 12,
+        "DPS": 7.5
+      },
+      {
+        "Id": 216,
+        "Name": "MUD_SHOT_FAST",
+        "Power": 6,
+        "DurationMs": 550,
+        "Energy": 7,
+        "DPS": 10.909090909090908
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 62,
+        "Name": "ANCIENT_POWER",
+        "Power": 35,
+        "DurationMs": 3600,
+        "Energy": -25,
+        "DPS": 12.152777777777777
+      },
+      {
+        "Id": 32,
+        "Name": "STONE_EDGE",
+        "Power": 80,
+        "DurationMs": 3100,
+        "Energy": -100,
+        "DPS": 32.25806451612903
+      },
+      {
+        "Id": 105,
+        "Name": "WATER_PULSE",
+        "Power": 35,
+        "DurationMs": 3300,
+        "Energy": -25,
+        "DPS": 13.25757575757576
+      }
+    ]
   },
   {
     "id": 142,
@@ -1973,8 +7742,50 @@
       "defense": 162
     },
     "family": "FAMILY_AERODACTYL",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 202,
+        "Name": "BITE_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12
+      },
+      {
+        "Id": 239,
+        "Name": "STEEL_WING_FAST",
+        "Power": 15,
+        "DurationMs": 1330,
+        "Energy": 4,
+        "DPS": 11.278195488721805
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 62,
+        "Name": "ANCIENT_POWER",
+        "Power": 35,
+        "DurationMs": 3600,
+        "Energy": -25,
+        "DPS": 12.152777777777777
+      },
+      {
+        "Id": 14,
+        "Name": "HYPER_BEAM",
+        "Power": 120,
+        "DurationMs": 5000,
+        "Energy": -100,
+        "DPS": 24
+      },
+      {
+        "Id": 74,
+        "Name": "IRON_HEAD",
+        "Power": 30,
+        "DurationMs": 2000,
+        "Energy": -33,
+        "DPS": 15
+      }
+    ]
   },
   {
     "id": 143,
@@ -1986,8 +7797,50 @@
       "defense": 180
     },
     "family": "FAMILY_SNORLAX",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 212,
+        "Name": "LICK_FAST",
+        "Power": 5,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 10
+      },
+      {
+        "Id": 234,
+        "Name": "ZEN_HEADBUTT_FAST",
+        "Power": 12,
+        "DurationMs": 1050,
+        "Energy": 4,
+        "DPS": 11.428571428571429
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 131,
+        "Name": "BODY_SLAM",
+        "Power": 40,
+        "DurationMs": 1560,
+        "Energy": -50,
+        "DPS": 32.05128205128205
+      },
+      {
+        "Id": 31,
+        "Name": "EARTHQUAKE",
+        "Power": 100,
+        "DurationMs": 4200,
+        "Energy": -100,
+        "DPS": 23.80952380952381
+      },
+      {
+        "Id": 14,
+        "Name": "HYPER_BEAM",
+        "Power": 120,
+        "DurationMs": 5000,
+        "Energy": -100,
+        "DPS": 30
+      }
+    ]
   },
   {
     "id": 144,
@@ -2000,8 +7853,42 @@
       "defense": 242
     },
     "family": "FAMILY_ARTICUNO",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 218,
+        "Name": "FROST_BREATH_FAST",
+        "Power": 9,
+        "DurationMs": 810,
+        "Energy": 7,
+        "DPS": 13.88888888888889
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 40,
+        "Name": "BLIZZARD",
+        "Power": 100,
+        "DurationMs": 3900,
+        "Energy": -100,
+        "DPS": 32.05128205128205
+      },
+      {
+        "Id": 39,
+        "Name": "ICE_BEAM",
+        "Power": 65,
+        "DurationMs": 3650,
+        "Energy": -50,
+        "DPS": 22.260273972602743
+      },
+      {
+        "Id": 111,
+        "Name": "ICY_WIND",
+        "Power": 25,
+        "DurationMs": 3800,
+        "Energy": -20,
+        "DPS": 8.223684210526317
+      }
+    ]
   },
   {
     "id": 145,
@@ -2014,8 +7901,42 @@
       "defense": 194
     },
     "family": "FAMILY_ZAPDOS",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 205,
+        "Name": "THUNDER_SHOCK_FAST",
+        "Power": 5,
+        "DurationMs": 600,
+        "Energy": 7,
+        "DPS": 10.416666666666668
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 35,
+        "Name": "DISCHARGE",
+        "Power": 35,
+        "DurationMs": 2500,
+        "Energy": -33,
+        "DPS": 17.5
+      },
+      {
+        "Id": 78,
+        "Name": "THUNDER",
+        "Power": 100,
+        "DurationMs": 4300,
+        "Energy": -100,
+        "DPS": 29.069767441860467
+      },
+      {
+        "Id": 79,
+        "Name": "THUNDERBOLT",
+        "Power": 55,
+        "DurationMs": 2700,
+        "Energy": -50,
+        "DPS": 25.462962962962962
+      }
+    ]
   },
   {
     "id": 146,
@@ -2028,8 +7949,42 @@
       "defense": 194
     },
     "family": "FAMILY_MOLTRES",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 209,
+        "Name": "EMBER_FAST",
+        "Power": 10,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 11.904761904761905
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 103,
+        "Name": "FIRE_BLAST",
+        "Power": 100,
+        "DurationMs": 4100,
+        "Energy": -100,
+        "DPS": 30.48780487804878
+      },
+      {
+        "Id": 24,
+        "Name": "FLAMETHROWER",
+        "Power": 55,
+        "DurationMs": 2900,
+        "Energy": -50,
+        "DPS": 23.706896551724135
+      },
+      {
+        "Id": 42,
+        "Name": "HEAT_WAVE",
+        "Power": 80,
+        "DurationMs": 3800,
+        "Energy": -100,
+        "DPS": 26.315789473684212
+      }
+    ]
   },
   {
     "id": 147,
@@ -2042,8 +7997,42 @@
     },
     "candy": 25,
     "family": "FAMILY_DRATINI",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 204,
+        "Name": "DRAGON_BREATH_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 15
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 58,
+        "Name": "AQUA_TAIL",
+        "Power": 45,
+        "DurationMs": 2350,
+        "Energy": -50,
+        "DPS": 19.148936170212764
+      },
+      {
+        "Id": 80,
+        "Name": "TWISTER",
+        "Power": 25,
+        "DurationMs": 2700,
+        "Energy": -20,
+        "DPS": 11.574074074074074
+      },
+      {
+        "Id": 13,
+        "Name": "WRAP",
+        "Power": 25,
+        "DurationMs": 4000,
+        "Energy": -20,
+        "DPS": 6.25
+      }
+    ]
   },
   {
     "id": 148,
@@ -2056,8 +8045,42 @@
     },
     "candy": 100,
     "family": "FAMILY_DRATINI",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 204,
+        "Name": "DRAGON_BREATH_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 15
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 58,
+        "Name": "AQUA_TAIL",
+        "Power": 45,
+        "DurationMs": 2350,
+        "Energy": -50,
+        "DPS": 19.148936170212764
+      },
+      {
+        "Id": 82,
+        "Name": "DRAGON_PULSE",
+        "Power": 65,
+        "DurationMs": 3600,
+        "Energy": -50,
+        "DPS": 22.569444444444443
+      },
+      {
+        "Id": 13,
+        "Name": "WRAP",
+        "Power": 25,
+        "DurationMs": 4000,
+        "Energy": -20,
+        "DPS": 6.25
+      }
+    ]
   },
   {
     "id": 149,
@@ -2070,8 +8093,50 @@
       "defense": 212
     },
     "family": "FAMILY_DRATINI",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 204,
+        "Name": "DRAGON_BREATH_FAST",
+        "Power": 6,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 15
+      },
+      {
+        "Id": 239,
+        "Name": "STEEL_WING_FAST",
+        "Power": 15,
+        "DurationMs": 1330,
+        "Energy": 4,
+        "DPS": 11.278195488721805
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 83,
+        "Name": "DRAGON_CLAW",
+        "Power": 35,
+        "DurationMs": 1500,
+        "Energy": -50,
+        "DPS": 29.166666666666664
+      },
+      {
+        "Id": 82,
+        "Name": "DRAGON_PULSE",
+        "Power": 65,
+        "DurationMs": 3600,
+        "Energy": -50,
+        "DPS": 22.569444444444443
+      },
+      {
+        "Id": 14,
+        "Name": "HYPER_BEAM",
+        "Power": 120,
+        "DurationMs": 5000,
+        "Energy": -100,
+        "DPS": 24
+      }
+    ]
   },
   {
     "id": 150,
@@ -2083,8 +8148,50 @@
       "defense": 202
     },
     "family": "FAMILY_MEWTWO",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 235,
+        "Name": "CONFUSION_FAST",
+        "Power": 15,
+        "DurationMs": 1510,
+        "Energy": 7,
+        "DPS": 12.417218543046358
+      },
+      {
+        "Id": 226,
+        "Name": "PSYCHO_CUT_FAST",
+        "Power": 7,
+        "DurationMs": 570,
+        "Energy": 7,
+        "DPS": 15.350877192982457
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 14,
+        "Name": "HYPER_BEAM",
+        "Power": 120,
+        "DurationMs": 5000,
+        "Energy": -100,
+        "DPS": 24
+      },
+      {
+        "Id": 108,
+        "Name": "PSYCHIC",
+        "Power": 55,
+        "DurationMs": 2800,
+        "Energy": -50,
+        "DPS": 24.553571428571427
+      },
+      {
+        "Id": 70,
+        "Name": "SHADOW_BALL",
+        "Power": 45,
+        "DurationMs": 3080,
+        "Energy": -33,
+        "DPS": 14.61038961038961
+      }
+    ]
   },
   {
     "id": 151,
@@ -2096,7 +8203,89 @@
       "defense": 220
     },
     "family": "FAMILY_MEW",
-    "moves1": [],
-    "moves2": []
+    "moves1": [
+      {
+        "Id": 222,
+        "Name": "POUND_FAST",
+        "Power": 7,
+        "DurationMs": 540,
+        "Energy": 7,
+        "DPS": 12.962962962962962
+      }
+    ],
+    "moves2": [
+      {
+        "Id": 82,
+        "Name": "DRAGON_PULSE",
+        "Power": 65,
+        "DurationMs": 3600,
+        "Energy": -50,
+        "DPS": 18.055555555555554
+      },
+      {
+        "Id": 31,
+        "Name": "EARTHQUAKE",
+        "Power": 100,
+        "DurationMs": 4200,
+        "Energy": -100,
+        "DPS": 23.80952380952381
+      },
+      {
+        "Id": 103,
+        "Name": "FIRE_BLAST",
+        "Power": 100,
+        "DurationMs": 4100,
+        "Energy": -100,
+        "DPS": 24.390243902439025
+      },
+      {
+        "Id": 122,
+        "Name": "HURRICANE",
+        "Power": 80,
+        "DurationMs": 3200,
+        "Energy": -100,
+        "DPS": 25
+      },
+      {
+        "Id": 14,
+        "Name": "HYPER_BEAM",
+        "Power": 120,
+        "DurationMs": 5000,
+        "Energy": -100,
+        "DPS": 24
+      },
+      {
+        "Id": 87,
+        "Name": "MOONBLAST",
+        "Power": 85,
+        "DurationMs": 4100,
+        "Energy": -100,
+        "DPS": 20.731707317073173
+      },
+      {
+        "Id": 108,
+        "Name": "PSYCHIC",
+        "Power": 55,
+        "DurationMs": 2800,
+        "Energy": -50,
+        "DPS": 24.553571428571427
+      },
+      {
+        "Id": 116,
+        "Name": "SOLAR_BEAM",
+        "Power": 120,
+        "DurationMs": 4900,
+        "Energy": -100,
+        "DPS": 24.489795918367346
+      },
+      {
+        "Id": 78,
+        "Name": "THUNDER",
+        "Power": 100,
+        "DurationMs": 4300,
+        "Energy": -100,
+        "DPS": 23.255813953488374
+      }
+    ]
   }
 ]
