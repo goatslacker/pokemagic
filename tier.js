@@ -16,6 +16,11 @@ function Def(p) {
   return (p.stats.attack * 0.25) + p.stats.defense
 }
 
+// XXX
+// to calculate DPS I need to get the "best moveset" for each pokemon
+// and to get that I need a list of all possible moves for every pokemon quick+charge
+// best moveset is highest DPS combo during a battle. so it takes into account charge move's quickness to charge
+
 // These are mostly the best attackers/defenders. Filter them out.
 const LegendaryPokemon = {
   ARTICUNO: 1,
@@ -110,6 +115,8 @@ function justTheName(obj) {
 }
 
 // This stuff does not take into account DPS!
+// It's good that it doesn't take into account dps. I'd want to have both...
+// sometimes you don't get the best moves.
 function bestForTypeDefense() {
   const types = Object.assign({}, Types)
 
