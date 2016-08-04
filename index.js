@@ -333,7 +333,7 @@ function magic(pokemon) {
     console.log('Congrats! Here are your Pokemon\'s IVs')
     console.log()
     const pokemon = values[0]
-    console.log(`IVs: ${pokemon.ivs.IndAtk}/${pokemon.ivs.IndDef}/${pokemon.ivs.IndSta}`)
+    console.log(`IVs: ${pokemon.ivs.IndAtk}/${pokemon.ivs.IndDef}/${pokemon.ivs.IndSta} (${pokemon.percent.PerfectIV}%)`)
     console.log(`Attack: ${pokemon.ivs.IndAtk + pokemon.ivs.IndDef} (${pokemon.percent.PercentAtk}%)`)
     console.log(`CP: ${pokemon.CP} (${pokemon.percent.PercentCP}%)`)
     console.log(`HP: ${pokemon.HP} (${pokemon.percent.PercentHP}%)`)
