@@ -42,7 +42,7 @@ const DustToLevel = {
 // This 80th percentile thing was made up by me.
 // XXX this formula still sucks ass...
 const isGoodPokemon = (
-  v => v.percent.PercentAtk >= 80 &&
+  v => v.percent.PercentBatt >= 80 &&
        v.percent.PercentCP >= 80 &&
        v.percent.PerfectIV >= 80 &&
        v.percent.PercentHP >= 55
@@ -148,7 +148,7 @@ function getPokemonDataForStats(mon, level, IndAtk, IndDef, IndSta) {
   const Def = (BaseDef + IndDef) * ECpM
 
   const PerfectIV = Math.round((IndAtk + IndDef + IndSta) / 45 * 100)
-  const PercentAtk = getAttackPercentage(IndAtk, IndDef)
+  const PercentBatt = getAttackPercentage(IndAtk, IndDef)
 
   return {
     CP,
@@ -161,7 +161,7 @@ function getPokemonDataForStats(mon, level, IndAtk, IndDef, IndSta) {
       IndSta,
     },
     percent: {
-      PercentAtk,
+      PercentBatt,
       PerfectIV,
     },
   }
@@ -207,7 +207,7 @@ function getAllPossibleValues(pokemon, mon, ECpM) {
         const Def = (BaseDef + IndDef) * ECpM
 
         const PerfectIV = Math.round((IndAtk + IndDef + IndSta) / 45 * 100)
-        const PercentAtk = getAttackPercentage(IndAtk, IndDef)
+        const PercentBatt = getAttackPercentage(IndAtk, IndDef)
 
         if (pokemon.cp === CP) {
           possibleValues.push({
@@ -223,7 +223,7 @@ function getAllPossibleValues(pokemon, mon, ECpM) {
               IndSta,
             },
             percent: {
-              PercentAtk,
+              PercentBatt,
               PercentCP,
               PercentHP,
               PerfectIV,
@@ -298,8 +298,8 @@ function magic(pokemon) {
   const ValuesRange = values.reduce((obj, v) => {
     return {
       atk: [
-        Math.min(v.percent.PercentAtk, obj.atk[0]),
-        Math.max(v.percent.PercentAtk, obj.atk[1]),
+        Math.min(v.percent.PercentBatt, obj.atk[0]),
+        Math.max(v.percent.PercentBatt, obj.atk[1]),
       ],
       cp: [
         Math.min(v.percent.PercentCP, obj.cp[0]),
@@ -334,7 +334,7 @@ function magic(pokemon) {
     console.log()
     const pokemon = values[0]
     console.log(`IVs: ${pokemon.ivs.IndAtk}/${pokemon.ivs.IndDef}/${pokemon.ivs.IndSta} (${pokemon.percent.PerfectIV}%)`)
-    console.log(`Attack: ${pokemon.ivs.IndAtk + pokemon.ivs.IndDef} (${pokemon.percent.PercentAtk}%)`)
+    console.log(`Atk+Def: ${pokemon.ivs.IndAtk + pokemon.ivs.IndDef} (${pokemon.percent.PercentBatt}%)`)
     console.log(`CP: ${pokemon.CP} (${pokemon.percent.PercentCP}%)`)
     console.log(`HP: ${pokemon.HP} (${pokemon.percent.PercentHP}%)`)
   } else {
