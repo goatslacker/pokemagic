@@ -7,6 +7,12 @@ const Moves = require('./moves.json')
 const LevelToCPM = require('./level-to-cpm.json')
 const Levels = require('./levels')
 
+// These are values that I consider "baseline" for what makes a good pokemon
+const OK_ATK = 106
+const OK_DEF = 106
+const OK_STA = 100
+const OK_HP = 100
+
 function findPokemon(name) {
   const fmtName = name.toUpperCase()
 
@@ -42,15 +48,12 @@ const DustToLevel = {
 
 // A good pokemon is in the 80th percentile for Atk, CP, HP, and IV.
 // This 80th percentile thing was made up by me.
-// XXX this formula still sucks ass...
-const isGoodPokemon = (
+const isGoodPokemonForItsClass = (
   v => v.percent.PercentBatt >= 80 &&
        v.percent.PercentCP >= 80 &&
        v.percent.PerfectIV >= 80 &&
        v.percent.PercentHP >= 55
 )
-
-// 90 + 55 Atk + HP?
 
 function percentInRange(num, min, max) {
   return ((num - min) * 100) / (max - min)
@@ -149,6 +152,9 @@ function getPokemonDataForStats(mon, level, IndAtk, IndDef, IndSta) {
   const BaseDef = mon.stats.defense
   const Def = (BaseDef + IndDef) * ECpM
 
+  const BaseSta = mon.stats.stamina
+  const Sta = (BaseSta + IndSta) * ECpM
+
   const PerfectIV = Math.round((IndAtk + IndDef + IndSta) / 45 * 100)
   const PercentBatt = getAttackPercentage(IndAtk, IndDef)
 
@@ -157,6 +163,7 @@ function getPokemonDataForStats(mon, level, IndAtk, IndDef, IndSta) {
     HP,
     Atk,
     Def,
+    Sta,
     ivs: {
       IndAtk,
       IndDef,
@@ -208,6 +215,9 @@ function getAllPossibleValues(pokemon, mon, ECpM) {
         const BaseDef = mon.stats.defense
         const Def = (BaseDef + IndDef) * ECpM
 
+        const BaseSta = mon.stats.stamina
+        const Sta = (BaseSta + IndSta) * ECpM
+
         const PerfectIV = Math.round((IndAtk + IndDef + IndSta) / 45 * 100)
         const PercentBatt = getAttackPercentage(IndAtk, IndDef)
 
@@ -218,6 +228,7 @@ function getAllPossibleValues(pokemon, mon, ECpM) {
             HP,
             Atk,
             Def,
+            Sta,
             ECpM,
             ivs: {
               IndAtk,
@@ -285,6 +296,10 @@ function logPokemon(pokemon) {
   console.log(`CP: ${pokemon.CP} (${colorPercent(pokemon.percent.PercentCP, 1.05)})`)
   console.log(`HP: ${pokemon.HP} (${colorPercent(pokemon.percent.PercentHP, 1.5)})`)
 
+  console.log(`Atk: ${pokemon.Atk} (${(pokemon.Atk - OK_ATK).toFixed(2)})`)
+  console.log(`Def: ${pokemon.Def} (${(pokemon.Def - OK_DEF).toFixed(2)})`)
+  console.log(`Sta: ${pokemon.Sta} (${(pokemon.Sta - OK_STA).toFixed(2)})`)
+
   console.log()
 
   console.log(`Maximum CP: ${pokemon.meta.MaxCP}`)
@@ -304,8 +319,8 @@ function magic(pokemon) {
     return mon.percent.PerfectIV > best.percent.PerfectIV ? mon : best
   }, null)
 
-  const yes = values.every(isGoodPokemon)
-  const maybeValues = values.filter(isGoodPokemon)
+  const yes = values.every(isGoodPokemonForItsClass)
+  const maybeValues = values.filter(isGoodPokemonForItsClass)
   const maybe = maybeValues.length > 0
 
   const init = {
@@ -468,11 +483,9 @@ magic({
   level: process.argv[6] ? Number(process.argv[6]) : null,
 })
 
-/*
-console.log(
-  getPokemonDataForStats(
-    findPokemon('chansey'),
-    15, 15, 15, 15
-  )
-)
-*/
+//console.log(
+//  getPokemonDataForStats(
+//    findPokemon('nidoqueen'),
+//    15, 15, 15, 15
+//  )
+//)
