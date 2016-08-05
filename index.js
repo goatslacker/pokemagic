@@ -267,6 +267,18 @@ function calculate(pokemon) {
   }, [])
 }
 
+function logPokemon(pokemon) {
+  console.log(`IVs: ${pokemon.ivs.IndAtk}/${pokemon.ivs.IndDef}/${pokemon.ivs.IndSta} (${pokemon.percent.PerfectIV}%)`)
+  console.log(`Atk+Def: ${pokemon.ivs.IndAtk + pokemon.ivs.IndDef} (${pokemon.percent.PercentBatt}%)`)
+  console.log(`CP: ${pokemon.CP} (${pokemon.percent.PercentCP}%)`)
+  console.log(`HP: ${pokemon.HP} (${pokemon.percent.PercentHP}%)`)
+
+  console.log()
+
+  console.log(`Maximum CP: ${pokemon.meta.MaxCP}`)
+  console.log(`Maximum HP: ${pokemon.meta.MaxHP}`)
+}
+
 function magic(pokemon) {
   const values = calculate(pokemon)
 
@@ -332,11 +344,8 @@ function magic(pokemon) {
   if (values.length === 1) {
     console.log('Congrats! Here are your Pokemon\'s IVs')
     console.log()
-    const pokemon = values[0]
-    console.log(`IVs: ${pokemon.ivs.IndAtk}/${pokemon.ivs.IndDef}/${pokemon.ivs.IndSta} (${pokemon.percent.PerfectIV}%)`)
-    console.log(`Atk+Def: ${pokemon.ivs.IndAtk + pokemon.ivs.IndDef} (${pokemon.percent.PercentBatt}%)`)
-    console.log(`CP: ${pokemon.CP} (${pokemon.percent.PercentCP}%)`)
-    console.log(`HP: ${pokemon.HP} (${pokemon.percent.PercentHP}%)`)
+
+    logPokemon(values[0])
   } else {
     console.log('Your possible Pokemon\'s values')
     console.log(values)
@@ -348,15 +357,29 @@ function magic(pokemon) {
 
     console.log()
 
+    console.log(`There are ${values.length} possibilities.`)
+    console.log(`There is a ${Math.round(1 / values.length * 100)}% chance you'll get the one below.`)
+
+    console.log()
+
     console.log('Best possible Pokemon\'s values')
-    console.log(bestPossible)
+    logPokemon(bestPossible)
   }
+
+  const maxLevel = Math.max.apply(null, DustToLevel[pokemon.stardust])
+  // XXX shit what is your trainer level!?
+
+  const x = howMuchPowerUp(maxLevel, 24)
+  const stardust = x.stardust
+  const candy = x.candy
+
+  console.log()
+
+  console.log(`It would take ${stardust} stardust and ${candy} candy to max this pokemon out`)
 
   console.log()
 
   const pokemonId = `${pokemon.name.toUpperCase()} ${pokemon.cp}`
-
-  console.log(`There are ${values.length} possibilities.`)
 
   if (yes) {
     console.log(`>> Yes, keep your ${pokemonId}.`)
