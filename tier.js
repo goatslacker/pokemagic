@@ -52,7 +52,7 @@ const Types = {
 }
 
 function isNotLegendary(pokemon) {
-  return !LegendaryPokemon.hasOwnProperty(pokemon)
+  return !LegendaryPokemon.hasOwnProperty(pokemon.name || pokemon)
 }
 
 // This stuff does not take into account DPS!
@@ -60,8 +60,8 @@ function bestNonLegendaryDefenders() {
   return Object.keys(mon)
     .map(k => mon[k])
     .sort((a, b) => Def(a) < Def(b) ? 1 : -1)
-    .map(p => p.name)
     .filter(isNotLegendary)
+    .map(p => p.name)
     .slice(0, 10)
 }
 
@@ -70,8 +70,8 @@ function bestNonLegendaryAttackers() {
   return Object.keys(mon)
     .map(k => mon[k])
     .sort((a, b) => Atk(a) < Atk(b) ? 1 : -1)
-    .map(p => p.name)
     .filter(isNotLegendary)
+    .map(p => p.name)
     .slice(0, 10)
 }
 
@@ -81,6 +81,7 @@ function bestForTypeAttack() {
 
   return justTheName(Object.keys(mon)
     .map(k => mon[k])
+    .filter(isNotLegendary)
     .sort((a, b) => Atk(a) < Atk(b) ? 1 : -1)
     .reduce((types, mon) => {
       if (!types[mon.type1]) {
@@ -148,4 +149,5 @@ function bestForTypeDefense() {
     }, types))
 }
 
-console.log(bestForTypeDefense())
+console.log(bestForTypeAttack())
+console.log(bestNonLegendaryAttackers())
