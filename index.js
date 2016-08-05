@@ -348,12 +348,14 @@ function magic(pokemon) {
     logPokemon(values[0])
   } else {
     console.log('Your possible Pokemon\'s values')
-    console.log(values)
 
     console.log()
 
     console.log('Range in values')
-    console.log(ValuesRange)
+    console.log(`IV: ${ValuesRange.iv[0]} -- ${ValuesRange.iv[1]}%`)
+    console.log(`Atk+Def: ${ValuesRange.atk[0]} -- ${ValuesRange.atk[1]}%`)
+    console.log(`CP: ${ValuesRange.cp[0]} -- ${ValuesRange.cp[1]}%`)
+    console.log(`HP: ${ValuesRange.hp[0]} -- ${ValuesRange.hp[1]}%`)
 
     console.log()
 
@@ -462,5 +464,3 @@ console.log(
   )
 )
 */
-
-//console.log(howMuchPowerUp(2, 25))
