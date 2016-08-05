@@ -1,5 +1,7 @@
 'use strict'
 
+const chalk = require('chalk')
+
 const Pokemon = require('./pokemon.json')
 const Moves = require('./moves.json')
 const LevelToCPM = require('./level-to-cpm.json')
@@ -267,11 +269,21 @@ function calculate(pokemon) {
   }, [])
 }
 
+function colorPercent(num, mod) {
+  const mul = num * (mod || 1)
+  if (mul < 70) {
+    return chalk.red(num + '%')
+  } else if (mul < 90) {
+    return chalk.yellow(num + '%')
+  }
+  return chalk.green.bold(num + '%')
+}
+
 function logPokemon(pokemon) {
-  console.log(`IVs: ${pokemon.ivs.IndAtk}/${pokemon.ivs.IndDef}/${pokemon.ivs.IndSta} (${pokemon.percent.PerfectIV}%)`)
-  console.log(`Atk+Def: ${pokemon.ivs.IndAtk + pokemon.ivs.IndDef} (${pokemon.percent.PercentBatt}%)`)
-  console.log(`CP: ${pokemon.CP} (${pokemon.percent.PercentCP}%)`)
-  console.log(`HP: ${pokemon.HP} (${pokemon.percent.PercentHP}%)`)
+  console.log(`IVs: ${pokemon.ivs.IndAtk}/${pokemon.ivs.IndDef}/${pokemon.ivs.IndSta} (${colorPercent(pokemon.percent.PerfectIV)})`)
+  console.log(`Atk+Def: ${pokemon.ivs.IndAtk + pokemon.ivs.IndDef} (${colorPercent(pokemon.percent.PercentBatt)})`)
+  console.log(`CP: ${pokemon.CP} (${colorPercent(pokemon.percent.PercentCP, 1.05)})`)
+  console.log(`HP: ${pokemon.HP} (${colorPercent(pokemon.percent.PercentHP, 1.5)})`)
 
   console.log()
 
@@ -360,7 +372,7 @@ function magic(pokemon) {
     console.log()
 
     console.log(`There are ${values.length} possibilities.`)
-    console.log(`There is a ${Math.round(1 / values.length * 100)}% chance you'll get the one below.`)
+    console.log(`There is a ${chalk.bold(Math.round(1 / values.length * 100))}% chance you'll get the one below.`)
 
     console.log()
 
@@ -377,11 +389,11 @@ function magic(pokemon) {
 
   console.log()
 
-  console.log(`It would take ${stardust} stardust and ${candy} candy to max this pokemon out`)
+  console.log(`It would take ${chalk.bold(stardust)} stardust and ${chalk.bold(candy)} candy to max this pokemon out`)
 
   console.log()
 
-  const pokemonId = `${pokemon.name.toUpperCase()} ${pokemon.cp}`
+  const pokemonId = chalk.blue.bold(`${pokemon.name.toUpperCase()} ${pokemon.cp}`)
 
   if (yes) {
     console.log(`>> Yes, keep your ${pokemonId}.`)
@@ -389,7 +401,7 @@ function magic(pokemon) {
     console.log(
       `>> Maybe you should keep ${pokemonId} around.`,
       '\n  ',
-      `There is a ${Math.round(maybeValues.length / values.length * 100)}% chance you've got a winner.`
+      `There is a ${chalk.bold(Math.round(maybeValues.length / values.length * 100))}% chance you've got a winner.`
     )
   } else {
     console.log(`>> Send ${pokemonId} to Willow's grinder.`)
