@@ -390,6 +390,17 @@ function howMuchStardust(currentLevel, trainerLevel) {
 
 // XXX
 function howMuchCandy(currentLevel, trainerLevel) {
+  const maxLevel = (trainerLevel + 1.5) * 2
+  return Levels.reduce((sum, level) => {
+    if (level.level < maxLevel) return sum + level.candy
+    return sum
+  }, 0)
+}
+
+function howMuchPowerUp(currentLevel, trainerLevel) {
+  const candy = howMuchCandy(currentLevel, trainerLevel)
+  const stardust = howMuchStardust(currentLevel, trainerLevel)
+  return { candy, stardust }
 }
 
 // XXX
@@ -429,4 +440,4 @@ console.log(
 )
 */
 
-//console.log(howMuchStardust(25.5, 25))
+//console.log(howMuchPowerUp(2, 25))
