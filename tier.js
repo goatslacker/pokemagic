@@ -16,6 +16,10 @@ function Def(p) {
   return (p.stats.attack * 0.25) + p.stats.defense
 }
 
+function Hp(p) {
+  return (p.stats.stamina * 2) + p.stats.defense
+}
+
 // XXX
 // to calculate DPS I need to get the "best moveset" for each pokemon
 // and to get that I need a list of all possible moves for every pokemon quick+charge
@@ -60,6 +64,16 @@ function bestNonLegendaryDefenders() {
   return Object.keys(mon)
     .map(k => mon[k])
     .sort((a, b) => Def(a) < Def(b) ? 1 : -1)
+    .filter(isNotLegendary)
+    .map(p => p.name)
+    .slice(0, 10)
+}
+
+// This stuff does not take into account DPS!
+function bestNonLegendaryHealth() {
+  return Object.keys(mon)
+    .map(k => mon[k])
+    .sort((a, b) => Hp(a) < Hp(b) ? 1 : -1)
     .filter(isNotLegendary)
     .map(p => p.name)
     .slice(0, 10)
@@ -149,5 +163,6 @@ function bestForTypeDefense() {
     }, types))
 }
 
-console.log(bestForTypeAttack())
-console.log(bestNonLegendaryAttackers())
+//console.log(bestForTypeAttack())
+//console.log(bestNonLegendaryAttackers())
+//console.log(bestNonLegendaryHealth())
