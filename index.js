@@ -13,6 +13,9 @@ const OK_DEF = 106
 const OK_STA = 100
 const OK_HP = 100
 
+const MAX_OVERALL_RATING = 385
+const DECENT_POKEMON_RATING = 309
+
 function findPokemon(name) {
   const fmtName = name.toUpperCase()
 
@@ -46,14 +49,16 @@ const DustToLevel = {
   10000: [39, 39.5, 40, 40.5],
 }
 
+const getOverallRating = (
+  v => v.percent.PerfectIV +
+       v.percent.PercentCP +
+       v.percent.PercentBatt +
+       (v.percent.PercentHP * 0.85)
+)
+
 // A good pokemon is in the 80th percentile for Atk, CP, HP, and IV.
 // This 80th percentile thing was made up by me.
-const isGoodPokemonForItsClass = (
-  v => v.percent.PercentBatt >= 80 &&
-       v.percent.PercentCP >= 80 &&
-       v.percent.PerfectIV >= 80 &&
-       v.percent.PercentHP >= 55
-)
+const isGoodPokemonForItsClass = v => getOverallRating(v) > DECENT_POKEMON_RATING
 
 function percentInRange(num, min, max) {
   return ((num - min) * 100) / (max - min)
@@ -304,6 +309,13 @@ function logPokemon(pokemon) {
 
   console.log(`Maximum CP: ${pokemon.meta.MaxCP}`)
   console.log(`Maximum HP: ${pokemon.meta.MaxHP}`)
+
+  console.log()
+
+  const ovRating = getOverallRating(pokemon)
+  const ovRatingPercent = Math.round(ovRating / MAX_OVERALL_RATING * 100)
+  const plusMinusRating = (ovRating - DECENT_POKEMON_RATING).toFixed(1)
+  console.log(`Overall Rating: ${ovRatingPercent}% (${ovRating} +${plusMinusRating})`)
 }
 
 function magic(pokemon) {
