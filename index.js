@@ -82,8 +82,8 @@ function getHP(mon, IndSta, ECpM) {
 }
 
 // The minimum HP for a Pokemon that has perfect IVs
-function getMaxHP(mon) {
-  return getHP(mon, 15, 0.790300)
+function getMaxHP(mon, sta) {
+  return getHP(mon, sta, 0.790300)
 }
 
 // The maximum HP for your Pokemon's current level
@@ -115,12 +115,8 @@ function getCP(mon, ivs, ECpM) {
 }
 
 // The maximum possible CP for a Pokemon that has perfect IVs
-function getMaxCP(mon) {
-  return getCP(mon, {
-    atk: 15,
-    def: 15,
-    sta: 15,
-  }, 0.790300)
+function getMaxCP(mon, atk, def, sta) {
+  return getCP(mon, { atk, def, sta }, 0.790300)
 }
 
 // The minimum CP for your Pokemon's level
@@ -188,11 +184,9 @@ function getAllPossibleValues(pokemon, mon, ECpM) {
 
   const IndStaValues = calcIndSta(pokemon.hp, BaseSta, ECpM)
 
-  const MaxCP = getMaxCP(mon)
   const MaxLevelCP = getMaxCPForLevel(mon, ECpM)
   const MinLevelCP = getMinCPForLevel(mon, ECpM)
 
-  const MaxHP = getMaxHP(mon)
   const MaxLevelHP = getMaxHPForLevel(mon, ECpM)
   const MinLevelHP = getMinHPForLevel(mon, ECpM)
 
@@ -222,6 +216,9 @@ function getAllPossibleValues(pokemon, mon, ECpM) {
 
         const BaseSta = mon.stats.stamina
         const Sta = (BaseSta + IndSta) * ECpM
+
+        const MaxCP = getMaxCP(mon, IndAtk, IndDef, IndSta)
+        const MaxHP = getMaxHP(mon, IndSta)
 
         const PerfectIV = Math.round((IndAtk + IndDef + IndSta) / 45 * 100)
         const PercentBatt = getAttackPercentage(IndAtk, IndDef)
@@ -297,16 +294,17 @@ function colorPercent(num, mod) {
 
 function logPokemon(pokemon) {
   console.log(`IVs: ${pokemon.ivs.IndAtk}/${pokemon.ivs.IndDef}/${pokemon.ivs.IndSta} (${colorPercent(pokemon.percent.PerfectIV)})`)
-  console.log(`Atk+Def: ${pokemon.ivs.IndAtk + pokemon.ivs.IndDef} (${colorPercent(pokemon.percent.PercentBatt)})`)
+  console.log(`Atk+Def: ${pokemon.ivs.IndAtk + pokemon.ivs.IndDef}/30 (${colorPercent(pokemon.percent.PercentBatt)})`)
   console.log(`CP: ${pokemon.CP} (${colorPercent(pokemon.percent.PercentCP, 1.05)})`)
   console.log(`HP: ${pokemon.HP} (${colorPercent(pokemon.percent.PercentHP, 1.5)})`)
 
-  console.log(`Atk: ${pokemon.Atk} (${(pokemon.Atk - OK_ATK).toFixed(2)})`)
-  console.log(`Def: ${pokemon.Def} (${(pokemon.Def - OK_DEF).toFixed(2)})`)
-  console.log(`Sta: ${pokemon.Sta} (${(pokemon.Sta - OK_STA).toFixed(2)})`)
+  console.log(`Atk: ${pokemon.Atk.toFixed(2)} (${(pokemon.Atk - OK_ATK).toFixed(2)})`)
+  console.log(`Def: ${pokemon.Def.toFixed(2)} (${(pokemon.Def - OK_DEF).toFixed(2)})`)
+  console.log(`Sta: ${pokemon.Sta.toFixed(2)} (${(pokemon.Sta - OK_STA).toFixed(2)})`)
 
   console.log()
 
+  console.log('At level 40, this pokemon would have:')
   console.log(`Maximum CP: ${pokemon.meta.MaxCP}`)
   console.log(`Maximum HP: ${pokemon.meta.MaxHP}`)
 
@@ -381,7 +379,7 @@ function magic(pokemon) {
 
   // Begin logging
   if (values.length === 1) {
-    console.log('Congrats! Here are your Pokemon\'s IVs')
+    console.log('Congrats! Here are your Pokemon\'s stats')
     console.log()
 
     logPokemon(values[0])
