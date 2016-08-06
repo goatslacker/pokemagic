@@ -138,6 +138,11 @@ const chargeMoves = {
   "X_SCISSOR": ["BEEDRILL","PARAS","PARASECT","KINGLER","SCYTHER","PINSIR"],
 }
 
+Pokemon.forEach((mon) => {
+  mon.moves1 = []
+  mon.moves2 = []
+})
+
 Object.keys(quickMoves).forEach((moveName) => {
   const pokemon = quickMoves[moveName]
 
@@ -169,9 +174,9 @@ Object.keys(quickMoves).forEach((moveName) => {
 })
 
 Object.keys(chargeMoves).forEach((moveName) => {
-  const pokemon = chargeMoves[moveName]
-
   const move = Moves.filter(x => x.Name === moveName)[0]
+
+  const pokemon = chargeMoves[moveName]
 
   if (!move) {
     throw new Error(`Problem with ${moveName}`)
@@ -190,6 +195,7 @@ Object.keys(chargeMoves).forEach((moveName) => {
     mon.moves2.push({
       Id: move.Id,
       Name: move.Name,
+      Type: move.Type,
       Power: move.Power,
       DurationMs: move.DurationMs,
       Energy: move.EnergyDelta,
