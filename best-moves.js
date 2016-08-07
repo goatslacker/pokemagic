@@ -1,14 +1,13 @@
 const Pokemon = require('./pokemon.json')
 
-// I'm guessing that you'll earn/spend ~200 energy per battle.
-const MAGICAL_NUMBER = 200
+function getDmg(atk, power, stab) {
+  const def = 100
+  const ECpM = 0.790300
+  return Math.floor((0.5 * atk * ECpM / (def * ECpM ) * power * stab) + 1)
+}
 
-// I'm trying to calculate what the total DPS is for a move throughout a battle
-// AKA: how fast does the move get you to 200 Energy and how much DPS does it
-// do over that amount of time.
-// TODO is this true?
-function totalBattleDPS(move) {
-  return Math.abs(MAGICAL_NUMBER / move.Energy) * move.DPS
+function getDPS(dmg, duration) {
+  return (dmg / (duration / 1000)).toFixed(2)
 }
 
 function bestMovesFor(pokemonName) {
@@ -17,19 +16,40 @@ function bestMovesFor(pokemonName) {
 
   if (!mon) throw new Error(`Cannot find ${fmtName}`)
 
-  const bestMove1 = mon.moves1.reduce((best, move) => {
-    if (!best) return move
-    return totalBattleDPS(best) > totalBattleDPS(move) ? best : move
-  }, null)
+  const stuff = []
 
-  const bestMove2 = mon.moves2.reduce((best, move) => {
-    if (!best) return move
-    return totalBattleDPS(best) > totalBattleDPS(move) ? best : move
-  }, null)
+  mon.moves1.forEach((move1) => {
+    mon.moves2.forEach((move2) => {
+      const totalEnergy = 10 * move1.Energy
+      const howManyCharges = Math.abs(totalEnergy / move2.Energy)
 
-  return { bestMove1, bestMove2 }
+      const atk = mon.stats.attack
+      const stab1 = move1.Type === mon.type1 || move1.Type === mon.type2 ? 1.25 : 1
+      const stab2 = move2.Type === mon.type1 || move2.Type === mon.type2 ? 1.25 : 1
+
+      const ECpM = 0.790300
+      // The defending Pokemon's level will be set at just 100
+      const def = 100
+
+      const dmg1 = getDmg(atk, move1.Power, stab1)
+      const dmg2 = getDmg(atk, move2.Power, stab2)
+
+      const dps1 = getDPS(dmg1, move1.DurationMs)
+      const dps2 = getDPS(dmg2, move2.DurationMs)
+
+      stuff.push({
+        quick: move1.Name,
+        charge: move2.Name,
+        dps1,
+        dps2,
+        total: Number(dps1) + Number(dps2),
+      })
+    })
+  })
+
+  return stuff.sort((a, b) => a.total > b.total ? -1 : 1)[0]
 }
 
 console.log(
-  bestMovesFor('arcanine')
+  bestMovesFor(process.argv[2] || 'flareon')
 )
