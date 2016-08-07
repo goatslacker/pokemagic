@@ -329,7 +329,7 @@ function logPokemon(pokemon) {
 
   console.log()
 
-  console.log(`At level ${getMaxLevel()}, this pokemon would have:`)
+  console.log(`At level ${TRAINER_LEVEL + 1.5}, this pokemon would have:`)
   console.log(`Maximum CP: ${pokemon.meta.MaxCP}`)
   console.log(`Maximum HP: ${pokemon.meta.MaxHP}`)
 
@@ -527,7 +527,7 @@ magic({
 
 //logPokemon(
 //  getPokemonDataForStats(
-//    findPokemon('seadra'),
-//    21, 15, 12, 14
+//    findPokemon('seaking'),
+//    20, 12, 15, 14
 //  )
 //)

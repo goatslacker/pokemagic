@@ -65,18 +65,18 @@ function battleDMG(atk, move1, move2, stab1, stab2) {
   }, { energy: 0, time: 0, dmg: 0 })
 }
 
-console.log(
-  Pokemon.sort((a, b) => {
-    return getBestMoves(a).dps > getBestMoves(b).dps ? -1 : 1
-  })
-  .map(x => {
-    return {
-      name: x.name,
-      moves: getBestMoves(x),
-    }
-  })
-  .slice(0, 10)
-)
+//console.log(
+//  Pokemon.sort((a, b) => {
+//    return getBestMoves(a).dps > getBestMoves(b).dps ? -1 : 1
+//  })
+//  .map(x => {
+//    return {
+//      name: x.name,
+//      moves: getBestMoves(x),
+//    }
+//  })
+//  .slice(0, 10)
+//)
 
 console.log(
   bestMovesFor(process.argv[2] || 'flareon')
