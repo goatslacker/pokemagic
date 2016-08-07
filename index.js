@@ -322,12 +322,6 @@ function logPokemon(pokemon) {
   const plusMinusRating = (ovRating - DECENT_POKEMON_RATING).toFixed(1)
 
   console.log(`Overall Rating: ${ovRatingPercent}% (${ovRating} +${plusMinusRating})`)
-
-  // XXX this doesn't quite work
-//  if (CPM[pokemon.Name]) {
-//    const evolveCP = Math.round(CPM[pokemon.Name].reduce((total, cp) => total * cp, pokemon.CP))
-//    console.log(`Your fully evolved Pokemon would have ~${evolveCP}CP`)
-//  }
 }
 
 function magic(pokemon) {
@@ -427,6 +421,11 @@ function magic(pokemon) {
   const candy = x.candy
 
   console.log()
+
+  if (CPM[pokemon.name.toUpperCase()]) {
+    const evolveCP = Math.round(CPM[pokemon.name.toUpperCase()][1] * pokemon.cp)
+    console.log(`If evolved, it would have ~${evolveCP}CP`)
+  }
 
   console.log(`It would take ${chalk.bold(stardust)} stardust and ${chalk.bold(candy)} candy to max this pokemon out`)
 
