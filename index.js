@@ -6,6 +6,7 @@ const Pokemon = require('./pokemon.json')
 const Moves = require('./moves.json')
 const LevelToCPM = require('./level-to-cpm.json')
 const Levels = require('./levels')
+const CPM = require('./cpm.json')
 
 // These are values that I consider "baseline" for what makes a good pokemon
 const OK_ATK = 106
@@ -298,9 +299,9 @@ function logPokemon(pokemon) {
   console.log(`CP: ${pokemon.CP} (${colorPercent(pokemon.percent.PercentCP, 1.05)})`)
   console.log(`HP: ${pokemon.HP} (${colorPercent(pokemon.percent.PercentHP, 1.5)})`)
 
-  console.log(`Atk: ${pokemon.Atk.toFixed(2)} (${(pokemon.Atk - OK_ATK).toFixed(2)})`)
-  console.log(`Def: ${pokemon.Def.toFixed(2)} (${(pokemon.Def - OK_DEF).toFixed(2)})`)
-  console.log(`Sta: ${pokemon.Sta.toFixed(2)} (${(pokemon.Sta - OK_STA).toFixed(2)})`)
+  console.log(`Atk: ${pokemon.Atk.toFixed(2)} (+${(pokemon.Atk - OK_ATK).toFixed(2)})`)
+  console.log(`Def: ${pokemon.Def.toFixed(2)} (+${(pokemon.Def - OK_DEF).toFixed(2)})`)
+  console.log(`Sta: ${pokemon.Sta.toFixed(2)} (+${(pokemon.Sta - OK_STA).toFixed(2)})`)
 
   console.log()
 
@@ -308,12 +309,18 @@ function logPokemon(pokemon) {
   console.log(`Maximum CP: ${pokemon.meta.MaxCP}`)
   console.log(`Maximum HP: ${pokemon.meta.MaxHP}`)
 
-  console.log()
-
   const ovRating = getOverallRating(pokemon)
   const ovRatingPercent = Math.round(ovRating / MAX_OVERALL_RATING * 100)
   const plusMinusRating = (ovRating - DECENT_POKEMON_RATING).toFixed(1)
   console.log(`Overall Rating: ${ovRatingPercent}% (${ovRating} +${plusMinusRating})`)
+
+  console.log()
+
+  // XXX this doesn't quite work
+//  if (CPM[pokemon.Name]) {
+//    const evolveCP = Math.round(CPM[pokemon.Name].reduce((total, cp) => total * cp, pokemon.CP))
+//    console.log(`Your fully evolved Pokemon would have ~${evolveCP}CP`)
+//  }
 }
 
 function magic(pokemon) {
@@ -453,8 +460,9 @@ function howMuchStardust(currentLevel, trainerLevel) {
 // XXX
 function howMuchCandy(currentLevel, trainerLevel) {
   const maxLevel = (trainerLevel + 1.5) * 2
+  const minLevel = currentLevel * 2
   return Levels.reduce((sum, level) => {
-    if (level.level < maxLevel) return sum + level.candy
+    if (level.level <= maxLevel && level.level > minLevel) return sum + level.candy
     return sum
   }, 0)
 }
