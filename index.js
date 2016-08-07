@@ -83,8 +83,8 @@ function getHP(mon, IndSta, ECpM) {
 }
 
 // The minimum HP for a Pokemon that has perfect IVs
-function getMaxHP(mon, sta) {
-  return getHP(mon, sta, 0.790300)
+function getMaxHP(mon, sta, ECpM) {
+  return getHP(mon, sta, ECpM)
 }
 
 // The maximum HP for your Pokemon's current level
@@ -116,8 +116,8 @@ function getCP(mon, ivs, ECpM) {
 }
 
 // The maximum possible CP for a Pokemon that has perfect IVs
-function getMaxCP(mon, atk, def, sta) {
-  return getCP(mon, { atk, def, sta }, 0.790300)
+function getMaxCP(mon, atk, def, sta, ECpM) {
+  return getCP(mon, { atk, def, sta }, ECpM)
 }
 
 // The minimum CP for your Pokemon's level
@@ -218,8 +218,8 @@ function getAllPossibleValues(pokemon, mon, ECpM) {
         const BaseSta = mon.stats.stamina
         const Sta = (BaseSta + IndSta) * ECpM
 
-        const MaxCP = getMaxCP(mon, IndAtk, IndDef, IndSta)
-        const MaxHP = getMaxHP(mon, IndSta)
+        const MaxCP = getMaxCP(mon, IndAtk, IndDef, IndSta, LevelToCPM['26.5'])
+        const MaxHP = getMaxHP(mon, IndSta, LevelToCPM['26.5'])
 
         const PerfectIV = Math.round((IndAtk + IndDef + IndSta) / 45 * 100)
         const PercentBatt = getAttackPercentage(IndAtk, IndDef)
@@ -305,7 +305,7 @@ function logPokemon(pokemon) {
 
   console.log()
 
-  console.log('At level 40, this pokemon would have:')
+  console.log('At level 26.5, this pokemon would have:')
   console.log(`Maximum CP: ${pokemon.meta.MaxCP}`)
   console.log(`Maximum HP: ${pokemon.meta.MaxHP}`)
 
