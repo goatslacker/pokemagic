@@ -14,7 +14,7 @@ const OK_DEF = 106
 const OK_STA = 100
 const OK_HP = 100
 
-const TRAINER_LEVEL = 25
+const TRAINER_LEVEL = 24
 
 const MAX_OVERALL_RATING = 385
 const DECENT_POKEMON_RATING = 309
@@ -339,7 +339,17 @@ function logPokemon(pokemon) {
   const ovRatingPercent = Math.round(ovRating / MAX_OVERALL_RATING * 100)
   const plusMinusRating = (ovRating - DECENT_POKEMON_RATING).toFixed(1)
 
+  const deceCP = getCP({
+    stats: {
+      attack: 150,
+      defense: 150,
+      stamina: 150,
+    },
+  }, { atk: 15, def: 15, sta: 15 }, LevelToCPM[TRAINER_LEVEL + 1.5])
+  const ovCP = Math.round(pokemon.meta.MaxCP / deceCP)
+
   console.log(`Overall Rating: ${ovRatingPercent}% (${ovRating} +${plusMinusRating})`)
+  console.log(`Overall CP Rating: ${ovCP}%`)
 }
 
 function magic(pokemon) {
@@ -527,7 +537,7 @@ magic({
 
 //logPokemon(
 //  getPokemonDataForStats(
-//    findPokemon('seaking'),
-//    20, 12, 15, 14
+//    findPokemon('gyarados'),
+//    20, 15, 15, 15
 //  )
 //)
