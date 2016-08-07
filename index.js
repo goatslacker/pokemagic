@@ -415,7 +415,7 @@ function magic(pokemon) {
   const maxLevel = Math.max.apply(null, DustToLevel[pokemon.stardust])
   // XXX shit what is your trainer level!?
 
-  const x = howMuchPowerUp(maxLevel, 24)
+  const x = howMuchPowerUp(maxLevel, 25)
   const stardust = x.stardust
   const candy = x.candy
 
