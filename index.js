@@ -163,8 +163,20 @@ function getPokemonDataForStats(mon, level, IndAtk, IndDef, IndSta) {
   const BaseSta = mon.stats.stamina
   const Sta = (BaseSta + IndSta) * ECpM
 
+  const MaxCP = getMaxCP(mon, IndAtk, IndDef, IndSta, getMaxLevel())
+  const MaxHP = getMaxHP(mon, IndSta, getMaxLevel())
+
   const PerfectIV = Math.round((IndAtk + IndDef + IndSta) / 45 * 100)
   const PercentBatt = getAttackPercentage(IndAtk, IndDef)
+
+  const MaxLevelCP = getMaxCPForLevel(mon, ECpM)
+  const MinLevelCP = getMinCPForLevel(mon, ECpM)
+
+  const MaxLevelHP = getMaxHPForLevel(mon, ECpM)
+  const MinLevelHP = getMinHPForLevel(mon, ECpM)
+
+  const PercentHP = Math.round(percentInRange(HP, MinLevelHP, MaxLevelHP))
+  const PercentCP = Math.round(percentInRange(CP, MinLevelCP, MaxLevelCP))
 
   return {
     CP,
@@ -178,8 +190,14 @@ function getPokemonDataForStats(mon, level, IndAtk, IndDef, IndSta) {
       IndSta,
     },
     percent: {
+      PercentCP,
+      PercentHP,
       PercentBatt,
       PerfectIV,
+    },
+    meta: {
+      MaxCP,
+      MaxHP,
     },
   }
 }
@@ -507,9 +525,9 @@ magic({
   level: process.argv[6] ? Number(process.argv[6]) : null,
 })
 
-//console.log(
+//logPokemon(
 //  getPokemonDataForStats(
-//    findPokemon('nidoqueen'),
-//    15, 15, 15, 15
+//    findPokemon('seadra'),
+//    21, 15, 12, 14
 //  )
 //)
