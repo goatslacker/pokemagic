@@ -14,6 +14,8 @@ const OK_DEF = 106
 const OK_STA = 100
 const OK_HP = 100
 
+const TRAINER_LEVEL = 25
+
 const MAX_OVERALL_RATING = 385
 const DECENT_POKEMON_RATING = 309
 
@@ -25,6 +27,10 @@ function findPokemon(name) {
     if (Pokemon[key].name === fmtName) return Pokemon[key]
     return null
   }, null)
+}
+
+function getMaxLevel() {
+  return LevelToCPM[String(TRAINER_LEVEL + 1.5)]
 }
 
 const DustToLevel = {
@@ -218,8 +224,8 @@ function getAllPossibleValues(pokemon, mon, ECpM) {
         const BaseSta = mon.stats.stamina
         const Sta = (BaseSta + IndSta) * ECpM
 
-        const MaxCP = getMaxCP(mon, IndAtk, IndDef, IndSta, LevelToCPM['26.5'])
-        const MaxHP = getMaxHP(mon, IndSta, LevelToCPM['26.5'])
+        const MaxCP = getMaxCP(mon, IndAtk, IndDef, IndSta, getMaxLevel())
+        const MaxHP = getMaxHP(mon, IndSta, getMaxLevel())
 
         const PerfectIV = Math.round((IndAtk + IndDef + IndSta) / 45 * 100)
         const PercentBatt = getAttackPercentage(IndAtk, IndDef)
@@ -305,7 +311,7 @@ function logPokemon(pokemon) {
 
   console.log()
 
-  console.log('At level 26.5, this pokemon would have:')
+  console.log(`At level ${getMaxLevel()}, this pokemon would have:`)
   console.log(`Maximum CP: ${pokemon.meta.MaxCP}`)
   console.log(`Maximum HP: ${pokemon.meta.MaxHP}`)
 
@@ -416,7 +422,7 @@ function magic(pokemon) {
   const maxLevel = Math.max.apply(null, DustToLevel[pokemon.stardust])
   // XXX shit what is your trainer level!?
 
-  const x = howMuchPowerUp(maxLevel, 25)
+  const x = howMuchPowerUp(maxLevel, TRAINER_LEVEL)
   const stardust = x.stardust
   const candy = x.candy
 
