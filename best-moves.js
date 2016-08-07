@@ -3,11 +3,11 @@ const Pokemon = require('./pokemon.json')
 function getDmg(atk, power, stab) {
   const def = 100
   const ECpM = 0.790300
-  return Math.floor((0.5 * atk * ECpM / (def * ECpM ) * power * stab) + 1)
+  return (0.5 * atk * ECpM / (def * ECpM ) * power * stab) + 1
 }
 
 function getDPS(dmg, duration) {
-  return (dmg / (duration / 1000)).toFixed(2)
+  return Number((dmg / (duration / 1000)).toFixed(2))
 }
 
 function bestMovesFor(pokemonName) {
@@ -20,34 +20,42 @@ function bestMovesFor(pokemonName) {
 
   mon.moves1.forEach((move1) => {
     mon.moves2.forEach((move2) => {
-      const totalEnergy = 10 * move1.Energy
-      const howManyCharges = Math.abs(totalEnergy / move2.Energy)
-
-      const atk = mon.stats.attack
       const stab1 = move1.Type === mon.type1 || move1.Type === mon.type2 ? 1.25 : 1
       const stab2 = move2.Type === mon.type1 || move2.Type === mon.type2 ? 1.25 : 1
 
-      const ECpM = 0.790300
-      // The defending Pokemon's level will be set at just 100
-      const def = 100
-
-      const dmg1 = getDmg(atk, move1.Power, stab1)
-      const dmg2 = getDmg(atk, move2.Power, stab2)
-
-      const dps1 = getDPS(dmg1, move1.DurationMs)
-      const dps2 = getDPS(dmg2, move2.DurationMs)
+      const total = battleDMG(move1, move2, stab1, stab2)
+      const dps = getDPS(total.dmg, total.time)
 
       stuff.push({
         quick: move1.Name,
         charge: move2.Name,
-        dps1,
-        dps2,
-        total: Number(dps1) + Number(dps2),
+        dps,
       })
     })
   })
 
-  return stuff.sort((a, b) => a.total > b.total ? -1 : 1)[0]
+  return stuff.sort((a, b) => a.dps > b.dps ? -1 : 1)[0]
+}
+
+function battleDMG(move1, move2, stab1, stab2) {
+  // Assuming you only get 20 "hits" on the CPU
+  return Array.from(Array(20)).reduce((x, _) => {
+    var energy = x.energy
+    var time = x.time
+    var dmg = x.dmg
+
+    if (energy >= Math.abs(move2.Energy)) {
+      dmg += move2.Power * stab2
+      time += move2.DurationMs
+      energy = energy + move2.Energy
+    } else {
+      dmg += move1.Power * stab1
+      time += move1.DurationMs
+      energy = energy + move1.Energy
+    }
+
+    return { energy, time, dmg }
+  }, { energy: 0, time: 0, dmg: 0 })
 }
 
 console.log(
