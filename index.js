@@ -309,12 +309,13 @@ function logPokemon(pokemon) {
   console.log(`Maximum CP: ${pokemon.meta.MaxCP}`)
   console.log(`Maximum HP: ${pokemon.meta.MaxHP}`)
 
+  console.log()
+
   const ovRating = getOverallRating(pokemon)
   const ovRatingPercent = Math.round(ovRating / MAX_OVERALL_RATING * 100)
   const plusMinusRating = (ovRating - DECENT_POKEMON_RATING).toFixed(1)
-  console.log(`Overall Rating: ${ovRatingPercent}% (${ovRating} +${plusMinusRating})`)
 
-  console.log()
+  console.log(`Overall Rating: ${ovRatingPercent}% (${ovRating} +${plusMinusRating})`)
 
   // XXX this doesn't quite work
 //  if (CPM[pokemon.Name]) {
