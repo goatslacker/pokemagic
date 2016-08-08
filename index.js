@@ -8,13 +8,20 @@ const LevelToCPM = require('./level-to-cpm.json')
 const Levels = require('./levels')
 const CPM = require('./cpm.json')
 
+const TRAINER_LEVEL = 24
+
 // These are values that I consider "baseline" for what makes a good pokemon
 const OK_ATK = 106
 const OK_DEF = 106
 const OK_STA = 100
 const OK_HP = 100
-
-const TRAINER_LEVEL = 24
+const DECE_CP = getCP({
+  stats: {
+    attack: 150,
+    defense: 150,
+    stamina: 150,
+  },
+}, { atk: 15, def: 15, sta: 15 }, LevelToCPM[TRAINER_LEVEL + 1.5])
 
 const MAX_OVERALL_RATING = 385
 const DECENT_POKEMON_RATING = 309
@@ -178,6 +185,14 @@ function getPokemonDataForStats(mon, level, IndAtk, IndDef, IndSta) {
   const PercentHP = Math.round(percentInRange(HP, MinLevelHP, MaxLevelHP))
   const PercentCP = Math.round(percentInRange(CP, MinLevelCP, MaxLevelCP))
 
+  var EvolveCP = null
+  var MaxEvolveCP = null
+
+  if (CPM[pokemon.name.toUpperCase()]) {
+    EvolveCP = Math.round(CPM[pokemon.name.toUpperCase()][1] * CP)
+    MaxEvolveCP = Math.round(CPM[pokemon.name.toUpperCase()][1] * MaxCP)
+  }
+
   return {
     CP,
     HP,
@@ -198,6 +213,8 @@ function getPokemonDataForStats(mon, level, IndAtk, IndDef, IndSta) {
     meta: {
       MaxCP,
       MaxHP,
+      EvolveCP,
+      MaxEvolveCP,
     },
   }
 }
@@ -217,6 +234,12 @@ function getAllPossibleValues(pokemon, mon, ECpM) {
 
   const PercentHP = Math.round(percentInRange(pokemon.hp, MinLevelHP, MaxLevelHP))
   const PercentCP = Math.round(percentInRange(pokemon.cp, MinLevelCP, MaxLevelCP))
+
+  const maxLevel = Math.max.apply(null, DustToLevel[pokemon.stardust])
+
+  const powerup = howMuchPowerUp(maxLevel, TRAINER_LEVEL)
+  const Stardust = powerup.stardust
+  const Candy = powerup.candy
 
   // Brute force find the IVs.
   // For every possible IndSta we'll loop through IndAtk and IndDef until we
@@ -248,6 +271,14 @@ function getAllPossibleValues(pokemon, mon, ECpM) {
         const PerfectIV = Math.round((IndAtk + IndDef + IndSta) / 45 * 100)
         const PercentBatt = getAttackPercentage(IndAtk, IndDef)
 
+        var EvolveCP = null
+        var MaxEvolveCP = null
+
+        if (CPM[pokemon.name.toUpperCase()]) {
+          EvolveCP = Math.round(CPM[pokemon.name.toUpperCase()][1] * CP)
+          MaxEvolveCP = Math.round(CPM[pokemon.name.toUpperCase()][1] * MaxCP)
+        }
+
         if (pokemon.cp === CP) {
           possibleValues.push({
             Name,
@@ -269,6 +300,10 @@ function getAllPossibleValues(pokemon, mon, ECpM) {
               PerfectIV,
             },
             meta: {
+              Stardust,
+              Candy,
+              EvolveCP,
+              MaxEvolveCP,
               MinLevelCP,
               MaxLevelCP,
               MinLevelHP,
@@ -323,33 +358,31 @@ function logPokemon(pokemon) {
   console.log(`CP: ${pokemon.CP} (${colorPercent(pokemon.percent.PercentCP, 1.05)})`)
   console.log(`HP: ${pokemon.HP} (${colorPercent(pokemon.percent.PercentHP, 1.5)})`)
 
+  // XXX it would be better to know how far off from "perfect" this pokemon is
   console.log(`Atk: ${pokemon.Atk.toFixed(2)} (+${(pokemon.Atk - OK_ATK).toFixed(2)})`)
   console.log(`Def: ${pokemon.Def.toFixed(2)} (+${(pokemon.Def - OK_DEF).toFixed(2)})`)
   console.log(`Sta: ${pokemon.Sta.toFixed(2)} (+${(pokemon.Sta - OK_STA).toFixed(2)})`)
 
   console.log()
 
+  const ovCP = Math.round(pokemon.meta.MaxCP / DECE_CP * 100)
+
   console.log(`At level ${TRAINER_LEVEL + 1.5}, this pokemon would have:`)
   console.log(`Maximum CP: ${pokemon.meta.MaxCP}`)
   console.log(`Maximum HP: ${pokemon.meta.MaxHP}`)
+  console.log(`Overall CP Rating: ${ovCP}%`)
 
   console.log()
 
+  console.log(`If evolved, it would have ~${pokemon.meta.EvolveCP}CP and a Max CP of ~${pokemon.meta.MaxEvolveCP}CP`)
+  console.log(`It would take ${chalk.bold(pokemon.meta.Stardust)} stardust and ${chalk.bold(pokemon.meta.Candy)} candy to max this pokemon out`)
+
   const ovRating = getOverallRating(pokemon)
   const ovRatingPercent = Math.round(ovRating / MAX_OVERALL_RATING * 100)
-  const plusMinusRating = (ovRating - DECENT_POKEMON_RATING).toFixed(1)
 
-  const deceCP = getCP({
-    stats: {
-      attack: 150,
-      defense: 150,
-      stamina: 150,
-    },
-  }, { atk: 15, def: 15, sta: 15 }, LevelToCPM[TRAINER_LEVEL + 1.5])
-  const ovCP = Math.round(pokemon.meta.MaxCP / deceCP)
+  console.log()
 
-  console.log(`Overall Rating: ${ovRatingPercent}% (${ovRating} +${plusMinusRating})`)
-  console.log(`Overall CP Rating: ${ovCP}%`)
+  console.log(`${pokemon.Name} Rating: ${ovRatingPercent}%`)
 }
 
 function magic(pokemon) {
@@ -440,23 +473,6 @@ function magic(pokemon) {
     console.log('Best possible Pokemon\'s values')
     logPokemon(bestPossible)
   }
-
-  const maxLevel = Math.max.apply(null, DustToLevel[pokemon.stardust])
-  // XXX shit what is your trainer level!?
-
-  const x = howMuchPowerUp(maxLevel, TRAINER_LEVEL)
-  const stardust = x.stardust
-  const candy = x.candy
-
-  console.log()
-
-  if (CPM[pokemon.name.toUpperCase()]) {
-    const evolveCP = Math.round(CPM[pokemon.name.toUpperCase()][1] * pokemon.cp)
-    console.log(`If evolved, it would have ~${evolveCP}CP`)
-  }
-
-  console.log(`It would take ${chalk.bold(stardust)} stardust and ${chalk.bold(candy)} candy to max this pokemon out`)
-
   console.log()
 
   const pokemonId = chalk.blue.bold(`${pokemon.name.toUpperCase()} ${pokemon.cp}`)
@@ -541,3 +557,4 @@ magic({
 //    20, 15, 15, 15
 //  )
 //)
+module.exports = magic
