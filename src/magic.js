@@ -97,7 +97,7 @@ function magic(pokemon) {
     response.push('Congrats! Here are your Pokemon\'s stats')
     response.push('')
 
-    logPokemon(values[0])
+    response.push.apply(response, logPokemon(values[0]))
   } else {
     response.push('Your possible Pokemon\'s values')
 
@@ -117,7 +117,7 @@ function magic(pokemon) {
     response.push('')
 
     response.push('Best possible Pokemon\'s values')
-    logPokemon(bestPossible)
+    response.push.apply(response, logPokemon(bestPossible))
   }
 
   response.push('')

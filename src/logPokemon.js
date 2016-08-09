@@ -27,32 +27,35 @@ function colorPercent(num, mod) {
 }
 
 function logPokemon(pokemon) {
-  console.log(`IVs: ${pokemon.ivs.IndAtk}/${pokemon.ivs.IndDef}/${pokemon.ivs.IndSta} (${colorPercent(pokemon.percent.PerfectIV)})`)
-  console.log(`Atk+Def: ${pokemon.ivs.IndAtk + pokemon.ivs.IndDef}/30 (${colorPercent(pokemon.percent.PercentBatt)})`)
-  console.log(`CP: ${pokemon.CP} (${colorPercent(pokemon.percent.PercentCP, 1.05)})`)
-  console.log(`HP: ${pokemon.HP} (${colorPercent(pokemon.percent.PercentHP, 1.5)})`)
+  const response = []
+  response.push(`IVs: ${pokemon.ivs.IndAtk}/${pokemon.ivs.IndDef}/${pokemon.ivs.IndSta} (${colorPercent(pokemon.percent.PerfectIV)})`)
+  response.push(`Atk+Def: ${pokemon.ivs.IndAtk + pokemon.ivs.IndDef}/30 (${colorPercent(pokemon.percent.PercentBatt)})`)
+  response.push(`CP: ${pokemon.CP} (${colorPercent(pokemon.percent.PercentCP, 1.05)})`)
+  response.push(`HP: ${pokemon.HP} (${colorPercent(pokemon.percent.PercentHP, 1.5)})`)
 
-  console.log(`Atk: ${pokemon.Atk.toFixed(2)}`)
-  console.log(`Def: ${pokemon.Def.toFixed(2)}`)
-  console.log(`Sta: ${pokemon.Sta.toFixed(2)}`)
+  response.push(`Atk: ${pokemon.Atk.toFixed(2)}`)
+  response.push(`Def: ${pokemon.Def.toFixed(2)}`)
+  response.push(`Sta: ${pokemon.Sta.toFixed(2)}`)
 
-  console.log()
+  response.push('')
 
-  console.log(`At level ${TRAINER_LEVEL + 1.5}, this pokemon would have:`)
-  console.log(`Maximum CP: ${pokemon.meta.MaxCP}`)
-  console.log(`Maximum HP: ${pokemon.meta.MaxHP}`)
+  response.push(`At level ${TRAINER_LEVEL + 1.5}, this pokemon would have:`)
+  response.push(`Maximum CP: ${pokemon.meta.MaxCP}`)
+  response.push(`Maximum HP: ${pokemon.meta.MaxHP}`)
 
-  console.log()
+  response.push('')
 
-  console.log(`If evolved, it would have ~${pokemon.meta.EvolveCP}CP and a Max CP of ~${pokemon.meta.MaxEvolveCP}CP`)
-  console.log(`It would take ${chalk.bold(pokemon.meta.Stardust)} stardust and ${chalk.bold(pokemon.meta.Candy)} candy to max this pokemon out`)
+  response.push(`If evolved, it would have ~${pokemon.meta.EvolveCP}CP and a Max CP of ~${pokemon.meta.MaxEvolveCP}CP`)
+  response.push(`It would take ${chalk.bold(pokemon.meta.Stardust)} stardust and ${chalk.bold(pokemon.meta.Candy)} candy to max this pokemon out`)
 
   const ovRating = getOverallRating(pokemon)
   const ovRatingPercent = Math.round(ovRating / MAX_OVERALL_RATING * 100)
 
-  console.log()
+  response.push('')
 
-  console.log(`${pokemon.Name} Rating: ${ovRatingPercent}%`)
+  response.push(`${pokemon.Name} Rating: ${ovRatingPercent}%`)
+
+  return response
 }
 
 module.exports = logPokemon
