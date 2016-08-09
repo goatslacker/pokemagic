@@ -32,10 +32,11 @@ function calculate(pokemon) {
 
 function magic(pokemon) {
   const values = calculate(pokemon)
+  const response = []
 
   if (!values.length) {
-    console.log('I have no idea. You might have entered the wrong values.')
-    return
+    response.push('I have no idea. You might have entered the wrong values.')
+    return response
   }
 
   const bestPossible = values.reduce((best, mon) => {
@@ -93,46 +94,49 @@ function magic(pokemon) {
 
   // Begin logging
   if (values.length === 1) {
-    console.log('Congrats! Here are your Pokemon\'s stats')
-    console.log()
+    response.push('Congrats! Here are your Pokemon\'s stats')
+    response.push('')
 
     logPokemon(values[0])
   } else {
-    console.log('Your possible Pokemon\'s values')
+    response.push('Your possible Pokemon\'s values')
 
-    console.log()
+    response.push('')
 
-    console.log('Range in values')
-    console.log(`IV: ${ValuesRange.iv[0]} -- ${ValuesRange.iv[1]}%`)
-    console.log(`Atk+Def: ${ValuesRange.atk[0]} -- ${ValuesRange.atk[1]}%`)
-    console.log(`CP: ${ValuesRange.cp[0]} -- ${ValuesRange.cp[1]}%`)
-    console.log(`HP: ${ValuesRange.hp[0]} -- ${ValuesRange.hp[1]}%`)
+    response.push('Range in values')
+    response.push(`IV: ${ValuesRange.iv[0]} -- ${ValuesRange.iv[1]}%`)
+    response.push(`Atk+Def: ${ValuesRange.atk[0]} -- ${ValuesRange.atk[1]}%`)
+    response.push(`CP: ${ValuesRange.cp[0]} -- ${ValuesRange.cp[1]}%`)
+    response.push(`HP: ${ValuesRange.hp[0]} -- ${ValuesRange.hp[1]}%`)
 
-    console.log()
+    response.push('')
 
-    console.log(`There are ${values.length} possibilities.`)
-    console.log(`There is a ${chalk.bold(Math.round(1 / values.length * 100))}% chance you'll get the one below.`)
+    response.push(`There are ${values.length} possibilities.`)
+    response.push(`There is a ${chalk.bold(Math.round(1 / values.length * 100))}% chance you'll get the one below.`)
 
-    console.log()
+    response.push('')
 
-    console.log('Best possible Pokemon\'s values')
+    response.push('Best possible Pokemon\'s values')
     logPokemon(bestPossible)
   }
-  console.log()
+
+  response.push('')
 
   const pokemonId = chalk.blue.bold(`${pokemon.name.toUpperCase()} ${pokemon.cp}`)
 
   if (yes) {
-    console.log(`>> Yes, keep your ${pokemonId}.`)
+    response.push(`>> Yes, keep your ${pokemonId}.`)
   } else if (maybe) {
-    console.log(
+    response.push(
       `>> Maybe you should keep ${pokemonId} around.`,
       '\n  ',
       `There is a ${chalk.bold(Math.round(maybeValues.length / values.length * 100))}% chance you've got a winner.`
     )
   } else {
-    console.log(`>> Send ${pokemonId} to Willow's grinder.`)
+    response.push(`>> Send ${pokemonId} to Willow's grinder.`)
   }
+
+  return response
 }
 
 module.exports = magic
