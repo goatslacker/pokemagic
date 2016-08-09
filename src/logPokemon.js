@@ -5,7 +5,7 @@ const Levels = require('../json/levels')
 const cpTools = require('./cp')
 const hpTools = require('./hp')
 
-const TRAINER_LEVEL = 25
+const TRAINER_LEVEL = 26
 
 const MAX_OVERALL_RATING = 385
 
@@ -28,6 +28,8 @@ function colorPercent(num, mod) {
 
 function logPokemon(pokemon) {
   const response = []
+
+  response.push(`Level: ${pokemon.Level}`)
   response.push(`IVs: ${pokemon.ivs.IndAtk}/${pokemon.ivs.IndDef}/${pokemon.ivs.IndSta} (${colorPercent(pokemon.percent.PerfectIV)})`)
   response.push(`Atk+Def: ${pokemon.ivs.IndAtk + pokemon.ivs.IndDef}/30 (${colorPercent(pokemon.percent.PercentBatt)})`)
   response.push(`CP: ${pokemon.CP} (${colorPercent(pokemon.percent.PercentCP, 1.05)})`)
@@ -40,13 +42,20 @@ function logPokemon(pokemon) {
   response.push('')
 
   response.push(`At level ${TRAINER_LEVEL + 1.5}, this pokemon would have:`)
-  response.push(`Maximum CP: ${pokemon.meta.MaxCP}`)
-  response.push(`Maximum HP: ${pokemon.meta.MaxHP}`)
+  response.push(`Maximum CP: ${pokemon.meta.MaxCP}/${pokemon.meta.MaxLeveledCP}`)
+  response.push(`Maximum HP: ${pokemon.meta.MaxHP}/${pokemon.meta.MaxLeveledHP}`)
 
-  response.push('')
+  if (pokemon.meta.EvolveCP || pokemon.meta.Stardust) {
+    response.push('')
+  }
 
-  response.push(`If evolved, it would have ~${pokemon.meta.EvolveCP}CP and a Max CP of ~${pokemon.meta.MaxEvolveCP}CP`)
-  response.push(`It would take ${chalk.bold(pokemon.meta.Stardust)} stardust and ${chalk.bold(pokemon.meta.Candy)} candy to max this pokemon out`)
+  if (pokemon.meta.EvolveCP) {
+    response.push(`If evolved, it would have ~${pokemon.meta.EvolveCP}CP and a Max CP of ~${pokemon.meta.MaxEvolveCP}CP`)
+  }
+
+  if (pokemon.meta.Stardust) {
+    response.push(`It would take ${chalk.bold(pokemon.meta.Stardust)} stardust and ${chalk.bold(pokemon.meta.Candy)} candy to max this pokemon out`)
+  }
 
   const ovRating = getOverallRating(pokemon)
   const ovRatingPercent = Math.round(ovRating / MAX_OVERALL_RATING * 100)

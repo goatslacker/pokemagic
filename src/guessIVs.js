@@ -9,7 +9,7 @@ const cpTools = require('./cp')
 const hpTools = require('./hp')
 const powerupTools = require('./powerup')
 
-const TRAINER_LEVEL = 24
+const TRAINER_LEVEL = 26
 
 function getMaxLevel() {
   return LevelToCPM[String(TRAINER_LEVEL + 1.5)]
@@ -35,7 +35,17 @@ function guessIVs(pokemon, mon, ECpM) {
 
   const BaseSta = mon.stats.stamina
 
+  const Level = Object.keys(LevelToCPM).reduce((lvl, key) => {
+    if (LevelToCPM[key] === ECpM) {
+      return key
+    }
+    return lvl
+  }, null)
+
   const IndStaValues = calcIndSta(pokemon.hp, BaseSta, ECpM)
+
+  const MaxLeveledCP = cpTools.getMaxCPForLevel(mon, getMaxLevel())
+  const MaxLeveledHP = hpTools.getMaxHPForLevel(mon, getMaxLevel())
 
   const MaxLevelCP = cpTools.getMaxCPForLevel(mon, ECpM)
   const MinLevelCP = cpTools.getMinCPForLevel(mon, ECpM)
@@ -93,6 +103,7 @@ function guessIVs(pokemon, mon, ECpM) {
         if (pokemon.cp === CP) {
           possibleValues.push({
             Name,
+            Level,
             CP,
             HP,
             Atk,
@@ -121,6 +132,8 @@ function guessIVs(pokemon, mon, ECpM) {
               MaxLevelHP,
               MaxCP,
               MaxHP,
+              MaxLeveledCP,
+              MaxLeveledHP,
             },
           })
         }
