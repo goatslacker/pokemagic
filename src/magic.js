@@ -112,6 +112,12 @@ function magic(pokemon) {
     response.push('')
 
     response.push(`There are ${values.length} possibilities.`)
+    if (values.length < 7) {
+      values.forEach((value) => {
+        const ivPercent = Math.round((value.ivs.IndAtk + value.ivs.IndDef + value.ivs.IndSta) / 45 * 100)
+        response.push(`${value.ivs.IndAtk}/${value.ivs.IndDef}/${value.ivs.IndSta} (${ivPercent}%)`)
+      })
+    }
     response.push(`There is a ${chalk.bold(Math.round(1 / values.length * 100))}% chance you'll get the one below.`)
 
     response.push('')
