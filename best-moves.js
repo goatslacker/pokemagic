@@ -1,4 +1,4 @@
-const Pokemon = require('./pokemon.json')
+const Pokemon = require('./json/pokemon.json')
 
 function getDmg(atk, power, stab) {
   const def = 100
