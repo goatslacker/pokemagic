@@ -7,20 +7,7 @@ const hpTools = require('./hp')
 
 const TRAINER_LEVEL = 25
 
-const OK_ATK = 106
-const OK_DEF = 106
-const OK_STA = 100
-const OK_HP = 100
-const DECE_CP = cpTools.getCP({
-  stats: {
-    attack: 150,
-    defense: 150,
-    stamina: 150,
-  },
-}, { atk: 15, def: 15, sta: 15 }, LevelToCPM[TRAINER_LEVEL + 1.5])
-
 const MAX_OVERALL_RATING = 385
-const DECENT_POKEMON_RATING = 309
 
 const getOverallRating = (
   v => v.percent.PerfectIV +
@@ -45,19 +32,15 @@ function logPokemon(pokemon) {
   console.log(`CP: ${pokemon.CP} (${colorPercent(pokemon.percent.PercentCP, 1.05)})`)
   console.log(`HP: ${pokemon.HP} (${colorPercent(pokemon.percent.PercentHP, 1.5)})`)
 
-  // XXX it would be better to know how far off from "perfect" this pokemon is
-  console.log(`Atk: ${pokemon.Atk.toFixed(2)} (+${(pokemon.Atk - OK_ATK).toFixed(2)})`)
-  console.log(`Def: ${pokemon.Def.toFixed(2)} (+${(pokemon.Def - OK_DEF).toFixed(2)})`)
-  console.log(`Sta: ${pokemon.Sta.toFixed(2)} (+${(pokemon.Sta - OK_STA).toFixed(2)})`)
+  console.log(`Atk: ${pokemon.Atk.toFixed(2)}`)
+  console.log(`Def: ${pokemon.Def.toFixed(2)}`)
+  console.log(`Sta: ${pokemon.Sta.toFixed(2)}`)
 
   console.log()
-
-  const ovCP = Math.round(pokemon.meta.MaxCP / DECE_CP * 100)
 
   console.log(`At level ${TRAINER_LEVEL + 1.5}, this pokemon would have:`)
   console.log(`Maximum CP: ${pokemon.meta.MaxCP}`)
   console.log(`Maximum HP: ${pokemon.meta.MaxHP}`)
-  console.log(`Overall CP Rating: ${ovCP}%`)
 
   console.log()
 
