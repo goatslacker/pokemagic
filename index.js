@@ -7,3 +7,7 @@ magic({
   stardust: Number(process.argv[5]) || 2500,
   level: process.argv[6] ? Number(process.argv[6]) : null,
 }).forEach(x => console.log(x))
+
+/* function findIvs(name, cp, hp, startdust, level) {
+  return
+} */

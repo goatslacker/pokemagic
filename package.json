@@ -1,0 +1,12 @@
+{
+  "name": "pokemon-go-iv-calculator",
+  "version": "0.0.1",
+  "description": "Pokemon Go IV calculator",
+  "keywords": [
+  ],
+  "author": "goatslacker",
+  "homepage": "https://github.com/goatslacker/pokemon-go-iv-calculator",
+  "license": "MIT",
+  "scripts": {
+  }
+}
