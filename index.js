@@ -69,9 +69,9 @@ const FileParser = function(filename) {
   this.extension = this.findExtension(filename);
 
   switch(this.extension) {
-    case 'json':
+    /*case 'json':
       this.file = new JsonParser(filename);
-      break;
+      break;*/
     case 'csv':
       this.file = new CsvParser(filename);
       break;
