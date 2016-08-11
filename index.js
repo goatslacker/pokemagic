@@ -3,8 +3,6 @@ const fs = require('fs');
 const magic = require('./src/magic')
 
 function processInput() {
-  console.log(`# of args ${process.argv.length}`);
-
   if (process.argv.length > 3) {
     return findSingleResult();
   }
@@ -13,44 +11,44 @@ function processInput() {
 }
 
 function findResultsForFile(filename) {
-  const fileParser = new FileParser(filename);
+  const parser = new FileParser(filename).file;
   var results;
 
-  if (!fileParser.file) {
+  if (!parser) {
     return console.log(`${filename} is not a valid file type`);
   }
 
-  if (!fileParser.file.isValid()) {
-    return fileParser.file.errors.forEach(x => console.log(x));
+  if (!parser.isValid()) {
+    return parser.errors.forEach(x => console.log(x));
   }
 
-  fileParser.file.read(() => {
-    fileParser.file.pokemonList.forEach((pokemon) => {
+  parser.read(() => {
+    parser.logHeaders();
+    parser.pokemonList.forEach((pokemon) => {
       try {
         results = magic(pokemon);
-        fileParser.file.logResults(pokemon, results.asObject());
+        parser.logResults(pokemon, results.asObject());
       } catch(err) {
-        console.log(err.message);
+        parser.logResults(pokemon, { range: { iv: ['Not found', 'Not found'] } });
       }
     });
   });
 }
 
 function findSingleResult() {
-  console.log('findSingleResult');
   printResult(arrayToPokemon(process.argv, 2));
 }
 
 function arrayToPokemon(array, startIndex) {
   startIndex = startIndex || 0;
 
-  return {
-    name: array[startIndex] || 'rhyhorn',
-    cp: Number(array[startIndex + 1]) || 634,
-    hp: Number(array[startIndex + 2]) || 103,
-    stardust: Number(array[startIndex + 3]) || 2500,
-    level: array[startIndex + 4] ? Number(array[startIndex + 4]) : null,
-  }
+  return serializePokemon({
+    name: array[startIndex],
+    cp: array[startIndex + 1],
+    hp: array[startIndex + 2],
+    stardust: array[startIndex + 3],
+    level: array[startIndex + 4]
+  });
 }
 
 function serializePokemon(pokemon) {
@@ -67,11 +65,8 @@ function printResult(pokemon) {
   magic(pokemon).toString().forEach(x => console.log(x))
 }
 
-
 const FileParser = function(filename) {
-  console.log(`FileParser filename: ${filename}`);
   this.extension = this.findExtension(filename);
-  console.log(`FileParser extension: ${this.extension}`);
 
   switch(this.extension) {
     case 'json':
@@ -124,11 +119,15 @@ CsvParser.prototype.isValid = function() {
   return !this.errors.length;
 }
 
+CsvParser.prototype.logHeaders = function() {
+  console.log(`name${this.delimiter}cp${this.delimiter}hp${this.delimiter}stardust${this.delimiter}leveled${this.delimiter}minIV${this.delimiter}maxIV`);
+}
+
 CsvParser.prototype.logResults = function(pokemon, results) {
   const minIV = results.range.iv[0];
   const maxIV = results.range.iv[1];
 
-  console.log(`${pokemon.name}${this.delimiter}${pokemon.cp}${this.delimiter}${pokemon.hp}${this.delimiter}${pokemon.stardust}${this.delimiter}${minIV}${this.delimiter}${maxIV}`);
+  console.log(`${pokemon.name}${this.delimiter}${pokemon.cp}${this.delimiter}${pokemon.hp}${this.delimiter}${pokemon.stardust}${this.delimiter}${!!pokemon.level}${this.delimiter}${minIV}${this.delimiter}${maxIV}`);
 }
 
 processInput();
