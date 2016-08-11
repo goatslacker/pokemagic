@@ -22,10 +22,10 @@ function magic(pokemon) {
   const results = (new IvCalculator(pokemon)).results;
 
   if (!results.isValid()) {
-    return results.errors;
+    throw new Error(results.errors.join('. '));
   }
 
-  return results.toString();
+  return results;
 }
 
 const IvResults = function(pokemon, results) {
