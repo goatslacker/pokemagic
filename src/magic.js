@@ -28,160 +28,161 @@ function magic(pokemon) {
   return results;
 }
 
-const IvResults = function(pokemon, results) {
-  this.pokemon = pokemon;
-  this.results = results;
-  this.errors = [];
+class IvResults {
+  constructor(pokemon, results) {
+    this.pokemon = pokemon;
+    this.results = results;
+    this.errors = [];
 
-  if (!results.length) {
-    this.errors.push('I have no idea. You might have entered the wrong values.')
-  }
-
-  this.bestPossible = results.reduce((best, mon) => {
-    if (!best) return mon
-    return mon.percent.PerfectIV > best.percent.PerfectIV ? mon : best
-  }, null)
-
-  this.yes = results.every(isGoodPokemonForItsClass)
-  this.maybeValues = results.filter(isGoodPokemonForItsClass)
-  this.maybe = this.maybeValues.length > 0
-  this.valuesRange = this.findValuesRange(results);
-}
-
-
-IvResults.prototype.isValid = function() {
-  return !this.errors.length;
-}
-
-IvResults.prototype.toString = function() {
-  const response = [];
-
-  if (this.results.length === 1) {
-    response.push('Congrats! Here are your Pokemon\'s stats')
-    response.push('')
-
-    response.push.apply(response, logPokemon(this.results[0]))
-  } else {
-    response.push('Your possible Pokemon\'s values')
-
-    response.push('')
-
-    response.push('Range in values')
-    response.push(`IV: ${this.valuesRange.iv[0]} -- ${this.valuesRange.iv[1]}%`)
-    response.push(`Atk+Def: ${this.valuesRange.atk[0]} -- ${this.valuesRange.atk[1]}%`)
-    response.push(`CP: ${this.valuesRange.cp[0]} -- ${this.valuesRange.cp[1]}%`)
-    response.push(`HP: ${this.valuesRange.hp[0]} -- ${this.valuesRange.hp[1]}%`)
-
-    response.push('')
-
-    response.push(`There are ${this.results.length} possibilities.`)
-    if (this.results.length < 7) {
-      this.results.forEach((value) => {
-        const ivPercent = Math.round((value.ivs.IndAtk + value.ivs.IndDef + value.ivs.IndSta) / 45 * 100)
-        response.push(`${value.ivs.IndAtk}/${value.ivs.IndDef}/${value.ivs.IndSta} (${ivPercent}%)`)
-      })
+    if (!results.length) {
+      this.errors.push('I have no idea. You might have entered the wrong values.')
     }
-    response.push(`There is a ${chalk.bold(Math.round(1 / this.results.length * 100))}% chance you'll get the one below.`)
+
+    this.bestPossible = results.reduce((best, mon) => {
+      if (!best) return mon
+      return mon.percent.PerfectIV > best.percent.PerfectIV ? mon : best
+    }, null)
+
+    this.yes = results.every(isGoodPokemonForItsClass)
+    this.maybeValues = results.filter(isGoodPokemonForItsClass)
+    this.maybe = this.maybeValues.length > 0
+    this.valuesRange = this.findValuesRange(results);
+  }
+
+  isValid() {
+    return !this.errors.length;
+  }
+
+  toString() {
+    const response = [];
+
+    if (this.results.length === 1) {
+      response.push('Congrats! Here are your Pokemon\'s stats')
+      response.push('')
+
+      response.push.apply(response, logPokemon(this.results[0]))
+    } else {
+      response.push('Your possible Pokemon\'s values')
+
+      response.push('')
+
+      response.push('Range in values')
+      response.push(`IV: ${this.valuesRange.iv[0]} -- ${this.valuesRange.iv[1]}%`)
+      response.push(`Atk+Def: ${this.valuesRange.atk[0]} -- ${this.valuesRange.atk[1]}%`)
+      response.push(`CP: ${this.valuesRange.cp[0]} -- ${this.valuesRange.cp[1]}%`)
+      response.push(`HP: ${this.valuesRange.hp[0]} -- ${this.valuesRange.hp[1]}%`)
+
+      response.push('')
+
+      response.push(`There are ${this.results.length} possibilities.`)
+      if (this.results.length < 7) {
+        this.results.forEach((value) => {
+          const ivPercent = Math.round((value.ivs.IndAtk + value.ivs.IndDef + value.ivs.IndSta) / 45 * 100)
+          response.push(`${value.ivs.IndAtk}/${value.ivs.IndDef}/${value.ivs.IndSta} (${ivPercent}%)`)
+        })
+      }
+      response.push(`There is a ${chalk.bold(Math.round(1 / this.results.length * 100))}% chance you'll get the one below.`)
+
+      response.push('')
+
+      response.push('Best possible Pokemon\'s values')
+      response.push.apply(response, logPokemon(this.bestPossible))
+    }
 
     response.push('')
 
-    response.push('Best possible Pokemon\'s values')
-    response.push.apply(response, logPokemon(this.bestPossible))
+    const pokemonId = chalk.blue.bold(`${this.pokemon.name.toUpperCase()} ${this.pokemon.cp}`)
+
+    if (this.yes) {
+      response.push(`>> Yes, keep your ${pokemonId}.`)
+    } else if (this.maybe) {
+      response.push(
+        `>> Maybe you should keep ${pokemonId} around.`,
+        '\n  ',
+        `There is a ${chalk.bold(Math.round(this.maybeValues.length / this.results.length * 100))}% chance you've got a winner.`
+      )
+    } else {
+      response.push(`>> Send ${pokemonId} to Willow's grinder.`)
+    }
+
+    return response;
   }
 
-  response.push('')
-
-  const pokemonId = chalk.blue.bold(`${this.pokemon.name.toUpperCase()} ${this.pokemon.cp}`)
-
-  if (this.yes) {
-    response.push(`>> Yes, keep your ${pokemonId}.`)
-  } else if (this.maybe) {
-    response.push(
-      `>> Maybe you should keep ${pokemonId} around.`,
-      '\n  ',
-      `There is a ${chalk.bold(Math.round(this.maybeValues.length / this.results.length * 100))}% chance you've got a winner.`
-    )
-  } else {
-    response.push(`>> Send ${pokemonId} to Willow's grinder.`)
-  }
-
-  return response;
-}
-
-IvResults.prototype.asObject = function() {
-  return {
-    chance: Math.round(this.maybeValues.length / this.results.length * 100),
-    best: logPokemon(this.bestPossible),
-    pokemon: this.pokemon,
-    range: this.valuesRange,
-    values: this.results.map(logPokemon),
-  }
-}
-
-IvResults.prototype.findValuesRange = function(results) {
-  return results.reduce((obj, v) => {
+  asObject() {
     return {
-      atk: [
-        Math.min(v.percent.PercentBatt, obj.atk[0]),
-        Math.max(v.percent.PercentBatt, obj.atk[1]),
-      ],
-      cp: [
-        Math.min(v.percent.PercentCP, obj.cp[0]),
-        Math.max(v.percent.PercentCP, obj.cp[1]),
-      ],
-      hp: [
-        Math.min(v.percent.PercentHP, obj.hp[0]),
-        Math.max(v.percent.PercentHP, obj.hp[1]),
-      ],
-      iv: [
-        Math.min(v.percent.PerfectIV, obj.iv[0]),
-        Math.max(v.percent.PerfectIV, obj.iv[1]),
-      ],
-      iva: [
-        Math.min(v.ivs.IndAtk, obj.iva[0]),
-        Math.max(v.ivs.IndAtk, obj.iva[1]),
-      ],
-      ivd: [
-        Math.min(v.ivs.IndDef, obj.ivd[0]),
-        Math.max(v.ivs.IndDef, obj.ivd[1]),
-      ],
-      ivs: [
-        Math.min(v.ivs.IndSta, obj.ivs[0]),
-        Math.max(v.ivs.IndSta, obj.ivs[1]),
-      ],
-    }
-  }, init)
-}
-
-const IvCalculator = function(pokemon) {
-  this.pokemon = pokemon;
-  this.results = new IvResults(
-    pokemon, this.calculateIvResults(pokemon)
-  );
-}
-
-IvCalculator.prototype.calculateIvResults = function(pokemon) {
-  pokemon = pokemon || this.pokemon || {};
-
-  const mon = findPokemon(pokemon.name)
-
-  // If the level has been provided then we can get a better accurate reading
-  // since we'll be able to determine the exact ECpM.
-  if (pokemon.level) {
-    if (DustToLevel[pokemon.stardust].indexOf(pokemon.level) === -1) {
-      throw new Error('Stardust does not match level')
-    }
-
-    const ECpM = LevelToCPM[String(pokemon.level)]
-    return guessIVs(pokemon, mon, ECpM)
+      chance: Math.round(this.maybeValues.length / this.results.length * 100),
+      best: logPokemon(this.bestPossible),
+      pokemon: this.pokemon,
+      range: this.valuesRange,
+      values: this.results.map(logPokemon),
+    };
   }
 
-  // If we're just going on stardust then we'll have to iterate through
-  // each level and concatenate all possible values
-  return DustToLevel[pokemon.stardust].reduce((arr, level) => {
-    const ECpM = LevelToCPM[String(level)]
-    return arr.concat(guessIVs(pokemon, mon, ECpM))
-  }, [])
+  findValuesRange(results) {
+    return results.reduce((obj, v) => {
+      return {
+        atk: [
+          Math.min(v.percent.PercentBatt, obj.atk[0]),
+          Math.max(v.percent.PercentBatt, obj.atk[1]),
+        ],
+        cp: [
+          Math.min(v.percent.PercentCP, obj.cp[0]),
+          Math.max(v.percent.PercentCP, obj.cp[1]),
+        ],
+        hp: [
+          Math.min(v.percent.PercentHP, obj.hp[0]),
+          Math.max(v.percent.PercentHP, obj.hp[1]),
+        ],
+        iv: [
+          Math.min(v.percent.PerfectIV, obj.iv[0]),
+          Math.max(v.percent.PerfectIV, obj.iv[1]),
+        ],
+        iva: [
+          Math.min(v.ivs.IndAtk, obj.iva[0]),
+          Math.max(v.ivs.IndAtk, obj.iva[1]),
+        ],
+        ivd: [
+          Math.min(v.ivs.IndDef, obj.ivd[0]),
+          Math.max(v.ivs.IndDef, obj.ivd[1]),
+        ],
+        ivs: [
+          Math.min(v.ivs.IndSta, obj.ivs[0]),
+          Math.max(v.ivs.IndSta, obj.ivs[1]),
+        ],
+      }
+    }, init);
+  }
+}
+
+class IvCalculator {
+  constructor(pokemon) {
+    this.pokemon = pokemon || {};
+    this.results = new IvResults(
+      pokemon, this.calculateIvResults()
+    );
+  }
+
+  calculateIvResults() {
+    const mon = findPokemon(this.pokemon.name)
+
+    // If the level has been provided then we can get a better accurate reading
+    // since we'll be able to determine the exact ECpM.
+    if (this.pokemon.level) {
+      if (DustToLevel[this.pokemon.stardust].indexOf(this.pokemon.level) === -1) {
+        throw new Error('Stardust does not match level')
+      }
+
+      const ECpM = LevelToCPM[String(this.pokemon.level)]
+      return guessIVs(this.pokemon, mon, ECpM)
+    }
+
+    // If we're just going on stardust then we'll have to iterate through
+    // each level and concatenate all possible values
+    return DustToLevel[this.pokemon.stardust].reduce((arr, level) => {
+      const ECpM = LevelToCPM[String(level)]
+      return arr.concat(guessIVs(this.pokemon, mon, ECpM))
+    }, [])
+  }
 }
 
 module.exports = magic
