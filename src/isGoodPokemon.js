@@ -1,12 +1,10 @@
-const MAX_OVERALL_RATING = 385
-const DECENT_POKEMON_RATING = 309
+const DECENT_POKEMON_RATING = 80
 
-const getOverallRating = (
-  v => v.percent.PerfectIV +
-       v.percent.PercentCP +
-       v.percent.PercentBatt +
-       (v.percent.PercentHP * 0.85)
-)
+const getOverallRating = v => (
+  (v.ivs.IndAtk * 1.25) +
+  (v.ivs.IndDef * 1.05) +
+  (v.ivs.IndSta * 0.70)
+) / 45 * 100
 
 // A good pokemon is in the 80th percentile for Atk, CP, HP, and IV.
 // This 80th percentile thing was made up by me.

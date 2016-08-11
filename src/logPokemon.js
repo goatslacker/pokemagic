@@ -7,14 +7,11 @@ const hpTools = require('./hp')
 
 const TRAINER_LEVEL = 26
 
-const MAX_OVERALL_RATING = 385
-
-const getOverallRating = (
-  v => v.percent.PerfectIV +
-       v.percent.PercentCP +
-       v.percent.PercentBatt +
-       (v.percent.PercentHP * 0.85)
-)
+const getOverallRating = v => (
+  (v.ivs.IndAtk * 1.25) +
+  (v.ivs.IndDef * 1.05) +
+  (v.ivs.IndSta * 0.70)
+) / 45 * 100
 
 function colorPercent(num, mod) {
   const mul = num * (mod || 1)
@@ -58,7 +55,7 @@ function logPokemon(pokemon) {
   }
 
   const ovRating = getOverallRating(pokemon)
-  const ovRatingPercent = Math.round(ovRating / MAX_OVERALL_RATING * 100)
+  const ovRatingPercent = Math.round(ovRating)
 
   response.push('')
 
