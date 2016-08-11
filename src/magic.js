@@ -39,6 +39,17 @@ function magic(pokemon) {
     return response
   }
 
+//  const sortedByBest = values.sort((a, b) => {
+//    return a.percent.PerfectIV > b.percent.PerfectIV ? -1 : 1
+//  })
+
+  // assume that we caught this pokemon in the wild where there are no
+  // half levels
+//  const mostProbable = sortedByBest.filter(x => x.Level % 1 === 0)
+
+  // the best possible is the top most probably or the best one
+//  const bestPossible = mostProbable.length ? mostProbable[0] : sortedByBest[0]
+
   const bestPossible = values.reduce((best, mon) => {
     if (!best) return mon
     return mon.percent.PerfectIV > best.percent.PerfectIV ? mon : best
@@ -143,6 +154,15 @@ function magic(pokemon) {
   }
 
   return response
+
+  return {
+    keep: yes || maybe,
+    chance: Math.round(maybeValues.length / values.length * 100),
+    best: logPokemon(bestPossible),
+    pokemon,
+    range: ValuesRange,
+    values,
+  }
 }
 
 module.exports = magic

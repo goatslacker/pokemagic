@@ -50,7 +50,7 @@ function logPokemon(pokemon) {
   }
 
   if (pokemon.meta.EvolveCP) {
-    response.push(`If evolved, it would have ~${pokemon.meta.EvolveCP}CP and a Max CP of ~${pokemon.meta.MaxEvolveCP}CP`)
+    response.push(`If evolved, it would have ~${pokemon.meta.EvolveCP}CP with a max of ~${pokemon.meta.MaxEvolveCP}CP`)
   }
 
   if (pokemon.meta.Stardust) {
@@ -65,6 +65,25 @@ function logPokemon(pokemon) {
   response.push(`${pokemon.Name} Rating: ${ovRatingPercent}%`)
 
   return response
+
+  return {
+    level: pokemon.Level,
+    iv: `${pokemon.ivs.IndAtk}/${pokemon.ivs.IndDef}/${pokemon.ivs.IndSta}`,
+    ivp: pokemon.percent.PerfectIV,
+    atkdef: `${pokemon.ivs.IndAtk + pokemon.ivs.IndDef}/30`,
+    atkdefp: pokemon.percent.PercentBatt,
+    cp: pokemon.CP,
+    cpp: pokemon.percent.PercentCP,
+    hp: pokemon.HP,
+    hpp: pokemon.percent.PercentHP,
+    atk: pokemon.Atk.toFixed(2),
+    def: pokemon.Def.toFixed(2),
+    sta: pokemon.Sta.toFixed(2),
+    maxlevel: TRAINER_LEVEL + 1.5,
+    maxcp: `${pokemon.meta.MaxCP}/${pokemon.meta.MaxLeveledCP}`,
+    maxhp: `${pokemon.meta.MaxHP}/${pokemon.meta.MaxLeveledHP}`,
+    overall: ovRatingPercent,
+  }
 }
 
 module.exports = logPokemon

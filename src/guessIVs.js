@@ -56,7 +56,7 @@ function guessIVs(pokemon, mon, ECpM) {
   const PercentHP = Math.round(percentInRange(pokemon.hp, MinLevelHP, MaxLevelHP))
   const PercentCP = Math.round(percentInRange(pokemon.cp, MinLevelCP, MaxLevelCP))
 
-  const maxLevel = Math.max.apply(null, DustToLevel[pokemon.stardust])
+  const maxLevel = pokemon.level || Math.max.apply(null, DustToLevel[pokemon.stardust])
 
   const powerup = powerupTools.howMuchPowerUp(maxLevel, TRAINER_LEVEL)
   const Stardust = powerup.stardust
@@ -96,8 +96,8 @@ function guessIVs(pokemon, mon, ECpM) {
         var MaxEvolveCP = null
 
         if (CPM[pokemon.name.toUpperCase()]) {
-          EvolveCP = Math.round(CPM[pokemon.name.toUpperCase()][1] * CP)
-          MaxEvolveCP = Math.round(CPM[pokemon.name.toUpperCase()][1] * MaxCP)
+          EvolveCP = Math.floor(CPM[pokemon.name.toUpperCase()][1] * CP / 100) * 100
+          MaxEvolveCP = Math.floor(CPM[pokemon.name.toUpperCase()][1] * MaxCP / 100) * 100
         }
 
         if (pokemon.cp === CP) {
