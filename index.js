@@ -12,7 +12,7 @@ function processInput() {
 
 function findResultsForFile(filename) {
   const parser = new FileParser(filename).file;
-  var results;
+  var resultString;
 
   if (!parser) {
     return console.log(`${filename} is not a valid file type`);
@@ -23,14 +23,16 @@ function findResultsForFile(filename) {
   }
 
   parser.read(() => {
-    parser.logHeaders();
+    console.log(parser.headerString());
     parser.pokemonList.forEach((pokemon) => {
       try {
-        results = magic(pokemon);
-        parser.logResults(pokemon, results.asObject());
+        resultString = parser.resultString(pokemon, magic(pokemon).asObject());
       } catch(err) {
-        parser.logResults(pokemon, { range: { iv: ['Not found', 'Not found'] } });
+        resultString = parser.resultString(pokemon, {
+          range: { iv: ['Not found', 'Not found'] }
+        });
       }
+      console.log(resultString);
     });
   });
 }

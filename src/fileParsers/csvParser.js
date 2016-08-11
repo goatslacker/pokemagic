@@ -33,15 +33,25 @@ class CsvParser {
     return !this.errors.length;
   }
 
-  logHeaders() {
-    console.log(`name${this.delimiter}cp${this.delimiter}hp${this.delimiter}stardust${this.delimiter}leveled${this.delimiter}minIV${this.delimiter}maxIV`);
+  headerString() {
+    var headers = [
+      'name', 'cp', 'hp', 'stardust', 'leveled',
+      'minIV', 'maxIV'
+    ];
+
+    return headers.join(this.delimiter);
   }
 
-  logResults(pokemon, results) {
+  resultString(pokemon, results) {
     const minIV = results.range.iv[0];
     const maxIV = results.range.iv[1];
 
-    console.log(`${pokemon.name}${this.delimiter}${pokemon.cp}${this.delimiter}${pokemon.hp}${this.delimiter}${pokemon.stardust}${this.delimiter}${!!pokemon.level}${this.delimiter}${minIV}${this.delimiter}${maxIV}`);
+    var results = [
+      pokemon.name, pokemon.cp, pokemon.hp, pokemon.stardust, !!pokemon.level,
+      minIV, maxIV
+    ];
+
+    return results.join(this.delimiter);
   }
 }
 
