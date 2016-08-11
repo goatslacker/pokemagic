@@ -1,5 +1,5 @@
 const magic = require('./src/magic');
-const { FileParser, _ } = require('./src/fileParsers/fileParser');
+const FileParser = require('./src/fileParsers/fileParser');
 const pokeSerializer = require('./src/pokeHelpers');
 
 function processInput() {
