@@ -8,9 +8,9 @@ const hpTools = require('./hp')
 const TRAINER_LEVEL = 26
 
 const getOverallRating = v => (
-  (v.ivs.IndAtk * 1.25) +
+  (v.ivs.IndAtk * 1.10) +
   (v.ivs.IndDef * 1.05) +
-  (v.ivs.IndSta * 0.70)
+  (v.ivs.IndSta * 0.85)
 ) / 45 * 100
 
 function colorPercent(num, mod) {
@@ -61,10 +61,11 @@ function logPokemon(pokemon) {
 
   response.push(`${pokemon.Name} Rating: ${ovRatingPercent}%`)
 
-  return response
+//  return response
 
   return {
     level: pokemon.Level,
+    name: pokemon.Name,
     iv: `${pokemon.ivs.IndAtk}/${pokemon.ivs.IndDef}/${pokemon.ivs.IndSta}`,
     ivp: pokemon.percent.PerfectIV,
     atkdef: `${pokemon.ivs.IndAtk + pokemon.ivs.IndDef}/30`,
@@ -79,7 +80,10 @@ function logPokemon(pokemon) {
     maxlevel: TRAINER_LEVEL + 1.5,
     maxcp: `${pokemon.meta.MaxCP}/${pokemon.meta.MaxLeveledCP}`,
     maxhp: `${pokemon.meta.MaxHP}/${pokemon.meta.MaxLeveledHP}`,
-    overall: ovRatingPercent,
+    rating: Math.round(getOverallRating(pokemon)),
+    stardust: pokemon.meta.Stardust,
+    candy: pokemon.meta.Candy,
+    value: pokemon,
   }
 }
 

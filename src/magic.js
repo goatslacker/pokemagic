@@ -153,15 +153,14 @@ function magic(pokemon) {
     response.push(`>> Send ${pokemonId} to Willow's grinder.`)
   }
 
-  return response
+//  return response
 
   return {
-    keep: yes || maybe,
     chance: Math.round(maybeValues.length / values.length * 100),
     best: logPokemon(bestPossible),
     pokemon,
     range: ValuesRange,
-    values,
+    values: values.map(logPokemon),
   }
 }
 
