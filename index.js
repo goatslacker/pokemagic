@@ -1,4 +1,4 @@
-const parse = require('./node_modules/csv-parser');
+const csvParser = require('csv-parser');
 const fs = require('fs');
 const magic = require('./src/magic')
 
@@ -91,7 +91,7 @@ const CsvParser = function(filename, callback) {
   this.pokemonList = [];
   this.delimiter = ',';
 
-  this.parser = parse({ delimiter: this.delimiter });
+  this.parser = csvParser({ delimiter: this.delimiter });
 
   this.parser.on('readable', () => {
     var record, pokemon;
