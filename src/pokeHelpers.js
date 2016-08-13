@@ -1,6 +1,6 @@
 const serializePokemon = {
   fromArray: function(array, startIndex = 0) {
-    return fromObject({
+    return this.fromObject({
       name: array[startIndex],
       cp: array[startIndex + 1],
       hp: array[startIndex + 2],
