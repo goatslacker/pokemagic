@@ -120,7 +120,7 @@ class IvResults {
       best: logPokemon(this.bestPossible),
       pokemon: this.pokemon,
       range: this.valuesRange,
-      values: sortByBest(his.results).map(logPokemon),
+      values: sortByBest(this.results).map(logPokemon),
     };
   }
 
