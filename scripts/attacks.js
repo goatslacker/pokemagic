@@ -1,5 +1,5 @@
-const Moves = require('./moves.json')
-const Pokemon = require('./pokemon.json')
+const Moves = require('../json/moves.json')
+const Pokemon = require('../json/pokemon.json')
 
 // "Quick" "attacks"
 

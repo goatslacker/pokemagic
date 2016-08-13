@@ -1,4 +1,4 @@
-const mon = require('./json/pokemon')
+const mon = require('../json/pokemon')
 
 // I'm nerfing defense a bit (ok a lot) because I mostly just care about
 // taking them down ASAP. We get 6 pokemon to do it anyway and that's a lot.
