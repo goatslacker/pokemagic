@@ -28,6 +28,12 @@ function magic(pokemon) {
   return results;
 }
 
+function sortByBest(values) {
+  return values.sort((a, b) => {
+    return a.percent.PerfectIV > b.percent.PerfectIV ? -1 : 1
+  });
+}
+
 class IvResults {
   constructor(pokemon, results) {
     this.pokemon = pokemon;
@@ -114,7 +120,7 @@ class IvResults {
       best: logPokemon(this.bestPossible),
       pokemon: this.pokemon,
       range: this.valuesRange,
-      values: this.results.map(logPokemon),
+      values: sortByBest(his.results).map(logPokemon),
     };
   }
 
@@ -181,7 +187,7 @@ class IvCalculator {
     return DustToLevel[this.pokemon.stardust].reduce((arr, level) => {
       const ECpM = LevelToCPM[String(level)]
       return arr.concat(guessIVs(this.pokemon, mon, ECpM))
-    }, [])
+    }, []);
   }
 }
 
