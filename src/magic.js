@@ -39,9 +39,9 @@ function magic(pokemon) {
     return response
   }
 
-//  const sortedByBest = values.sort((a, b) => {
-//    return a.percent.PerfectIV > b.percent.PerfectIV ? -1 : 1
-//  })
+  const sortedByBest = values.sort((a, b) => {
+    return a.percent.PerfectIV > b.percent.PerfectIV ? -1 : 1
+  })
 
   // assume that we caught this pokemon in the wild where there are no
   // half levels
@@ -160,7 +160,7 @@ function magic(pokemon) {
     best: logPokemon(bestPossible),
     pokemon,
     range: ValuesRange,
-    values: values.map(logPokemon),
+    values: sortedByBest.map(logPokemon),
   }
 }
 

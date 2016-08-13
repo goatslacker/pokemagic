@@ -1,4 +1,4 @@
-const Pokemon = require('./json/pokemon.json')
+const Pokemon = require('../json/pokemon.json')
 
 function getDmg(atk, power, stab) {
   const def = 100
@@ -7,7 +7,7 @@ function getDmg(atk, power, stab) {
 }
 
 function getDPS(dmg, duration) {
-  return Number((dmg / (duration / 1000)).toFixed(2))
+  return Number((dmg / (duration / 1000)).toFixed(2)) || 0
 }
 
 function bestMovesFor(pokemonName) {
@@ -28,12 +28,19 @@ function getBestMoves(mon) {
       const total = battleDMG(mon.stats.attack, move1, move2, stab1, stab2)
       const dps = getDPS(total.dmg, total.time)
 
-//      console.log('=>', move1.Name, move2.Name, total)
+      const dmg1 = getDmg(mon.stats.attack, move1.Power, stab1)
+      const dmg2 = getDmg(mon.stats.attack, move2.Power, stab2)
+      const dps1 = getDPS(dmg1, move1.DurationMs)
+      const dps2 = getDPS(dmg2, move2.DurationMs)
 
       stuff.push({
         quick: move1.Name,
         charge: move2.Name,
         dps,
+        dmg1,
+        dmg2,
+        dps1,
+        dps2,
       })
     })
   })
@@ -65,6 +72,8 @@ function battleDMG(atk, move1, move2, stab1, stab2) {
   }, { energy: 0, time: 0, dmg: 0 })
 }
 
+module.exports = bestMovesFor
+
 //console.log(
 //  Pokemon.sort((a, b) => {
 //    return getBestMoves(a).dps > getBestMoves(b).dps ? -1 : 1
@@ -78,6 +87,6 @@ function battleDMG(atk, move1, move2, stab1, stab2) {
 //  .slice(0, 10)
 //)
 
-console.log(
-  bestMovesFor(process.argv[2] || 'flareon')
-)
+//console.log(
+//  bestMovesFor(process.argv[2] || 'flareon')
+//)
