@@ -1,3 +1,5 @@
+'use strict'
+
 const chalk = require('chalk')
 
 const LevelToCPM = require('../json/level-to-cpm.json')

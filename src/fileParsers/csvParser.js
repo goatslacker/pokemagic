@@ -1,3 +1,5 @@
+'use strict'
+
 const csvParser = require('csv-parser');
 const fs = require('fs');
 const pokeSerializer = require('../pokeHelpers');

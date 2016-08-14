@@ -1,5 +1,6 @@
 const serializePokemon = {
-  fromArray: function(array, startIndex = 0) {
+  fromArray(array, startIndex) {
+    startIndex = startIndex || 0
     return this.fromObject({
       name: array[startIndex],
       cp: array[startIndex + 1],
@@ -8,7 +9,8 @@ const serializePokemon = {
       level: array[startIndex + 4]
     });
   },
-  fromObject: function(pokemon) {
+
+  fromObject(pokemon) {
     return {
       name: (pokemon.name || 'rhyhorn').toLowerCase(),
       cp: Number(pokemon.cp) || 634,
@@ -16,7 +18,7 @@ const serializePokemon = {
       stardust: Number(pokemon.stardust) || 2500,
       level: pokemon.level ? Number(pokemon.level) : null,
     }
-  }
+  },
 }
 
 module.exports = serializePokemon

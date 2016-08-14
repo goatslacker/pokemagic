@@ -1,3 +1,5 @@
+'use strict'
+
 const CsvParser = require('./csvParser');
 
 class FileParser {
