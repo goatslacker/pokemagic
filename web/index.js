@@ -7,6 +7,13 @@ const n = require('./n')
 const magic = require('../src/magic')
 const B = require('react-bootstrap')
 const bestMovesFor = require('../src/best-moves')
+const localforage = require('localforage')
+const Spinner = require('react-spinkit')
+
+const Mon = Pokemon.reduce((obj, mon) => {
+  obj[mon.name] = mon.name
+  return obj
+}, {})
 
 const Alt = require('../../alt/')
 const alt = new Alt()
@@ -17,8 +24,10 @@ const actions = alt.generateActions('InventoryActions', [
   'changedHP',
   'changedStardust',
   'changedLevel',
+  'imageProcessing',
   'resultsCalculated',
   'resultsReset',
+  'trainerLevelChanged',
   'valuesReset',
 ])
 
@@ -31,8 +40,10 @@ class Inventory extends Alt.Store {
       cp: 1411,
       hp: 102,
       stardust: '2200',
+      trainerLevel: 25,
       level: 0,
       results: null,
+      processingImage: false,
     }
   }
 
@@ -42,6 +53,10 @@ class Inventory extends Alt.Store {
 
   changedName(name) {
     this.setState({ name })
+  }
+
+  imageProcessing() {
+    this.setState({ processingImage: true })
   }
 
   changedCP(ev) {
@@ -67,6 +82,10 @@ class Inventory extends Alt.Store {
     this.setState({ results: results.asObject() })
   }
 
+  trainerLevelChanged(trainerLevel) {
+    this.setState({ trainerLevel })
+  }
+
   valuesReset() {
     this.setState({
       name: '',
@@ -75,6 +94,7 @@ class Inventory extends Alt.Store {
       stardust: '',
       level: 0,
       results: null,
+      processingImage: false,
     })
   }
 
@@ -102,6 +122,7 @@ function calculateValues() {
     hp: Number(state.hp),
     stardust: Number(state.stardust),
     level: state.level ? Number(state.level) : null,
+    trainerLevel: state.trainerLevel,
   })
   actions.resultsCalculated(results)
 }
@@ -205,6 +226,68 @@ function Results(props) {
   )
 }
 
+function scanResults(data) {
+  const obj = {}
+  data.lines.forEach((line) => {
+    console.log(line.text)
+    if (/CP/.test(line.text)) {
+      const singledCp = line.text.split(' ').filter(x => /CP/.test(x))
+      if (singledCp.length) {
+        obj.cp = Number(singledCp[0].replace(/\D/g, ''))
+      }
+    } else if (/HP/.test(line.text)) {
+      obj.hp = Number(line.text.split('/')[1].trim())
+    } else if (Mon.hasOwnProperty(line.text.trim())) {
+      obj.name = line.text.trim()
+    }
+  })
+  return obj
+}
+
+function pictureUploaded(ev) {
+  const files = ev.target.files
+  const url = window.URL.createObjectURL(files[0])
+
+  const photoCanvas = document.getElementById('capturedPhoto')
+  const ctx = photoCanvas.getContext('2d')
+
+  actions.imageProcessing()
+
+  const img = new Image()
+  img.onload = function () {
+    ctx.drawImage(img, 0, 0, 750, 1334)
+
+    window.Tesseract.recognize(img, { lang: 'eng' }).then((data) => {
+      window.URL.revokeObjectURL(url)
+      const obj = scanResults(data)
+
+      actions.valuesReset()
+      if (obj.cp) actions.changedCP({ currentTarget: { value: obj.cp }})
+      if (obj.hp) actions.changedHP({ currentTarget: { value: obj.hp }})
+      if (obj.name) actions.changedName(obj.name)
+    })
+  }
+  img.src = url
+}
+
+function PictureUpload(props) {
+  if (props.processingImage) {
+    return n(Spinner, { spinnerName: 'three-bounce' })
+  }
+
+  return n(B.Row,[
+    n(B.FormGroup, { controlId: 'screenshot' }, [
+      n(B.ControlLabel, 'Select Screenshot'),
+      n('input', {
+        type: 'file',
+        accept: 'image/*',
+        capture: 'camera',
+        onChange: pictureUploaded,
+      }),
+    ]),
+  ])
+}
+
 function Form(props) {
   if (props.results) return n('noscript')
 
@@ -213,6 +296,7 @@ function Form(props) {
       n(B.PageHeader, 'Pokemon Rater'),
     ]),
     n(B.Row, [
+      n(PictureUpload, props),
       n(B.FormGroup, { controlId: 'pokemon' }, [
         n(B.ControlLabel, 'Name'),
         n(Select, {
@@ -323,7 +407,17 @@ const ConnectedCalculator = connect(Calculator, {
   },
 })
 
-ReactDOM.render(
-  n(ConnectedCalculator),
-  document.querySelector('#app')
-)
+localforage.getItem('pogoivcalc.trainerLevel').then((level) => {
+  if (!level) {
+    const trainerLevel = prompt('what is your trainer level?')
+    actions.trainerLevelChanged(trainerLevel)
+    localforage.setItem('pogoivcalc.trainerLevel', trainerLevel)
+  } else {
+    actions.trainerLevelChanged(level)
+  }
+
+  ReactDOM.render(
+    n(ConnectedCalculator),
+    document.querySelector('#app')
+  )
+})

@@ -9,10 +9,8 @@ const cpTools = require('./cp')
 const hpTools = require('./hp')
 const powerupTools = require('./powerup')
 
-const TRAINER_LEVEL = 26
-
-function getMaxLevel() {
-  return LevelToCPM[String(TRAINER_LEVEL + 1.5)]
+function getMaxLevel(trainerLevel) {
+  return LevelToCPM[String((trainerLevel || 0) + 1.5)]
 }
 
 function percentInRange(num, min, max) {
@@ -44,8 +42,8 @@ function guessIVs(pokemon, mon, ECpM) {
 
   const IndStaValues = calcIndSta(pokemon.hp, BaseSta, ECpM)
 
-  const MaxLeveledCP = cpTools.getMaxCPForLevel(mon, getMaxLevel())
-  const MaxLeveledHP = hpTools.getMaxHPForLevel(mon, getMaxLevel())
+  const MaxLeveledCP = cpTools.getMaxCPForLevel(mon, getMaxLevel(pokemon.trainerLevel))
+  const MaxLeveledHP = hpTools.getMaxHPForLevel(mon, getMaxLevel(pokemon.trainerLevel))
 
   const MaxLevelCP = cpTools.getMaxCPForLevel(mon, ECpM)
   const MinLevelCP = cpTools.getMinCPForLevel(mon, ECpM)
@@ -58,7 +56,7 @@ function guessIVs(pokemon, mon, ECpM) {
 
   const maxLevel = pokemon.level || Math.max.apply(null, DustToLevel[pokemon.stardust])
 
-  const powerup = powerupTools.howMuchPowerUp(maxLevel, TRAINER_LEVEL)
+  const powerup = powerupTools.howMuchPowerUp(maxLevel, pokemon.trainerLevel)
   const Stardust = powerup.stardust
   const Candy = powerup.candy
 
