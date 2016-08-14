@@ -51299,7 +51299,7 @@ var bestMovesFor = require('../src/best-moves');
 var Alt = require('../../alt/');
 var alt = new Alt();
 
-var actions = alt.generateActions('InventoryActions', ['changedName', 'changedCP', 'changedHP', 'changedStardust', 'changedLevel', 'resultsCalculated', 'valuesReset']);
+var actions = alt.generateActions('InventoryActions', ['changedName', 'changedCP', 'changedHP', 'changedStardust', 'changedLevel', 'resultsCalculated', 'resultsReset', 'valuesReset']);
 
 var Inventory = function (_Alt$Store) {
   _inherits(Inventory, _Alt$Store);
@@ -51403,6 +51403,15 @@ var Inventory = function (_Alt$Store) {
 
       return valuesReset;
     }()
+  }, {
+    key: 'resultsReset',
+    value: function () {
+      function resultsReset() {
+        this.setState({ results: null });
+      }
+
+      return resultsReset;
+    }()
   }]);
 
   return Inventory;
@@ -51456,13 +51465,15 @@ var Styles = {
 
 function Results(props) {
   var bestMoves = bestMovesFor(props.pokemon.name);
-  return n('div', [n(B.Row, [n(B.PageHeader, 'Pokemon Analysis')]), n(B.Row, { style: Styles.resultsRow }, [n('h2', [props.pokemon.name]), n('div', { style: Styles.pokemonImage }, [n('img', { src: 'images/' + String(props.pokemon.name) + '.png', height: 150, width: 150 })]), n('h2', String(props.range.iv[0]) + '% - ' + String(props.range.iv[1]) + '%')]), n(B.Row, [n(B.Table, [n('thead', [n('th'), n('th', 'Yours'), n('th', 'Perfect')]), n('tbody', [n('tr', [n('td', 'CP'), n('td', props.best.cp), n('td', props.best.value.meta.MaxLevelCP)]), n('tr', [n('td', 'HP'), n('td', props.best.hp), n('td', props.best.value.meta.MaxLevelHP)]), n('tr', [n('td', 'Max CP'), n('td', props.best.maxcpcur), n('td', props.best.maxcpperfect)]), n('tr', [n('td', 'Max HP'), n('td', props.best.maxhpcur), n('td', props.best.maxhpperfect)])])]), n(B.Panel, [props.best.stardust && n('div', [n('div', 'Candy cost to max: ' + String(props.best.candy)), n('div', 'Stardust cost to max: ' + String(props.best.stardust))]), props.best.evolvecp && n('div', 'If evolved it would have a CP of ~' + String(props.best.evolvecp))])]), n(B.Row, [n('h2', 'Possible values'), n(B.ListGroup, props.values.slice(0, 10).map(function (value) {
+  return n('div', [n(B.Row, [n(B.PageHeader, 'Pokemon Analysis')]), n(B.Row, { style: Styles.resultsRow }, [n(B.Button, { onClick: actions.resultsReset }, 'Check Another'), n('h2', [props.pokemon.name]), n('div', { style: Styles.pokemonImage }, [n('img', { src: 'images/' + String(props.pokemon.name) + '.png', height: 150, width: 150 })]), n('h2', String(props.range.iv[0]) + '% - ' + String(props.range.iv[1]) + '%')]), n(B.Row, [n(B.Table, [n('tbody', [n('tr', [n('td', 'CP'), n('td', props.pokemon.cp)]), n('tr', [n('td', 'HP'), n('td', props.pokemon.hp)]), n('tr', [n('td', 'Max CP'), n('td', props.best.maxcpcur)]), n('tr', [n('td', 'Max HP'), n('td', props.best.maxhpcur)])])]), n(B.Panel, [props.best.stardust && n('div', [n('div', 'Candy cost to max: ' + String(props.best.candy)), n('div', 'Stardust cost to max: ' + String(props.best.stardust))]), props.best.evolvecp && n('div', 'If evolved it would have a CP of ~' + String(props.best.evolvecp))])]), n(B.Row, [n('h2', 'Possible values'), n(B.ListGroup, props.values.slice(0, 10).map(function (value) {
     return n(B.ListGroupItem, String(value.iv) + ' (' + String(value.ivp) + '%)');
   }))]), n(B.Row, [n('h2', ['Detailed Report']), n(B.Panel, [n('p', 'There are ' + String(props.values.length) + ' possibilities'), n('p', ['Should you keep it? ', props.chance === 100 ? 'Yes! Keep your ' + String(props.best.cp) + 'CP ' + String(props.best.name) : props.chance === 0 ? 'No, send this Pokemon to the grinder for candy.' : 'Maybe, there is a ' + String(props.chance) + '% chance you\'ve got a good Pokemon.']), n('p', 'There is a ' + String(Math.round(1 / props.values.length * 100)) + '% chance you will have the one below'), n('p', String(props.best.name) + ' Rating: ' + String(props.best.rating) + '%'), n('p', 'IVs: ' + String(props.best.iv) + ' (' + String(props.best.ivp) + '%)'), n('p', 'Attack: ' + String(props.best.atk)), n('p', 'Defense: ' + String(props.best.def)), n('p', 'Stamina: ' + String(props.best.sta)), n('p', 'Best moves for this Pokemon'), n('ul', [n('li', 'Quick: ' + String(bestMoves.quick) + ' (' + String(bestMoves.dps1) + ' dmg/sec)'), n('li', 'Charge: ' + String(bestMoves.charge) + ' (' + String(bestMoves.dps2) + ' dmg/sec)')])])])]);
 }
 
-function Calculator(props) {
-  return n(B.Grid, [n(B.Row, [n(B.PageHeader, 'Pokemon Rater')]), n(B.Row, [n(B.FormGroup, { controlId: 'pokemon' }, [n(B.ControlLabel, 'Name'), n(Select, {
+function Form(props) {
+  if (props.results) return n('noscript');
+
+  return n('div', [n(B.Row, [n(B.PageHeader, 'Pokemon Rater')]), n(B.Row, [n(B.FormGroup, { controlId: 'pokemon' }, [n(B.ControlLabel, 'Name'), n(Select, {
     name: 'pokemon-selector',
     value: props.name,
     options: options,
@@ -51484,7 +51495,11 @@ function Calculator(props) {
     type: 'number',
     onChange: actions.changedLevel,
     value: props.level
-  })]), n(B.Button, { bsStyle: 'primary', onClick: calculateValues }, 'Calculate'), n(B.Button, { onClick: actions.valuesReset }, 'Clear'), props.results && n(Results, props.results)])]);
+  })]), n(B.Button, { bsStyle: 'primary', onClick: calculateValues }, 'Calculate'), n(B.Button, { onClick: actions.valuesReset }, 'Clear')])]);
+}
+
+function Calculator(props) {
+  return n(B.Grid, [n(Form, props), props.results && n(Results, props.results)]);
 }
 
 function connect(Component, o) {

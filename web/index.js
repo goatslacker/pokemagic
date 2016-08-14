@@ -18,6 +18,7 @@ const actions = alt.generateActions('InventoryActions', [
   'changedStardust',
   'changedLevel',
   'resultsCalculated',
+  'resultsReset',
   'valuesReset',
 ])
 
@@ -76,6 +77,10 @@ class Inventory extends Alt.Store {
       results: null,
     })
   }
+
+  resultsReset() {
+    this.setState({ results: null })
+  }
 }
 
 const inventoryStore = alt.createStore('InventoryStore', new Inventory())
@@ -125,6 +130,7 @@ function Results(props) {
     n('div', [
       n(B.Row, [n(B.PageHeader, 'Pokemon Analysis')]),
       n(B.Row, { style: Styles.resultsRow }, [
+        n(B.Button, { onClick: actions.resultsReset }, 'Check Another'),
         n('h2', [props.pokemon.name]),
         n('div', { style: Styles.pokemonImage }, [
           n('img', { src: `images/${props.pokemon.name}.png`, height: 150, width: 150 }),
@@ -133,31 +139,22 @@ function Results(props) {
       ]),
       n(B.Row, [
         n(B.Table, [
-          n('thead', [
-            n('th'),
-            n('th', 'Yours'),
-            n('th', 'Perfect'),
-          ]),
           n('tbody', [
             n('tr', [
               n('td', 'CP'),
-              n('td', props.best.cp),
-              n('td', props.best.value.meta.MaxLevelCP),
+              n('td', props.pokemon.cp),
             ]),
             n('tr', [
               n('td', 'HP'),
-              n('td', props.best.hp),
-              n('td', props.best.value.meta.MaxLevelHP),
+              n('td', props.pokemon.hp),
             ]),
             n('tr', [
               n('td', 'Max CP'),
               n('td', props.best.maxcpcur),
-              n('td', props.best.maxcpperfect),
             ]),
             n('tr', [
               n('td', 'Max HP'),
               n('td', props.best.maxhpcur),
-              n('td', props.best.maxhpperfect),
             ]),
           ]),
         ]),
@@ -208,8 +205,10 @@ function Results(props) {
   )
 }
 
-function Calculator(props) {
-  return n(B.Grid, [
+function Form(props) {
+  if (props.results) return n('noscript')
+
+  return n('div', [
     n(B.Row, [
       n(B.PageHeader, 'Pokemon Rater'),
     ]),
@@ -258,8 +257,14 @@ function Calculator(props) {
       ]),
       n(B.Button, { bsStyle: 'primary', onClick: calculateValues }, 'Calculate'),
       n(B.Button, { onClick: actions.valuesReset }, 'Clear'),
-      props.results && n(Results, props.results),
-    ]),
+    ])
+  ])
+}
+
+function Calculator(props) {
+  return n(B.Grid, [
+    n(Form, props),
+    props.results && n(Results, props.results),
   ])
 }
 
