@@ -63,8 +63,7 @@ class Inventory extends Alt.Store {
   }
 
   resultsCalculated(results) {
-    console.log('@', results)
-    this.setState({ results })
+    this.setState({ results: results.asObject() })
   }
 
   valuesReset() {
