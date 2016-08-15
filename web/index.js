@@ -261,6 +261,8 @@ function pictureUploaded(ev) {
       window.URL.revokeObjectURL(url)
       const obj = scanResults(data)
 
+      console.log(obj)
+
       actions.valuesReset()
       if (obj.cp) actions.changedCP({ currentTarget: { value: obj.cp }})
       if (obj.hp) actions.changedHP({ currentTarget: { value: obj.hp }})
@@ -297,6 +299,14 @@ function Form(props) {
     ]),
     n(B.Row, [
       n(PictureUpload, props),
+//      n(B.FormGroup, { controlId: 'trainerlevel' }, [
+//        n(B.ControlLabel, 'Trainer Level'),
+//        n(B.FormControl, {
+//          type: 'number',
+//          onChange: actions.changedLevel,
+//          value: props.trainerLevel,
+//        }),
+//      ]),
       n(B.FormGroup, { controlId: 'pokemon' }, [
         n(B.ControlLabel, 'Name'),
         n(Select, {
@@ -332,7 +342,7 @@ function Form(props) {
         }),
       ]),
       n(B.FormGroup, { controlId: 'level' }, [
-        n(B.ControlLabel, 'Level'),
+        n(B.ControlLabel, 'Pokemon Level'),
         n(B.FormControl, {
           type: 'number',
           onChange: actions.changedLevel,

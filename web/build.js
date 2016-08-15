@@ -54136,6 +54136,8 @@ function pictureUploaded(ev) {
       window.URL.revokeObjectURL(url);
       var obj = scanResults(data);
 
+      console.log(obj);
+
       actions.valuesReset();
       if (obj.cp) actions.changedCP({ currentTarget: { value: obj.cp } });
       if (obj.hp) actions.changedHP({ currentTarget: { value: obj.hp } });
@@ -54161,7 +54163,16 @@ function PictureUpload(props) {
 function Form(props) {
   if (props.results) return n('noscript');
 
-  return n('div', [n(B.Row, [n(B.PageHeader, 'Pokemon Rater')]), n(B.Row, [n(PictureUpload, props), n(B.FormGroup, { controlId: 'pokemon' }, [n(B.ControlLabel, 'Name'), n(Select, {
+  return n('div', [n(B.Row, [n(B.PageHeader, 'Pokemon Rater')]), n(B.Row, [n(PictureUpload, props),
+  //      n(B.FormGroup, { controlId: 'trainerlevel' }, [
+  //        n(B.ControlLabel, 'Trainer Level'),
+  //        n(B.FormControl, {
+  //          type: 'number',
+  //          onChange: actions.changedLevel,
+  //          value: props.trainerLevel,
+  //        }),
+  //      ]),
+  n(B.FormGroup, { controlId: 'pokemon' }, [n(B.ControlLabel, 'Name'), n(Select, {
     name: 'pokemon-selector',
     value: props.name,
     options: options,
@@ -54179,7 +54190,7 @@ function Form(props) {
     value: props.stardust,
     options: dustOptions,
     onChange: logStardust
-  })]), n(B.FormGroup, { controlId: 'level' }, [n(B.ControlLabel, 'Level'), n(B.FormControl, {
+  })]), n(B.FormGroup, { controlId: 'level' }, [n(B.ControlLabel, 'Pokemon Level'), n(B.FormControl, {
     type: 'number',
     onChange: actions.changedLevel,
     value: props.level
