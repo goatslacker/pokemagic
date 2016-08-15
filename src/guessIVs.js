@@ -42,20 +42,23 @@ function guessIVs(pokemon, mon, ECpM) {
 
   const IndStaValues = calcIndSta(pokemon.hp, BaseSta, ECpM)
 
+  // If you max this pokemon out, what CP/HP would it have.
   const MaxLeveledCP = cpTools.getMaxCPForLevel(mon, getMaxLevel(pokemon.trainerLevel))
   const MaxLeveledHP = hpTools.getMaxHPForLevel(mon, getMaxLevel(pokemon.trainerLevel))
 
+  // What is this Pokemon's Max/Min CP/HP for your current level given Perfect IVs
   const MaxLevelCP = cpTools.getMaxCPForLevel(mon, ECpM)
   const MinLevelCP = cpTools.getMinCPForLevel(mon, ECpM)
-
   const MaxLevelHP = hpTools.getMaxHPForLevel(mon, ECpM)
   const MinLevelHP = hpTools.getMinHPForLevel(mon, ECpM)
 
+  // Where is your Pokemon in terms of the CP/HP scale
   const PercentHP = Math.round(percentInRange(pokemon.hp, MinLevelHP, MaxLevelHP))
   const PercentCP = Math.round(percentInRange(pokemon.cp, MinLevelCP, MaxLevelCP))
 
   const maxLevel = pokemon.level || Math.max.apply(null, DustToLevel[pokemon.stardust])
 
+  // How much powerup does it cost
   const powerup = powerupTools.howMuchPowerUp(maxLevel, pokemon.trainerLevel)
   const Stardust = powerup.stardust
   const Candy = powerup.candy
@@ -93,6 +96,7 @@ function guessIVs(pokemon, mon, ECpM) {
         var EvolveCP = null
         var MaxEvolveCP = null
 
+        // If we can evolve it, what would it evolve to and what does it power up to?
         if (CPM[pokemon.name.toUpperCase()]) {
           EvolveCP = Math.floor(CPM[pokemon.name.toUpperCase()][1] * CP / 100) * 100
           MaxEvolveCP = Math.floor(CPM[pokemon.name.toUpperCase()][1] * MaxCP / 100) * 100

@@ -127,7 +127,7 @@ function calculateValues() {
     hp: Number(state.hp),
     stardust: Number(state.stardust),
     level: state.level ? Number(state.level) : null,
-    trainerLevel: state.trainerLevel,
+    trainerLevel: Number(state.trainerLevel) || 26,
   })
   actions.resultsCalculated(results)
 }
@@ -213,6 +213,13 @@ function Results(props) {
                 ? `No, send this Pokemon to the grinder for candy.`
                 : `Maybe, there is a ${props.chance}% chance you've got a good Pokemon.`
           ]),
+          n('div', `Candy cost to max: ${props.best.meta.Candy}`),
+          n('div', `Stardust cost to max: ${props.best.meta.Stardust}`),
+          n('div', `CP at max: ${props.best.meta.MaxLeveledCP}`),
+          n('div', `HP at max: ${props.best.meta.MaxLeveledHP}`),
+          props.best.evolvecp && (
+            n('div', `If evolved it would have a CP of ~${props.best.meta.EvolveCP}`)
+          ),
           n('p', 'Best moves for this Pokemon'),
           n('ul', [
             n('li', `Quick: ${bestMoves.quick} (${bestMoves.dps1} dmg/sec)`),
