@@ -113,6 +113,12 @@ function guessIVs(pokemon, mon, ECpM) {
               IndDef,
               IndSta,
             },
+            strings: {
+              iv: `${IndAtk}/${IndDef}/${IndSta}`,
+              batt: `${IndAtk + IndDef}/30`,
+              maxcp: `${MaxCP}/${MaxLeveledCP}`,
+              maxhp: `${MaxHP}/${MaxLeveledHP}`,
+            },
             percent: {
               PercentBatt,
               PercentCP,

@@ -119,10 +119,9 @@ class IvResults {
   asObject() {
     return {
       chance: Math.round(this.maybeValues.length / this.results.length * 100),
-      best: logPokemon(this.bestPossible),
       pokemon: this.pokemon,
       range: this.valuesRange,
-      values: sortByBest(this.results).map(logPokemon),
+      values: sortByBest(this.results),
     };
   }
 

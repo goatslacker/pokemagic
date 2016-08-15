@@ -13,15 +13,9 @@ var _store2 = _interopRequireDefault(_store);
 
 var _utils = require('./utils');
 
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { 'default': obj };
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var STORES_REF = (0, _utils.id)();
 
@@ -374,7 +368,6 @@ Alt.Store = _store2['default'];
 
 exports['default'] = Alt;
 module.exports = exports['default'];
-
 },{"./store":2,"./utils":3,"transmitter":4}],2:[function(require,module,exports){
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -386,15 +379,9 @@ var _transmitter2 = _interopRequireDefault(_transmitter);
 
 var _utils = require('./utils');
 
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { 'default': obj };
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _bindActions(store, type, name) {
   var matchFirstCharacter = /./;
@@ -521,19 +508,12 @@ var Store = function () {
 
 exports['default'] = Store;
 module.exports = exports['default'];
-
 },{"./utils":3,"transmitter":4}],3:[function(require,module,exports){
-var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _typeof = typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol" ? function (obj) {
-  return typeof obj === "undefined" ? "undefined" : _typeof2(obj);
-} : function (obj) {
-  return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof2(obj);
-};
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 exports.isFunction = isFunction;
 exports.isMutableObject = isMutableObject;
@@ -557,7 +537,6 @@ function dispatchIdentity(x) {
 function id() {
   return Math.random().toString(18).substr(2, 16);
 }
-
 },{}],4:[function(require,module,exports){
 "use strict";
 
@@ -53179,85 +53158,81 @@ arguments[4][296][0].apply(exports,arguments)
 module.exports = require('./lib/React');
 
 },{"./lib/React":322}],469:[function(require,module,exports){
-var Pokemon = require('../json/pokemon.json');
+const Pokemon = require('../json/pokemon.json')
 
 function getDmg(atk, power, stab) {
-  var def = 100;
-  var ECpM = 0.790300;
-  return 0.5 * atk * ECpM / (def * ECpM) * power * stab + 1;
+  const def = 100
+  const ECpM = 0.790300
+  return (0.5 * atk * ECpM / (def * ECpM ) * power * stab) + 1
 }
 
 function getDPS(dmg, duration) {
-  return Number((dmg / (duration / 1000)).toFixed(2)) || 0;
+  return Number((dmg / (duration / 1000)).toFixed(2)) || 0
 }
 
 function bestMovesFor(pokemonName) {
-  var fmtName = pokemonName.toUpperCase().trim();
-  var mon = Pokemon.filter(function (x) {
-    return x.name === fmtName;
-  })[0];
-  if (!mon) throw new Error('Cannot find ' + String(fmtName));
-  return getBestMoves(mon);
+  const fmtName = pokemonName.toUpperCase().trim()
+  const mon = Pokemon.filter(x => x.name === fmtName)[0]
+  if (!mon) throw new Error(`Cannot find ${fmtName}`)
+  return getBestMoves(mon)
 }
 
 function getBestMoves(mon) {
-  var stuff = [];
+  const stuff = []
 
-  mon.moves1.forEach(function (move1) {
-    mon.moves2.forEach(function (move2) {
-      var stab1 = move1.Type === mon.type1 || move1.Type === mon.type2 ? 1.25 : 1;
-      var stab2 = move2.Type === mon.type1 || move2.Type === mon.type2 ? 1.25 : 1;
+  mon.moves1.forEach((move1) => {
+    mon.moves2.forEach((move2) => {
+      const stab1 = move1.Type === mon.type1 || move1.Type === mon.type2 ? 1.25 : 1
+      const stab2 = move2.Type === mon.type1 || move2.Type === mon.type2 ? 1.25 : 1
 
-      var total = battleDMG(mon.stats.attack, move1, move2, stab1, stab2);
-      var dps = getDPS(total.dmg, total.time);
+      const total = battleDMG(mon.stats.attack, move1, move2, stab1, stab2)
+      const dps = getDPS(total.dmg, total.time)
 
-      var dmg1 = getDmg(mon.stats.attack, move1.Power, stab1);
-      var dmg2 = getDmg(mon.stats.attack, move2.Power, stab2);
-      var dps1 = getDPS(dmg1, move1.DurationMs);
-      var dps2 = getDPS(dmg2, move2.DurationMs);
+      const dmg1 = getDmg(mon.stats.attack, move1.Power, stab1)
+      const dmg2 = getDmg(mon.stats.attack, move2.Power, stab2)
+      const dps1 = getDPS(dmg1, move1.DurationMs)
+      const dps2 = getDPS(dmg2, move2.DurationMs)
 
       stuff.push({
         quick: move1.Name,
         charge: move2.Name,
-        dps: dps,
-        dmg1: dmg1,
-        dmg2: dmg2,
-        dps1: dps1,
-        dps2: dps2
-      });
-    });
-  });
+        dps,
+        dmg1,
+        dmg2,
+        dps1,
+        dps2,
+      })
+    })
+  })
 
-  return stuff.sort(function (a, b) {
-    return a.dps > b.dps ? -1 : 1;
-  })[0];
+  return stuff.sort((a, b) => a.dps > b.dps ? -1 : 1)[0]
 }
 
 function battleDMG(atk, move1, move2, stab1, stab2) {
   // Assuming you only get 30 "hits" on the CPU
-  return Array.from(Array(30)).reduce(function (x, _) {
-    var energy = x.energy;
-    var time = x.time;
-    var dmg = x.dmg;
+  return Array.from(Array(30)).reduce((x, _) => {
+    var energy = x.energy
+    var time = x.time
+    var dmg = x.dmg
 
     // if we've dealt "300" damage then stop
-    if (dmg > 300) return x;
+    if (dmg > 300) return x
 
     if (energy >= Math.abs(move2.Energy)) {
-      dmg += getDmg(atk, move2.Power, stab2);
-      time += move2.DurationMs;
-      energy = energy + move2.Energy;
+      dmg += getDmg(atk, move2.Power, stab2)
+      time += move2.DurationMs
+      energy = energy + move2.Energy
     } else {
-      dmg += getDmg(atk, move1.Power, stab1);
-      time += move1.DurationMs;
-      energy = energy + move1.Energy;
+      dmg += getDmg(atk, move1.Power, stab1)
+      time += move1.DurationMs
+      energy = energy + move1.Energy
     }
 
-    return { energy: energy, time: time, dmg: dmg };
-  }, { energy: 0, time: 0, dmg: 0 });
+    return { energy, time, dmg }
+  }, { energy: 0, time: 0, dmg: 0 })
 }
 
-module.exports = bestMovesFor;
+module.exports = bestMovesFor
 
 //console.log(
 //  Pokemon.sort((a, b) => {
@@ -53279,19 +53254,25 @@ module.exports = bestMovesFor;
 },{"../json/pokemon.json":9}],470:[function(require,module,exports){
 // Formula to calculate the CP given the IVs and ECpM
 function getCP(mon, ivs, ECpM) {
-  var BaseAtk = mon.stats.attack;
-  var BaseDef = mon.stats.defense;
-  var BaseSta = mon.stats.stamina;
-  var IndAtk = ivs.atk;
-  var IndDef = ivs.def;
-  var IndSta = ivs.sta;
+  const BaseAtk = mon.stats.attack
+  const BaseDef = mon.stats.defense
+  const BaseSta = mon.stats.stamina
+  const IndAtk = ivs.atk
+  const IndDef = ivs.def
+  const IndSta = ivs.sta
 
-  return Math.floor((BaseAtk + IndAtk) * Math.pow(BaseDef + IndDef, 0.5) * Math.pow(BaseSta + IndSta, 0.5) * Math.pow(ECpM, 2) / 10);
+  return Math.floor(
+    (BaseAtk + IndAtk) *
+    Math.pow(BaseDef + IndDef, 0.5) *
+    Math.pow(BaseSta + IndSta, 0.5) *
+    Math.pow(ECpM, 2) /
+    10
+  )
 }
 
 // The maximum possible CP for a Pokemon that has perfect IVs
 function getMaxCP(mon, atk, def, sta, ECpM) {
-  return getCP(mon, { atk: atk, def: def, sta: sta }, ECpM);
+  return getCP(mon, { atk, def, sta }, ECpM)
 }
 
 // The minimum CP for your Pokemon's level
@@ -53299,8 +53280,8 @@ function getMinCPForLevel(mon, ECpM) {
   return getCP(mon, {
     atk: 0,
     def: 0,
-    sta: 0
-  }, ECpM);
+    sta: 0,
+  }, ECpM)
 }
 
 // The maximum CP for your Pokemon's level
@@ -53308,295 +53289,302 @@ function getMaxCPForLevel(mon, ECpM) {
   return getCP(mon, {
     atk: 15,
     def: 15,
-    sta: 15
-  }, ECpM);
+    sta: 15,
+  }, ECpM)
 }
+
 
 module.exports = {
-  getCP: getCP,
-  getMaxCP: getMaxCP,
-  getMaxCPForLevel: getMaxCPForLevel,
-  getMinCPForLevel: getMinCPForLevel
-};
-
-},{}],471:[function(require,module,exports){
-var Pokemon = require('../json/pokemon');
-
-function findPokemon(name) {
-  var fmtName = name.toUpperCase();
-
-  return Object.keys(Pokemon).reduce(function (a, key) {
-    if (a) return a;
-    if (Pokemon[key].name === fmtName) return Pokemon[key];
-    return null;
-  }, null);
+  getCP,
+  getMaxCP,
+  getMaxCPForLevel,
+  getMinCPForLevel,
 }
 
-module.exports = findPokemon;
+},{}],471:[function(require,module,exports){
+const Pokemon = require('../json/pokemon')
+
+function findPokemon(name) {
+  const fmtName = name.toUpperCase()
+
+  return Object.keys(Pokemon).reduce((a, key) => {
+    if (a) return a
+    if (Pokemon[key].name === fmtName) return Pokemon[key]
+    return null
+  }, null)
+}
+
+module.exports = findPokemon
 
 },{"../json/pokemon":9}],472:[function(require,module,exports){
-'use strict';
+'use strict'
 
-var Pokemon = require('../json/pokemon.json');
-var LevelToCPM = require('../json/level-to-cpm.json');
-var CPM = require('../json/cpm.json');
-var DustToLevel = require('../json/dust-to-level');
+const Pokemon = require('../json/pokemon.json')
+const LevelToCPM = require('../json/level-to-cpm.json')
+const CPM = require('../json/cpm.json')
+const DustToLevel = require('../json/dust-to-level')
 
-var cpTools = require('./cp');
-var hpTools = require('./hp');
-var powerupTools = require('./powerup');
+const cpTools = require('./cp')
+const hpTools = require('./hp')
+const powerupTools = require('./powerup')
 
 function getMaxLevel(trainerLevel) {
-  return LevelToCPM[String((trainerLevel || 0) + 1.5)];
+  return LevelToCPM[String((trainerLevel || 0) + 1.5)]
 }
 
 function percentInRange(num, min, max) {
-  return (num - min) * 100 / (max - min);
+  return ((num - min) * 100) / (max - min)
 }
 
 function calcIndSta(hp, BaseSta, ECpM) {
-  return Array.from(Array(16)).map(function (_, i) {
-    return i;
-  }).filter(function (IndSta) {
-    return hp === Math.floor(ECpM * (BaseSta + IndSta));
-  });
+  return Array.from(Array(16))
+    .map((_, i) => i)
+    .filter(IndSta => hp === Math.floor(ECpM * (BaseSta + IndSta)))
 }
 
 // A formula that determines in which percentile you are for Atk + Def
 function getAttackPercentage(IndAtk, IndDef) {
-  return Math.round((IndAtk + IndDef) / 30 * 100);
+  return Math.round((IndAtk + IndDef) / 30 * 100)
 }
 
 function guessIVs(pokemon, mon, ECpM) {
-  var Name = pokemon.name.toUpperCase();
+  const Name = pokemon.name.toUpperCase()
 
-  var BaseSta = mon.stats.stamina;
+  const BaseSta = mon.stats.stamina
 
-  var Level = Object.keys(LevelToCPM).reduce(function (lvl, key) {
+  const Level = Object.keys(LevelToCPM).reduce((lvl, key) => {
     if (LevelToCPM[key] === ECpM) {
-      return key;
+      return key
     }
-    return lvl;
-  }, null);
+    return lvl
+  }, null)
 
-  var IndStaValues = calcIndSta(pokemon.hp, BaseSta, ECpM);
+  const IndStaValues = calcIndSta(pokemon.hp, BaseSta, ECpM)
 
-  var MaxLeveledCP = cpTools.getMaxCPForLevel(mon, getMaxLevel(pokemon.trainerLevel));
-  var MaxLeveledHP = hpTools.getMaxHPForLevel(mon, getMaxLevel(pokemon.trainerLevel));
+  const MaxLeveledCP = cpTools.getMaxCPForLevel(mon, getMaxLevel(pokemon.trainerLevel))
+  const MaxLeveledHP = hpTools.getMaxHPForLevel(mon, getMaxLevel(pokemon.trainerLevel))
 
-  var MaxLevelCP = cpTools.getMaxCPForLevel(mon, ECpM);
-  var MinLevelCP = cpTools.getMinCPForLevel(mon, ECpM);
+  const MaxLevelCP = cpTools.getMaxCPForLevel(mon, ECpM)
+  const MinLevelCP = cpTools.getMinCPForLevel(mon, ECpM)
 
-  var MaxLevelHP = hpTools.getMaxHPForLevel(mon, ECpM);
-  var MinLevelHP = hpTools.getMinHPForLevel(mon, ECpM);
+  const MaxLevelHP = hpTools.getMaxHPForLevel(mon, ECpM)
+  const MinLevelHP = hpTools.getMinHPForLevel(mon, ECpM)
 
-  var PercentHP = Math.round(percentInRange(pokemon.hp, MinLevelHP, MaxLevelHP));
-  var PercentCP = Math.round(percentInRange(pokemon.cp, MinLevelCP, MaxLevelCP));
+  const PercentHP = Math.round(percentInRange(pokemon.hp, MinLevelHP, MaxLevelHP))
+  const PercentCP = Math.round(percentInRange(pokemon.cp, MinLevelCP, MaxLevelCP))
 
-  var maxLevel = pokemon.level || Math.max.apply(null, DustToLevel[pokemon.stardust]);
+  const maxLevel = pokemon.level || Math.max.apply(null, DustToLevel[pokemon.stardust])
 
-  var powerup = powerupTools.howMuchPowerUp(maxLevel, pokemon.trainerLevel);
-  var Stardust = powerup.stardust;
-  var Candy = powerup.candy;
+  const powerup = powerupTools.howMuchPowerUp(maxLevel, pokemon.trainerLevel)
+  const Stardust = powerup.stardust
+  const Candy = powerup.candy
 
   // Brute force find the IVs.
   // For every possible IndSta we'll loop through IndAtk and IndDef until we
   // find CPs that match your Pokemon's CP. Those are possible matches and are
   // returned by this function.
-  var possibleValues = [];
-  IndStaValues.forEach(function (IndSta) {
-    for (var IndAtk = 0; IndAtk <= 15; IndAtk += 1) {
-      for (var IndDef = 0; IndDef <= 15; IndDef += 1) {
-        var CP = cpTools.getCP(mon, {
+  const possibleValues = []
+  IndStaValues.forEach((IndSta) => {
+    for (let IndAtk = 0; IndAtk <= 15; IndAtk += 1) {
+      for (let IndDef = 0; IndDef <= 15; IndDef += 1) {
+        const CP = cpTools.getCP(mon, {
           atk: IndAtk,
           def: IndDef,
-          sta: IndSta
-        }, ECpM);
-        var HP = pokemon.hp;
+          sta: IndSta,
+        }, ECpM)
+        const HP = pokemon.hp
 
-        var BaseAtk = mon.stats.attack;
-        var Atk = (BaseAtk + IndAtk) * ECpM;
+        const BaseAtk = mon.stats.attack
+        const Atk = (BaseAtk + IndAtk) * ECpM
 
-        var BaseDef = mon.stats.defense;
-        var Def = (BaseDef + IndDef) * ECpM;
+        const BaseDef = mon.stats.defense
+        const Def = (BaseDef + IndDef) * ECpM
 
-        var _BaseSta = mon.stats.stamina;
-        var Sta = (_BaseSta + IndSta) * ECpM;
+        const BaseSta = mon.stats.stamina
+        const Sta = (BaseSta + IndSta) * ECpM
 
-        var MaxCP = cpTools.getMaxCP(mon, IndAtk, IndDef, IndSta, getMaxLevel());
-        var MaxHP = hpTools.getMaxHP(mon, IndSta, getMaxLevel());
+        const MaxCP = cpTools.getMaxCP(mon, IndAtk, IndDef, IndSta, getMaxLevel())
+        const MaxHP = hpTools.getMaxHP(mon, IndSta, getMaxLevel())
 
-        var PerfectIV = Math.round((IndAtk + IndDef + IndSta) / 45 * 100);
-        var PercentBatt = getAttackPercentage(IndAtk, IndDef);
+        const PerfectIV = Math.round((IndAtk + IndDef + IndSta) / 45 * 100)
+        const PercentBatt = getAttackPercentage(IndAtk, IndDef)
 
-        var EvolveCP = null;
-        var MaxEvolveCP = null;
+        var EvolveCP = null
+        var MaxEvolveCP = null
 
         if (CPM[pokemon.name.toUpperCase()]) {
-          EvolveCP = Math.floor(CPM[pokemon.name.toUpperCase()][1] * CP / 100) * 100;
-          MaxEvolveCP = Math.floor(CPM[pokemon.name.toUpperCase()][1] * MaxCP / 100) * 100;
+          EvolveCP = Math.floor(CPM[pokemon.name.toUpperCase()][1] * CP / 100) * 100
+          MaxEvolveCP = Math.floor(CPM[pokemon.name.toUpperCase()][1] * MaxCP / 100) * 100
         }
 
         if (pokemon.cp === CP) {
           possibleValues.push({
-            Name: Name,
-            Level: Level,
-            CP: CP,
-            HP: HP,
-            Atk: Atk,
-            Def: Def,
-            Sta: Sta,
-            ECpM: ECpM,
+            Name,
+            Level,
+            CP,
+            HP,
+            Atk,
+            Def,
+            Sta,
+            ECpM,
             ivs: {
-              IndAtk: IndAtk,
-              IndDef: IndDef,
-              IndSta: IndSta
+              IndAtk,
+              IndDef,
+              IndSta,
+            },
+            strings: {
+              iv: `${IndAtk}/${IndDef}/${IndSta}`,
+              batt: `${IndAtk + IndDef}/30`,
+              maxcp: `${MaxCP}/${MaxLeveledCP}`,
+              maxhp: `${MaxHP}/${MaxLeveledHP}`,
             },
             percent: {
-              PercentBatt: PercentBatt,
-              PercentCP: PercentCP,
-              PercentHP: PercentHP,
-              PerfectIV: PerfectIV
+              PercentBatt,
+              PercentCP,
+              PercentHP,
+              PerfectIV,
             },
             meta: {
-              Stardust: Stardust,
-              Candy: Candy,
-              EvolveCP: EvolveCP,
-              MaxEvolveCP: MaxEvolveCP,
-              MinLevelCP: MinLevelCP,
-              MaxLevelCP: MaxLevelCP,
-              MinLevelHP: MinLevelHP,
-              MaxLevelHP: MaxLevelHP,
-              MaxCP: MaxCP,
-              MaxHP: MaxHP,
-              MaxLeveledCP: MaxLeveledCP,
-              MaxLeveledHP: MaxLeveledHP
-            }
-          });
+              Stardust,
+              Candy,
+              EvolveCP,
+              MaxEvolveCP,
+              MinLevelCP,
+              MaxLevelCP,
+              MinLevelHP,
+              MaxLevelHP,
+              MaxCP,
+              MaxHP,
+              MaxLeveledCP,
+              MaxLeveledHP,
+            },
+          })
         }
       }
     }
-  });
+  })
 
-  return possibleValues;
+  return possibleValues
 }
 
-module.exports = guessIVs;
+module.exports = guessIVs
 
 },{"../json/cpm.json":5,"../json/dust-to-level":6,"../json/level-to-cpm.json":7,"../json/pokemon.json":9,"./cp":470,"./hp":473,"./powerup":477}],473:[function(require,module,exports){
 // Formula to calculate the HP given the IV stamina and ECpM
 function getHP(mon, IndSta, ECpM) {
-  var BaseSta = mon.stats.stamina;
-  return Math.floor(ECpM * (BaseSta + IndSta));
+  const BaseSta = mon.stats.stamina
+  return Math.floor(ECpM * (BaseSta + IndSta))
 }
 
 // The minimum HP for a Pokemon that has perfect IVs
 function getMaxHP(mon, sta, ECpM) {
-  return getHP(mon, sta, ECpM);
+  return getHP(mon, sta, ECpM)
 }
 
 // The maximum HP for your Pokemon's current level
 function getMaxHPForLevel(mon, ECpM) {
-  return getHP(mon, 15, ECpM);
+  return getHP(mon, 15, ECpM)
 }
 
 // The minimum HP for your Pokemon's current level
 function getMinHPForLevel(mon, ECpM) {
-  return getHP(mon, 0, ECpM);
+  return getHP(mon, 0, ECpM)
 }
 
 module.exports = {
-  getHP: getHP,
-  getMaxHP: getMaxHP,
-  getMaxHPForLevel: getMaxHPForLevel,
-  getMinHPForLevel: getMinHPForLevel
-};
+  getHP,
+  getMaxHP,
+  getMaxHPForLevel,
+  getMinHPForLevel,
+}
 
 },{}],474:[function(require,module,exports){
-var DECENT_POKEMON_RATING = 80;
+const DECENT_POKEMON_RATING = 80
 
-var getOverallRating = function getOverallRating(v) {
-  return (v.ivs.IndAtk * 1.10 + v.ivs.IndDef * 1.05 + v.ivs.IndSta * 0.85) / 45 * 100;
-};
+const getOverallRating = v => (
+  (v.ivs.IndAtk * 1.10) +
+  (v.ivs.IndDef * 1.05) +
+  (v.ivs.IndSta * 0.85)
+) / 45 * 100
 
 // A good pokemon is in the 80th percentile for Atk, CP, HP, and IV.
 // This 80th percentile thing was made up by me.
-var isGoodPokemonForItsClass = function isGoodPokemonForItsClass(v) {
-  return getOverallRating(v) > DECENT_POKEMON_RATING;
-};
+const isGoodPokemonForItsClass = v => getOverallRating(v) > DECENT_POKEMON_RATING
 
-module.exports = isGoodPokemonForItsClass;
+module.exports = isGoodPokemonForItsClass
 
 },{}],475:[function(require,module,exports){
-var chalk = require('chalk');
+const chalk = require('chalk')
 
-var LevelToCPM = require('../json/level-to-cpm.json');
-var Levels = require('../json/levels');
-var cpTools = require('./cp');
-var hpTools = require('./hp');
+const LevelToCPM = require('../json/level-to-cpm.json')
+const Levels = require('../json/levels')
+const cpTools = require('./cp')
+const hpTools = require('./hp')
 
-var TRAINER_LEVEL = 26;
+const TRAINER_LEVEL = 26
 
-var getOverallRating = function getOverallRating(v) {
-  return (v.ivs.IndAtk * 1.10 + v.ivs.IndDef * 1.05 + v.ivs.IndSta * 0.85) / 45 * 100;
-};
+const getOverallRating = v => (
+  (v.ivs.IndAtk * 1.10) +
+  (v.ivs.IndDef * 1.05) +
+  (v.ivs.IndSta * 0.85)
+) / 45 * 100
 
 function colorPercent(num, mod) {
-  var mul = num * (mod || 1);
+  const mul = num * (mod || 1)
   if (mul < 70) {
-    return chalk.red(num + '%');
+    return chalk.red(num + '%')
   } else if (mul < 90) {
-    return chalk.yellow(num + '%');
+    return chalk.yellow(num + '%')
   }
-  return chalk.green.bold(num + '%');
+  return chalk.green.bold(num + '%')
 }
 
 function logPokemon(pokemon) {
-  var response = [];
+  const response = []
 
-  response.push('Level: ' + String(pokemon.Level));
-  response.push('IVs: ' + String(pokemon.ivs.IndAtk) + '/' + String(pokemon.ivs.IndDef) + '/' + String(pokemon.ivs.IndSta) + ' (' + String(colorPercent(pokemon.percent.PerfectIV)) + ')');
-  response.push('Atk+Def: ' + String(pokemon.ivs.IndAtk + pokemon.ivs.IndDef) + '/30 (' + String(colorPercent(pokemon.percent.PercentBatt)) + ')');
-  response.push('CP: ' + String(pokemon.CP) + ' (' + String(colorPercent(pokemon.percent.PercentCP, 1.05)) + ')');
-  response.push('HP: ' + String(pokemon.HP) + ' (' + String(colorPercent(pokemon.percent.PercentHP, 1.5)) + ')');
+  response.push(`Level: ${pokemon.Level}`)
+  response.push(`IVs: ${pokemon.ivs.IndAtk}/${pokemon.ivs.IndDef}/${pokemon.ivs.IndSta} (${colorPercent(pokemon.percent.PerfectIV)})`)
+  response.push(`Atk+Def: ${pokemon.ivs.IndAtk + pokemon.ivs.IndDef}/30 (${colorPercent(pokemon.percent.PercentBatt)})`)
+  response.push(`CP: ${pokemon.CP} (${colorPercent(pokemon.percent.PercentCP, 1.05)})`)
+  response.push(`HP: ${pokemon.HP} (${colorPercent(pokemon.percent.PercentHP, 1.5)})`)
 
-  response.push('Atk: ' + String(pokemon.Atk.toFixed(2)));
-  response.push('Def: ' + String(pokemon.Def.toFixed(2)));
-  response.push('Sta: ' + String(pokemon.Sta.toFixed(2)));
+  response.push(`Atk: ${pokemon.Atk.toFixed(2)}`)
+  response.push(`Def: ${pokemon.Def.toFixed(2)}`)
+  response.push(`Sta: ${pokemon.Sta.toFixed(2)}`)
 
-  response.push('');
+  response.push('')
 
-  response.push('At level ' + (TRAINER_LEVEL + 1.5) + ', this pokemon would have:');
-  response.push('Maximum CP: ' + String(pokemon.meta.MaxCP) + '/' + String(pokemon.meta.MaxLeveledCP));
-  response.push('Maximum HP: ' + String(pokemon.meta.MaxHP) + '/' + String(pokemon.meta.MaxLeveledHP));
+  response.push(`At level ${TRAINER_LEVEL + 1.5}, this pokemon would have:`)
+  response.push(`Maximum CP: ${pokemon.meta.MaxCP}/${pokemon.meta.MaxLeveledCP}`)
+  response.push(`Maximum HP: ${pokemon.meta.MaxHP}/${pokemon.meta.MaxLeveledHP}`)
 
   if (pokemon.meta.EvolveCP || pokemon.meta.Stardust) {
-    response.push('');
+    response.push('')
   }
 
   if (pokemon.meta.EvolveCP) {
-    response.push('If evolved, it would have ~' + String(pokemon.meta.EvolveCP) + 'CP with a max of ~' + String(pokemon.meta.MaxEvolveCP) + 'CP');
+    response.push(`If evolved, it would have ~${pokemon.meta.EvolveCP}CP with a max of ~${pokemon.meta.MaxEvolveCP}CP`)
   }
 
   if (pokemon.meta.Stardust) {
-    response.push('It would take ' + String(chalk.bold(pokemon.meta.Stardust)) + ' stardust and ' + String(chalk.bold(pokemon.meta.Candy)) + ' candy to max this pokemon out');
+    response.push(`It would take ${chalk.bold(pokemon.meta.Stardust)} stardust and ${chalk.bold(pokemon.meta.Candy)} candy to max this pokemon out`)
   }
 
-  var ovRating = getOverallRating(pokemon);
-  var ovRatingPercent = Math.round(ovRating);
+  const ovRating = getOverallRating(pokemon)
+  const ovRatingPercent = Math.round(ovRating)
 
-  response.push('');
+  response.push('')
 
-  response.push(String(pokemon.Name) + ' Rating: ' + String(ovRatingPercent) + '%');
+  response.push(`${pokemon.Name} Rating: ${ovRatingPercent}%`)
 
-  //  return response
+//  return response
 
   return {
     level: pokemon.Level,
     name: pokemon.Name,
-    iv: String(pokemon.ivs.IndAtk) + '/' + String(pokemon.ivs.IndDef) + '/' + String(pokemon.ivs.IndSta),
+    iv: `${pokemon.ivs.IndAtk}/${pokemon.ivs.IndDef}/${pokemon.ivs.IndSta}`,
     ivp: pokemon.percent.PerfectIV,
-    atkdef: String(pokemon.ivs.IndAtk + pokemon.ivs.IndDef) + '/30',
+    atkdef: `${pokemon.ivs.IndAtk + pokemon.ivs.IndDef}/30`,
     atkdefp: pokemon.percent.PercentBatt,
     cp: pokemon.CP,
     cpp: pokemon.percent.PercentCP,
@@ -53606,51 +53594,47 @@ function logPokemon(pokemon) {
     def: pokemon.Def.toFixed(2),
     sta: pokemon.Sta.toFixed(2),
     maxlevel: TRAINER_LEVEL + 1.5,
-    maxcp: String(pokemon.meta.MaxCP) + '/' + String(pokemon.meta.MaxLeveledCP),
+    maxcp: `${pokemon.meta.MaxCP}/${pokemon.meta.MaxLeveledCP}`,
     maxcpcur: pokemon.meta.MaxCP,
     maxcpperfect: pokemon.meta.MaxLeveledCP,
     maxhpcur: pokemon.meta.MaxHP,
     maxhpperfect: pokemon.meta.MaxLeveledHP,
-    maxhp: String(pokemon.meta.MaxHP) + '/' + String(pokemon.meta.MaxLeveledHP),
+    maxhp: `${pokemon.meta.MaxHP}/${pokemon.meta.MaxLeveledHP}`,
     rating: Math.round(getOverallRating(pokemon)),
     evolvecp: pokemon.meta.EvolveCP,
     stardust: pokemon.meta.Stardust,
     candy: pokemon.meta.Candy,
-    value: pokemon
-  };
+    value: pokemon,
+  }
 }
 
-module.exports = logPokemon;
+module.exports = logPokemon
 
 },{"../json/level-to-cpm.json":7,"../json/levels":8,"./cp":470,"./hp":473,"chalk":11}],476:[function(require,module,exports){
-'use strict';
+'use strict'
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+const chalk = require('chalk')
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+const LevelToCPM = require('../json/level-to-cpm.json')
+const DustToLevel = require('../json/dust-to-level')
 
-var chalk = require('chalk');
+const findPokemon = require('./findPokemon')
+const logPokemon = require('./logPokemon')
+const isGoodPokemonForItsClass = require('./isGoodPokemon')
+const guessIVs = require('./guessIVs')
 
-var LevelToCPM = require('../json/level-to-cpm.json');
-var DustToLevel = require('../json/dust-to-level');
-
-var findPokemon = require('./findPokemon');
-var logPokemon = require('./logPokemon');
-var isGoodPokemonForItsClass = require('./isGoodPokemon');
-var guessIVs = require('./guessIVs');
-
-var init = {
+const init = {
   atk: [Infinity, -Infinity],
   cp: [Infinity, -Infinity],
   hp: [Infinity, -Infinity],
   iv: [Infinity, -Infinity],
   iva: [Infinity, -Infinity],
   ivd: [Infinity, -Infinity],
-  ivs: [Infinity, -Infinity]
+  ivs: [Infinity, -Infinity],
 };
 
 function magic(pokemon) {
-  var results = new IvCalculator(pokemon).results;
+  const results = (new IvCalculator(pokemon)).results;
 
   if (!results.isValid()) {
     throw new Error(results.errors.join('. '));
@@ -53660,263 +53644,256 @@ function magic(pokemon) {
 }
 
 function sortByBest(values) {
-  return values.sort(function (a, b) {
-    return a.percent.PerfectIV > b.percent.PerfectIV ? -1 : 1;
+  return values.sort((a, b) => {
+    return a.percent.PerfectIV > b.percent.PerfectIV ? -1 : 1
   });
 }
 
-var IvResults = function () {
-  function IvResults(pokemon, results) {
-    _classCallCheck(this, IvResults);
-
+class IvResults {
+  constructor(pokemon, results) {
     this.pokemon = pokemon;
     this.results = results;
     this.errors = [];
 
     if (!results.length) {
-      this.errors.push('I have no idea. You might have entered the wrong values.');
+      this.errors.push('I have no idea. You might have entered the wrong values.')
     }
 
-    this.bestPossible = results.reduce(function (best, mon) {
-      if (!best) return mon;
-      return mon.percent.PerfectIV > best.percent.PerfectIV ? mon : best;
-    }, null);
+    this.bestPossible = results.reduce((best, mon) => {
+      if (!best) return mon
+      return mon.percent.PerfectIV > best.percent.PerfectIV ? mon : best
+    }, null)
 
-    this.yes = results.every(isGoodPokemonForItsClass);
-    this.maybeValues = results.filter(isGoodPokemonForItsClass);
-    this.maybe = this.maybeValues.length > 0;
+    this.yes = results.every(isGoodPokemonForItsClass)
+    this.maybeValues = results.filter(isGoodPokemonForItsClass)
+    this.maybe = this.maybeValues.length > 0
     this.valuesRange = this.findValuesRange(results);
   }
 
-  _createClass(IvResults, [{
-    key: 'isValid',
-    value: function () {
-      function isValid() {
-        return !this.errors.length;
-      }
-
-      return isValid;
-    }()
-  }, {
-    key: 'toString',
-    value: function () {
-      function toString() {
-        var response = [];
-
-        if (this.results.length === 1) {
-          response.push('Congrats! Here are your Pokemon\'s stats');
-          response.push('');
-
-          response.push.apply(response, logPokemon(this.results[0]));
-        } else {
-          response.push('Your possible Pokemon\'s values');
-
-          response.push('');
-
-          response.push('Range in values');
-          response.push('IV: ' + String(this.valuesRange.iv[0]) + ' -- ' + String(this.valuesRange.iv[1]) + '%');
-          response.push('Atk+Def: ' + String(this.valuesRange.atk[0]) + ' -- ' + String(this.valuesRange.atk[1]) + '%');
-          response.push('CP: ' + String(this.valuesRange.cp[0]) + ' -- ' + String(this.valuesRange.cp[1]) + '%');
-          response.push('HP: ' + String(this.valuesRange.hp[0]) + ' -- ' + String(this.valuesRange.hp[1]) + '%');
-
-          response.push('');
-
-          response.push('There are ' + String(this.results.length) + ' possibilities.');
-          if (this.results.length < 7) {
-            this.results.forEach(function (value) {
-              var ivPercent = Math.round((value.ivs.IndAtk + value.ivs.IndDef + value.ivs.IndSta) / 45 * 100);
-              response.push(String(value.ivs.IndAtk) + '/' + String(value.ivs.IndDef) + '/' + String(value.ivs.IndSta) + ' (' + String(ivPercent) + '%)');
-            });
-          }
-          response.push('There is a ' + String(chalk.bold(Math.round(1 / this.results.length * 100))) + '% chance you\'ll get the one below.');
-
-          response.push('');
-
-          response.push('Best possible Pokemon\'s values');
-          response.push.apply(response, logPokemon(this.bestPossible));
-        }
-
-        response.push('');
-
-        var pokemonId = chalk.blue.bold(String(this.pokemon.name.toUpperCase()) + ' ' + String(this.pokemon.cp));
-
-        if (this.yes) {
-          response.push('>> Yes, keep your ' + String(pokemonId) + '.');
-        } else if (this.maybe) {
-          response.push('>> Maybe you should keep ' + String(pokemonId) + ' around.', '\n  ', 'There is a ' + String(chalk.bold(Math.round(this.maybeValues.length / this.results.length * 100))) + '% chance you\'ve got a winner.');
-        } else {
-          response.push('>> Send ' + String(pokemonId) + ' to Willow\'s grinder.');
-        }
-
-        return response;
-      }
-
-      return toString;
-    }()
-  }, {
-    key: 'asObject',
-    value: function () {
-      function asObject() {
-        return {
-          chance: Math.round(this.maybeValues.length / this.results.length * 100),
-          best: logPokemon(this.bestPossible),
-          pokemon: this.pokemon,
-          range: this.valuesRange,
-          values: sortByBest(this.results).map(logPokemon)
-        };
-      }
-
-      return asObject;
-    }()
-  }, {
-    key: 'findValuesRange',
-    value: function () {
-      function findValuesRange(results) {
-        return results.reduce(function (obj, v) {
-          return {
-            atk: [Math.min(v.percent.PercentBatt, obj.atk[0]), Math.max(v.percent.PercentBatt, obj.atk[1])],
-            cp: [Math.min(v.percent.PercentCP, obj.cp[0]), Math.max(v.percent.PercentCP, obj.cp[1])],
-            hp: [Math.min(v.percent.PercentHP, obj.hp[0]), Math.max(v.percent.PercentHP, obj.hp[1])],
-            iv: [Math.min(v.percent.PerfectIV, obj.iv[0]), Math.max(v.percent.PerfectIV, obj.iv[1])],
-            iva: [Math.min(v.ivs.IndAtk, obj.iva[0]), Math.max(v.ivs.IndAtk, obj.iva[1])],
-            ivd: [Math.min(v.ivs.IndDef, obj.ivd[0]), Math.max(v.ivs.IndDef, obj.ivd[1])],
-            ivs: [Math.min(v.ivs.IndSta, obj.ivs[0]), Math.max(v.ivs.IndSta, obj.ivs[1])]
-          };
-        }, init);
-      }
-
-      return findValuesRange;
-    }()
-  }]);
-
-  return IvResults;
-}();
-
-var IvCalculator = function () {
-  function IvCalculator(pokemon) {
-    _classCallCheck(this, IvCalculator);
-
-    this.pokemon = pokemon || {};
-    this.results = new IvResults(pokemon, this.calculateIvResults());
+  isValid() {
+    return !this.errors.length;
   }
 
-  _createClass(IvCalculator, [{
-    key: 'calculateIvResults',
-    value: function () {
-      function calculateIvResults() {
-        var _this = this;
+  toString() {
+    const response = [];
 
-        var mon = findPokemon(this.pokemon.name);
+    if (this.results.length === 1) {
+      response.push('Congrats! Here are your Pokemon\'s stats')
+      response.push('')
 
-        // If the level has been provided then we can get a better accurate reading
-        // since we'll be able to determine the exact ECpM.
-        if (this.pokemon.level) {
-          if (DustToLevel[this.pokemon.stardust].indexOf(this.pokemon.level) === -1) {
-            throw new Error('Stardust does not match level');
-          }
+      response.push.apply(response, logPokemon(this.results[0]))
+    } else {
+      response.push('Your possible Pokemon\'s values')
 
-          var ECpM = LevelToCPM[String(this.pokemon.level)];
-          return guessIVs(this.pokemon, mon, ECpM);
-        }
+      response.push('')
 
-        // If we're just going on stardust then we'll have to iterate through
-        // each level and concatenate all possible values
-        return DustToLevel[this.pokemon.stardust].reduce(function (arr, level) {
-          var ECpM = LevelToCPM[String(level)];
-          return arr.concat(guessIVs(_this.pokemon, mon, ECpM));
-        }, []);
+      response.push('Range in values')
+      response.push(`IV: ${this.valuesRange.iv[0]} -- ${this.valuesRange.iv[1]}%`)
+      response.push(`Atk+Def: ${this.valuesRange.atk[0]} -- ${this.valuesRange.atk[1]}%`)
+      response.push(`CP: ${this.valuesRange.cp[0]} -- ${this.valuesRange.cp[1]}%`)
+      response.push(`HP: ${this.valuesRange.hp[0]} -- ${this.valuesRange.hp[1]}%`)
+
+      response.push('')
+
+      response.push(`There are ${this.results.length} possibilities.`)
+      if (this.results.length < 7) {
+        this.results.forEach((value) => {
+          const ivPercent = Math.round((value.ivs.IndAtk + value.ivs.IndDef + value.ivs.IndSta) / 45 * 100)
+          response.push(`${value.ivs.IndAtk}/${value.ivs.IndDef}/${value.ivs.IndSta} (${ivPercent}%)`)
+        })
+      }
+      response.push(`There is a ${chalk.bold(Math.round(1 / this.results.length * 100))}% chance you'll get the one below.`)
+
+      response.push('')
+
+      response.push('Best possible Pokemon\'s values')
+      response.push.apply(response, logPokemon(this.bestPossible))
+    }
+
+    response.push('')
+
+    const pokemonId = chalk.blue.bold(`${this.pokemon.name.toUpperCase()} ${this.pokemon.cp}`)
+
+    if (this.yes) {
+      response.push(`>> Yes, keep your ${pokemonId}.`)
+    } else if (this.maybe) {
+      response.push(
+        `>> Maybe you should keep ${pokemonId} around.`,
+        '\n  ',
+        `There is a ${chalk.bold(Math.round(this.maybeValues.length / this.results.length * 100))}% chance you've got a winner.`
+      )
+    } else {
+      response.push(`>> Send ${pokemonId} to Willow's grinder.`)
+    }
+
+    return response;
+  }
+
+  asObject() {
+    return {
+      chance: Math.round(this.maybeValues.length / this.results.length * 100),
+      best: this.bestPossible,
+      pokemon: this.pokemon,
+      range: this.valuesRange,
+      values: sortByBest(this.results),
+    };
+  }
+
+  findValuesRange(results) {
+    return results.reduce((obj, v) => {
+      return {
+        atk: [
+          Math.min(v.percent.PercentBatt, obj.atk[0]),
+          Math.max(v.percent.PercentBatt, obj.atk[1]),
+        ],
+        cp: [
+          Math.min(v.percent.PercentCP, obj.cp[0]),
+          Math.max(v.percent.PercentCP, obj.cp[1]),
+        ],
+        hp: [
+          Math.min(v.percent.PercentHP, obj.hp[0]),
+          Math.max(v.percent.PercentHP, obj.hp[1]),
+        ],
+        iv: [
+          Math.min(v.percent.PerfectIV, obj.iv[0]),
+          Math.max(v.percent.PerfectIV, obj.iv[1]),
+        ],
+        iva: [
+          Math.min(v.ivs.IndAtk, obj.iva[0]),
+          Math.max(v.ivs.IndAtk, obj.iva[1]),
+        ],
+        ivd: [
+          Math.min(v.ivs.IndDef, obj.ivd[0]),
+          Math.max(v.ivs.IndDef, obj.ivd[1]),
+        ],
+        ivs: [
+          Math.min(v.ivs.IndSta, obj.ivs[0]),
+          Math.max(v.ivs.IndSta, obj.ivs[1]),
+        ],
+      }
+    }, init);
+  }
+}
+
+class IvCalculator {
+  constructor(pokemon) {
+    this.pokemon = pokemon || {};
+    this.results = new IvResults(
+      pokemon, this.calculateIvResults()
+    );
+  }
+
+  calculateIvResults() {
+    const mon = findPokemon(this.pokemon.name)
+
+    // If the level has been provided then we can get a better accurate reading
+    // since we'll be able to determine the exact ECpM.
+    if (this.pokemon.level) {
+      if (DustToLevel[this.pokemon.stardust].indexOf(this.pokemon.level) === -1) {
+        throw new Error('Stardust does not match level')
       }
 
-      return calculateIvResults;
-    }()
-  }]);
+      const ECpM = LevelToCPM[String(this.pokemon.level)]
+      return guessIVs(this.pokemon, mon, ECpM)
+    }
 
-  return IvCalculator;
-}();
+    // If we're just going on stardust then we'll have to iterate through
+    // each level and concatenate all possible values
+    return DustToLevel[this.pokemon.stardust].reduce((arr, level) => {
+      const ECpM = LevelToCPM[String(level)]
+      return arr.concat(guessIVs(this.pokemon, mon, ECpM))
+    }, []);
+  }
+}
 
-module.exports = magic;
+module.exports = magic
 
 },{"../json/dust-to-level":6,"../json/level-to-cpm.json":7,"./findPokemon":471,"./guessIVs":472,"./isGoodPokemon":474,"./logPokemon":475,"chalk":11}],477:[function(require,module,exports){
-var DustToLevel = require('../json/dust-to-level');
-var Levels = require('../json/levels');
+const DustToLevel = require('../json/dust-to-level')
+const Levels = require('../json/levels')
 
 function howMuchCandy(currentLevel, trainerLevel) {
-  var maxLevel = (trainerLevel + 1.5) * 2;
-  var minLevel = currentLevel * 2;
-  return Levels.reduce(function (sum, level) {
-    if (level.level <= maxLevel && level.level >= minLevel) return sum + level.candy;
-    return sum;
-  }, 0);
+  const maxLevel = (trainerLevel + 1.5) * 2
+  const minLevel = currentLevel * 2
+  return Levels.reduce((sum, level) => {
+    if (level.level <= maxLevel && level.level >= minLevel) return sum + level.candy
+    return sum
+  }, 0)
 }
 
 function howMuchStardust(currentLevel, trainerLevel) {
-  var maxPokemonLevel = trainerLevel + 1.5;
+  const maxPokemonLevel = trainerLevel + 1.5
 
   // Returns the candy cost of upgrading to the current maximum Pokemon level
   // cap based on the trainer's level
-  return Object.keys(DustToLevel).reduce(function (sum, dust) {
-    var levels = DustToLevel[dust];
-    var stardustIncrease = levels.reduce(function (num, level) {
-      return level >= currentLevel && level <= maxPokemonLevel ? num + Number(dust) : num;
-    }, 0);
+  return Object.keys(DustToLevel).reduce((sum, dust) => {
+    const levels = DustToLevel[dust]
+    const stardustIncrease = levels.reduce((num, level) => {
+      return level >= currentLevel && level <= maxPokemonLevel
+        ? num + Number(dust)
+        : num
+    }, 0)
 
-    return sum + stardustIncrease;
-  }, 0);
+    return sum + stardustIncrease
+  }, 0)
 }
 
 function howMuchPowerUp(currentLevel, trainerLevel) {
-  var candy = howMuchCandy(currentLevel, trainerLevel);
-  var stardust = howMuchStardust(currentLevel, trainerLevel);
-  return { candy: candy, stardust: stardust };
+  const candy = howMuchCandy(currentLevel, trainerLevel)
+  const stardust = howMuchStardust(currentLevel, trainerLevel)
+  return { candy, stardust }
 }
 
 module.exports = {
-  howMuchCandy: howMuchCandy,
-  howMuchPowerUp: howMuchPowerUp,
-  howMuchStardust: howMuchStardust
-};
+  howMuchCandy,
+  howMuchPowerUp,
+  howMuchStardust,
+}
 
 },{"../json/dust-to-level":6,"../json/levels":8}],478:[function(require,module,exports){
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+const React = require('react')
+const ReactDOM = require('react-dom')
+const Select = require('react-select')
+const Pokemon = require('../json/pokemon.json')
+const DustToLevel = require('../json/dust-to-level.json')
+const n = require('./n')
+const magic = require('../src/magic')
+const B = require('react-bootstrap')
+const bestMovesFor = require('../src/best-moves')
+const localforage = require('localforage')
+const Spinner = require('react-spinkit')
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+const Mon = Pokemon.reduce((obj, mon) => {
+  obj[mon.name] = mon.name
+  return obj
+}, {})
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+const Alt = require('../../alt/')
+const alt = new Alt()
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+const actions = alt.generateActions('InventoryActions', [
+  'changedName',
+  'changedCP',
+  'changedHP',
+  'changedStardust',
+  'changedLevel',
+  'imageProcessing',
+  'resultsCalculated',
+  'resultsReset',
+  'trainerLevelChanged',
+  'valuesReset',
+])
 
-var React = require('react');
-var ReactDOM = require('react-dom');
-var Select = require('react-select');
-var Pokemon = require('../json/pokemon.json');
-var DustToLevel = require('../json/dust-to-level.json');
-var n = require('./n');
-var magic = require('../src/magic');
-var B = require('react-bootstrap');
-var bestMovesFor = require('../src/best-moves');
-var localforage = require('localforage');
-var Spinner = require('react-spinkit');
+function changeTrainerLevel(trainerLevel) {
+  localforage.setItem('pogoivcalc.trainerLevel', trainerLevel)
+  actions.trainerLevelChanged(trainerLevel)
+}
 
-var Mon = Pokemon.reduce(function (obj, mon) {
-  obj[mon.name] = mon.name;
-  return obj;
-}, {});
-
-var Alt = require('../../alt/');
-var alt = new Alt();
-
-var actions = alt.generateActions('InventoryActions', ['changedName', 'changedCP', 'changedHP', 'changedStardust', 'changedLevel', 'imageProcessing', 'resultsCalculated', 'resultsReset', 'trainerLevelChanged', 'valuesReset']);
-
-var Inventory = function (_Alt$Store) {
-  _inherits(Inventory, _Alt$Store);
-
-  function Inventory() {
-    _classCallCheck(this, Inventory);
-
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Inventory).call(this));
-
-    _this.bindActions(actions);
-    _this.state = {
+class Inventory extends Alt.Store {
+  constructor() {
+    super()
+    this.bindActions(actions)
+    this.state = {
       name: 'ARCANINE',
       cp: 1411,
       hp: 102,
@@ -53924,413 +53901,407 @@ var Inventory = function (_Alt$Store) {
       trainerLevel: 25,
       level: 0,
       results: null,
-      processingImage: false
-    };
-    return _this;
+      processingImage: false,
+    }
   }
 
-  _createClass(Inventory, [{
-    key: 'fromEvent',
-    value: function () {
-      function fromEvent(ev) {
-        return ev.currentTarget.value;
-      }
+  fromEvent(ev) {
+    return ev.currentTarget.value
+  }
 
-      return fromEvent;
-    }()
-  }, {
-    key: 'changedName',
-    value: function () {
-      function changedName(name) {
-        this.setState({ name: name });
-      }
+  changedName(name) {
+    this.setState({ name })
+  }
 
-      return changedName;
-    }()
-  }, {
-    key: 'imageProcessing',
-    value: function () {
-      function imageProcessing() {
-        this.setState({ processingImage: true });
-      }
+  imageProcessing() {
+    this.setState({ processingImage: true })
+  }
 
-      return imageProcessing;
-    }()
-  }, {
-    key: 'changedCP',
-    value: function () {
-      function changedCP(ev) {
-        var cp = this.fromEvent(ev);
-        this.setState({ cp: cp });
-      }
+  changedCP(ev) {
+    const cp = this.fromEvent(ev)
+    this.setState({ cp })
+  }
 
-      return changedCP;
-    }()
-  }, {
-    key: 'changedHP',
-    value: function () {
-      function changedHP(ev) {
-        var hp = this.fromEvent(ev);
-        this.setState({ hp: hp });
-      }
+  changedHP(ev) {
+    const hp = this.fromEvent(ev)
+    this.setState({ hp })
+  }
 
-      return changedHP;
-    }()
-  }, {
-    key: 'changedStardust',
-    value: function () {
-      function changedStardust(stardust) {
-        this.setState({ stardust: stardust });
-      }
+  changedStardust(stardust) {
+    this.setState({ stardust })
+  }
 
-      return changedStardust;
-    }()
-  }, {
-    key: 'changedLevel',
-    value: function () {
-      function changedLevel(ev) {
-        var level = this.fromEvent(ev);
-        this.setState({ level: level });
-      }
+  changedLevel(ev) {
+    const level = this.fromEvent(ev)
+    this.setState({ level })
+  }
 
-      return changedLevel;
-    }()
-  }, {
-    key: 'resultsCalculated',
-    value: function () {
-      function resultsCalculated(results) {
-        this.setState({ results: results.asObject() });
-      }
+  resultsCalculated(results) {
+    this.setState({ results: results.asObject() })
+  }
 
-      return resultsCalculated;
-    }()
-  }, {
-    key: 'trainerLevelChanged',
-    value: function () {
-      function trainerLevelChanged(trainerLevel) {
-        this.setState({ trainerLevel: trainerLevel });
-      }
+  trainerLevelChanged(trainerLevel) {
+    this.setState({ trainerLevel })
+  }
 
-      return trainerLevelChanged;
-    }()
-  }, {
-    key: 'valuesReset',
-    value: function () {
-      function valuesReset() {
-        this.setState({
-          name: '',
-          cp: 0,
-          hp: 0,
-          stardust: '',
-          level: 0,
-          results: null,
-          processingImage: false
-        });
-      }
+  valuesReset() {
+    this.setState({
+      name: '',
+      cp: 0,
+      hp: 0,
+      stardust: '',
+      level: 0,
+      results: null,
+      processingImage: false,
+    })
+  }
 
-      return valuesReset;
-    }()
-  }, {
-    key: 'resultsReset',
-    value: function () {
-      function resultsReset() {
-        this.setState({ results: null });
-      }
+  resultsReset() {
+    this.setState({ results: null })
+  }
+}
 
-      return resultsReset;
-    }()
-  }]);
+const inventoryStore = alt.createStore('InventoryStore', new Inventory())
 
-  return Inventory;
-}(Alt.Store);
 
-var inventoryStore = alt.createStore('InventoryStore', new Inventory());
 
-var options = Pokemon.map(function (x) {
-  return { value: x.name, label: x.name };
-});
-var dustOptions = Object.keys(DustToLevel).map(function (x) {
-  return { value: x, label: x };
-});
 
-var logName = function logName(x) {
-  return actions.changedName(x.value);
-};
-var logStardust = function logStardust(x) {
-  return actions.changedStardust(x.value);
-};
+const options = Pokemon.map(x => ({ value: x.name, label: x.name }))
+const dustOptions = Object.keys(DustToLevel).map(x => ({ value: x, label: x }))
+
+const logName = x => actions.changedName(x.value)
+const logStardust = x => actions.changedStardust(x.value)
 
 function calculateValues() {
-  var state = inventoryStore.getState();
-  var results = magic({
+  const state = inventoryStore.getState()
+  const results = magic({
     name: state.name,
     cp: Number(state.cp),
     hp: Number(state.hp),
     stardust: Number(state.stardust),
     level: state.level ? Number(state.level) : null,
-    trainerLevel: state.trainerLevel
-  });
-  actions.resultsCalculated(results);
+    trainerLevel: state.trainerLevel,
+  })
+  actions.resultsCalculated(results)
 }
 
-var Styles = {
+const Styles = {
   resultsRow: {
-    textAlign: 'center'
+    textAlign: 'center',
   },
 
   pokemonImage: {
     alignItems: 'center',
-    background: 'white',
-    border: '1px solid #353535',
-    borderRadius: 200,
+//    background: 'white',
+//    border: '1px solid #353535',
+//    borderRadius: 200,
     display: 'flex',
-    height: 200,
+    height: 150,
     margin: '0 auto',
     justifyContent: 'center',
-    width: 200
+    width: 150,
   }
-};
+}
 
 function Results(props) {
-  var bestMoves = bestMovesFor(props.pokemon.name);
-  return n('div', [n(B.Row, [n(B.PageHeader, 'Pokemon Analysis')]), n(B.Row, { style: Styles.resultsRow }, [n(B.Button, { onClick: actions.resultsReset }, 'Check Another'), n('h2', [props.pokemon.name]), n('div', { style: Styles.pokemonImage }, [n('img', { src: 'images/' + String(props.pokemon.name) + '.png', height: 150, width: 150 })]), n('h2', String(props.range.iv[0]) + '% - ' + String(props.range.iv[1]) + '%')]), n(B.Row, [n(B.Table, [n('tbody', [n('tr', [n('td', 'CP'), n('td', props.pokemon.cp)]), n('tr', [n('td', 'HP'), n('td', props.pokemon.hp)]), n('tr', [n('td', 'Max CP'), n('td', props.best.maxcpcur)]), n('tr', [n('td', 'Max HP'), n('td', props.best.maxhpcur)])])]), n(B.Panel, [props.best.stardust && n('div', [n('div', 'Candy cost to max: ' + String(props.best.candy)), n('div', 'Stardust cost to max: ' + String(props.best.stardust))]), props.best.evolvecp && n('div', 'If evolved it would have a CP of ~' + String(props.best.evolvecp))])]), n(B.Row, [n('h2', 'Possible values'), n(B.ListGroup, props.values.slice(0, 10).map(function (value) {
-    return n(B.ListGroupItem, String(value.iv) + ' (' + String(value.ivp) + '%)');
-  }))]), n(B.Row, [n('h2', ['Detailed Report']), n(B.Panel, [n('p', 'There are ' + String(props.values.length) + ' possibilities'), n('p', ['Should you keep it? ', props.chance === 100 ? 'Yes! Keep your ' + String(props.best.cp) + 'CP ' + String(props.best.name) : props.chance === 0 ? 'No, send this Pokemon to the grinder for candy.' : 'Maybe, there is a ' + String(props.chance) + '% chance you\'ve got a good Pokemon.']), n('p', 'There is a ' + String(Math.round(1 / props.values.length * 100)) + '% chance you will have the one below'), n('p', String(props.best.name) + ' Rating: ' + String(props.best.rating) + '%'), n('p', 'IVs: ' + String(props.best.iv) + ' (' + String(props.best.ivp) + '%)'), n('p', 'Attack: ' + String(props.best.atk)), n('p', 'Defense: ' + String(props.best.def)), n('p', 'Stamina: ' + String(props.best.sta)), n('p', 'Best moves for this Pokemon'), n('ul', [n('li', 'Quick: ' + String(bestMoves.quick) + ' (' + String(bestMoves.dps1) + ' dmg/sec)'), n('li', 'Charge: ' + String(bestMoves.charge) + ' (' + String(bestMoves.dps2) + ' dmg/sec)')])])])]);
+  const bestMoves = bestMovesFor(props.pokemon.name)
+  console.log(props)
+  return (
+    n('div', [
+      n(B.Row, [
+        n(B.Button, { onClick: actions.resultsReset }, 'Check Another'),
+      ]),
+
+      n(B.Row, { style: Styles.resultsRow }, [
+        n('div', props.pokemon.name),
+        n('div', { style: Styles.pokemonImage }, [
+          n('img', { src: `images/${props.pokemon.name}.png`, height: 150, width: 150 }),
+        ]),
+        n('div', `${props.range.iv[0]}% - ${props.range.iv[1]}%`),
+      ]),
+
+      n(B.Row, [
+        n('h2', `Possible values (${props.values.length})`),
+        n('p', `There are ${props.values.length} possibilities and a ${props.chance}% chance you will have a good ${props.pokemon.Name}.`),
+        n(B.Table, [
+          n('thead', [
+            n('tr', [
+              n('th', 'IV'),
+              n('th', 'Level'),
+              n('th', 'CP %'),
+              n('th', 'HP %'),
+              n('th', 'Battle %'),
+            ]),
+          ]),
+          n('tbody', props.values.slice(0, 10).map((value) => (
+            n('tr', [
+              n('td', [
+                n(B.Label, {
+                  bsStyle: value.percent.PerfectIV > 80
+                    ? 'success'
+                    : value.percent.PerfectIV > 69
+                    ? 'warning'
+                    : 'danger',
+                }, `${value.percent.PerfectIV}%`),
+                ' ',
+                n('strong', value.strings.iv),
+              ]),
+              n('td', value.Level),
+              n('td', value.percent.PercentCP),
+              n('td', value.percent.PercentHP),
+              n('td', value.percent.PercentBatt),
+            ])
+          ))),
+        ]),
+      ]),
+
+      n(B.Row, [
+        n('h2', ['Other']),
+        n(B.Panel, [
+          n('p', [
+            'Should you keep it? ',
+            props.chance === 100
+              ? `Yes! Keep your ${props.pokemon.CP}CP ${props.pokemon.Name}`
+              : props.chance === 0
+                ? `No, send this Pokemon to the grinder for candy.`
+                : `Maybe, there is a ${props.chance}% chance you've got a good Pokemon.`
+          ]),
+          n('p', 'Best moves for this Pokemon'),
+          n('ul', [
+            n('li', `Quick: ${bestMoves.quick} (${bestMoves.dps1} dmg/sec)`),
+            n('li', `Charge: ${bestMoves.charge} (${bestMoves.dps2} dmg/sec)`),
+          ]),
+        ]),
+      ]),
+
+    ])
+  )
 }
 
 function scanResults(data) {
-  var obj = {};
-  data.lines.forEach(function (line) {
-    console.log(line.text);
+  const obj = {}
+  data.lines.forEach((line) => {
+    console.log(line.text)
     if (/CP/.test(line.text)) {
-      var singledCp = line.text.split(' ').filter(function (x) {
-        return (/CP/.test(x)
-        );
-      });
+      const singledCp = line.text.split(' ').filter(x => /CP/.test(x))
       if (singledCp.length) {
-        obj.cp = Number(singledCp[0].replace(/\D/g, ''));
+        obj.cp = Number(singledCp[0].replace(/\D/g, ''))
       }
     } else if (/HP/.test(line.text)) {
-      obj.hp = Number(line.text.split('/')[1].trim());
+      obj.hp = Number(line.text.split('/')[1].trim())
     } else if (Mon.hasOwnProperty(line.text.trim())) {
-      obj.name = line.text.trim();
+      obj.name = line.text.trim()
     }
-  });
-  return obj;
+  })
+  return obj
 }
 
 function pictureUploaded(ev) {
-  var files = ev.target.files;
-  var url = window.URL.createObjectURL(files[0]);
+  const files = ev.target.files
+  const url = window.URL.createObjectURL(files[0])
 
-  var photoCanvas = document.getElementById('capturedPhoto');
-  var ctx = photoCanvas.getContext('2d');
+  const photoCanvas = document.getElementById('capturedPhoto')
+  const ctx = photoCanvas.getContext('2d')
 
-  actions.imageProcessing();
+  actions.imageProcessing()
 
-  var img = new Image();
+  const img = new Image()
   img.onload = function () {
-    ctx.drawImage(img, 0, 0, 750, 1334);
+    ctx.drawImage(img, 0, 0, 750, 1334)
 
-    window.Tesseract.recognize(img, { lang: 'eng' }).then(function (data) {
-      window.URL.revokeObjectURL(url);
-      var obj = scanResults(data);
+    window.Tesseract.recognize(img, { lang: 'eng' }).then((data) => {
+      window.URL.revokeObjectURL(url)
+      const obj = scanResults(data)
 
-      console.log(obj);
+      console.log(obj)
 
-      actions.valuesReset();
-      if (obj.cp) actions.changedCP({ currentTarget: { value: obj.cp } });
-      if (obj.hp) actions.changedHP({ currentTarget: { value: obj.hp } });
-      if (obj.name) actions.changedName(obj.name);
-    });
-  };
-  img.src = url;
+      actions.valuesReset()
+      if (obj.cp) actions.changedCP({ currentTarget: { value: obj.cp }})
+      if (obj.hp) actions.changedHP({ currentTarget: { value: obj.hp }})
+      if (obj.name) actions.changedName(obj.name)
+    })
+  }
+  img.src = url
 }
 
 function PictureUpload(props) {
   if (props.processingImage) {
-    return n(Spinner, { spinnerName: 'three-bounce' });
+    return n(Spinner, { spinnerName: 'three-bounce' })
   }
 
-  return n(B.Row, [n(B.FormGroup, { controlId: 'screenshot' }, [n(B.ControlLabel, 'Select Screenshot'), n('input', {
-    type: 'file',
-    accept: 'image/*',
-    capture: 'camera',
-    onChange: pictureUploaded
-  })])]);
+  return n(B.Row,[
+    n(B.FormGroup, { controlId: 'screenshot' }, [
+      n(B.ControlLabel, 'Select Screenshot'),
+      n('input', {
+        type: 'file',
+        accept: 'image/*',
+        capture: 'camera',
+        onChange: pictureUploaded,
+      }),
+    ]),
+  ])
 }
 
 function Form(props) {
-  if (props.results) return n('noscript');
+  if (props.results) return n('noscript')
 
-  return n('div', [n(B.Row, [n(B.PageHeader, 'Pokemon Rater')]), n(B.Row, [n(PictureUpload, props),
-  //      n(B.FormGroup, { controlId: 'trainerlevel' }, [
-  //        n(B.ControlLabel, 'Trainer Level'),
-  //        n(B.FormControl, {
-  //          type: 'number',
-  //          onChange: actions.changedLevel,
-  //          value: props.trainerLevel,
-  //        }),
-  //      ]),
-  n(B.FormGroup, { controlId: 'pokemon' }, [n(B.ControlLabel, 'Name'), n(Select, {
-    name: 'pokemon-selector',
-    value: props.name,
-    options: options,
-    onChange: logName
-  })]), n(B.FormGroup, { controlId: 'cp' }, [n(B.ControlLabel, 'CP'), n(B.FormControl, {
-    type: 'number',
-    onChange: actions.changedCP,
-    value: props.cp
-  })]), n(B.FormGroup, { controlId: 'hp' }, [n(B.ControlLabel, 'HP'), n(B.FormControl, {
-    type: 'number',
-    onChange: actions.changedHP,
-    value: props.hp
-  })]), n(B.FormGroup, { controlId: 'dust' }, [n(B.ControlLabel, 'Stardust'), n(Select, {
-    name: 'stardust-selector',
-    value: props.stardust,
-    options: dustOptions,
-    onChange: logStardust
-  })]), n(B.FormGroup, { controlId: 'level' }, [n(B.ControlLabel, 'Pokemon Level'), n(B.FormControl, {
-    type: 'number',
-    onChange: actions.changedLevel,
-    value: props.level
-  })]), n(B.Button, { bsStyle: 'primary', onClick: calculateValues }, 'Calculate'), n(B.Button, { onClick: actions.valuesReset }, 'Clear')])]);
+  return n('div', [
+    n(B.Row, [
+      n(B.PageHeader, 'Pokemon Rater'),
+    ]),
+    n(B.Row, [
+      n(PictureUpload, props),
+//      n(B.FormGroup, { controlId: 'trainerlevel' }, [
+//        n(B.ControlLabel, 'Trainer Level'),
+//        n(B.FormControl, {
+//          type: 'number',
+//          onChange: actions.changedLevel,
+//          value: props.trainerLevel,
+//        }),
+//      ]),
+      n(B.FormGroup, { controlId: 'pokemon' }, [
+        n(B.ControlLabel, 'Name'),
+        n(Select, {
+          name: 'pokemon-selector',
+          value: props.name,
+          options,
+          onChange: logName,
+        }),
+      ]),
+      n(B.FormGroup, { controlId: 'cp' }, [
+        n(B.ControlLabel, 'CP'),
+        n(B.FormControl, {
+          type: 'number',
+          onChange: actions.changedCP,
+          value: props.cp,
+        }),
+      ]),
+      n(B.FormGroup, { controlId: 'hp' }, [
+        n(B.ControlLabel, 'HP'),
+        n(B.FormControl, {
+          type: 'number',
+          onChange: actions.changedHP,
+          value: props.hp,
+        }),
+      ]),
+      n(B.FormGroup, { controlId: 'dust' }, [
+        n(B.ControlLabel, 'Stardust'),
+        n(Select, {
+          name: 'stardust-selector',
+          value: props.stardust,
+          options: dustOptions,
+          onChange: logStardust,
+        }),
+      ]),
+      n(B.FormGroup, { controlId: 'level' }, [
+        n(B.ControlLabel, 'Pokemon Level'),
+        n(B.FormControl, {
+          type: 'number',
+          onChange: actions.changedLevel,
+          value: props.level,
+        }),
+      ]),
+      n(B.Button, { bsStyle: 'primary', onClick: calculateValues }, 'Calculate'),
+      n(B.Button, { onClick: actions.valuesReset }, 'Clear'),
+    ])
+  ])
 }
 
 function Calculator(props) {
-  return n(B.Grid, [n(Form, props), props.results && n(Results, props.results)]);
+  return n(B.Grid, [
+    n(Form, props),
+    props.results && n(Results, props.results),
+  ])
 }
+
+
 
 function connect(Component, o) {
-  return function (_React$Component) {
-    _inherits(ConnectedComponent, _React$Component);
+  return class ConnectedComponent extends React.Component {
+    constructor() {
+      super()
 
-    function ConnectedComponent() {
-      _classCallCheck(this, ConnectedComponent);
+      this.stores = o.listenTo()
+      this.subscriptions = []
 
-      var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(ConnectedComponent).call(this));
-
-      _this2.stores = o.listenTo();
-      _this2.subscriptions = [];
-
-      _this2.state = _this2.computeState();
-      return _this2;
+      this.state = this.computeState()
     }
 
-    _createClass(ConnectedComponent, [{
-      key: 'computeState',
-      value: function () {
-        function computeState() {
-          var _this3 = this;
+    computeState() {
+      return Object.keys(this.stores).reduce((obj, key) => {
+        const store = this.stores[key]
+        obj[key] = store.getState()
+        return obj
+      }, {})
+    }
 
-          return Object.keys(this.stores).reduce(function (obj, key) {
-            var store = _this3.stores[key];
-            obj[key] = store.getState();
-            return obj;
-          }, {});
-        }
+    componentDidMount() {
+      this.subscriptions = Object.keys(this.stores).map((key) => {
+        return this.stores[key].subscribe(
+          () => this.setState(this.computeState())
+        )
+      })
+    }
 
-        return computeState;
-      }()
-    }, {
-      key: 'componentDidMount',
-      value: function () {
-        function componentDidMount() {
-          var _this4 = this;
+    componentWillUnmount() {
+      this.subscriptions.forEach(sub => sub.destroy())
+      this.subscriptions = []
+    }
 
-          this.subscriptions = Object.keys(this.stores).map(function (key) {
-            return _this4.stores[key].subscribe(function () {
-              return _this4.setState(_this4.computeState());
-            });
-          });
-        }
-
-        return componentDidMount;
-      }()
-    }, {
-      key: 'componentWillUnmount',
-      value: function () {
-        function componentWillUnmount() {
-          this.subscriptions.forEach(function (sub) {
-            return sub.destroy();
-          });
-          this.subscriptions = [];
-        }
-
-        return componentWillUnmount;
-      }()
-    }, {
-      key: 'render',
-      value: function () {
-        function render() {
-          return n(Component, o.getProps(this.state, this.props), this.props.children);
-        }
-
-        return render;
-      }()
-    }]);
-
-    return ConnectedComponent;
-  }(React.Component);
+    render() {
+      return n(Component, o.getProps(this.state, this.props), this.props.children)
+    }
+  }
 }
 
-var ConnectedCalculator = connect(Calculator, {
-  listenTo: function () {
-    function listenTo() {
-      return { inventoryStore: inventoryStore };
-    }
 
-    return listenTo;
-  }(),
-  getProps: function () {
-    function getProps(state, props) {
-      return state.inventoryStore;
-    }
 
-    return getProps;
-  }()
-});
 
-localforage.getItem('pogoivcalc.trainerLevel').then(function (level) {
-  if (!level) {
-    var trainerLevel = prompt('what is your trainer level?');
-    actions.trainerLevelChanged(trainerLevel);
-    localforage.setItem('pogoivcalc.trainerLevel', trainerLevel);
-  } else {
-    actions.trainerLevelChanged(level);
-  }
 
-  ReactDOM.render(n(ConnectedCalculator), document.querySelector('#app'));
-});
+
+const ConnectedCalculator = connect(Calculator, {
+  listenTo() {
+    return { inventoryStore }
+  },
+
+  getProps(state, props) {
+    return state.inventoryStore
+  },
+})
+
+localforage.getItem('pogoivcalc.trainerLevel').then((level) => {
+  if (level) changeTrainerLevel(level)
+
+  ReactDOM.render(
+    n(ConnectedCalculator),
+    document.querySelector('#app')
+  )
+})
 
 },{"../../alt/":1,"../json/dust-to-level.json":6,"../json/pokemon.json":9,"../src/best-moves":469,"../src/magic":476,"./n":479,"localforage":20,"react":468,"react-bootstrap":107,"react-dom":274,"react-select":277,"react-spinkit":294}],479:[function(require,module,exports){
-var React = require('react');
+const React = require('react')
 
-module.exports = function () {
-  function n(a, b, c) {
-    var component = a;
-    var props = null;
-    var children = undefined;
+module.exports = function n(a, b, c) {
+  var component = a
+  var props = null
+  var children = undefined
 
-    var len = arguments.length;
+  var len = arguments.length
 
-    if (len === 2) {
-      component = a;
-      if (Array.isArray(b) || typeof b === 'string' || typeof b === 'number') {
-        children = b;
-      } else {
-        props = b;
-      }
-    } else if (len === 3) {
-      props = b;
-      children = c;
+  if (len === 2) {
+    component = a
+    if (Array.isArray(b) || typeof b === 'string' || typeof b === 'number') {
+      children = b
+    } else {
+      props = b
     }
-
-    var args = [component, props].concat(children);
-    return React.createElement.apply(React, args);
+  } else if (len === 3) {
+    props = b
+    children = c
   }
 
-  return n;
-}();
+  const args = [component, props].concat(children)
+  return React.createElement.apply(React, args)
+}
 
 },{"react":468}]},{},[478]);

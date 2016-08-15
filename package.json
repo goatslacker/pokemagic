@@ -7,7 +7,8 @@
   "homepage": "https://github.com/goatslacker/pokemon-go-iv-calculator",
   "license": "MIT",
   "scripts": {
-    "build": "browserify -t babelify web/index.js > web/build.js"
+    "build": "browserify -t babelify web/index.js > web/build.js",
+    "build:fast": "browserify web/index.js > web/build.js"
   },
   "dependencies": {
     "chalk": "^1.1.3",

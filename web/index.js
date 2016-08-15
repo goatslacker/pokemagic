@@ -31,6 +31,11 @@ const actions = alt.generateActions('InventoryActions', [
   'valuesReset',
 ])
 
+function changeTrainerLevel(trainerLevel) {
+  localforage.setItem('pogoivcalc.trainerLevel', trainerLevel)
+  actions.trainerLevelChanged(trainerLevel)
+}
+
 class Inventory extends Alt.Store {
   constructor() {
     super()
@@ -134,87 +139,80 @@ const Styles = {
 
   pokemonImage: {
     alignItems: 'center',
-    background: 'white',
-    border: '1px solid #353535',
-    borderRadius: 200,
+//    background: 'white',
+//    border: '1px solid #353535',
+//    borderRadius: 200,
     display: 'flex',
-    height: 200,
+    height: 150,
     margin: '0 auto',
     justifyContent: 'center',
-    width: 200,
+    width: 150,
   }
 }
 
 function Results(props) {
   const bestMoves = bestMovesFor(props.pokemon.name)
+  console.log(props)
   return (
     n('div', [
-      n(B.Row, [n(B.PageHeader, 'Pokemon Analysis')]),
-      n(B.Row, { style: Styles.resultsRow }, [
+      n(B.Row, [
         n(B.Button, { onClick: actions.resultsReset }, 'Check Another'),
-        n('h2', [props.pokemon.name]),
+      ]),
+
+      n(B.Row, { style: Styles.resultsRow }, [
+        n('div', props.pokemon.name),
         n('div', { style: Styles.pokemonImage }, [
           n('img', { src: `images/${props.pokemon.name}.png`, height: 150, width: 150 }),
         ]),
-        n('h2', `${props.range.iv[0]}% - ${props.range.iv[1]}%`),
+        n('div', `${props.range.iv[0]}% - ${props.range.iv[1]}%`),
       ]),
+
       n(B.Row, [
+        n('h2', `Possible values (${props.values.length})`),
+        n('p', `There are ${props.values.length} possibilities and a ${props.chance}% chance you will have a good ${props.pokemon.name}.`),
         n(B.Table, [
-          n('tbody', [
+          n('thead', [
             n('tr', [
-              n('td', 'CP'),
-              n('td', props.pokemon.cp),
-            ]),
-            n('tr', [
-              n('td', 'HP'),
-              n('td', props.pokemon.hp),
-            ]),
-            n('tr', [
-              n('td', 'Max CP'),
-              n('td', props.best.maxcpcur),
-            ]),
-            n('tr', [
-              n('td', 'Max HP'),
-              n('td', props.best.maxhpcur),
+              n('th', 'IV'),
+              n('th', 'Level'),
+              n('th', 'CP %'),
+              n('th', 'HP %'),
+              n('th', 'Battle %'),
             ]),
           ]),
-        ]),
-        n(B.Panel, [
-          props.best.stardust && (
-            n('div', [
-              n('div', `Candy cost to max: ${props.best.candy}`),
-              n('div', `Stardust cost to max: ${props.best.stardust}`),
+          n('tbody', props.values.slice(0, 10).map((value) => (
+            n('tr', [
+              n('td', [
+                n(B.Label, {
+                  bsStyle: value.percent.PerfectIV > 80
+                    ? 'success'
+                    : value.percent.PerfectIV > 69
+                    ? 'warning'
+                    : 'danger',
+                }, `${value.percent.PerfectIV}%`),
+                ' ',
+                n('strong', value.strings.iv),
+              ]),
+              n('td', value.Level),
+              n('td', value.percent.PercentCP),
+              n('td', value.percent.PercentHP),
+              n('td', value.percent.PercentBatt),
             ])
-          ),
-          props.best.evolvecp && (
-            n('div', `If evolved it would have a CP of ~${props.best.evolvecp}`)
-          ),
+          ))),
         ]),
       ]),
+
       n(B.Row, [
-        n('h2', 'Possible values'),
-        n(B.ListGroup, props.values.slice(0, 10).map((value) => (
-          n(B.ListGroupItem, `${value.iv} (${value.ivp}%)`)
-        ))),
-      ]),
-      n(B.Row, [
-        n('h2', ['Detailed Report']),
+        n('h2', ['Other']),
         n(B.Panel, [
-          n('p', `There are ${props.values.length} possibilities`),
           n('p', [
             'Should you keep it? ',
             props.chance === 100
-              ? `Yes! Keep your ${props.best.cp}CP ${props.best.name}`
+              ? `Yes! Keep your ${props.pokemon.cp}CP ${props.pokemon.name}`
               : props.chance === 0
                 ? `No, send this Pokemon to the grinder for candy.`
                 : `Maybe, there is a ${props.chance}% chance you've got a good Pokemon.`
           ]),
-          n('p', `There is a ${Math.round(1 / props.values.length * 100)}% chance you will have the one below`),
-          n('p', `${props.best.name} Rating: ${props.best.rating}%`),
-          n('p', `IVs: ${props.best.iv} (${props.best.ivp}%)`),
-          n('p', `Attack: ${props.best.atk}`),
-          n('p', `Defense: ${props.best.def}`),
-          n('p', `Stamina: ${props.best.sta}`),
           n('p', 'Best moves for this Pokemon'),
           n('ul', [
             n('li', `Quick: ${bestMoves.quick} (${bestMoves.dps1} dmg/sec)`),
@@ -222,6 +220,7 @@ function Results(props) {
           ]),
         ]),
       ]),
+
     ])
   )
 }
@@ -418,13 +417,7 @@ const ConnectedCalculator = connect(Calculator, {
 })
 
 localforage.getItem('pogoivcalc.trainerLevel').then((level) => {
-  if (!level) {
-    const trainerLevel = prompt('what is your trainer level?')
-    actions.trainerLevelChanged(trainerLevel)
-    localforage.setItem('pogoivcalc.trainerLevel', trainerLevel)
-  } else {
-    actions.trainerLevelChanged(level)
-  }
+  if (level) changeTrainerLevel(level)
 
   ReactDOM.render(
     n(ConnectedCalculator),
