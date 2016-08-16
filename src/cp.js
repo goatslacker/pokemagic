@@ -16,11 +16,6 @@ function getCP(mon, ivs, ECpM) {
   )
 }
 
-// The maximum possible CP for a Pokemon that has perfect IVs
-function getMaxCP(mon, atk, def, sta, ECpM) {
-  return getCP(mon, { atk, def, sta }, ECpM)
-}
-
 // The minimum CP for your Pokemon's level
 function getMinCPForLevel(mon, ECpM) {
   return getCP(mon, {
@@ -42,7 +37,6 @@ function getMaxCPForLevel(mon, ECpM) {
 
 module.exports = {
   getCP,
-  getMaxCP,
   getMaxCPForLevel,
   getMinCPForLevel,
 }

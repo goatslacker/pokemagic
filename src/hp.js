@@ -4,11 +4,6 @@ function getHP(mon, IndSta, ECpM) {
   return Math.floor(ECpM * (BaseSta + IndSta))
 }
 
-// The minimum HP for a Pokemon that has perfect IVs
-function getMaxHP(mon, sta, ECpM) {
-  return getHP(mon, sta, ECpM)
-}
-
 // The maximum HP for your Pokemon's current level
 function getMaxHPForLevel(mon, ECpM) {
   return getHP(mon, 15, ECpM)
@@ -21,7 +16,6 @@ function getMinHPForLevel(mon, ECpM) {
 
 module.exports = {
   getHP,
-  getMaxHP,
   getMaxHPForLevel,
   getMinHPForLevel,
 }

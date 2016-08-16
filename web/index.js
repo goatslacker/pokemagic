@@ -9,6 +9,7 @@ const B = require('react-bootstrap')
 const bestMovesFor = require('../src/best-moves')
 const localforage = require('localforage')
 const Spinner = require('react-spinkit')
+const finalEvolutions = require('../json/finalEvolutions')
 
 const Mon = Pokemon.reduce((obj, mon) => {
   obj[mon.name] = mon.name
@@ -41,11 +42,11 @@ class Inventory extends Alt.Store {
     super()
     this.bindActions(actions)
     this.state = {
-      name: 'ARCANINE',
-      cp: 1411,
-      hp: 102,
-      stardust: '2200',
-      trainerLevel: 25,
+      name: 'KADABRA',
+      cp: 593,
+      hp: 54,
+      stardust: '2500',
+      trainerLevel: 26,
       level: 0,
       results: null,
       processingImage: false,
@@ -121,15 +122,19 @@ const logStardust = x => actions.changedStardust(x.value)
 
 function calculateValues() {
   const state = inventoryStore.getState()
-  const results = magic({
-    name: state.name,
-    cp: Number(state.cp),
-    hp: Number(state.hp),
-    stardust: Number(state.stardust),
-    level: state.level ? Number(state.level) : null,
-    trainerLevel: Number(state.trainerLevel) || 26,
-  })
-  actions.resultsCalculated(results)
+  try {
+    const results = magic({
+      name: state.name,
+      cp: Number(state.cp),
+      hp: Number(state.hp),
+      stardust: Number(state.stardust),
+      level: state.level ? Number(state.level) : null,
+      trainerLevel: Number(state.trainerLevel) || 26,
+    })
+    actions.resultsCalculated(results)
+  } catch (err) {
+    alert('Looks like there is a problem with the values you entered.')
+  }
 }
 
 const Styles = {
@@ -147,12 +152,22 @@ const Styles = {
     margin: '0 auto',
     justifyContent: 'center',
     width: 150,
-  }
+  },
+
+  bigText: {
+    fontSize: '1.5em',
+    fontWeight: 'bold',
+  },
 }
 
 function Results(props) {
-  const bestMoves = bestMovesFor(props.pokemon.name)
+  var bestMoves = null
+  if (finalEvolutions[props.pokemon.name]) {
+    bestMoves = bestMovesFor(props.pokemon.name)
+  }
+
   console.log(props)
+
   return (
     n('div', [
       n(B.Row, [
@@ -160,16 +175,24 @@ function Results(props) {
       ]),
 
       n(B.Row, { style: Styles.resultsRow }, [
-        n('div', props.pokemon.name),
+        n('div', { style: Styles.bigText }, props.pokemon.name),
+        n('div', `CP: ${props.pokemon.cp} | HP: ${props.pokemon.hp}`),
         n('div', { style: Styles.pokemonImage }, [
           n('img', { src: `images/${props.pokemon.name}.png`, height: 150, width: 150 }),
         ]),
-        n('div', `${props.range.iv[0]}% - ${props.range.iv[1]}%`),
+        n('div', { style: Styles.bigText }, `${props.range.iv[0]}% - ${props.range.iv[1]}%`),
+        n('div', { style: Styles.resultsRow }, [
+          props.chance === 100
+            ? `Keep your ${props.pokemon.cp}CP ${props.pokemon.name}`
+            : props.chance === 0
+              ? `Send this Pokemon to the grinder for candy.`
+              : `Maybe you should keep this Pokemon around.`
+        ]),
       ]),
 
       n(B.Row, [
-        n('h2', `Possible values (${props.values.length})`),
-        n('p', `There are ${props.values.length} possibilities and a ${props.chance}% chance you will have a good ${props.pokemon.name}.`),
+        n('h3', { style: Styles.resultsRow }, `Possible values (${props.values.length})`),
+        n('p', { style: Styles.resultsRow }, `There are ${props.values.length} possibilities and a ${props.chance}% chance you will have a good ${props.pokemon.name}.`),
         n(B.Table, [
           n('thead', [
             n('tr', [
@@ -202,32 +225,78 @@ function Results(props) {
         ]),
       ]),
 
+      // We should only show best moveset if it is in its final evolved form...
+      bestMoves && (
+        n(B.Row, [
+          n('h3', { style: Styles.resultsRow }, `Best moveset for ${props.pokemon.name}`),
+          n(B.Col, { xs: 6, style: Styles.resultsRow }, [
+            n(B.Panel, [
+              n('div', 'Quick Move'),
+              n('h5', bestMoves.quick),
+              n('div', `${bestMoves.dps1} dmg/sec`),
+            ]),
+          ]),
+          n(B.Col, { xs: 6, style: Styles.resultsRow }, [
+            n(B.Panel, [
+              n('div', 'Charge Move'),
+              n('h5', bestMoves.charge),
+              n('div', `${bestMoves.dps2} dmg/sec`),
+            ]),
+          ]),
+        ])
+      ),
+
+      props.best.meta.EvolveCP && (
+        n(B.Row, { style: Styles.resultsRow }, [
+          n('h3', 'Evolution'),
+          n(B.Panel, [
+            n('span', `If evolved it would have a CP of about ${props.best.meta.EvolveCP}`),
+          ]),
+        ])
+      ),
+
       n(B.Row, [
-        n('h2', ['Other']),
-        n(B.Panel, [
-          n('p', [
-            'Should you keep it? ',
-            props.chance === 100
-              ? `Yes! Keep your ${props.pokemon.cp}CP ${props.pokemon.name}`
-              : props.chance === 0
-                ? `No, send this Pokemon to the grinder for candy.`
-                : `Maybe, there is a ${props.chance}% chance you've got a good Pokemon.`
-          ]),
-          n('div', `Candy cost to max: ${props.best.meta.Candy}`),
-          n('div', `Stardust cost to max: ${props.best.meta.Stardust}`),
-          n('div', `CP at max: ${props.best.meta.MaxLeveledCP}`),
-          n('div', `HP at max: ${props.best.meta.MaxLeveledHP}`),
-          props.best.evolvecp && (
-            n('div', `If evolved it would have a CP of ~${props.best.meta.EvolveCP}`)
-          ),
-          n('p', 'Best moves for this Pokemon'),
-          n('ul', [
-            n('li', `Quick: ${bestMoves.quick} (${bestMoves.dps1} dmg/sec)`),
-            n('li', `Charge: ${bestMoves.charge} (${bestMoves.dps2} dmg/sec)`),
-          ]),
+        n('h3', { style: Styles.resultsRow }, `Maxing out to level ${props.best.meta.MaxLevel}`),
+        props.pokemon.level === null && (
+          n('p', `Assuming that your Pokemon's current level is ${props.best.Level}. The information below is just an estimate.`)
+        ),
+        n(B.ListGroup, [
+          n(B.ListGroupItem, `Current level: ${props.best.Level}`),
+          n(B.ListGroupItem, `Candy cost: ${props.best.meta.Candy}`),
+          n(B.ListGroupItem, `Stardust cost: ${props.best.meta.Stardust}`),
+          n(B.ListGroupItem, `CP: ${props.best.meta.MaxCP}`),
+          n(B.ListGroupItem, `HP: ${props.best.meta.MaxHP}`),
         ]),
       ]),
 
+      n(B.Row, [
+        n('h3', { style: Styles.resultsRow }, 'Yours vs Perfect by level'),
+        n(B.Table, [
+          n('thead', [
+            n('tr', [
+              n('th', 'Level'),
+              n('th', 'Your CP'),
+              n('th', 'Best CP'),
+              n('th', 'Your HP'),
+              n('th', 'Best HP'),
+            ]),
+          ]),
+          n('tbody', props.values.reduce((o, value) => {
+            if (o._[value.Level]) return o
+            o._[value.Level] = 1
+            o.rows.push(
+              n('tr', [
+                n('td', value.Level),
+                n('td', value.CP),
+                n('td', value.meta.MaxLevelCP),
+                n('td', value.HP),
+                n('td', value.meta.MaxLevelHP),
+              ])
+            )
+            return o
+          }, { rows: [], _: {} }).rows),
+        ]),
+      ]),
     ])
   )
 }

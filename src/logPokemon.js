@@ -39,8 +39,8 @@ function logPokemon(pokemon) {
   response.push('')
 
   response.push(`At level ${TRAINER_LEVEL + 1.5}, this pokemon would have:`)
-  response.push(`Maximum CP: ${pokemon.meta.MaxCP}/${pokemon.meta.MaxLeveledCP}`)
-  response.push(`Maximum HP: ${pokemon.meta.MaxHP}/${pokemon.meta.MaxLeveledHP}`)
+  response.push(`Maximum CP: ${pokemon.meta.MaxCP}/${pokemon.meta.MaxedPossibleCP}`)
+  response.push(`Maximum HP: ${pokemon.meta.MaxHP}/${pokemon.meta.MaxedPossibleHP}`)
 
   if (pokemon.meta.EvolveCP || pokemon.meta.Stardust) {
     response.push('')
@@ -61,7 +61,7 @@ function logPokemon(pokemon) {
 
   response.push(`${pokemon.Name} Rating: ${ovRatingPercent}%`)
 
-//  return response
+  return response
 
   return {
     level: pokemon.Level,

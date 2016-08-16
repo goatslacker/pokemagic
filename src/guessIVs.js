@@ -42,9 +42,12 @@ function guessIVs(pokemon, mon, ECpM) {
 
   const IndStaValues = calcIndSta(pokemon.hp, BaseSta, ECpM)
 
-  // If you max this pokemon out, what CP/HP would it have.
-  const MaxLeveledCP = cpTools.getMaxCPForLevel(mon, getMaxLevel(pokemon.trainerLevel))
-  const MaxLeveledHP = hpTools.getMaxHPForLevel(mon, getMaxLevel(pokemon.trainerLevel))
+  const MaxLevel = Number(pokemon.trainerLevel) + 1.5
+  const MaxLevelCpM = getMaxLevel(pokemon.trainerLevel)
+
+  // If you max this pokemon out, what CP/HP would it have given Perfect IVs
+  const MaxedPossibleCP = cpTools.getMaxCPForLevel(mon, MaxLevelCpM)
+  const MaxedPossibleHP = hpTools.getMaxHPForLevel(mon, MaxLevelCpM)
 
   // What is this Pokemon's Max/Min CP/HP for your current level given Perfect IVs
   const MaxLevelCP = cpTools.getMaxCPForLevel(mon, ECpM)
@@ -87,8 +90,13 @@ function guessIVs(pokemon, mon, ECpM) {
         const BaseSta = mon.stats.stamina
         const Sta = (BaseSta + IndSta) * ECpM
 
-        const MaxCP = cpTools.getMaxCP(mon, IndAtk, IndDef, IndSta, getMaxLevel())
-        const MaxHP = hpTools.getMaxHP(mon, IndSta, getMaxLevel())
+        // The maximum CP and HP potential this Pokemon has
+        const MaxCP = cpTools.getCP(mon, {
+          atk: IndAtk,
+          def: IndDef,
+          sta: IndSta,
+        }, MaxLevelCpM)
+        const MaxHP = hpTools.getHP(mon, IndSta, MaxLevelCpM)
 
         const PerfectIV = Math.round((IndAtk + IndDef + IndSta) / 45 * 100)
         const PercentBatt = getAttackPercentage(IndAtk, IndDef)
@@ -120,8 +128,8 @@ function guessIVs(pokemon, mon, ECpM) {
             strings: {
               iv: `${IndAtk}/${IndDef}/${IndSta}`,
               batt: `${IndAtk + IndDef}/30`,
-              maxcp: `${MaxCP}/${MaxLeveledCP}`,
-              maxhp: `${MaxHP}/${MaxLeveledHP}`,
+              maxcp: `${MaxCP}/${MaxedPossibleCP}`,
+              maxhp: `${MaxHP}/${MaxedPossibleHP}`,
             },
             percent: {
               PercentBatt,
@@ -140,8 +148,9 @@ function guessIVs(pokemon, mon, ECpM) {
               MaxLevelHP,
               MaxCP,
               MaxHP,
-              MaxLeveledCP,
-              MaxLeveledHP,
+              MaxLevel,
+              MaxedPossibleCP,
+              MaxedPossibleHP,
             },
           })
         }

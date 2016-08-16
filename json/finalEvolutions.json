@@ -1,0 +1,397 @@
+{
+  "VENUSAUR": {
+    "id": 3,
+    "name": "VENUSAUR",
+    "family": "FAMILY_BULBASAUR"
+  },
+  "CHARIZARD": {
+    "id": 6,
+    "name": "CHARIZARD",
+    "family": "FAMILY_CHARMANDER"
+  },
+  "BLASTOISE": {
+    "id": 9,
+    "name": "BLASTOISE",
+    "family": "FAMILY_SQUIRTLE"
+  },
+  "BUTTERFREE": {
+    "id": 12,
+    "name": "BUTTERFREE",
+    "family": "FAMILY_CATERPIE"
+  },
+  "BEEDRILL": {
+    "id": 15,
+    "name": "BEEDRILL",
+    "family": "FAMILY_WEEDLE"
+  },
+  "PIDGEOT": {
+    "id": 18,
+    "name": "PIDGEOT",
+    "family": "FAMILY_PIDGEY"
+  },
+  "RATICATE": {
+    "id": 20,
+    "name": "RATICATE",
+    "family": "FAMILY_RATTATA"
+  },
+  "FEAROW": {
+    "id": 22,
+    "name": "FEAROW",
+    "family": "FAMILY_SPEAROW"
+  },
+  "ARBOK": {
+    "id": 24,
+    "name": "ARBOK",
+    "family": "FAMILY_EKANS"
+  },
+  "RAICHU": {
+    "id": 26,
+    "name": "RAICHU",
+    "family": "FAMILY_PIKACHU"
+  },
+  "SANDSLASH": {
+    "id": 28,
+    "name": "SANDSLASH",
+    "family": "FAMILY_SANDSHREW"
+  },
+  "NIDOQUEEN": {
+    "id": 31,
+    "name": "NIDOQUEEN",
+    "family": "FAMILY_NIDORAN_FEMALE"
+  },
+  "NIDOKING": {
+    "id": 34,
+    "name": "NIDOKING",
+    "family": "FAMILY_NIDORAN_MALE"
+  },
+  "CLEFABLE": {
+    "id": 36,
+    "name": "CLEFABLE",
+    "family": "FAMILY_CLEFAIRY"
+  },
+  "NINETALES": {
+    "id": 38,
+    "name": "NINETALES",
+    "family": "FAMILY_VULPIX"
+  },
+  "WIGGLYTUFF": {
+    "id": 40,
+    "name": "WIGGLYTUFF",
+    "family": "FAMILY_JIGGLYPUFF"
+  },
+  "GOLBAT": {
+    "id": 42,
+    "name": "GOLBAT",
+    "family": "FAMILY_ZUBAT"
+  },
+  "VILEPLUME": {
+    "id": 45,
+    "name": "VILEPLUME",
+    "family": "FAMILY_ODDISH"
+  },
+  "PARASECT": {
+    "id": 47,
+    "name": "PARASECT",
+    "family": "FAMILY_PARAS"
+  },
+  "VENOMOTH": {
+    "id": 49,
+    "name": "VENOMOTH",
+    "family": "FAMILY_VENONAT"
+  },
+  "DUGTRIO": {
+    "id": 51,
+    "name": "DUGTRIO",
+    "family": "FAMILY_DIGLETT"
+  },
+  "PERSIAN": {
+    "id": 53,
+    "name": "PERSIAN",
+    "family": "FAMILY_MEOWTH"
+  },
+  "GOLDUCK": {
+    "id": 55,
+    "name": "GOLDUCK",
+    "family": "FAMILY_PSYDUCK"
+  },
+  "PRIMEAPE": {
+    "id": 57,
+    "name": "PRIMEAPE",
+    "family": "FAMILY_MANKEY"
+  },
+  "ARCANINE": {
+    "id": 59,
+    "name": "ARCANINE",
+    "family": "FAMILY_GROWLITHE"
+  },
+  "POLIWRATH": {
+    "id": 62,
+    "name": "POLIWRATH",
+    "family": "FAMILY_POLIWAG"
+  },
+  "ALAKAZAM": {
+    "id": 65,
+    "name": "ALAKAZAM",
+    "family": "FAMILY_ABRA"
+  },
+  "MACHAMP": {
+    "id": 68,
+    "name": "MACHAMP",
+    "family": "FAMILY_MACHOP"
+  },
+  "VICTREEBEL": {
+    "id": 71,
+    "name": "VICTREEBEL",
+    "family": "FAMILY_BELLSPROUT"
+  },
+  "TENTACRUEL": {
+    "id": 73,
+    "name": "TENTACRUEL",
+    "family": "FAMILY_TENTACOOL"
+  },
+  "GOLEM": {
+    "id": 76,
+    "name": "GOLEM",
+    "family": "FAMILY_GEODUDE"
+  },
+  "RAPIDASH": {
+    "id": 78,
+    "name": "RAPIDASH",
+    "family": "FAMILY_PONYTA"
+  },
+  "SLOWBRO": {
+    "id": 80,
+    "name": "SLOWBRO",
+    "family": "FAMILY_SLOWPOKE"
+  },
+  "MAGNETON": {
+    "id": 82,
+    "name": "MAGNETON",
+    "family": "FAMILY_MAGNEMITE"
+  },
+  "FARFETCHD": {
+    "id": 83,
+    "name": "FARFETCHD",
+    "family": "FAMILY_FARFETCHD"
+  },
+  "DODRIO": {
+    "id": 85,
+    "name": "DODRIO",
+    "family": "FAMILY_DODUO"
+  },
+  "DEWGONG": {
+    "id": 87,
+    "name": "DEWGONG",
+    "family": "FAMILY_SEEL"
+  },
+  "MUK": {
+    "id": 89,
+    "name": "MUK",
+    "family": "FAMILY_GRIMER"
+  },
+  "CLOYSTER": {
+    "id": 91,
+    "name": "CLOYSTER",
+    "family": "FAMILY_SHELLDER"
+  },
+  "GENGAR": {
+    "id": 94,
+    "name": "GENGAR",
+    "family": "FAMILY_GASTLY"
+  },
+  "ONIX": {
+    "id": 95,
+    "name": "ONIX",
+    "family": "FAMILY_ONIX"
+  },
+  "HYPNO": {
+    "id": 97,
+    "name": "HYPNO",
+    "family": "FAMILY_DROWZEE"
+  },
+  "KINGLER": {
+    "id": 99,
+    "name": "KINGLER",
+    "family": "FAMILY_KRABBY"
+  },
+  "ELECTRODE": {
+    "id": 101,
+    "name": "ELECTRODE",
+    "family": "FAMILY_VOLTORB"
+  },
+  "EXEGGUTOR": {
+    "id": 103,
+    "name": "EXEGGUTOR",
+    "family": "FAMILY_EXEGGCUTE"
+  },
+  "MAROWAK": {
+    "id": 105,
+    "name": "MAROWAK",
+    "family": "FAMILY_CUBONE"
+  },
+  "HITMONLEE": {
+    "id": 106,
+    "name": "HITMONLEE",
+    "family": "FAMILY_HITMONLEE"
+  },
+  "HITMONCHAN": {
+    "id": 107,
+    "name": "HITMONCHAN",
+    "family": "FAMILY_HITMONCHAN"
+  },
+  "LICKITUNG": {
+    "id": 108,
+    "name": "LICKITUNG",
+    "family": "FAMILY_LICKITUNG"
+  },
+  "WEEZING": {
+    "id": 110,
+    "name": "WEEZING",
+    "family": "FAMILY_KOFFING"
+  },
+  "RHYDON": {
+    "id": 112,
+    "name": "RHYDON",
+    "family": "FAMILY_RHYHORN"
+  },
+  "CHANSEY": {
+    "id": 113,
+    "name": "CHANSEY",
+    "family": "FAMILY_CHANSEY"
+  },
+  "TANGELA": {
+    "id": 114,
+    "name": "TANGELA",
+    "family": "FAMILY_TANGELA"
+  },
+  "KANGASKHAN": {
+    "id": 115,
+    "name": "KANGASKHAN",
+    "family": "FAMILY_KANGASKHAN"
+  },
+  "SEADRA": {
+    "id": 117,
+    "name": "SEADRA",
+    "family": "FAMILY_HORSEA"
+  },
+  "SEAKING": {
+    "id": 119,
+    "name": "SEAKING",
+    "family": "FAMILY_GOLDEEN"
+  },
+  "STARMIE": {
+    "id": 121,
+    "name": "STARMIE",
+    "family": "FAMILY_STARYU"
+  },
+  "MR_MIME": {
+    "id": 122,
+    "name": "MR_MIME",
+    "family": "FAMILY_MR_MIME"
+  },
+  "SCYTHER": {
+    "id": 123,
+    "name": "SCYTHER",
+    "family": "FAMILY_SCYTHER"
+  },
+  "JYNX": {
+    "id": 124,
+    "name": "JYNX",
+    "family": "FAMILY_JYNX"
+  },
+  "ELECTABUZZ": {
+    "id": 125,
+    "name": "ELECTABUZZ",
+    "family": "FAMILY_ELECTABUZZ"
+  },
+  "MAGMAR": {
+    "id": 126,
+    "name": "MAGMAR",
+    "family": "FAMILY_MAGMAR"
+  },
+  "PINSIR": {
+    "id": 127,
+    "name": "PINSIR",
+    "family": "FAMILY_PINSIR"
+  },
+  "TAUROS": {
+    "id": 128,
+    "name": "TAUROS",
+    "family": "FAMILY_TAUROS"
+  },
+  "GYARADOS": {
+    "id": 130,
+    "name": "GYARADOS",
+    "family": "FAMILY_MAGIKARP"
+  },
+  "LAPRAS": {
+    "id": 131,
+    "name": "LAPRAS",
+    "family": "FAMILY_LAPRAS"
+  },
+  "DITTO": {
+    "id": 132,
+    "name": "DITTO",
+    "family": "FAMILY_DITTO"
+  },
+  "FLAREON": {
+    "id": 136,
+    "name": "FLAREON",
+    "family": "FAMILY_EEVEE"
+  },
+  "PORYGON": {
+    "id": 137,
+    "name": "PORYGON",
+    "family": "FAMILY_PORYGON"
+  },
+  "OMASTAR": {
+    "id": 139,
+    "name": "OMASTAR",
+    "family": "FAMILY_OMANYTE"
+  },
+  "KABUTOPS": {
+    "id": 141,
+    "name": "KABUTOPS",
+    "family": "FAMILY_KABUTO"
+  },
+  "AERODACTYL": {
+    "id": 142,
+    "name": "AERODACTYL",
+    "family": "FAMILY_AERODACTYL"
+  },
+  "SNORLAX": {
+    "id": 143,
+    "name": "SNORLAX",
+    "family": "FAMILY_SNORLAX"
+  },
+  "ARTICUNO": {
+    "id": 144,
+    "name": "ARTICUNO",
+    "family": "FAMILY_ARTICUNO"
+  },
+  "ZAPDOS": {
+    "id": 145,
+    "name": "ZAPDOS",
+    "family": "FAMILY_ZAPDOS"
+  },
+  "MOLTRES": {
+    "id": 146,
+    "name": "MOLTRES",
+    "family": "FAMILY_MOLTRES"
+  },
+  "DRAGONITE": {
+    "id": 149,
+    "name": "DRAGONITE",
+    "family": "FAMILY_DRATINI"
+  },
+  "MEWTWO": {
+    "id": 150,
+    "name": "MEWTWO",
+    "family": "FAMILY_MEWTWO"
+  },
+  "MEW": {
+    "id": 151,
+    "name": "MEW",
+    "family": "FAMILY_MEW"
+  }
+}
