@@ -2,6 +2,7 @@ const React = require('react')
 const ReactDOM = require('react-dom')
 const Select = require('react-select')
 const Pokemon = require('../json/pokemon.json')
+const Moves = require('../json/moves.json')
 const DustToLevel = require('../json/dust-to-level.json')
 const n = require('./n')
 const magic = require('../src/magic')
@@ -12,7 +13,7 @@ const Spinner = require('react-spinkit')
 const finalEvolutions = require('../json/finalEvolutions')
 
 const Mon = Pokemon.reduce((obj, mon) => {
-  obj[mon.name] = mon.name
+  obj[mon.name] = mon.id
   return obj
 }, {})
 
@@ -50,6 +51,11 @@ const actions = alt.generateActions('InventoryActions', [
   'resultsReset',
   'trainerLevelChanged',
   'valuesReset',
+])
+
+const moveActions = alt.generateActions('MoveActions', [
+  'movesChanged',
+  'pokemonChanged',
 ])
 
 function changeTrainerLevel(trainerLevel) {
@@ -129,7 +135,27 @@ class Inventory extends Alt.Store {
   }
 }
 
+class MovesStore extends Alt.Store {
+  constructor() {
+    super()
+    this.state = {
+      moves: { quick: [], charge: [] },
+      pokemon: [],
+    }
+    this.bindActions(moveActions)
+  }
+
+  movesChanged(moves) {
+    this.setState({ moves })
+  }
+
+  pokemonChanged(pokemon) {
+    this.setState({ pokemon })
+  }
+}
+
 const inventoryStore = alt.createStore('InventoryStore', new Inventory())
+const movesStore = alt.createStore('MovesStore', new MovesStore())
 
 
 
@@ -137,8 +163,31 @@ const inventoryStore = alt.createStore('InventoryStore', new Inventory())
 const options = Pokemon.map(x => ({ value: x.name, label: x.name }))
 const dustOptions = Object.keys(DustToLevel).map(x => ({ value: x, label: x }))
 
+const moves = options.slice()
+moves.push.apply(moves, Moves.map(x => ({ value: x.Name, label: x.Name })))
+
 const logName = x => actions.changedName(x.value)
 const logStardust = x => actions.changedStardust(x.value)
+
+const sweetMoves = (x) => {
+  if (Mon.hasOwnProperty(x.value)) {
+    const best = bestMovesFor(x.value)
+    const mon = Pokemon[Mon[x.value] - 1]
+    moveActions.pokemonChanged([])
+    moveActions.movesChanged({
+      quick: mon.moves1.map(m => m.Name === best.quick ? `*${m.Name}` : m.Name),
+      charge: mon.moves2.map(m => m.Name === best.charge ? `*${m.Name}` : m.Name),
+    })
+  } else {
+    moveActions.movesChanged({ quick: [], charge: [] })
+    moveActions.pokemonChanged(
+      Pokemon.filter(mon => (
+        mon.moves1.some(m => m.Name === x.value) ||
+        mon.moves2.some(m => m.Name === x.value)
+      )).map(x => x.name)
+    )
+  }
+}
 
 function calculateValues() {
   const state = inventoryStore.getState()
@@ -403,6 +452,48 @@ function PictureUpload(props) {
   ])
 }
 
+function MovesCheck(props) {
+  return (
+    n(B.Row, [
+      n(B.PageHeader, 'Check Moves'),
+      n(B.FormGroup, { controlId: 'moves' }, [
+        n(B.ControlLabel, 'Moves'),
+        n(Select, {
+          inputProps: {
+            autoCorrect: 'off',
+            autoCapitalize: 'off',
+            spellCheck: 'off',
+          },
+          name: 'move-selector',
+          value: '',
+          options: moves,
+          onChange: sweetMoves,
+        }),
+      ]),
+      props.pokemon.length && (
+        n(B.Panel, props.pokemon.map(mon => (
+          n('img', { src: `images/${mon}.png`, height: 60, width: 60 })
+        )))
+      ) || undefined,
+      props.moves.quick.length && (
+        n(B.ListGroup, props.moves.quick.map(move => (
+          n(B.ListGroupItem, move)
+        )))
+      ) || undefined,
+      props.moves.charge.length && (
+        n(B.ListGroup, props.moves.charge.map(move => (
+          n(B.ListGroupItem, move)
+        )))
+      ) || undefined,
+    ])
+  )
+}
+
+const ConnectedMoves = connect(MovesCheck, {
+  listenTo: () => ({ movesStore }),
+  getProps: state => state.movesStore,
+})
+
 function Form(props) {
   if (props.results) return n('noscript')
 
@@ -471,6 +562,8 @@ function Form(props) {
       ]),
       n(B.Button, { bsStyle: 'primary', onClick: calculateValues }, 'Calculate'),
       n(B.Button, { onClick: actions.valuesReset }, 'Clear'),
+      n('hr'),
+      n(ConnectedMoves),
     ])
   ])
 }
