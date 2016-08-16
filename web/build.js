@@ -56543,7 +56543,7 @@ function getWithContext(values) {
 var Alt = require('../../alt/');
 var alt = new Alt();
 
-var actions = alt.generateActions('InventoryActions', ['changedName', 'changedCP', 'changedHP', 'changedStardust', 'changedLevel', 'imageProcessing', 'resultsCalculated', 'resultsReset', 'trainerLevelChanged', 'valuesReset']);
+var actions = alt.generateActions('InventoryActions', ['changedName', 'changedCP', 'changedHP', 'changedStardust', 'changedLevel', 'changedTrainerLevel', 'imageProcessing', 'resultsCalculated', 'resultsReset', 'trainerLevelChanged', 'valuesReset']);
 
 var moveActions = alt.generateActions('MoveActions', ['movesChanged', 'pokemonChanged']);
 
@@ -56629,6 +56629,16 @@ var Inventory = function (_Alt$Store) {
       }
 
       return changedStardust;
+    }()
+  }, {
+    key: 'changedTrainerLevel',
+    value: function () {
+      function changedTrainerLevel(ev) {
+        var trainerLevel = Number(this.fromEvent(ev));
+        this.setState({ trainerLevel: trainerLevel });
+      }
+
+      return changedTrainerLevel;
     }()
   }, {
     key: 'changedLevel',
@@ -56952,16 +56962,13 @@ var ConnectedMoves = connect(MovesCheck, {
 function Form(props) {
   if (props.results) return n('noscript');
 
-  return n('div', [n(B.Row, [n(B.PageHeader, 'Pokemon Rater')]), n(B.Row, [n(PictureUpload, props),
-  //      n(B.FormGroup, { controlId: 'trainerlevel' }, [
-  //        n(B.ControlLabel, 'Trainer Level'),
-  //        n(B.FormControl, {
-  //          type: 'number',
-  //          onChange: actions.changedLevel,
-  //          value: props.trainerLevel,
-  //        }),
-  //      ]),
-  n(B.FormGroup, { controlId: 'pokemon' }, [n(B.ControlLabel, 'Name'), n(Select, {
+  return n('div', [n(B.Row, [n(B.PageHeader, 'Pokemon Rater')]), n(B.Row, [
+  //      n(PictureUpload, props),
+  n(B.FormGroup, { controlId: 'trainerlevel' }, [n(B.ControlLabel, 'Trainer Level'), n(B.FormControl, {
+    type: 'number',
+    onChange: actions.changedTrainerLevel,
+    value: props.trainerLevel
+  })]), n(B.FormGroup, { controlId: 'pokemon' }, [n(B.ControlLabel, 'Name'), n(Select, {
     inputProps: {
       autoCorrect: 'off',
       autoCapitalize: 'off',
@@ -56998,7 +57005,7 @@ function Form(props) {
     value: props.stardust,
     options: dustOptions,
     onChange: logStardust
-  })]), n(B.FormGroup, { controlId: 'level' }, [n(B.ControlLabel, 'Pokemon Level'), n(B.FormControl, {
+  })]), n(B.FormGroup, { controlId: 'level' }, [n(B.ControlLabel, 'Pokemon Level (optional)'), n(B.FormControl, {
     type: 'number',
     onChange: actions.changedLevel,
     value: props.level

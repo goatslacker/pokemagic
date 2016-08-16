@@ -46,6 +46,7 @@ const actions = alt.generateActions('InventoryActions', [
   'changedHP',
   'changedStardust',
   'changedLevel',
+  'changedTrainerLevel',
   'imageProcessing',
   'resultsCalculated',
   'resultsReset',
@@ -103,6 +104,11 @@ class Inventory extends Alt.Store {
 
   changedStardust(stardust) {
     this.setState({ stardust })
+  }
+
+  changedTrainerLevel(ev) {
+    const trainerLevel = Number(this.fromEvent(ev))
+    this.setState({ trainerLevel })
   }
 
   changedLevel(ev) {
@@ -502,15 +508,15 @@ function Form(props) {
       n(B.PageHeader, 'Pokemon Rater'),
     ]),
     n(B.Row, [
-      n(PictureUpload, props),
-//      n(B.FormGroup, { controlId: 'trainerlevel' }, [
-//        n(B.ControlLabel, 'Trainer Level'),
-//        n(B.FormControl, {
-//          type: 'number',
-//          onChange: actions.changedLevel,
-//          value: props.trainerLevel,
-//        }),
-//      ]),
+//      n(PictureUpload, props),
+      n(B.FormGroup, { controlId: 'trainerlevel' }, [
+        n(B.ControlLabel, 'Trainer Level'),
+        n(B.FormControl, {
+          type: 'number',
+          onChange: actions.changedTrainerLevel,
+          value: props.trainerLevel,
+        }),
+      ]),
       n(B.FormGroup, { controlId: 'pokemon' }, [
         n(B.ControlLabel, 'Name'),
         n(Select, {
@@ -553,7 +559,7 @@ function Form(props) {
         }),
       ]),
       n(B.FormGroup, { controlId: 'level' }, [
-        n(B.ControlLabel, 'Pokemon Level'),
+        n(B.ControlLabel, 'Pokemon Level (optional)'),
         n(B.FormControl, {
           type: 'number',
           onChange: actions.changedLevel,
