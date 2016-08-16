@@ -423,6 +423,11 @@ function Form(props) {
       n(B.FormGroup, { controlId: 'pokemon' }, [
         n(B.ControlLabel, 'Name'),
         n(Select, {
+          inputProps: {
+            autoCorrect: 'off',
+            autoCapitalize: 'off',
+            spellCheck: 'off',
+          },
           name: 'pokemon-selector',
           value: props.name,
           options,
@@ -434,6 +439,7 @@ function Form(props) {
         n(B.FormControl, {
           type: 'number',
           onChange: actions.changedCP,
+          onClick: () => actions.changedCP({ currentTarget: { value: '' }}),
           value: props.cp,
         }),
       ]),
@@ -442,6 +448,7 @@ function Form(props) {
         n(B.FormControl, {
           type: 'number',
           onChange: actions.changedHP,
+          onClick: () => actions.changedHP({ currentTarget: { value: '' }}),
           value: props.hp,
         }),
       ]),
