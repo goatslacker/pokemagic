@@ -605,7 +605,7 @@ function connect(Component, o) {
     }
 
     componentWillUnmount() {
-      this.subscriptions.forEach(sub => sub.destroy())
+      this.subscriptions.forEach(sub => sub.dispose())
       this.subscriptions = []
     }
 

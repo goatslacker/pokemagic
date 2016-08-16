@@ -57060,7 +57060,7 @@ function connect(Component, o) {
       value: function () {
         function componentWillUnmount() {
           this.subscriptions.forEach(function (sub) {
-            return sub.destroy();
+            return sub.dispose();
           });
           this.subscriptions = [];
         }
