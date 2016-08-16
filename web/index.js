@@ -16,6 +16,26 @@ const Mon = Pokemon.reduce((obj, mon) => {
   return obj
 }, {})
 
+function getWithContext(values) {
+  const third = Math.floor(values.length / 3)
+  var l = 0
+
+  return values.reduce((arr, value, i) => {
+    if (l < 3) {
+      arr.push(value)
+      l += 1
+    } else if (i >= third && l < 7) {
+      arr.push(value)
+      l += 1
+    } else if (i > values.length - 4 & l < 10) {
+      arr.push(value)
+      l += 1
+    }
+
+    return arr
+  }, [])
+}
+
 const Alt = require('../../alt/')
 const alt = new Alt()
 
@@ -144,12 +164,9 @@ const Styles = {
 
   pokemonImage: {
     alignItems: 'center',
-//    background: 'white',
-//    border: '1px solid #353535',
-//    borderRadius: 200,
     display: 'flex',
     height: 150,
-    margin: '0 auto',
+    margin: '-16px auto',
     justifyContent: 'center',
     width: 150,
   },
@@ -192,8 +209,20 @@ function Results(props) {
 
       n(B.Row, [
         n('h3', { style: Styles.resultsRow }, `Possible values (${props.values.length})`),
-        n('p', { style: Styles.resultsRow }, `There are ${props.values.length} possibilities and a ${props.chance}% chance you will have a good ${props.pokemon.name}.`),
-        n(B.Table, [
+        n('p', { style: Styles.resultsRow }, [
+          'There are ',
+          n('strong', props.values.length),
+          ' possibilities and a ',
+          n('strong', `${props.chance}%`),
+          ` chance you will have a good ${props.pokemon.name}. `,
+          'We are showing up to ',
+          n('strong', 10),
+          ' possibilities below.',
+          ' Highlighted rows show even levels since you can only catch even leveled Pokemon.',
+        ]),
+        n(B.Table, {
+          bordered: true,
+        }, [
           n('thead', [
             n('tr', [
               n('th', 'IV'),
@@ -203,8 +232,12 @@ function Results(props) {
               n('th', 'Battle %'),
             ]),
           ]),
-          n('tbody', props.values.slice(0, 10).map((value) => (
-            n('tr', [
+          n('tbody', getWithContext(props.values).map((value) => (
+            n('tr', {
+              style: {
+                backgroundColor: Number(value.Level) % 1 === 0 ? '#fef4f4' : '',
+              },
+            }, [
               n('td', [
                 n(B.Label, {
                   bsStyle: value.percent.PerfectIV > 80
@@ -255,7 +288,7 @@ function Results(props) {
         ])
       ),
 
-      n(B.Row, [
+      n(B.Row, { style: Styles.resultsRow }, [
         n('h3', { style: Styles.resultsRow }, `Maxing out to level ${props.best.meta.MaxLevel}`),
         props.pokemon.level === null && (
           n('p', `Assuming that your Pokemon's current level is ${props.best.Level}. The information below is just an estimate.`)
@@ -271,7 +304,12 @@ function Results(props) {
 
       n(B.Row, [
         n('h3', { style: Styles.resultsRow }, 'Yours vs Perfect by level'),
-        n(B.Table, [
+        n(B.Table, {
+          bordered: true,
+          condensed: true,
+          hover: true,
+          striped: true,
+        }, [
           n('thead', [
             n('tr', [
               n('th', 'Level'),

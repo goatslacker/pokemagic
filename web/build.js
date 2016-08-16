@@ -54309,6 +54309,26 @@ var Mon = Pokemon.reduce(function (obj, mon) {
   return obj;
 }, {});
 
+function getWithContext(values) {
+  var third = Math.floor(values.length / 3);
+  var l = 0;
+
+  return values.reduce(function (arr, value, i) {
+    if (l < 3) {
+      arr.push(value);
+      l += 1;
+    } else if (i >= third && l < 7) {
+      arr.push(value);
+      l += 1;
+    } else if (i > values.length - 4 & l < 10) {
+      arr.push(value);
+      l += 1;
+    }
+
+    return arr;
+  }, []);
+}
+
 var Alt = require('../../alt/');
 var alt = new Alt();
 
@@ -54496,12 +54516,9 @@ var Styles = {
 
   pokemonImage: {
     alignItems: 'center',
-    //    background: 'white',
-    //    border: '1px solid #353535',
-    //    borderRadius: 200,
     display: 'flex',
     height: 150,
-    margin: '0 auto',
+    margin: '-16px auto',
     justifyContent: 'center',
     width: 150
   },
@@ -54520,14 +54537,25 @@ function Results(props) {
 
   console.log(props);
 
-  return n('div', [n(B.Row, [n(B.Button, { onClick: actions.resultsReset }, 'Check Another')]), n(B.Row, { style: Styles.resultsRow }, [n('div', { style: Styles.bigText }, props.pokemon.name), n('div', 'CP: ' + String(props.pokemon.cp) + ' | HP: ' + String(props.pokemon.hp)), n('div', { style: Styles.pokemonImage }, [n('img', { src: 'images/' + String(props.pokemon.name) + '.png', height: 150, width: 150 })]), n('div', { style: Styles.bigText }, String(props.range.iv[0]) + '% - ' + String(props.range.iv[1]) + '%'), n('div', { style: Styles.resultsRow }, [props.chance === 100 ? 'Keep your ' + String(props.pokemon.cp) + 'CP ' + String(props.pokemon.name) : props.chance === 0 ? 'Send this Pokemon to the grinder for candy.' : 'Maybe you should keep this Pokemon around.'])]), n(B.Row, [n('h3', { style: Styles.resultsRow }, 'Possible values (' + String(props.values.length) + ')'), n('p', { style: Styles.resultsRow }, 'There are ' + String(props.values.length) + ' possibilities and a ' + String(props.chance) + '% chance you will have a good ' + String(props.pokemon.name) + '.'), n(B.Table, [n('thead', [n('tr', [n('th', 'IV'), n('th', 'Level'), n('th', 'CP %'), n('th', 'HP %'), n('th', 'Battle %')])]), n('tbody', props.values.slice(0, 10).map(function (value) {
-    return n('tr', [n('td', [n(B.Label, {
+  return n('div', [n(B.Row, [n(B.Button, { onClick: actions.resultsReset }, 'Check Another')]), n(B.Row, { style: Styles.resultsRow }, [n('div', { style: Styles.bigText }, props.pokemon.name), n('div', 'CP: ' + String(props.pokemon.cp) + ' | HP: ' + String(props.pokemon.hp)), n('div', { style: Styles.pokemonImage }, [n('img', { src: 'images/' + String(props.pokemon.name) + '.png', height: 150, width: 150 })]), n('div', { style: Styles.bigText }, String(props.range.iv[0]) + '% - ' + String(props.range.iv[1]) + '%'), n('div', { style: Styles.resultsRow }, [props.chance === 100 ? 'Keep your ' + String(props.pokemon.cp) + 'CP ' + String(props.pokemon.name) : props.chance === 0 ? 'Send this Pokemon to the grinder for candy.' : 'Maybe you should keep this Pokemon around.'])]), n(B.Row, [n('h3', { style: Styles.resultsRow }, 'Possible values (' + String(props.values.length) + ')'), n('p', { style: Styles.resultsRow }, ['There are ', n('strong', props.values.length), ' possibilities and a ', n('strong', String(props.chance) + '%'), ' chance you will have a good ' + String(props.pokemon.name) + '. ', 'We are showing up to ', n('strong', 10), ' possibilities below.', ' Highlighted rows show even levels since you can only catch even leveled Pokemon.']), n(B.Table, {
+    bordered: true
+  }, [n('thead', [n('tr', [n('th', 'IV'), n('th', 'Level'), n('th', 'CP %'), n('th', 'HP %'), n('th', 'Battle %')])]), n('tbody', getWithContext(props.values).map(function (value) {
+    return n('tr', {
+      style: {
+        backgroundColor: Number(value.Level) % 1 === 0 ? '#fef4f4' : ''
+      }
+    }, [n('td', [n(B.Label, {
       bsStyle: value.percent.PerfectIV > 80 ? 'success' : value.percent.PerfectIV > 69 ? 'warning' : 'danger'
     }, String(value.percent.PerfectIV) + '%'), ' ', n('strong', value.strings.iv)]), n('td', value.Level), n('td', value.percent.PercentCP), n('td', value.percent.PercentHP), n('td', value.percent.PercentBatt)]);
   }))])]),
 
   // We should only show best moveset if it is in its final evolved form...
-  bestMoves && n(B.Row, [n('h3', { style: Styles.resultsRow }, 'Best moveset for ' + String(props.pokemon.name)), n(B.Col, { xs: 6, style: Styles.resultsRow }, [n(B.Panel, [n('div', 'Quick Move'), n('h5', bestMoves.quick), n('div', String(bestMoves.dps1) + ' dmg/sec')])]), n(B.Col, { xs: 6, style: Styles.resultsRow }, [n(B.Panel, [n('div', 'Charge Move'), n('h5', bestMoves.charge), n('div', String(bestMoves.dps2) + ' dmg/sec')])])]), props.best.meta.EvolveCP && n(B.Row, { style: Styles.resultsRow }, [n('h3', 'Evolution'), n(B.Panel, [n('span', 'If evolved it would have a CP of about ' + String(props.best.meta.EvolveCP))])]), n(B.Row, [n('h3', { style: Styles.resultsRow }, 'Maxing out to level ' + String(props.best.meta.MaxLevel)), props.pokemon.level === null && n('p', 'Assuming that your Pokemon\'s current level is ' + String(props.best.Level) + '. The information below is just an estimate.'), n(B.ListGroup, [n(B.ListGroupItem, 'Current level: ' + String(props.best.Level)), n(B.ListGroupItem, 'Candy cost: ' + String(props.best.meta.Candy)), n(B.ListGroupItem, 'Stardust cost: ' + String(props.best.meta.Stardust)), n(B.ListGroupItem, 'CP: ' + String(props.best.meta.MaxCP)), n(B.ListGroupItem, 'HP: ' + String(props.best.meta.MaxHP))])]), n(B.Row, [n('h3', { style: Styles.resultsRow }, 'Yours vs Perfect by level'), n(B.Table, [n('thead', [n('tr', [n('th', 'Level'), n('th', 'Your CP'), n('th', 'Best CP'), n('th', 'Your HP'), n('th', 'Best HP')])]), n('tbody', props.values.reduce(function (o, value) {
+  bestMoves && n(B.Row, [n('h3', { style: Styles.resultsRow }, 'Best moveset for ' + String(props.pokemon.name)), n(B.Col, { xs: 6, style: Styles.resultsRow }, [n(B.Panel, [n('div', 'Quick Move'), n('h5', bestMoves.quick), n('div', String(bestMoves.dps1) + ' dmg/sec')])]), n(B.Col, { xs: 6, style: Styles.resultsRow }, [n(B.Panel, [n('div', 'Charge Move'), n('h5', bestMoves.charge), n('div', String(bestMoves.dps2) + ' dmg/sec')])])]), props.best.meta.EvolveCP && n(B.Row, { style: Styles.resultsRow }, [n('h3', 'Evolution'), n(B.Panel, [n('span', 'If evolved it would have a CP of about ' + String(props.best.meta.EvolveCP))])]), n(B.Row, { style: Styles.resultsRow }, [n('h3', { style: Styles.resultsRow }, 'Maxing out to level ' + String(props.best.meta.MaxLevel)), props.pokemon.level === null && n('p', 'Assuming that your Pokemon\'s current level is ' + String(props.best.Level) + '. The information below is just an estimate.'), n(B.ListGroup, [n(B.ListGroupItem, 'Current level: ' + String(props.best.Level)), n(B.ListGroupItem, 'Candy cost: ' + String(props.best.meta.Candy)), n(B.ListGroupItem, 'Stardust cost: ' + String(props.best.meta.Stardust)), n(B.ListGroupItem, 'CP: ' + String(props.best.meta.MaxCP)), n(B.ListGroupItem, 'HP: ' + String(props.best.meta.MaxHP))])]), n(B.Row, [n('h3', { style: Styles.resultsRow }, 'Yours vs Perfect by level'), n(B.Table, {
+    bordered: true,
+    condensed: true,
+    hover: true,
+    striped: true
+  }, [n('thead', [n('tr', [n('th', 'Level'), n('th', 'Your CP'), n('th', 'Best CP'), n('th', 'Your HP'), n('th', 'Best HP')])]), n('tbody', props.values.reduce(function (o, value) {
     if (o._[value.Level]) return o;
     o._[value.Level] = 1;
     o.rows.push(n('tr', [n('td', value.Level), n('td', value.CP), n('td', value.meta.MaxLevelCP), n('td', value.HP), n('td', value.meta.MaxLevelHP)]));
