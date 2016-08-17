@@ -8,16 +8,88 @@ const LegendaryPokemon = {
   ZAPDOS: 1,
 }
 
+const BUG = 'BUG'
+const DARK = 'DARK'
+const DRAGON = 'DRAGON'
+const ELECTRIC = 'ELECTRIC'
+const FAIRY = 'FAIRY'
+const FIGHTING = 'FIGHTING'
+const FIRE = 'FIRE'
+const FLYING = 'FLYING'
+const GHOST = 'GHOST'
+const GRASS = 'GRASS'
+const GROUND = ' GROUND'
+const ICE = 'ICE'
+const NORMAL = 'NORMAL'
+const POISON = 'POISON'
+const PSYCHIC = 'PSYCHIC'
+const ROCK = 'ROCK'
+const STEEL = 'STEEL'
+const WATER = 'WATER'
+
+const SuperEffectiveTypes = {
+  BUG: { FLYING, ROCK, FIRE },
+  DARK: { FIGHTING, BUG, FAIRY },
+  DRAGON: { ICE, DRAGON, FAIRY },
+  ELECTRIC: { GROUND },
+  FAIRY: { POISON, STEEL },
+  FIGHTING: { FLYING, PSYCHIC, FAIRY },
+  FIRE: { GROUND, ROCK, WATER },
+  FLYING: { ROCK, ELECTRIC, ICE },
+  GHOST: { GHOST, DARK },
+  GRASS: { FLYING, POISON, BUG, FIRE, ICE },
+  GROUND: { WATER, GRASS, ICE },
+  ICE: { FIGHTING, ROCK, STEEL, FIRE },
+  NORMAL: { FIGHTING },
+  POISON: { GROUND, PSYCHIC },
+  PSYCHIC: { BUG, GHOST, DARK },
+  ROCK: { FIGHTING, GROUND, STEEL, WATER, GRASS },
+  STEEL: { FIGHTING, GROUND, FIRE },
+  WATER: { GRASS, ELECTRIC },
+}
+
+const ResistantTypes = {
+  BUG: { FIGHTING, GROUND, GRASS },
+  DARK: { GHOST, DARK },
+  DRAGON: { FIRE, WATER, GRASS, ELECTRIC },
+  ELECTRIC: { FLYING, STEEL, ELECTRIC },
+  FAIRY: { FIGHTING, BUG, DARK },
+  FIGHTING: { ROCK, BUG, DARK },
+  FIRE: { BUG, STEEL, FIRE, GRASS, ICE, FAIRY },
+  FLYING: { FIGHTING, BUG, GRASS },
+  GHOST: { POISON, BUG },
+  GRASS: { GROUND, WATER, GRASS, ELECTRIC },
+  GROUND: { POISON, ROCK },
+  ICE: { ICE },
+  NORMAL: {},
+  POISON: { FIGHTING, POISON, BUG, GRASS, FAIRY },
+  PSYCHIC: { FIGHTING, PSYCHIC },
+  ROCK: { NORMAL, FLYING, POISON, FIRE },
+  STEEL: { NORMAL, FLYING, ROCK, BUG, STEEL, GRASS, PSYCHIC, ICE, DRAGON, FAIRY },
+  WATER: { STEEL, FIRE, WATER, ICE },
+}
+
+const ImmuneTypes = {
+  DARK: { PSYCHIC },
+  DRAGON: {},
+  ELECTRIC: {},
+  FAIRY: { DRAGON },
+  FIRE: {},
+  FLYING: { GROUND },
+  GHOST: { NORMAL, FIGHTING },
+  GRASS: {},
+  GROUND: { ELECTRIC },
+  ICE: {},
+  NORMAL: { GHOST },
+  POISON: {},
+  PSYCHIC: {},
+  STEEL: { POISON },
+  WATER: {},
+}
+
 function isNotLegendary(pokemon) {
   return !LegendaryPokemon.hasOwnProperty(pokemon.name || pokemon)
 }
-
-function getDmg(atk, power, stab) {
-  const def = 100
-  const ECpM = 0.790300
-  return (0.5 * atk * ECpM / (def * ECpM ) * power * stab) + 1
-}
-
 
 function getDmgVs(player, opponent, moves) {
   const atk = player.stats.attack
@@ -26,9 +98,15 @@ function getDmgVs(player, opponent, moves) {
   return moves.map((move) => {
     const stab = move.Type === player.type1 || move.Type === player.type2 ? 1.25 : 1
     const power = move.Power
-    // XXX fix this we need to get proper weakness/strength
-  //  const effectiveness = 1.25 || 0.8
-    const effectiveness = move.Type === 'ICE' ? 1.25 : 1
+
+    const effectiveness = (
+      SuperEffectiveTypes[opponent.type1].hasOwnProperty(move.Type) ||
+      (opponent.type2 && SuperEffectiveTypes[opponent.type2].hasOwnProperty(move.Type))
+    ) ? 1.25 : (
+      ResistantTypes[opponent.type1].hasOwnProperty(move.Type) ||
+      (opponent.type2 && ResistantTypes[opponent.type2].hasOwnProperty(move.Type))
+    ) ? 0.8 : 1
+
     const ECpM = 0.790300
     return (0.5 * atk * ECpM / (def * ECpM ) * power * stab * effectiveness) + 1
   })
@@ -103,6 +181,8 @@ function effectiveness(player, opponent) {
 
   return bestMoves.map((x) => {
     return {
+      playerDps: x.dps,
+      opponentDps: bestMovesOpp[0].dps,
       score: x.dps - bestMovesOpp[0].dps,
       quick: x.quick,
       charge: x.charge,
@@ -113,66 +193,6 @@ function effectiveness(player, opponent) {
 
 function getDPS(dmg, duration) {
   return Number((dmg / (duration / 1000)).toFixed(2)) || 0
-}
-
-function battleDPS(atk, move1, move2, stab1, stab2) {
-  const quickHits = Math.ceil(100 / move1.Energy)
-  const chargeHits = Math.abs(Math.ceil(100 / move2.Energy))
-
-  const timeToQuick = quickHits * move1.DurationMs
-  const timeToCharge = chargeHits * move2.DurationMs
-
-  const chargeDmg = getDmg(atk, move2.Power, stab2) * chargeHits
-  const quickDmg = getDmg(atk, move1.Power, stab1) * quickHits
-
-  const dps = getDPS(chargeDmg + quickDmg, timeToQuick + timeToCharge)
-
-  return {
-    quickHits,
-    chargeHits,
-    dps,
-  }
-}
-
-function getBestMoves(mon, IndAtk) {
-  const stuff = []
-
-  mon.moves1.forEach((move1) => {
-    mon.moves2.forEach((move2) => {
-      const stab1 = move1.Type === mon.type1 || move1.Type === mon.type2 ? 1.25 : 1
-      const stab2 = move2.Type === mon.type1 || move2.Type === mon.type2 ? 1.25 : 1
-
-      const total = battleDPS(mon.stats.attack + IndAtk, move1, move2, stab1, stab2)
-      const dps = total.dps
-
-      const dmg1 = getDmg(mon.stats.attack + IndAtk, move1.Power, stab1)
-      const dmg2 = getDmg(mon.stats.attack + IndAtk, move2.Power, stab2)
-      const dps1 = getDPS(dmg1, move1.DurationMs)
-      const dps2 = getDPS(dmg2, move2.DurationMs)
-
-      stuff.push({
-        dps,
-        quick: {
-          name: move1.Name,
-          dps: dps1,
-        },
-        charge: {
-          name: move2.Name,
-          dps: dps2,
-        },
-        total,
-      })
-    })
-  })
-
-  return stuff.sort((a, b) => a.dps > b.dps ? -1 : 1)
-}
-
-function bestMovesFor(pokemonName, IndAtk) {
-  const fmtName = pokemonName.toUpperCase().trim()
-  const mon = Pokemon.filter(x => x.name === fmtName)[0]
-  if (!mon) throw new Error(`Cannot find ${fmtName}`)
-  return getBestMoves(mon, IndAtk || 0)
 }
 
 function bestPokemonVs(opponentName) {
@@ -198,31 +218,11 @@ function bestPokemonVs(opponentName) {
 
 module.exports = bestMovesFor
 
-// Find the top 20 Pokemon with the most DPS and their moveset
-//console.log(
-//  Pokemon.reduce((arr, mon) => {
-//    const moves = getBestMoves(mon)
-//    moves.forEach(move => arr.push({
-//      name: mon.name,
-//      dps: move.dps,
-//      quick: move.quick.name,
-//      charge: move.charge.name,
-//    }))
-//    return arr
-//  }, [])
-//  .sort((a, b) => {
-//    return a.dps > b.dps ? -1 : 1
-//  })
-//  .slice(0, 20)
-//)
+console.log(bestPokemonVs(process.argv[2] || 'arcanine'))
 
-const Cloyster = Pokemon.filter(x => x.name === 'ARCANINE')[0]
-const Dragonite = Pokemon.filter(x => x.name === 'SNORLAX')[0]
-
-console.log(bestPokemonVs(process.argv[2] || 'vaporeon'))
+//const Arcanine = Pokemon.filter(x => x.name === 'ARCANINE')[0]
+//const Vaporeon = Pokemon.filter(x => x.name === 'VAPOREON')[0]
 
 //console.log(
-//  JSON.stringify(effectiveness(Cloyster, Dragonite))
-//  '*********************',
-//  bestMovesFor('cloyster')
+//  JSON.stringify(effectiveness(Vaporeon, Arcanine))
 //)
