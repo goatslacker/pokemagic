@@ -146,7 +146,7 @@ class MovesStore extends Alt.Store {
   constructor() {
     super()
     this.state = {
-      moves: { quick: [], charge: [] },
+      moves: [],
       pokemon: [],
     }
     this.bindActions(moveActions)
@@ -181,12 +181,9 @@ const sweetMoves = (x) => {
     const best = bestMovesFor(x.value)
     const mon = Pokemon[Mon[x.value] - 1]
     moveActions.pokemonChanged([])
-    moveActions.movesChanged({
-      quick: mon.moves1.map(m => m.Name === best.quick ? `*${m.Name}` : m.Name),
-      charge: mon.moves2.map(m => m.Name === best.charge ? `*${m.Name}` : m.Name),
-    })
+    moveActions.movesChanged(best)
   } else {
-    moveActions.movesChanged({ quick: [], charge: [] })
+    moveActions.movesChanged([])
     moveActions.pokemonChanged(
       Pokemon.filter(mon => (
         mon.moves1.some(m => m.Name === x.value) ||
@@ -503,15 +500,28 @@ function MovesCheck(props) {
           n('img', { src: `images/${mon}.png`, height: 60, width: 60 })
         )))
       ) || undefined,
-      props.moves.quick.length && (
-        n(B.ListGroup, props.moves.quick.map(move => (
-          n(B.ListGroupItem, move)
-        )))
-      ) || undefined,
-      props.moves.charge.length && (
-        n(B.ListGroup, props.moves.charge.map(move => (
-          n(B.ListGroupItem, move)
-        )))
+      props.moves.length && (
+        n(B.Table, {
+          bordered: true,
+          condensed: true,
+          hover: true,
+          striped: true,
+        }, [
+          n('thead', [
+            n('tr', [
+              n('th', 'Quick Move'),
+              n('th', 'Charge Move'),
+              n('th', 'Combo DPS'),
+            ]),
+          ]),
+          n('tbody', props.moves.map((move) => (
+            n('tr', [
+              n('td', move.quick.name),
+              n('td', move.charge.name),
+              n('td', move.dps),
+            ])
+          ))),
+        ])
       ) || undefined,
     ])
   )
