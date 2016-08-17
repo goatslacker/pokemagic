@@ -216,9 +216,9 @@ function bestPokemonVs(opponentName) {
   )
 }
 
-module.exports = bestMovesFor
+module.exports = bestPokemonVs
 
-console.log(bestPokemonVs(process.argv[2] || 'arcanine'))
+//console.log(bestPokemonVs(process.argv[2] || 'arcanine'))
 
 //const Arcanine = Pokemon.filter(x => x.name === 'ARCANINE')[0]
 //const Vaporeon = Pokemon.filter(x => x.name === 'VAPOREON')[0]

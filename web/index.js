@@ -9,6 +9,7 @@ const Spinner = require('react-spinkit')
 const bestMovesFor = require('../src/best-moves')
 const finalEvolutions = require('../json/finalEvolutions')
 const findPokemon = require('../src/findPokemon')
+const idealMatchup = require('../src/idealMatchup')
 const localforage = require('localforage')
 const magic = require('../src/magic')
 const n = require('./n')
@@ -176,7 +177,23 @@ class HistoryStore extends Alt.Store {
   }
 
   pokemonChecked(pokemon) {
-    const searches = [pokemon].concat(this.state.searches.slice(0, 9))
+    const searches = []
+
+    searches.push(pokemon)
+
+    const inSearch = {
+      [pokemon.text]: 1,
+    }
+    this.state.searches.forEach((mon) => {
+      // make sure there are no dupes
+      if (inSearch.hasOwnProperty(mon.text)) return
+      // max 10 recent searches
+      if (searches.length === 10) return
+
+      searches.push(mon)
+      inSearch[mon.text] = 1
+    })
+
     this.setState({ searches })
     localforage.setItem('pogoivcalc.searches', searches)
   }
@@ -507,7 +524,7 @@ function PictureUpload(props) {
 function MovesCheck(props) {
   return (
     n(B.Row, [
-      n(B.PageHeader, 'Check Moves'),
+      n(B.PageHeader, 'Moveset Information'),
       n(B.FormGroup, { controlId: 'moves' }, [
         n(B.ControlLabel, 'Moves'),
         n(Select, {
@@ -530,7 +547,6 @@ function MovesCheck(props) {
       props.moves.length && (
         n(B.Table, {
           bordered: true,
-          condensed: true,
           hover: true,
           striped: true,
         }, [
@@ -570,7 +586,7 @@ function CheckStardust(props) {
 
   return (
     n(B.Row, [
-      n(B.PageHeader, 'Check stardust and candy cost'),
+      n(B.PageHeader, 'Power Up costs'),
       n(B.FormGroup, { controlId: 'trainerlevel' }, [
         n(B.ControlLabel, 'Trainer Level'),
         n(B.FormControl, {
@@ -628,6 +644,56 @@ const ConnectedHistory = connect(SearchHistory, {
 
 const ConnectedCheckStardust = connect(CheckStardust, {
   // TODO split inventoryStore and use pokemonStore or playerStore
+  listenTo: () => ({ inventoryStore }),
+  getProps: state => state.inventoryStore,
+})
+
+function IdealMatchup(props) {
+  const matchups = idealMatchup(props.name)
+  return (
+    n(B.Row, [
+      n(B.PageHeader, 'Ideal Matchup'),
+      n(B.FormGroup, { controlId: 'pokemon' }, [
+        n(B.ControlLabel, 'Opponent\'s Pokemon'),
+        n(Select, {
+          inputProps: {
+            autoCorrect: 'off',
+            autoCapitalize: 'off',
+            spellCheck: 'off',
+          },
+          name: 'pokemon-selector',
+          value: props.name,
+          options,
+          onChange: logName,
+        }),
+      ]),
+      matchups.length && (
+        n(B.Table, {
+          bordered: true,
+          hover: true,
+          striped: true,
+        }, [
+          n('thead', [
+            n('tr', [
+              n('th', 'Name'),
+              n('th', 'Quick Move'),
+              n('th', 'Charge Move'),
+            ]),
+          ]),
+          n('tbody', matchups.map((value) => (
+            n('tr', [
+              n('td', value.name),
+              n('td', value.quick),
+              n('td', value.charge),
+            ])
+          ))),
+        ])
+      ),
+    ])
+  )
+}
+
+const ConnectedIdealMatchup = connect(IdealMatchup, {
   listenTo: () => ({ inventoryStore }),
   getProps: state => state.inventoryStore,
 })
@@ -701,10 +767,9 @@ function Form(props) {
       n(B.Button, { bsStyle: 'primary', onClick: () => calculateValues() }, 'Calculate'),
       n(B.Button, { onClick: actions.valuesReset }, 'Clear'),
       n(ConnectedHistory),
-      n('hr'),
       n(ConnectedMoves),
-      n('hr'),
       n(ConnectedCheckStardust),
+      n(ConnectedIdealMatchup),
     ])
   ])
 }

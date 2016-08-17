@@ -56397,7 +56397,7 @@ function guessIVs(pokemon, mon, ECpM) {
 
 module.exports = guessIVs;
 
-},{"../json/cpm.json":5,"../json/dust-to-level":6,"../json/level-to-cpm.json":8,"../json/pokemon.json":11,"./cp":472,"./hp":475,"./powerup":479}],475:[function(require,module,exports){
+},{"../json/cpm.json":5,"../json/dust-to-level":6,"../json/level-to-cpm.json":8,"../json/pokemon.json":11,"./cp":472,"./hp":475,"./powerup":480}],475:[function(require,module,exports){
 // Formula to calculate the HP given the IV stamina and ECpM
 function getHP(mon, IndSta, ECpM) {
   var BaseSta = mon.stats.stamina;
@@ -56421,6 +56421,233 @@ module.exports = {
 };
 
 },{}],476:[function(require,module,exports){
+var Pokemon = require('../json/pokemon.json');
+
+var LegendaryPokemon = {
+  ARTICUNO: 1,
+  MEW: 1,
+  MEWTWO: 1,
+  MOLTRES: 1,
+  ZAPDOS: 1
+};
+
+var BUG = 'BUG';
+var DARK = 'DARK';
+var DRAGON = 'DRAGON';
+var ELECTRIC = 'ELECTRIC';
+var FAIRY = 'FAIRY';
+var FIGHTING = 'FIGHTING';
+var FIRE = 'FIRE';
+var FLYING = 'FLYING';
+var GHOST = 'GHOST';
+var GRASS = 'GRASS';
+var GROUND = ' GROUND';
+var ICE = 'ICE';
+var NORMAL = 'NORMAL';
+var POISON = 'POISON';
+var PSYCHIC = 'PSYCHIC';
+var ROCK = 'ROCK';
+var STEEL = 'STEEL';
+var WATER = 'WATER';
+
+var SuperEffectiveTypes = {
+  BUG: { FLYING: FLYING, ROCK: ROCK, FIRE: FIRE },
+  DARK: { FIGHTING: FIGHTING, BUG: BUG, FAIRY: FAIRY },
+  DRAGON: { ICE: ICE, DRAGON: DRAGON, FAIRY: FAIRY },
+  ELECTRIC: { GROUND: GROUND },
+  FAIRY: { POISON: POISON, STEEL: STEEL },
+  FIGHTING: { FLYING: FLYING, PSYCHIC: PSYCHIC, FAIRY: FAIRY },
+  FIRE: { GROUND: GROUND, ROCK: ROCK, WATER: WATER },
+  FLYING: { ROCK: ROCK, ELECTRIC: ELECTRIC, ICE: ICE },
+  GHOST: { GHOST: GHOST, DARK: DARK },
+  GRASS: { FLYING: FLYING, POISON: POISON, BUG: BUG, FIRE: FIRE, ICE: ICE },
+  GROUND: { WATER: WATER, GRASS: GRASS, ICE: ICE },
+  ICE: { FIGHTING: FIGHTING, ROCK: ROCK, STEEL: STEEL, FIRE: FIRE },
+  NORMAL: { FIGHTING: FIGHTING },
+  POISON: { GROUND: GROUND, PSYCHIC: PSYCHIC },
+  PSYCHIC: { BUG: BUG, GHOST: GHOST, DARK: DARK },
+  ROCK: { FIGHTING: FIGHTING, GROUND: GROUND, STEEL: STEEL, WATER: WATER, GRASS: GRASS },
+  STEEL: { FIGHTING: FIGHTING, GROUND: GROUND, FIRE: FIRE },
+  WATER: { GRASS: GRASS, ELECTRIC: ELECTRIC }
+};
+
+var ResistantTypes = {
+  BUG: { FIGHTING: FIGHTING, GROUND: GROUND, GRASS: GRASS },
+  DARK: { GHOST: GHOST, DARK: DARK },
+  DRAGON: { FIRE: FIRE, WATER: WATER, GRASS: GRASS, ELECTRIC: ELECTRIC },
+  ELECTRIC: { FLYING: FLYING, STEEL: STEEL, ELECTRIC: ELECTRIC },
+  FAIRY: { FIGHTING: FIGHTING, BUG: BUG, DARK: DARK },
+  FIGHTING: { ROCK: ROCK, BUG: BUG, DARK: DARK },
+  FIRE: { BUG: BUG, STEEL: STEEL, FIRE: FIRE, GRASS: GRASS, ICE: ICE, FAIRY: FAIRY },
+  FLYING: { FIGHTING: FIGHTING, BUG: BUG, GRASS: GRASS },
+  GHOST: { POISON: POISON, BUG: BUG },
+  GRASS: { GROUND: GROUND, WATER: WATER, GRASS: GRASS, ELECTRIC: ELECTRIC },
+  GROUND: { POISON: POISON, ROCK: ROCK },
+  ICE: { ICE: ICE },
+  NORMAL: {},
+  POISON: { FIGHTING: FIGHTING, POISON: POISON, BUG: BUG, GRASS: GRASS, FAIRY: FAIRY },
+  PSYCHIC: { FIGHTING: FIGHTING, PSYCHIC: PSYCHIC },
+  ROCK: { NORMAL: NORMAL, FLYING: FLYING, POISON: POISON, FIRE: FIRE },
+  STEEL: { NORMAL: NORMAL, FLYING: FLYING, ROCK: ROCK, BUG: BUG, STEEL: STEEL, GRASS: GRASS, PSYCHIC: PSYCHIC, ICE: ICE, DRAGON: DRAGON, FAIRY: FAIRY },
+  WATER: { STEEL: STEEL, FIRE: FIRE, WATER: WATER, ICE: ICE }
+};
+
+var ImmuneTypes = {
+  DARK: { PSYCHIC: PSYCHIC },
+  DRAGON: {},
+  ELECTRIC: {},
+  FAIRY: { DRAGON: DRAGON },
+  FIRE: {},
+  FLYING: { GROUND: GROUND },
+  GHOST: { NORMAL: NORMAL, FIGHTING: FIGHTING },
+  GRASS: {},
+  GROUND: { ELECTRIC: ELECTRIC },
+  ICE: {},
+  NORMAL: { GHOST: GHOST },
+  POISON: {},
+  PSYCHIC: {},
+  STEEL: { POISON: POISON },
+  WATER: {}
+};
+
+function isNotLegendary(pokemon) {
+  return !LegendaryPokemon.hasOwnProperty(pokemon.name || pokemon);
+}
+
+function getDmgVs(player, opponent, moves) {
+  var atk = player.stats.attack;
+  var def = opponent.stats.defense;
+
+  return moves.map(function (move) {
+    var stab = move.Type === player.type1 || move.Type === player.type2 ? 1.25 : 1;
+    var power = move.Power;
+
+    var effectiveness = SuperEffectiveTypes[opponent.type1].hasOwnProperty(move.Type) || opponent.type2 && SuperEffectiveTypes[opponent.type2].hasOwnProperty(move.Type) ? 1.25 : ResistantTypes[opponent.type1].hasOwnProperty(move.Type) || opponent.type2 && ResistantTypes[opponent.type2].hasOwnProperty(move.Type) ? 0.8 : 1;
+
+    var ECpM = 0.790300;
+    return 0.5 * atk * ECpM / (def * ECpM) * power * stab * effectiveness + 1;
+  });
+}
+
+function effectiveness(player, opponent) {
+  var moves = [];
+
+  player.moves1.forEach(function (move1) {
+    player.moves2.forEach(function (move2) {
+      var dmg1 = getDmgVs(player, opponent, [move1, move2]);
+
+      var quickHits = Math.ceil(100 / move1.Energy);
+      var chargeHits = Math.abs(Math.ceil(100 / move2.Energy));
+
+      var timeToQuick = quickHits * move1.DurationMs;
+      var timeToCharge = chargeHits * move2.DurationMs;
+
+      var quickDmg = dmg1[0] * quickHits;
+      var chargeDmg = dmg1[1] * chargeHits;
+
+      var totalTime = timeToQuick + timeToCharge;
+      var dps = getDPS(chargeDmg + quickDmg, totalTime);
+
+      moves.push({
+        dps: dps,
+        quick: {
+          name: move1.Name
+        },
+        charge: {
+          name: move2.Name
+        }
+      });
+    });
+  });
+
+  var bestMoves = moves.sort(function (a, b) {
+    return a.dps > b.dps ? -1 : 1;
+  });
+
+  var oppMoves = [];
+  opponent.moves1.forEach(function (move1) {
+    opponent.moves2.forEach(function (move2) {
+      var dmg1 = getDmgVs(opponent, player, [move1, move2]);
+
+      var quickHits = Math.ceil(100 / move1.Energy);
+      var chargeHits = Math.abs(Math.ceil(100 / move2.Energy));
+
+      var timeToQuick = quickHits * move1.DurationMs;
+      var timeToCharge = chargeHits * move2.DurationMs;
+
+      var quickDmg = dmg1[0] * quickHits;
+      var chargeDmg = dmg1[1] * chargeHits;
+
+      var totalTime = timeToQuick + timeToCharge;
+
+      // Slow it down to 1.5 secs
+      var dps = getDPS(chargeDmg + quickDmg, totalTime) * 0.75;
+
+      oppMoves.push({
+        dps: dps,
+        quick: {
+          name: move1.Name
+        },
+        charge: {
+          name: move2.Name
+        }
+      });
+    });
+  });
+
+  var bestMovesOpp = oppMoves.sort(function (a, b) {
+    return a.dps > b.dps ? -1 : 1;
+  });
+
+  return bestMoves.map(function (x) {
+    return {
+      playerDps: x.dps,
+      opponentDps: bestMovesOpp[0].dps,
+      score: x.dps - bestMovesOpp[0].dps,
+      quick: x.quick,
+      charge: x.charge
+    };
+  }).sort(function (a, b) {
+    return a.score > b.score ? -1 : 1;
+  });
+}
+
+function getDPS(dmg, duration) {
+  return Number((dmg / (duration / 1000)).toFixed(2)) || 0;
+}
+
+function bestPokemonVs(opponentName) {
+  var opponent = Pokemon.filter(function (x) {
+    return x.name === opponentName.toUpperCase();
+  })[0];
+  return Pokemon.reduce(function (arr, mon) {
+    var moves = effectiveness(mon, opponent);
+    moves.forEach(function (move) {
+      return arr.push({
+        name: mon.name,
+        score: move.score,
+        quick: move.quick.name,
+        charge: move.charge.name
+      });
+    });
+    return arr;
+  }, []).filter(isNotLegendary).sort(function (a, b) {
+    return a.score > b.score ? -1 : 1;
+  }).slice(0, 10);
+}
+
+module.exports = bestPokemonVs;
+
+//console.log(bestPokemonVs(process.argv[2] || 'arcanine'))
+
+//const Arcanine = Pokemon.filter(x => x.name === 'ARCANINE')[0]
+//const Vaporeon = Pokemon.filter(x => x.name === 'VAPOREON')[0]
+
+//console.log(
+//  JSON.stringify(effectiveness(Vaporeon, Arcanine))
+//)
+
+},{"../json/pokemon.json":11}],477:[function(require,module,exports){
 var DECENT_POKEMON_RATING = 80;
 
 var getOverallRating = function getOverallRating(v) {
@@ -56435,7 +56662,7 @@ var isGoodPokemonForItsClass = function isGoodPokemonForItsClass(v) {
 
 module.exports = isGoodPokemonForItsClass;
 
-},{}],477:[function(require,module,exports){
+},{}],478:[function(require,module,exports){
 var chalk = require('chalk');
 
 var LevelToCPM = require('../json/level-to-cpm.json');
@@ -56530,7 +56757,7 @@ function logPokemon(pokemon) {
 
 module.exports = logPokemon;
 
-},{"../json/level-to-cpm.json":8,"../json/levels":9,"./cp":472,"./hp":475,"chalk":13}],478:[function(require,module,exports){
+},{"../json/level-to-cpm.json":8,"../json/levels":9,"./cp":472,"./hp":475,"chalk":13}],479:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -56744,7 +56971,7 @@ var IvCalculator = function () {
 
 module.exports = magic;
 
-},{"../json/dust-to-level":6,"../json/level-to-cpm.json":8,"./findPokemon":473,"./guessIVs":474,"./isGoodPokemon":476,"./logPokemon":477,"chalk":13}],479:[function(require,module,exports){
+},{"../json/dust-to-level":6,"../json/level-to-cpm.json":8,"./findPokemon":473,"./guessIVs":474,"./isGoodPokemon":477,"./logPokemon":478,"chalk":13}],480:[function(require,module,exports){
 var DustToLevel = require('../json/dust-to-level');
 var Levels = require('../json/levels');
 
@@ -56784,8 +57011,10 @@ module.exports = {
   howMuchStardust: howMuchStardust
 };
 
-},{"../json/dust-to-level":6,"../json/levels":9}],480:[function(require,module,exports){
+},{"../json/dust-to-level":6,"../json/levels":9}],481:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -56804,6 +57033,7 @@ var Spinner = require('react-spinkit');
 var bestMovesFor = require('../src/best-moves');
 var finalEvolutions = require('../json/finalEvolutions');
 var findPokemon = require('../src/findPokemon');
+var idealMatchup = require('../src/idealMatchup');
 var localforage = require('localforage');
 var magic = require('../src/magic');
 var n = require('./n');
@@ -57053,7 +57283,21 @@ var HistoryStore = function (_Alt$Store3) {
     key: 'pokemonChecked',
     value: function () {
       function pokemonChecked(pokemon) {
-        var searches = [pokemon].concat(this.state.searches.slice(0, 9));
+        var searches = [];
+
+        searches.push(pokemon);
+
+        var inSearch = _defineProperty({}, pokemon.text, 1);
+        this.state.searches.forEach(function (mon) {
+          // make sure there are no dupes
+          if (inSearch.hasOwnProperty(mon.text)) return;
+          // max 10 recent searches
+          if (searches.length === 10) return;
+
+          searches.push(mon);
+          inSearch[mon.text] = 1;
+        });
+
         this.setState({ searches: searches });
         localforage.setItem('pogoivcalc.searches', searches);
       }
@@ -57254,7 +57498,7 @@ function PictureUpload(props) {
 }
 
 function MovesCheck(props) {
-  return n(B.Row, [n(B.PageHeader, 'Check Moves'), n(B.FormGroup, { controlId: 'moves' }, [n(B.ControlLabel, 'Moves'), n(Select, {
+  return n(B.Row, [n(B.PageHeader, 'Moveset Information'), n(B.FormGroup, { controlId: 'moves' }, [n(B.ControlLabel, 'Moves'), n(Select, {
     inputProps: {
       autoCorrect: 'off',
       autoCapitalize: 'off',
@@ -57268,7 +57512,6 @@ function MovesCheck(props) {
     return n('img', { src: 'images/' + String(mon) + '.png', height: 60, width: 60 });
   })) || undefined, props.moves.length && n(B.Table, {
     bordered: true,
-    condensed: true,
     hover: true,
     striped: true
   }, [n('thead', [n('tr', [n('th', 'Quick Move'), n('th', 'Charge Move'), n('th', 'Combo DPS')])]), n('tbody', props.moves.map(function (move) {
@@ -57299,7 +57542,7 @@ function CheckStardust(props) {
 
   var power = powerupTools.howMuchPowerUp(Number(props.level || minPokemonLevel), Number(props.trainerLevel));
 
-  return n(B.Row, [n(B.PageHeader, 'Check stardust and candy cost'), n(B.FormGroup, { controlId: 'trainerlevel' }, [n(B.ControlLabel, 'Trainer Level'), n(B.FormControl, {
+  return n(B.Row, [n(B.PageHeader, 'Power Up costs'), n(B.FormGroup, { controlId: 'trainerlevel' }, [n(B.ControlLabel, 'Trainer Level'), n(B.FormControl, {
     type: 'number',
     onChange: actions.changedTrainerLevel,
     value: props.trainerLevel
@@ -57348,6 +57591,44 @@ var ConnectedHistory = connect(SearchHistory, {
 
 var ConnectedCheckStardust = connect(CheckStardust, {
   // TODO split inventoryStore and use pokemonStore or playerStore
+  listenTo: function () {
+    function listenTo() {
+      return { inventoryStore: inventoryStore };
+    }
+
+    return listenTo;
+  }(),
+  getProps: function () {
+    function getProps(state) {
+      return state.inventoryStore;
+    }
+
+    return getProps;
+  }()
+});
+
+function IdealMatchup(props) {
+  var matchups = idealMatchup(props.name);
+  return n(B.Row, [n(B.PageHeader, 'Ideal Matchup'), n(B.FormGroup, { controlId: 'pokemon' }, [n(B.ControlLabel, 'Opponent\'s Pokemon'), n(Select, {
+    inputProps: {
+      autoCorrect: 'off',
+      autoCapitalize: 'off',
+      spellCheck: 'off'
+    },
+    name: 'pokemon-selector',
+    value: props.name,
+    options: options,
+    onChange: logName
+  })]), matchups.length && n(B.Table, {
+    bordered: true,
+    hover: true,
+    striped: true
+  }, [n('thead', [n('tr', [n('th', 'Name'), n('th', 'Quick Move'), n('th', 'Charge Move')])]), n('tbody', matchups.map(function (value) {
+    return n('tr', [n('td', value.name), n('td', value.quick), n('td', value.charge)]);
+  }))])]);
+}
+
+var ConnectedIdealMatchup = connect(IdealMatchup, {
   listenTo: function () {
     function listenTo() {
       return { inventoryStore: inventoryStore };
@@ -57420,7 +57701,7 @@ function Form(props) {
       }
 
       return onClick;
-    }() }, 'Calculate'), n(B.Button, { onClick: actions.valuesReset }, 'Clear'), n(ConnectedHistory), n('hr'), n(ConnectedMoves), n('hr'), n(ConnectedCheckStardust)])]);
+    }() }, 'Calculate'), n(B.Button, { onClick: actions.valuesReset }, 'Clear'), n(ConnectedHistory), n(ConnectedMoves), n(ConnectedCheckStardust), n(ConnectedIdealMatchup)])]);
 }
 
 function Calculator(props) {
@@ -57527,7 +57808,7 @@ localforage.getItem('pogoivcalc.trainerLevel').then(function (level) {
   ReactDOM.render(n(ConnectedCalculator), document.querySelector('#app'));
 });
 
-},{"../../alt/":1,"../json/dust-to-level.json":6,"../json/finalEvolutions":7,"../json/moves.json":10,"../json/pokemon.json":11,"../src/best-moves":471,"../src/findPokemon":473,"../src/magic":478,"../src/powerup":479,"./n":481,"localforage":22,"react":470,"react-bootstrap":109,"react-dom":276,"react-select":279,"react-spinkit":296}],481:[function(require,module,exports){
+},{"../../alt/":1,"../json/dust-to-level.json":6,"../json/finalEvolutions":7,"../json/moves.json":10,"../json/pokemon.json":11,"../src/best-moves":471,"../src/findPokemon":473,"../src/idealMatchup":476,"../src/magic":479,"../src/powerup":480,"./n":482,"localforage":22,"react":470,"react-bootstrap":109,"react-dom":276,"react-select":279,"react-spinkit":296}],482:[function(require,module,exports){
 var React = require('react');
 
 module.exports = function () {
@@ -57557,4 +57838,4 @@ module.exports = function () {
   return n;
 }();
 
-},{"react":470}]},{},[480]);
+},{"react":470}]},{},[481]);
