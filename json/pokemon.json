@@ -15,6 +15,7 @@
       {
         "Id": 221,
         "Name": "TACKLE_FAST",
+        "Type": "NORMAL",
         "Power": 12,
         "DurationMs": 1100,
         "Energy": 7,
@@ -23,6 +24,7 @@
       {
         "Id": 214,
         "Name": "VINE_WHIP_FAST",
+        "Type": "GRASS",
         "Power": 7,
         "DurationMs": 650,
         "Energy": 7,
@@ -75,6 +77,7 @@
       {
         "Id": 215,
         "Name": "RAZOR_LEAF_FAST",
+        "Type": "GRASS",
         "Power": 15,
         "DurationMs": 1450,
         "Energy": 7,
@@ -83,6 +86,7 @@
       {
         "Id": 214,
         "Name": "VINE_WHIP_FAST",
+        "Type": "GRASS",
         "Power": 7,
         "DurationMs": 650,
         "Energy": 7,
@@ -134,6 +138,7 @@
       {
         "Id": 215,
         "Name": "RAZOR_LEAF_FAST",
+        "Type": "GRASS",
         "Power": 15,
         "DurationMs": 1450,
         "Energy": 7,
@@ -142,6 +147,7 @@
       {
         "Id": 214,
         "Name": "VINE_WHIP_FAST",
+        "Type": "GRASS",
         "Power": 7,
         "DurationMs": 650,
         "Energy": 7,
@@ -193,6 +199,7 @@
       {
         "Id": 209,
         "Name": "EMBER_FAST",
+        "Type": "FIRE",
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
@@ -201,6 +208,7 @@
       {
         "Id": 220,
         "Name": "SCRATCH_FAST",
+        "Type": "NORMAL",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -252,6 +260,7 @@
       {
         "Id": 209,
         "Name": "EMBER_FAST",
+        "Type": "FIRE",
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
@@ -260,6 +269,7 @@
       {
         "Id": 220,
         "Name": "SCRATCH_FAST",
+        "Type": "NORMAL",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -311,6 +321,7 @@
       {
         "Id": 209,
         "Name": "EMBER_FAST",
+        "Type": "FIRE",
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
@@ -319,6 +330,7 @@
       {
         "Id": 210,
         "Name": "WING_ATTACK_FAST",
+        "Type": "FLYING",
         "Power": 9,
         "DurationMs": 750,
         "Energy": 7,
@@ -370,6 +382,7 @@
       {
         "Id": 237,
         "Name": "BUBBLE_FAST",
+        "Type": "WATER",
         "Power": 25,
         "DurationMs": 2300,
         "Energy": 15,
@@ -378,6 +391,7 @@
       {
         "Id": 221,
         "Name": "TACKLE_FAST",
+        "Type": "NORMAL",
         "Power": 12,
         "DurationMs": 1100,
         "Energy": 7,
@@ -429,6 +443,7 @@
       {
         "Id": 202,
         "Name": "BITE_FAST",
+        "Type": "DARK",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -437,6 +452,7 @@
       {
         "Id": 230,
         "Name": "WATER_GUN_FAST",
+        "Type": "WATER",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -487,6 +503,7 @@
       {
         "Id": 202,
         "Name": "BITE_FAST",
+        "Type": "DARK",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -495,6 +512,7 @@
       {
         "Id": 230,
         "Name": "WATER_GUN_FAST",
+        "Type": "WATER",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -546,6 +564,7 @@
       {
         "Id": 201,
         "Name": "BUG_BITE_FAST",
+        "Type": "BUG",
         "Power": 5,
         "DurationMs": 450,
         "Energy": 7,
@@ -554,6 +573,7 @@
       {
         "Id": 221,
         "Name": "TACKLE_FAST",
+        "Type": "NORMAL",
         "Power": 12,
         "DurationMs": 1100,
         "Energy": 7,
@@ -587,6 +607,7 @@
       {
         "Id": 201,
         "Name": "BUG_BITE_FAST",
+        "Type": "BUG",
         "Power": 5,
         "DurationMs": 450,
         "Energy": 7,
@@ -595,6 +616,7 @@
       {
         "Id": 221,
         "Name": "TACKLE_FAST",
+        "Type": "NORMAL",
         "Power": 12,
         "DurationMs": 1100,
         "Energy": 7,
@@ -628,6 +650,7 @@
       {
         "Id": 201,
         "Name": "BUG_BITE_FAST",
+        "Type": "BUG",
         "Power": 5,
         "DurationMs": 450,
         "Energy": 7,
@@ -636,6 +659,7 @@
       {
         "Id": 235,
         "Name": "CONFUSION_FAST",
+        "Type": "PSYCHIC",
         "Power": 15,
         "DurationMs": 1510,
         "Energy": 7,
@@ -688,6 +712,7 @@
       {
         "Id": 201,
         "Name": "BUG_BITE_FAST",
+        "Type": "BUG",
         "Power": 5,
         "DurationMs": 450,
         "Energy": 7,
@@ -696,6 +721,7 @@
       {
         "Id": 236,
         "Name": "POISON_STING_FAST",
+        "Type": "POISON",
         "Power": 6,
         "DurationMs": 575,
         "Energy": 4,
@@ -730,6 +756,7 @@
       {
         "Id": 201,
         "Name": "BUG_BITE_FAST",
+        "Type": "BUG",
         "Power": 5,
         "DurationMs": 450,
         "Energy": 7,
@@ -738,6 +765,7 @@
       {
         "Id": 236,
         "Name": "POISON_STING_FAST",
+        "Type": "POISON",
         "Power": 6,
         "DurationMs": 575,
         "Energy": 4,
@@ -771,6 +799,7 @@
       {
         "Id": 201,
         "Name": "BUG_BITE_FAST",
+        "Type": "BUG",
         "Power": 5,
         "DurationMs": 450,
         "Energy": 7,
@@ -779,6 +808,7 @@
       {
         "Id": 224,
         "Name": "POISON_JAB_FAST",
+        "Type": "POISON",
         "Power": 15,
         "DurationMs": 1050,
         "Energy": 7,
@@ -831,6 +861,7 @@
       {
         "Id": 219,
         "Name": "QUICK_ATTACK_FAST",
+        "Type": "NORMAL",
         "Power": 10,
         "DurationMs": 1330,
         "Energy": 7,
@@ -839,6 +870,7 @@
       {
         "Id": 221,
         "Name": "TACKLE_FAST",
+        "Type": "NORMAL",
         "Power": 12,
         "DurationMs": 1100,
         "Energy": 7,
@@ -891,6 +923,7 @@
       {
         "Id": 239,
         "Name": "STEEL_WING_FAST",
+        "Type": "STEEL",
         "Power": 15,
         "DurationMs": 1330,
         "Energy": 4,
@@ -899,6 +932,7 @@
       {
         "Id": 210,
         "Name": "WING_ATTACK_FAST",
+        "Type": "FLYING",
         "Power": 9,
         "DurationMs": 750,
         "Energy": 7,
@@ -950,6 +984,7 @@
       {
         "Id": 239,
         "Name": "STEEL_WING_FAST",
+        "Type": "STEEL",
         "Power": 15,
         "DurationMs": 1330,
         "Energy": 4,
@@ -958,6 +993,7 @@
       {
         "Id": 210,
         "Name": "WING_ATTACK_FAST",
+        "Type": "FLYING",
         "Power": 9,
         "DurationMs": 750,
         "Energy": 7,
@@ -1009,6 +1045,7 @@
       {
         "Id": 219,
         "Name": "QUICK_ATTACK_FAST",
+        "Type": "NORMAL",
         "Power": 10,
         "DurationMs": 1330,
         "Energy": 7,
@@ -1017,6 +1054,7 @@
       {
         "Id": 221,
         "Name": "TACKLE_FAST",
+        "Type": "NORMAL",
         "Power": 12,
         "DurationMs": 1100,
         "Energy": 7,
@@ -1067,6 +1105,7 @@
       {
         "Id": 202,
         "Name": "BITE_FAST",
+        "Type": "DARK",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -1075,6 +1114,7 @@
       {
         "Id": 219,
         "Name": "QUICK_ATTACK_FAST",
+        "Type": "NORMAL",
         "Power": 10,
         "DurationMs": 1330,
         "Energy": 7,
@@ -1127,6 +1167,7 @@
       {
         "Id": 211,
         "Name": "PECK_FAST",
+        "Type": "FLYING",
         "Power": 10,
         "DurationMs": 1150,
         "Energy": 10,
@@ -1135,6 +1176,7 @@
       {
         "Id": 219,
         "Name": "QUICK_ATTACK_FAST",
+        "Type": "NORMAL",
         "Power": 10,
         "DurationMs": 1330,
         "Energy": 7,
@@ -1186,6 +1228,7 @@
       {
         "Id": 211,
         "Name": "PECK_FAST",
+        "Type": "FLYING",
         "Power": 10,
         "DurationMs": 1150,
         "Energy": 10,
@@ -1194,6 +1237,7 @@
       {
         "Id": 239,
         "Name": "STEEL_WING_FAST",
+        "Type": "STEEL",
         "Power": 15,
         "DurationMs": 1330,
         "Energy": 4,
@@ -1245,6 +1289,7 @@
       {
         "Id": 225,
         "Name": "ACID_FAST",
+        "Type": "POISON",
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
@@ -1253,6 +1298,7 @@
       {
         "Id": 236,
         "Name": "POISON_STING_FAST",
+        "Type": "POISON",
         "Power": 6,
         "DurationMs": 575,
         "Energy": 4,
@@ -1303,6 +1349,7 @@
       {
         "Id": 225,
         "Name": "ACID_FAST",
+        "Type": "POISON",
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
@@ -1311,6 +1358,7 @@
       {
         "Id": 202,
         "Name": "BITE_FAST",
+        "Type": "DARK",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -1362,6 +1410,7 @@
       {
         "Id": 219,
         "Name": "QUICK_ATTACK_FAST",
+        "Type": "NORMAL",
         "Power": 10,
         "DurationMs": 1330,
         "Energy": 7,
@@ -1370,6 +1419,7 @@
       {
         "Id": 205,
         "Name": "THUNDER_SHOCK_FAST",
+        "Type": "ELECTRIC",
         "Power": 5,
         "DurationMs": 600,
         "Energy": 7,
@@ -1420,6 +1470,7 @@
       {
         "Id": 206,
         "Name": "SPARK_FAST",
+        "Type": "ELECTRIC",
         "Power": 7,
         "DurationMs": 700,
         "Energy": 4,
@@ -1428,6 +1479,7 @@
       {
         "Id": 205,
         "Name": "THUNDER_SHOCK_FAST",
+        "Type": "ELECTRIC",
         "Power": 5,
         "DurationMs": 600,
         "Energy": 7,
@@ -1479,6 +1531,7 @@
       {
         "Id": 216,
         "Name": "MUD_SHOT_FAST",
+        "Type": "GROUND",
         "Power": 6,
         "DurationMs": 550,
         "Energy": 7,
@@ -1487,6 +1540,7 @@
       {
         "Id": 220,
         "Name": "SCRATCH_FAST",
+        "Type": "NORMAL",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -1537,6 +1591,7 @@
       {
         "Id": 228,
         "Name": "METAL_CLAW_FAST",
+        "Type": "STEEL",
         "Power": 8,
         "DurationMs": 630,
         "Energy": 7,
@@ -1545,6 +1600,7 @@
       {
         "Id": 216,
         "Name": "MUD_SHOT_FAST",
+        "Type": "GROUND",
         "Power": 6,
         "DurationMs": 550,
         "Energy": 7,
@@ -1596,6 +1652,7 @@
       {
         "Id": 202,
         "Name": "BITE_FAST",
+        "Type": "DARK",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -1604,6 +1661,7 @@
       {
         "Id": 236,
         "Name": "POISON_STING_FAST",
+        "Type": "POISON",
         "Power": 6,
         "DurationMs": 575,
         "Energy": 4,
@@ -1655,6 +1713,7 @@
       {
         "Id": 202,
         "Name": "BITE_FAST",
+        "Type": "DARK",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -1663,6 +1722,7 @@
       {
         "Id": 236,
         "Name": "POISON_STING_FAST",
+        "Type": "POISON",
         "Power": 6,
         "DurationMs": 575,
         "Energy": 4,
@@ -1714,6 +1774,7 @@
       {
         "Id": 202,
         "Name": "BITE_FAST",
+        "Type": "DARK",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -1722,6 +1783,7 @@
       {
         "Id": 224,
         "Name": "POISON_JAB_FAST",
+        "Type": "POISON",
         "Power": 15,
         "DurationMs": 1050,
         "Energy": 7,
@@ -1773,6 +1835,7 @@
       {
         "Id": 211,
         "Name": "PECK_FAST",
+        "Type": "FLYING",
         "Power": 10,
         "DurationMs": 1150,
         "Energy": 10,
@@ -1781,6 +1844,7 @@
       {
         "Id": 236,
         "Name": "POISON_STING_FAST",
+        "Type": "POISON",
         "Power": 6,
         "DurationMs": 575,
         "Energy": 4,
@@ -1832,6 +1896,7 @@
       {
         "Id": 202,
         "Name": "BITE_FAST",
+        "Type": "DARK",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -1840,6 +1905,7 @@
       {
         "Id": 224,
         "Name": "POISON_JAB_FAST",
+        "Type": "POISON",
         "Power": 15,
         "DurationMs": 1050,
         "Energy": 7,
@@ -1891,6 +1957,7 @@
       {
         "Id": 200,
         "Name": "FURY_CUTTER_FAST",
+        "Type": "BUG",
         "Power": 3,
         "DurationMs": 400,
         "Energy": 12,
@@ -1899,6 +1966,7 @@
       {
         "Id": 224,
         "Name": "POISON_JAB_FAST",
+        "Type": "POISON",
         "Power": 15,
         "DurationMs": 1050,
         "Energy": 7,
@@ -1950,6 +2018,7 @@
       {
         "Id": 222,
         "Name": "POUND_FAST",
+        "Type": "NORMAL",
         "Power": 7,
         "DurationMs": 540,
         "Energy": 7,
@@ -1958,6 +2027,7 @@
       {
         "Id": 234,
         "Name": "ZEN_HEADBUTT_FAST",
+        "Type": "PSYCHIC",
         "Power": 12,
         "DurationMs": 1050,
         "Energy": 4,
@@ -2008,6 +2078,7 @@
       {
         "Id": 222,
         "Name": "POUND_FAST",
+        "Type": "NORMAL",
         "Power": 7,
         "DurationMs": 540,
         "Energy": 7,
@@ -2016,6 +2087,7 @@
       {
         "Id": 234,
         "Name": "ZEN_HEADBUTT_FAST",
+        "Type": "PSYCHIC",
         "Power": 12,
         "DurationMs": 1050,
         "Energy": 4,
@@ -2067,6 +2139,7 @@
       {
         "Id": 209,
         "Name": "EMBER_FAST",
+        "Type": "FIRE",
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
@@ -2075,6 +2148,7 @@
       {
         "Id": 219,
         "Name": "QUICK_ATTACK_FAST",
+        "Type": "NORMAL",
         "Power": 10,
         "DurationMs": 1330,
         "Energy": 7,
@@ -2125,6 +2199,7 @@
       {
         "Id": 209,
         "Name": "EMBER_FAST",
+        "Type": "FIRE",
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
@@ -2133,6 +2208,7 @@
       {
         "Id": 238,
         "Name": "FEINT_ATTACK_FAST",
+        "Type": "DARK",
         "Power": 12,
         "DurationMs": 1040,
         "Energy": 7,
@@ -2185,6 +2261,7 @@
       {
         "Id": 238,
         "Name": "FEINT_ATTACK_FAST",
+        "Type": "DARK",
         "Power": 12,
         "DurationMs": 1040,
         "Energy": 7,
@@ -2193,6 +2270,7 @@
       {
         "Id": 222,
         "Name": "POUND_FAST",
+        "Type": "NORMAL",
         "Power": 7,
         "DurationMs": 540,
         "Energy": 7,
@@ -2244,6 +2322,7 @@
       {
         "Id": 238,
         "Name": "FEINT_ATTACK_FAST",
+        "Type": "DARK",
         "Power": 12,
         "DurationMs": 1040,
         "Energy": 7,
@@ -2252,6 +2331,7 @@
       {
         "Id": 222,
         "Name": "POUND_FAST",
+        "Type": "NORMAL",
         "Power": 7,
         "DurationMs": 540,
         "Energy": 7,
@@ -2304,6 +2384,7 @@
       {
         "Id": 202,
         "Name": "BITE_FAST",
+        "Type": "DARK",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -2312,6 +2393,7 @@
       {
         "Id": 219,
         "Name": "QUICK_ATTACK_FAST",
+        "Type": "NORMAL",
         "Power": 10,
         "DurationMs": 1330,
         "Energy": 7,
@@ -2363,6 +2445,7 @@
       {
         "Id": 202,
         "Name": "BITE_FAST",
+        "Type": "DARK",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -2371,6 +2454,7 @@
       {
         "Id": 210,
         "Name": "WING_ATTACK_FAST",
+        "Type": "FLYING",
         "Power": 9,
         "DurationMs": 750,
         "Energy": 7,
@@ -2423,6 +2507,7 @@
       {
         "Id": 225,
         "Name": "ACID_FAST",
+        "Type": "POISON",
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
@@ -2431,6 +2516,7 @@
       {
         "Id": 215,
         "Name": "RAZOR_LEAF_FAST",
+        "Type": "GRASS",
         "Power": 15,
         "DurationMs": 1450,
         "Energy": 7,
@@ -2483,6 +2569,7 @@
       {
         "Id": 225,
         "Name": "ACID_FAST",
+        "Type": "POISON",
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
@@ -2491,6 +2578,7 @@
       {
         "Id": 215,
         "Name": "RAZOR_LEAF_FAST",
+        "Type": "GRASS",
         "Power": 15,
         "DurationMs": 1450,
         "Energy": 7,
@@ -2542,6 +2630,7 @@
       {
         "Id": 225,
         "Name": "ACID_FAST",
+        "Type": "POISON",
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
@@ -2550,6 +2639,7 @@
       {
         "Id": 215,
         "Name": "RAZOR_LEAF_FAST",
+        "Type": "GRASS",
         "Power": 15,
         "DurationMs": 1450,
         "Energy": 7,
@@ -2602,6 +2692,7 @@
       {
         "Id": 201,
         "Name": "BUG_BITE_FAST",
+        "Type": "BUG",
         "Power": 5,
         "DurationMs": 450,
         "Energy": 7,
@@ -2610,6 +2701,7 @@
       {
         "Id": 220,
         "Name": "SCRATCH_FAST",
+        "Type": "NORMAL",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -2661,6 +2753,7 @@
       {
         "Id": 201,
         "Name": "BUG_BITE_FAST",
+        "Type": "BUG",
         "Power": 5,
         "DurationMs": 450,
         "Energy": 7,
@@ -2669,6 +2762,7 @@
       {
         "Id": 200,
         "Name": "FURY_CUTTER_FAST",
+        "Type": "BUG",
         "Power": 3,
         "DurationMs": 400,
         "Energy": 12,
@@ -2721,6 +2815,7 @@
       {
         "Id": 201,
         "Name": "BUG_BITE_FAST",
+        "Type": "BUG",
         "Power": 5,
         "DurationMs": 450,
         "Energy": 7,
@@ -2729,6 +2824,7 @@
       {
         "Id": 235,
         "Name": "CONFUSION_FAST",
+        "Type": "PSYCHIC",
         "Power": 15,
         "DurationMs": 1510,
         "Energy": 7,
@@ -2780,6 +2876,7 @@
       {
         "Id": 201,
         "Name": "BUG_BITE_FAST",
+        "Type": "BUG",
         "Power": 5,
         "DurationMs": 450,
         "Energy": 7,
@@ -2788,6 +2885,7 @@
       {
         "Id": 235,
         "Name": "CONFUSION_FAST",
+        "Type": "PSYCHIC",
         "Power": 15,
         "DurationMs": 1510,
         "Energy": 7,
@@ -2839,6 +2937,7 @@
       {
         "Id": 216,
         "Name": "MUD_SHOT_FAST",
+        "Type": "GROUND",
         "Power": 6,
         "DurationMs": 550,
         "Energy": 7,
@@ -2847,6 +2946,7 @@
       {
         "Id": 220,
         "Name": "SCRATCH_FAST",
+        "Type": "NORMAL",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -2897,6 +2997,7 @@
       {
         "Id": 216,
         "Name": "MUD_SHOT_FAST",
+        "Type": "GROUND",
         "Power": 6,
         "DurationMs": 550,
         "Energy": 7,
@@ -2905,6 +3006,7 @@
       {
         "Id": 203,
         "Name": "SUCKER_PUNCH_FAST",
+        "Type": "DARK",
         "Power": 7,
         "DurationMs": 700,
         "Energy": 4,
@@ -2956,6 +3058,7 @@
       {
         "Id": 202,
         "Name": "BITE_FAST",
+        "Type": "DARK",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -2964,6 +3067,7 @@
       {
         "Id": 220,
         "Name": "SCRATCH_FAST",
+        "Type": "NORMAL",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -3014,6 +3118,7 @@
       {
         "Id": 238,
         "Name": "FEINT_ATTACK_FAST",
+        "Type": "DARK",
         "Power": 12,
         "DurationMs": 1040,
         "Energy": 7,
@@ -3022,6 +3127,7 @@
       {
         "Id": 220,
         "Name": "SCRATCH_FAST",
+        "Type": "NORMAL",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -3073,6 +3179,7 @@
       {
         "Id": 230,
         "Name": "WATER_GUN_FAST",
+        "Type": "WATER",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -3081,6 +3188,7 @@
       {
         "Id": 234,
         "Name": "ZEN_HEADBUTT_FAST",
+        "Type": "PSYCHIC",
         "Power": 12,
         "DurationMs": 1050,
         "Energy": 4,
@@ -3131,6 +3239,7 @@
       {
         "Id": 235,
         "Name": "CONFUSION_FAST",
+        "Type": "PSYCHIC",
         "Power": 15,
         "DurationMs": 1510,
         "Energy": 7,
@@ -3139,6 +3248,7 @@
       {
         "Id": 230,
         "Name": "WATER_GUN_FAST",
+        "Type": "WATER",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -3190,6 +3300,7 @@
       {
         "Id": 208,
         "Name": "KARATE_CHOP_FAST",
+        "Type": "FIGHTING",
         "Power": 6,
         "DurationMs": 800,
         "Energy": 7,
@@ -3198,6 +3309,7 @@
       {
         "Id": 220,
         "Name": "SCRATCH_FAST",
+        "Type": "NORMAL",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -3248,6 +3360,7 @@
       {
         "Id": 208,
         "Name": "KARATE_CHOP_FAST",
+        "Type": "FIGHTING",
         "Power": 6,
         "DurationMs": 800,
         "Energy": 7,
@@ -3256,6 +3369,7 @@
       {
         "Id": 207,
         "Name": "LOW_KICK_FAST",
+        "Type": "FIGHTING",
         "Power": 5,
         "DurationMs": 600,
         "Energy": 7,
@@ -3307,6 +3421,7 @@
       {
         "Id": 202,
         "Name": "BITE_FAST",
+        "Type": "DARK",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -3315,6 +3430,7 @@
       {
         "Id": 209,
         "Name": "EMBER_FAST",
+        "Type": "FIRE",
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
@@ -3365,6 +3481,7 @@
       {
         "Id": 202,
         "Name": "BITE_FAST",
+        "Type": "DARK",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -3373,6 +3490,7 @@
       {
         "Id": 240,
         "Name": "FIRE_FANG_FAST",
+        "Type": "FIRE",
         "Power": 10,
         "DurationMs": 840,
         "Energy": 4,
@@ -3424,6 +3542,7 @@
       {
         "Id": 237,
         "Name": "BUBBLE_FAST",
+        "Type": "WATER",
         "Power": 25,
         "DurationMs": 2300,
         "Energy": 15,
@@ -3432,6 +3551,7 @@
       {
         "Id": 216,
         "Name": "MUD_SHOT_FAST",
+        "Type": "GROUND",
         "Power": 6,
         "DurationMs": 550,
         "Energy": 7,
@@ -3483,6 +3603,7 @@
       {
         "Id": 237,
         "Name": "BUBBLE_FAST",
+        "Type": "WATER",
         "Power": 25,
         "DurationMs": 2300,
         "Energy": 15,
@@ -3491,6 +3612,7 @@
       {
         "Id": 216,
         "Name": "MUD_SHOT_FAST",
+        "Type": "GROUND",
         "Power": 6,
         "DurationMs": 550,
         "Energy": 7,
@@ -3542,6 +3664,7 @@
       {
         "Id": 237,
         "Name": "BUBBLE_FAST",
+        "Type": "WATER",
         "Power": 25,
         "DurationMs": 2300,
         "Energy": 15,
@@ -3550,6 +3673,7 @@
       {
         "Id": 216,
         "Name": "MUD_SHOT_FAST",
+        "Type": "GROUND",
         "Power": 6,
         "DurationMs": 550,
         "Energy": 7,
@@ -3601,6 +3725,7 @@
       {
         "Id": 234,
         "Name": "ZEN_HEADBUTT_FAST",
+        "Type": "PSYCHIC",
         "Power": 12,
         "DurationMs": 1050,
         "Energy": 4,
@@ -3652,6 +3777,7 @@
       {
         "Id": 235,
         "Name": "CONFUSION_FAST",
+        "Type": "PSYCHIC",
         "Power": 15,
         "DurationMs": 1510,
         "Energy": 7,
@@ -3660,6 +3786,7 @@
       {
         "Id": 226,
         "Name": "PSYCHO_CUT_FAST",
+        "Type": "PSYCHIC",
         "Power": 7,
         "DurationMs": 570,
         "Energy": 7,
@@ -3710,6 +3837,7 @@
       {
         "Id": 235,
         "Name": "CONFUSION_FAST",
+        "Type": "PSYCHIC",
         "Power": 15,
         "DurationMs": 1510,
         "Energy": 7,
@@ -3718,6 +3846,7 @@
       {
         "Id": 226,
         "Name": "PSYCHO_CUT_FAST",
+        "Type": "PSYCHIC",
         "Power": 7,
         "DurationMs": 570,
         "Energy": 7,
@@ -3769,6 +3898,7 @@
       {
         "Id": 208,
         "Name": "KARATE_CHOP_FAST",
+        "Type": "FIGHTING",
         "Power": 6,
         "DurationMs": 800,
         "Energy": 7,
@@ -3777,6 +3907,7 @@
       {
         "Id": 207,
         "Name": "LOW_KICK_FAST",
+        "Type": "FIGHTING",
         "Power": 5,
         "DurationMs": 600,
         "Energy": 7,
@@ -3828,6 +3959,7 @@
       {
         "Id": 208,
         "Name": "KARATE_CHOP_FAST",
+        "Type": "FIGHTING",
         "Power": 6,
         "DurationMs": 800,
         "Energy": 7,
@@ -3836,6 +3968,7 @@
       {
         "Id": 207,
         "Name": "LOW_KICK_FAST",
+        "Type": "FIGHTING",
         "Power": 5,
         "DurationMs": 600,
         "Energy": 7,
@@ -3886,6 +4019,7 @@
       {
         "Id": 229,
         "Name": "BULLET_PUNCH_FAST",
+        "Type": "STEEL",
         "Power": 10,
         "DurationMs": 1200,
         "Energy": 7,
@@ -3894,6 +4028,7 @@
       {
         "Id": 208,
         "Name": "KARATE_CHOP_FAST",
+        "Type": "FIGHTING",
         "Power": 6,
         "DurationMs": 800,
         "Energy": 7,
@@ -3946,6 +4081,7 @@
       {
         "Id": 225,
         "Name": "ACID_FAST",
+        "Type": "POISON",
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
@@ -3954,6 +4090,7 @@
       {
         "Id": 214,
         "Name": "VINE_WHIP_FAST",
+        "Type": "GRASS",
         "Power": 7,
         "DurationMs": 650,
         "Energy": 7,
@@ -4006,6 +4143,7 @@
       {
         "Id": 225,
         "Name": "ACID_FAST",
+        "Type": "POISON",
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
@@ -4014,6 +4152,7 @@
       {
         "Id": 215,
         "Name": "RAZOR_LEAF_FAST",
+        "Type": "GRASS",
         "Power": 15,
         "DurationMs": 1450,
         "Energy": 7,
@@ -4065,6 +4204,7 @@
       {
         "Id": 225,
         "Name": "ACID_FAST",
+        "Type": "POISON",
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
@@ -4073,6 +4213,7 @@
       {
         "Id": 215,
         "Name": "RAZOR_LEAF_FAST",
+        "Type": "GRASS",
         "Power": 15,
         "DurationMs": 1450,
         "Energy": 7,
@@ -4125,6 +4266,7 @@
       {
         "Id": 237,
         "Name": "BUBBLE_FAST",
+        "Type": "WATER",
         "Power": 25,
         "DurationMs": 2300,
         "Energy": 15,
@@ -4133,6 +4275,7 @@
       {
         "Id": 236,
         "Name": "POISON_STING_FAST",
+        "Type": "POISON",
         "Power": 6,
         "DurationMs": 575,
         "Energy": 4,
@@ -4184,6 +4327,7 @@
       {
         "Id": 225,
         "Name": "ACID_FAST",
+        "Type": "POISON",
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
@@ -4192,6 +4336,7 @@
       {
         "Id": 224,
         "Name": "POISON_JAB_FAST",
+        "Type": "POISON",
         "Power": 15,
         "DurationMs": 1050,
         "Energy": 7,
@@ -4244,6 +4389,7 @@
       {
         "Id": 227,
         "Name": "ROCK_THROW_FAST",
+        "Type": "ROCK",
         "Power": 12,
         "DurationMs": 1360,
         "Energy": 7,
@@ -4252,6 +4398,7 @@
       {
         "Id": 221,
         "Name": "TACKLE_FAST",
+        "Type": "NORMAL",
         "Power": 12,
         "DurationMs": 1100,
         "Energy": 7,
@@ -4304,6 +4451,7 @@
       {
         "Id": 216,
         "Name": "MUD_SHOT_FAST",
+        "Type": "GROUND",
         "Power": 6,
         "DurationMs": 550,
         "Energy": 7,
@@ -4312,6 +4460,7 @@
       {
         "Id": 227,
         "Name": "ROCK_THROW_FAST",
+        "Type": "ROCK",
         "Power": 12,
         "DurationMs": 1360,
         "Energy": 7,
@@ -4363,6 +4512,7 @@
       {
         "Id": 216,
         "Name": "MUD_SHOT_FAST",
+        "Type": "GROUND",
         "Power": 6,
         "DurationMs": 550,
         "Energy": 7,
@@ -4371,6 +4521,7 @@
       {
         "Id": 227,
         "Name": "ROCK_THROW_FAST",
+        "Type": "ROCK",
         "Power": 12,
         "DurationMs": 1360,
         "Energy": 7,
@@ -4422,6 +4573,7 @@
       {
         "Id": 209,
         "Name": "EMBER_FAST",
+        "Type": "FIRE",
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
@@ -4430,6 +4582,7 @@
       {
         "Id": 221,
         "Name": "TACKLE_FAST",
+        "Type": "NORMAL",
         "Power": 12,
         "DurationMs": 1100,
         "Energy": 7,
@@ -4480,6 +4633,7 @@
       {
         "Id": 209,
         "Name": "EMBER_FAST",
+        "Type": "FIRE",
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
@@ -4488,6 +4642,7 @@
       {
         "Id": 207,
         "Name": "LOW_KICK_FAST",
+        "Type": "FIGHTING",
         "Power": 5,
         "DurationMs": 600,
         "Energy": 7,
@@ -4540,6 +4695,7 @@
       {
         "Id": 235,
         "Name": "CONFUSION_FAST",
+        "Type": "PSYCHIC",
         "Power": 15,
         "DurationMs": 1510,
         "Energy": 7,
@@ -4548,6 +4704,7 @@
       {
         "Id": 230,
         "Name": "WATER_GUN_FAST",
+        "Type": "WATER",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -4599,6 +4756,7 @@
       {
         "Id": 235,
         "Name": "CONFUSION_FAST",
+        "Type": "PSYCHIC",
         "Power": 15,
         "DurationMs": 1510,
         "Energy": 7,
@@ -4607,6 +4765,7 @@
       {
         "Id": 230,
         "Name": "WATER_GUN_FAST",
+        "Type": "WATER",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -4659,6 +4818,7 @@
       {
         "Id": 206,
         "Name": "SPARK_FAST",
+        "Type": "ELECTRIC",
         "Power": 7,
         "DurationMs": 700,
         "Energy": 4,
@@ -4667,6 +4827,7 @@
       {
         "Id": 205,
         "Name": "THUNDER_SHOCK_FAST",
+        "Type": "ELECTRIC",
         "Power": 5,
         "DurationMs": 600,
         "Energy": 7,
@@ -4718,6 +4879,7 @@
       {
         "Id": 206,
         "Name": "SPARK_FAST",
+        "Type": "ELECTRIC",
         "Power": 7,
         "DurationMs": 700,
         "Energy": 4,
@@ -4726,6 +4888,7 @@
       {
         "Id": 205,
         "Name": "THUNDER_SHOCK_FAST",
+        "Type": "ELECTRIC",
         "Power": 5,
         "DurationMs": 600,
         "Energy": 7,
@@ -4777,6 +4940,7 @@
       {
         "Id": 223,
         "Name": "CUT_FAST",
+        "Type": "NORMAL",
         "Power": 12,
         "DurationMs": 1130,
         "Energy": 7,
@@ -4785,6 +4949,7 @@
       {
         "Id": 200,
         "Name": "FURY_CUTTER_FAST",
+        "Type": "BUG",
         "Power": 3,
         "DurationMs": 400,
         "Energy": 12,
@@ -4837,6 +5002,7 @@
       {
         "Id": 211,
         "Name": "PECK_FAST",
+        "Type": "FLYING",
         "Power": 10,
         "DurationMs": 1150,
         "Energy": 10,
@@ -4845,6 +5011,7 @@
       {
         "Id": 219,
         "Name": "QUICK_ATTACK_FAST",
+        "Type": "NORMAL",
         "Power": 10,
         "DurationMs": 1330,
         "Energy": 7,
@@ -4896,6 +5063,7 @@
       {
         "Id": 238,
         "Name": "FEINT_ATTACK_FAST",
+        "Type": "DARK",
         "Power": 12,
         "DurationMs": 1040,
         "Energy": 7,
@@ -4904,6 +5072,7 @@
       {
         "Id": 239,
         "Name": "STEEL_WING_FAST",
+        "Type": "STEEL",
         "Power": 15,
         "DurationMs": 1330,
         "Energy": 4,
@@ -4955,6 +5124,7 @@
       {
         "Id": 217,
         "Name": "ICE_SHARD_FAST",
+        "Type": "ICE",
         "Power": 15,
         "DurationMs": 1400,
         "Energy": 7,
@@ -4963,6 +5133,7 @@
       {
         "Id": 230,
         "Name": "WATER_GUN_FAST",
+        "Type": "WATER",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -5014,6 +5185,7 @@
       {
         "Id": 218,
         "Name": "FROST_BREATH_FAST",
+        "Type": "ICE",
         "Power": 9,
         "DurationMs": 810,
         "Energy": 7,
@@ -5022,6 +5194,7 @@
       {
         "Id": 217,
         "Name": "ICE_SHARD_FAST",
+        "Type": "ICE",
         "Power": 15,
         "DurationMs": 1400,
         "Energy": 7,
@@ -5073,6 +5246,7 @@
       {
         "Id": 225,
         "Name": "ACID_FAST",
+        "Type": "POISON",
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
@@ -5081,6 +5255,7 @@
       {
         "Id": 233,
         "Name": "MUD_SLAP_FAST",
+        "Type": "GROUND",
         "Power": 15,
         "DurationMs": 1350,
         "Energy": 9,
@@ -5131,6 +5306,7 @@
       {
         "Id": 225,
         "Name": "ACID_FAST",
+        "Type": "POISON",
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
@@ -5139,6 +5315,7 @@
       {
         "Id": 224,
         "Name": "POISON_JAB_FAST",
+        "Type": "POISON",
         "Power": 15,
         "DurationMs": 1050,
         "Energy": 7,
@@ -5190,6 +5367,7 @@
       {
         "Id": 217,
         "Name": "ICE_SHARD_FAST",
+        "Type": "ICE",
         "Power": 15,
         "DurationMs": 1400,
         "Energy": 7,
@@ -5198,6 +5376,7 @@
       {
         "Id": 221,
         "Name": "TACKLE_FAST",
+        "Type": "NORMAL",
         "Power": 12,
         "DurationMs": 1100,
         "Energy": 7,
@@ -5249,6 +5428,7 @@
       {
         "Id": 218,
         "Name": "FROST_BREATH_FAST",
+        "Type": "ICE",
         "Power": 9,
         "DurationMs": 810,
         "Energy": 7,
@@ -5257,6 +5437,7 @@
       {
         "Id": 217,
         "Name": "ICE_SHARD_FAST",
+        "Type": "ICE",
         "Power": 15,
         "DurationMs": 1400,
         "Energy": 7,
@@ -5309,6 +5490,7 @@
       {
         "Id": 212,
         "Name": "LICK_FAST",
+        "Type": "GHOST",
         "Power": 5,
         "DurationMs": 500,
         "Energy": 7,
@@ -5317,6 +5499,7 @@
       {
         "Id": 203,
         "Name": "SUCKER_PUNCH_FAST",
+        "Type": "DARK",
         "Power": 7,
         "DurationMs": 700,
         "Energy": 4,
@@ -5369,6 +5552,7 @@
       {
         "Id": 212,
         "Name": "LICK_FAST",
+        "Type": "GHOST",
         "Power": 5,
         "DurationMs": 500,
         "Energy": 7,
@@ -5377,6 +5561,7 @@
       {
         "Id": 213,
         "Name": "SHADOW_CLAW_FAST",
+        "Type": "GHOST",
         "Power": 11,
         "DurationMs": 950,
         "Energy": 7,
@@ -5428,6 +5613,7 @@
       {
         "Id": 213,
         "Name": "SHADOW_CLAW_FAST",
+        "Type": "GHOST",
         "Power": 11,
         "DurationMs": 950,
         "Energy": 7,
@@ -5436,6 +5622,7 @@
       {
         "Id": 203,
         "Name": "SUCKER_PUNCH_FAST",
+        "Type": "DARK",
         "Power": 7,
         "DurationMs": 700,
         "Energy": 4,
@@ -5487,6 +5674,7 @@
       {
         "Id": 227,
         "Name": "ROCK_THROW_FAST",
+        "Type": "ROCK",
         "Power": 12,
         "DurationMs": 1360,
         "Energy": 7,
@@ -5495,6 +5683,7 @@
       {
         "Id": 221,
         "Name": "TACKLE_FAST",
+        "Type": "NORMAL",
         "Power": 12,
         "DurationMs": 1100,
         "Energy": 7,
@@ -5546,6 +5735,7 @@
       {
         "Id": 235,
         "Name": "CONFUSION_FAST",
+        "Type": "PSYCHIC",
         "Power": 15,
         "DurationMs": 1510,
         "Energy": 7,
@@ -5554,6 +5744,7 @@
       {
         "Id": 222,
         "Name": "POUND_FAST",
+        "Type": "NORMAL",
         "Power": 7,
         "DurationMs": 540,
         "Energy": 7,
@@ -5604,6 +5795,7 @@
       {
         "Id": 235,
         "Name": "CONFUSION_FAST",
+        "Type": "PSYCHIC",
         "Power": 15,
         "DurationMs": 1510,
         "Energy": 7,
@@ -5612,6 +5804,7 @@
       {
         "Id": 234,
         "Name": "ZEN_HEADBUTT_FAST",
+        "Type": "PSYCHIC",
         "Power": 12,
         "DurationMs": 1050,
         "Energy": 4,
@@ -5663,6 +5856,7 @@
       {
         "Id": 237,
         "Name": "BUBBLE_FAST",
+        "Type": "WATER",
         "Power": 25,
         "DurationMs": 2300,
         "Energy": 15,
@@ -5671,6 +5865,7 @@
       {
         "Id": 216,
         "Name": "MUD_SHOT_FAST",
+        "Type": "GROUND",
         "Power": 6,
         "DurationMs": 550,
         "Energy": 7,
@@ -5721,6 +5916,7 @@
       {
         "Id": 228,
         "Name": "METAL_CLAW_FAST",
+        "Type": "STEEL",
         "Power": 8,
         "DurationMs": 630,
         "Energy": 7,
@@ -5729,6 +5925,7 @@
       {
         "Id": 216,
         "Name": "MUD_SHOT_FAST",
+        "Type": "GROUND",
         "Power": 6,
         "DurationMs": 550,
         "Energy": 7,
@@ -5780,6 +5977,7 @@
       {
         "Id": 206,
         "Name": "SPARK_FAST",
+        "Type": "ELECTRIC",
         "Power": 7,
         "DurationMs": 700,
         "Energy": 4,
@@ -5788,6 +5986,7 @@
       {
         "Id": 221,
         "Name": "TACKLE_FAST",
+        "Type": "NORMAL",
         "Power": 12,
         "DurationMs": 1100,
         "Energy": 7,
@@ -5838,6 +6037,7 @@
       {
         "Id": 206,
         "Name": "SPARK_FAST",
+        "Type": "ELECTRIC",
         "Power": 7,
         "DurationMs": 700,
         "Energy": 4,
@@ -5846,6 +6046,7 @@
       {
         "Id": 221,
         "Name": "TACKLE_FAST",
+        "Type": "NORMAL",
         "Power": 12,
         "DurationMs": 1100,
         "Energy": 7,
@@ -5898,6 +6099,7 @@
       {
         "Id": 235,
         "Name": "CONFUSION_FAST",
+        "Type": "PSYCHIC",
         "Power": 15,
         "DurationMs": 1510,
         "Energy": 7,
@@ -5949,6 +6151,7 @@
       {
         "Id": 235,
         "Name": "CONFUSION_FAST",
+        "Type": "PSYCHIC",
         "Power": 15,
         "DurationMs": 1510,
         "Energy": 7,
@@ -5957,6 +6160,7 @@
       {
         "Id": 234,
         "Name": "ZEN_HEADBUTT_FAST",
+        "Type": "PSYCHIC",
         "Power": 12,
         "DurationMs": 1050,
         "Energy": 4,
@@ -6008,6 +6212,7 @@
       {
         "Id": 233,
         "Name": "MUD_SLAP_FAST",
+        "Type": "GROUND",
         "Power": 15,
         "DurationMs": 1350,
         "Energy": 9,
@@ -6016,6 +6221,7 @@
       {
         "Id": 241,
         "Name": "ROCK_SMASH_FAST",
+        "Type": "FIGHTING",
         "Power": 15,
         "DurationMs": 1410,
         "Energy": 7,
@@ -6066,6 +6272,7 @@
       {
         "Id": 233,
         "Name": "MUD_SLAP_FAST",
+        "Type": "GROUND",
         "Power": 15,
         "DurationMs": 1350,
         "Energy": 9,
@@ -6074,6 +6281,7 @@
       {
         "Id": 241,
         "Name": "ROCK_SMASH_FAST",
+        "Type": "FIGHTING",
         "Power": 15,
         "DurationMs": 1410,
         "Energy": 7,
@@ -6124,6 +6332,7 @@
       {
         "Id": 207,
         "Name": "LOW_KICK_FAST",
+        "Type": "FIGHTING",
         "Power": 5,
         "DurationMs": 600,
         "Energy": 7,
@@ -6132,6 +6341,7 @@
       {
         "Id": 241,
         "Name": "ROCK_SMASH_FAST",
+        "Type": "FIGHTING",
         "Power": 15,
         "DurationMs": 1410,
         "Energy": 7,
@@ -6182,6 +6392,7 @@
       {
         "Id": 229,
         "Name": "BULLET_PUNCH_FAST",
+        "Type": "STEEL",
         "Power": 10,
         "DurationMs": 1200,
         "Energy": 7,
@@ -6190,6 +6401,7 @@
       {
         "Id": 241,
         "Name": "ROCK_SMASH_FAST",
+        "Type": "FIGHTING",
         "Power": 15,
         "DurationMs": 1410,
         "Energy": 7,
@@ -6249,6 +6461,7 @@
       {
         "Id": 212,
         "Name": "LICK_FAST",
+        "Type": "GHOST",
         "Power": 5,
         "DurationMs": 500,
         "Energy": 7,
@@ -6257,6 +6470,7 @@
       {
         "Id": 234,
         "Name": "ZEN_HEADBUTT_FAST",
+        "Type": "PSYCHIC",
         "Power": 12,
         "DurationMs": 1050,
         "Energy": 4,
@@ -6308,6 +6522,7 @@
       {
         "Id": 225,
         "Name": "ACID_FAST",
+        "Type": "POISON",
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
@@ -6316,6 +6531,7 @@
       {
         "Id": 221,
         "Name": "TACKLE_FAST",
+        "Type": "NORMAL",
         "Power": 12,
         "DurationMs": 1100,
         "Energy": 7,
@@ -6366,6 +6582,7 @@
       {
         "Id": 225,
         "Name": "ACID_FAST",
+        "Type": "POISON",
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
@@ -6374,6 +6591,7 @@
       {
         "Id": 221,
         "Name": "TACKLE_FAST",
+        "Type": "NORMAL",
         "Power": 12,
         "DurationMs": 1100,
         "Energy": 7,
@@ -6426,6 +6644,7 @@
       {
         "Id": 233,
         "Name": "MUD_SLAP_FAST",
+        "Type": "GROUND",
         "Power": 15,
         "DurationMs": 1350,
         "Energy": 9,
@@ -6434,6 +6653,7 @@
       {
         "Id": 241,
         "Name": "ROCK_SMASH_FAST",
+        "Type": "FIGHTING",
         "Power": 15,
         "DurationMs": 1410,
         "Energy": 7,
@@ -6485,6 +6705,7 @@
       {
         "Id": 233,
         "Name": "MUD_SLAP_FAST",
+        "Type": "GROUND",
         "Power": 15,
         "DurationMs": 1350,
         "Energy": 9,
@@ -6493,6 +6714,7 @@
       {
         "Id": 241,
         "Name": "ROCK_SMASH_FAST",
+        "Type": "FIGHTING",
         "Power": 15,
         "DurationMs": 1410,
         "Energy": 7,
@@ -6543,6 +6765,7 @@
       {
         "Id": 222,
         "Name": "POUND_FAST",
+        "Type": "NORMAL",
         "Power": 7,
         "DurationMs": 540,
         "Energy": 7,
@@ -6551,6 +6774,7 @@
       {
         "Id": 234,
         "Name": "ZEN_HEADBUTT_FAST",
+        "Type": "PSYCHIC",
         "Power": 12,
         "DurationMs": 1050,
         "Energy": 4,
@@ -6601,6 +6825,7 @@
       {
         "Id": 214,
         "Name": "VINE_WHIP_FAST",
+        "Type": "GRASS",
         "Power": 7,
         "DurationMs": 650,
         "Energy": 7,
@@ -6651,6 +6876,7 @@
       {
         "Id": 207,
         "Name": "LOW_KICK_FAST",
+        "Type": "FIGHTING",
         "Power": 5,
         "DurationMs": 600,
         "Energy": 7,
@@ -6659,6 +6885,7 @@
       {
         "Id": 233,
         "Name": "MUD_SLAP_FAST",
+        "Type": "GROUND",
         "Power": 15,
         "DurationMs": 1350,
         "Energy": 9,
@@ -6710,6 +6937,7 @@
       {
         "Id": 237,
         "Name": "BUBBLE_FAST",
+        "Type": "WATER",
         "Power": 25,
         "DurationMs": 2300,
         "Energy": 15,
@@ -6718,6 +6946,7 @@
       {
         "Id": 230,
         "Name": "WATER_GUN_FAST",
+        "Type": "WATER",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -6768,6 +6997,7 @@
       {
         "Id": 204,
         "Name": "DRAGON_BREATH_FAST",
+        "Type": "DRAGON",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -6776,6 +7006,7 @@
       {
         "Id": 230,
         "Name": "WATER_GUN_FAST",
+        "Type": "WATER",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -6827,6 +7058,7 @@
       {
         "Id": 216,
         "Name": "MUD_SHOT_FAST",
+        "Type": "GROUND",
         "Power": 6,
         "DurationMs": 550,
         "Energy": 7,
@@ -6835,6 +7067,7 @@
       {
         "Id": 211,
         "Name": "PECK_FAST",
+        "Type": "FLYING",
         "Power": 10,
         "DurationMs": 1150,
         "Energy": 10,
@@ -6885,6 +7118,7 @@
       {
         "Id": 211,
         "Name": "PECK_FAST",
+        "Type": "FLYING",
         "Power": 10,
         "DurationMs": 1150,
         "Energy": 10,
@@ -6893,6 +7127,7 @@
       {
         "Id": 224,
         "Name": "POISON_JAB_FAST",
+        "Type": "POISON",
         "Power": 15,
         "DurationMs": 1050,
         "Energy": 7,
@@ -6944,6 +7179,7 @@
       {
         "Id": 219,
         "Name": "QUICK_ATTACK_FAST",
+        "Type": "NORMAL",
         "Power": 10,
         "DurationMs": 1330,
         "Energy": 7,
@@ -6952,6 +7188,7 @@
       {
         "Id": 230,
         "Name": "WATER_GUN_FAST",
+        "Type": "WATER",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -7003,6 +7240,7 @@
       {
         "Id": 219,
         "Name": "QUICK_ATTACK_FAST",
+        "Type": "NORMAL",
         "Power": 10,
         "DurationMs": 1330,
         "Energy": 7,
@@ -7011,6 +7249,7 @@
       {
         "Id": 230,
         "Name": "WATER_GUN_FAST",
+        "Type": "WATER",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -7062,6 +7301,7 @@
       {
         "Id": 235,
         "Name": "CONFUSION_FAST",
+        "Type": "PSYCHIC",
         "Power": 15,
         "DurationMs": 1510,
         "Energy": 7,
@@ -7070,6 +7310,7 @@
       {
         "Id": 234,
         "Name": "ZEN_HEADBUTT_FAST",
+        "Type": "PSYCHIC",
         "Power": 12,
         "DurationMs": 1050,
         "Energy": 4,
@@ -7121,6 +7362,7 @@
       {
         "Id": 200,
         "Name": "FURY_CUTTER_FAST",
+        "Type": "BUG",
         "Power": 3,
         "DurationMs": 400,
         "Energy": 12,
@@ -7129,6 +7371,7 @@
       {
         "Id": 239,
         "Name": "STEEL_WING_FAST",
+        "Type": "STEEL",
         "Power": 15,
         "DurationMs": 1330,
         "Energy": 4,
@@ -7180,6 +7423,7 @@
       {
         "Id": 218,
         "Name": "FROST_BREATH_FAST",
+        "Type": "ICE",
         "Power": 9,
         "DurationMs": 810,
         "Energy": 7,
@@ -7188,6 +7432,7 @@
       {
         "Id": 222,
         "Name": "POUND_FAST",
+        "Type": "NORMAL",
         "Power": 7,
         "DurationMs": 540,
         "Energy": 7,
@@ -7238,6 +7483,7 @@
       {
         "Id": 207,
         "Name": "LOW_KICK_FAST",
+        "Type": "FIGHTING",
         "Power": 5,
         "DurationMs": 600,
         "Energy": 7,
@@ -7246,6 +7492,7 @@
       {
         "Id": 205,
         "Name": "THUNDER_SHOCK_FAST",
+        "Type": "ELECTRIC",
         "Power": 5,
         "DurationMs": 600,
         "Energy": 7,
@@ -7296,6 +7543,7 @@
       {
         "Id": 209,
         "Name": "EMBER_FAST",
+        "Type": "FIRE",
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
@@ -7304,6 +7552,7 @@
       {
         "Id": 208,
         "Name": "KARATE_CHOP_FAST",
+        "Type": "FIGHTING",
         "Power": 6,
         "DurationMs": 800,
         "Energy": 7,
@@ -7354,6 +7603,7 @@
       {
         "Id": 200,
         "Name": "FURY_CUTTER_FAST",
+        "Type": "BUG",
         "Power": 3,
         "DurationMs": 400,
         "Energy": 12,
@@ -7362,6 +7612,7 @@
       {
         "Id": 241,
         "Name": "ROCK_SMASH_FAST",
+        "Type": "FIGHTING",
         "Power": 15,
         "DurationMs": 1410,
         "Energy": 7,
@@ -7412,6 +7663,7 @@
       {
         "Id": 221,
         "Name": "TACKLE_FAST",
+        "Type": "NORMAL",
         "Power": 12,
         "DurationMs": 1100,
         "Energy": 7,
@@ -7420,6 +7672,7 @@
       {
         "Id": 234,
         "Name": "ZEN_HEADBUTT_FAST",
+        "Type": "PSYCHIC",
         "Power": 12,
         "DurationMs": 1050,
         "Energy": 4,
@@ -7471,6 +7724,7 @@
       {
         "Id": 231,
         "Name": "SPLASH_FAST",
+        "Type": "WATER",
         "DurationMs": 1230,
         "Energy": 7,
         "DPS": null
@@ -7503,6 +7757,7 @@
       {
         "Id": 202,
         "Name": "BITE_FAST",
+        "Type": "DARK",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -7511,6 +7766,7 @@
       {
         "Id": 204,
         "Name": "DRAGON_BREATH_FAST",
+        "Type": "DRAGON",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -7562,6 +7818,7 @@
       {
         "Id": 218,
         "Name": "FROST_BREATH_FAST",
+        "Type": "ICE",
         "Power": 9,
         "DurationMs": 810,
         "Energy": 7,
@@ -7570,6 +7827,7 @@
       {
         "Id": 217,
         "Name": "ICE_SHARD_FAST",
+        "Type": "ICE",
         "Power": 15,
         "DurationMs": 1400,
         "Energy": 7,
@@ -7620,6 +7878,7 @@
       {
         "Id": 222,
         "Name": "POUND_FAST",
+        "Type": "NORMAL",
         "Power": 7,
         "DurationMs": 540,
         "Energy": 7,
@@ -7653,6 +7912,7 @@
       {
         "Id": 219,
         "Name": "QUICK_ATTACK_FAST",
+        "Type": "NORMAL",
         "Power": 10,
         "DurationMs": 1330,
         "Energy": 7,
@@ -7661,6 +7921,7 @@
       {
         "Id": 221,
         "Name": "TACKLE_FAST",
+        "Type": "NORMAL",
         "Power": 12,
         "DurationMs": 1100,
         "Energy": 7,
@@ -7711,6 +7972,7 @@
       {
         "Id": 230,
         "Name": "WATER_GUN_FAST",
+        "Type": "WATER",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -7761,6 +8023,7 @@
       {
         "Id": 205,
         "Name": "THUNDER_SHOCK_FAST",
+        "Type": "ELECTRIC",
         "Power": 5,
         "DurationMs": 600,
         "Energy": 7,
@@ -7811,6 +8074,7 @@
       {
         "Id": 209,
         "Name": "EMBER_FAST",
+        "Type": "FIRE",
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
@@ -7861,6 +8125,7 @@
       {
         "Id": 219,
         "Name": "QUICK_ATTACK_FAST",
+        "Type": "NORMAL",
         "Power": 10,
         "DurationMs": 1330,
         "Energy": 7,
@@ -7869,6 +8134,7 @@
       {
         "Id": 221,
         "Name": "TACKLE_FAST",
+        "Type": "NORMAL",
         "Power": 12,
         "DurationMs": 1100,
         "Energy": 7,
@@ -7921,6 +8187,7 @@
       {
         "Id": 216,
         "Name": "MUD_SHOT_FAST",
+        "Type": "GROUND",
         "Power": 6,
         "DurationMs": 550,
         "Energy": 7,
@@ -7929,6 +8196,7 @@
       {
         "Id": 230,
         "Name": "WATER_GUN_FAST",
+        "Type": "WATER",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -7980,6 +8248,7 @@
       {
         "Id": 227,
         "Name": "ROCK_THROW_FAST",
+        "Type": "ROCK",
         "Power": 12,
         "DurationMs": 1360,
         "Energy": 7,
@@ -7988,6 +8257,7 @@
       {
         "Id": 230,
         "Name": "WATER_GUN_FAST",
+        "Type": "WATER",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -8040,6 +8310,7 @@
       {
         "Id": 216,
         "Name": "MUD_SHOT_FAST",
+        "Type": "GROUND",
         "Power": 6,
         "DurationMs": 550,
         "Energy": 7,
@@ -8048,6 +8319,7 @@
       {
         "Id": 220,
         "Name": "SCRATCH_FAST",
+        "Type": "NORMAL",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -8099,6 +8371,7 @@
       {
         "Id": 200,
         "Name": "FURY_CUTTER_FAST",
+        "Type": "BUG",
         "Power": 3,
         "DurationMs": 400,
         "Energy": 12,
@@ -8107,6 +8380,7 @@
       {
         "Id": 216,
         "Name": "MUD_SHOT_FAST",
+        "Type": "GROUND",
         "Power": 6,
         "DurationMs": 550,
         "Energy": 7,
@@ -8158,6 +8432,7 @@
       {
         "Id": 202,
         "Name": "BITE_FAST",
+        "Type": "DARK",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -8166,6 +8441,7 @@
       {
         "Id": 239,
         "Name": "STEEL_WING_FAST",
+        "Type": "STEEL",
         "Power": 15,
         "DurationMs": 1330,
         "Energy": 4,
@@ -8216,6 +8492,7 @@
       {
         "Id": 212,
         "Name": "LICK_FAST",
+        "Type": "GHOST",
         "Power": 5,
         "DurationMs": 500,
         "Energy": 7,
@@ -8224,6 +8501,7 @@
       {
         "Id": 234,
         "Name": "ZEN_HEADBUTT_FAST",
+        "Type": "PSYCHIC",
         "Power": 12,
         "DurationMs": 1050,
         "Energy": 4,
@@ -8275,6 +8553,7 @@
       {
         "Id": 218,
         "Name": "FROST_BREATH_FAST",
+        "Type": "ICE",
         "Power": 9,
         "DurationMs": 810,
         "Energy": 7,
@@ -8326,6 +8605,7 @@
       {
         "Id": 205,
         "Name": "THUNDER_SHOCK_FAST",
+        "Type": "ELECTRIC",
         "Power": 5,
         "DurationMs": 600,
         "Energy": 7,
@@ -8377,6 +8657,7 @@
       {
         "Id": 209,
         "Name": "EMBER_FAST",
+        "Type": "FIRE",
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
@@ -8428,6 +8709,7 @@
       {
         "Id": 204,
         "Name": "DRAGON_BREATH_FAST",
+        "Type": "DRAGON",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -8479,6 +8761,7 @@
       {
         "Id": 204,
         "Name": "DRAGON_BREATH_FAST",
+        "Type": "DRAGON",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -8530,6 +8813,7 @@
       {
         "Id": 204,
         "Name": "DRAGON_BREATH_FAST",
+        "Type": "DRAGON",
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
@@ -8538,6 +8822,7 @@
       {
         "Id": 239,
         "Name": "STEEL_WING_FAST",
+        "Type": "STEEL",
         "Power": 15,
         "DurationMs": 1330,
         "Energy": 4,
@@ -8588,6 +8873,7 @@
       {
         "Id": 235,
         "Name": "CONFUSION_FAST",
+        "Type": "PSYCHIC",
         "Power": 15,
         "DurationMs": 1510,
         "Energy": 7,
@@ -8596,6 +8882,7 @@
       {
         "Id": 226,
         "Name": "PSYCHO_CUT_FAST",
+        "Type": "PSYCHIC",
         "Power": 7,
         "DurationMs": 570,
         "Energy": 7,
@@ -8646,6 +8933,7 @@
       {
         "Id": 222,
         "Name": "POUND_FAST",
+        "Type": "NORMAL",
         "Power": 7,
         "DurationMs": 540,
         "Energy": 7,

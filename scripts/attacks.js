@@ -165,9 +165,11 @@ Object.keys(quickMoves).forEach((moveName) => {
     mon.moves1.push({
       Id: move.Id,
       Name: move.Name,
+      Type: move.Type,
       Power: move.Power,
       DurationMs: move.DurationMs,
       Energy: move.EnergyDelta,
+      RawDPS: move.DPS,
       DPS,
     })
   })
@@ -199,7 +201,7 @@ Object.keys(chargeMoves).forEach((moveName) => {
       Power: move.Power,
       DurationMs: move.DurationMs,
       Energy: move.EnergyDelta,
-      RAW_DPS: move.DPS,
+      RawDPS: move.DPS,
       DPS,
     })
   })
