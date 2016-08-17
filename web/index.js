@@ -162,8 +162,29 @@ class MovesStore extends Alt.Store {
   }
 }
 
+const historyActions = alt.generateActions('HistoryActions', [
+  'pokemonChecked',
+])
+
+class HistoryStore extends Alt.Store {
+  constructor() {
+    super()
+    this.state = {
+      searches: []
+    }
+    this.bindActions(historyActions)
+  }
+
+  pokemonChecked(pokemon) {
+    const searches = [pokemon].concat(this.state.searches.slice(0, 9))
+    this.setState({ searches })
+    localforage.setItem('pogoivcalc.searches', searches)
+  }
+}
+
 const inventoryStore = alt.createStore('InventoryStore', new Inventory())
 const movesStore = alt.createStore('MovesStore', new MovesStore())
+const historyStore = alt.createStore('HistoryStore', new HistoryStore())
 
 
 
@@ -194,18 +215,23 @@ const sweetMoves = (x) => {
   }
 }
 
-function calculateValues() {
-  const state = inventoryStore.getState()
+function calculateValues(nextState) {
+  const state = nextState || inventoryStore.getState()
   try {
-    const results = magic({
+    const values = {
       name: state.name,
       cp: Number(state.cp),
       hp: Number(state.hp),
       stardust: Number(state.stardust),
       level: state.level ? Number(state.level) : null,
       trainerLevel: Number(state.trainerLevel) || 27,
-    })
+    }
+    const results = magic(values)
     actions.resultsCalculated(results)
+    historyActions.pokemonChecked({
+      text: `${state.name} ${state.cp}CP`,
+      values,
+    })
   } catch (err) {
     alert('Looks like there is a problem with the values you entered.')
   }
@@ -580,6 +606,26 @@ function CheckStardust(props) {
   )
 }
 
+function SearchHistory(props) {
+  return (
+    n(B.Row, [
+      n('h3', { style: Styles.resultsRow }, 'Recent Searches'),
+      n(B.ListGroup, props.searches.map((search) => (
+        n(B.ListGroupItem, [
+          n('a', {
+            onClick: () => calculateValues(search.values),
+          }, search.text),
+        ])
+      )))
+    ])
+  )
+}
+
+const ConnectedHistory = connect(SearchHistory, {
+  listenTo: () => ({ historyStore }),
+  getProps: state => state.historyStore,
+})
+
 const ConnectedCheckStardust = connect(CheckStardust, {
   // TODO split inventoryStore and use pokemonStore or playerStore
   listenTo: () => ({ inventoryStore }),
@@ -652,10 +698,12 @@ function Form(props) {
           value: props.level,
         }),
       ]),
-      n(B.Button, { bsStyle: 'primary', onClick: calculateValues }, 'Calculate'),
+      n(B.Button, { bsStyle: 'primary', onClick: () => calculateValues() }, 'Calculate'),
       n(B.Button, { onClick: actions.valuesReset }, 'Clear'),
+      n(ConnectedHistory),
       n('hr'),
       n(ConnectedMoves),
+      n('hr'),
       n(ConnectedCheckStardust),
     ])
   ])
@@ -721,6 +769,10 @@ const ConnectedCalculator = connect(Calculator, {
   getProps(state, props) {
     return state.inventoryStore
   },
+})
+
+localforage.getItem('pogoivcalc.searches').then((searches) => {
+  if (searches) alt.load({ HistoryStore: { searches } })
 })
 
 localforage.getItem('pogoivcalc.trainerLevel').then((level) => {

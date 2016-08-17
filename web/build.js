@@ -57032,8 +57032,42 @@ var MovesStore = function (_Alt$Store2) {
   return MovesStore;
 }(Alt.Store);
 
+var historyActions = alt.generateActions('HistoryActions', ['pokemonChecked']);
+
+var HistoryStore = function (_Alt$Store3) {
+  _inherits(HistoryStore, _Alt$Store3);
+
+  function HistoryStore() {
+    _classCallCheck(this, HistoryStore);
+
+    var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(HistoryStore).call(this));
+
+    _this3.state = {
+      searches: []
+    };
+    _this3.bindActions(historyActions);
+    return _this3;
+  }
+
+  _createClass(HistoryStore, [{
+    key: 'pokemonChecked',
+    value: function () {
+      function pokemonChecked(pokemon) {
+        var searches = [pokemon].concat(this.state.searches.slice(0, 9));
+        this.setState({ searches: searches });
+        localforage.setItem('pogoivcalc.searches', searches);
+      }
+
+      return pokemonChecked;
+    }()
+  }]);
+
+  return HistoryStore;
+}(Alt.Store);
+
 var inventoryStore = alt.createStore('InventoryStore', new Inventory());
 var movesStore = alt.createStore('MovesStore', new MovesStore());
+var historyStore = alt.createStore('HistoryStore', new HistoryStore());
 
 var options = Pokemon.map(function (x) {
   return { value: x.name, label: x.name };
@@ -57074,18 +57108,23 @@ var sweetMoves = function sweetMoves(x) {
   }
 };
 
-function calculateValues() {
-  var state = inventoryStore.getState();
+function calculateValues(nextState) {
+  var state = nextState || inventoryStore.getState();
   try {
-    var results = magic({
+    var values = {
       name: state.name,
       cp: Number(state.cp),
       hp: Number(state.hp),
       stardust: Number(state.stardust),
       level: state.level ? Number(state.level) : null,
       trainerLevel: Number(state.trainerLevel) || 27
-    });
+    };
+    var results = magic(values);
     actions.resultsCalculated(results);
+    historyActions.pokemonChecked({
+      text: String(state.name) + ' ' + String(state.cp) + 'CP',
+      values: values
+    });
   } catch (err) {
     alert('Looks like there is a problem with the values you entered.');
   }
@@ -57276,6 +57315,37 @@ function CheckStardust(props) {
   })]), power && n(B.ListGroup, [n(B.ListGroupItem, 'Candy cost: ' + String(power.candy)), n(B.ListGroupItem, 'Stardust cost: ' + String(power.stardust))])]);
 }
 
+function SearchHistory(props) {
+  return n(B.Row, [n('h3', { style: Styles.resultsRow }, 'Recent Searches'), n(B.ListGroup, props.searches.map(function (search) {
+    return n(B.ListGroupItem, [n('a', {
+      onClick: function () {
+        function onClick() {
+          return calculateValues(search.values);
+        }
+
+        return onClick;
+      }()
+    }, search.text)]);
+  }))]);
+}
+
+var ConnectedHistory = connect(SearchHistory, {
+  listenTo: function () {
+    function listenTo() {
+      return { historyStore: historyStore };
+    }
+
+    return listenTo;
+  }(),
+  getProps: function () {
+    function getProps(state) {
+      return state.historyStore;
+    }
+
+    return getProps;
+  }()
+});
+
 var ConnectedCheckStardust = connect(CheckStardust, {
   // TODO split inventoryStore and use pokemonStore or playerStore
   listenTo: function () {
@@ -57344,7 +57414,13 @@ function Form(props) {
     type: 'number',
     onChange: actions.changedLevel,
     value: props.level
-  })]), n(B.Button, { bsStyle: 'primary', onClick: calculateValues }, 'Calculate'), n(B.Button, { onClick: actions.valuesReset }, 'Clear'), n('hr'), n(ConnectedMoves), n(ConnectedCheckStardust)])]);
+  })]), n(B.Button, { bsStyle: 'primary', onClick: function () {
+      function onClick() {
+        return calculateValues();
+      }
+
+      return onClick;
+    }() }, 'Calculate'), n(B.Button, { onClick: actions.valuesReset }, 'Clear'), n(ConnectedHistory), n('hr'), n(ConnectedMoves), n('hr'), n(ConnectedCheckStardust)])]);
 }
 
 function Calculator(props) {
@@ -57358,23 +57434,23 @@ function connect(Component, o) {
     function ConnectedComponent() {
       _classCallCheck(this, ConnectedComponent);
 
-      var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(ConnectedComponent).call(this));
+      var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(ConnectedComponent).call(this));
 
-      _this3.stores = o.listenTo();
-      _this3.subscriptions = [];
+      _this4.stores = o.listenTo();
+      _this4.subscriptions = [];
 
-      _this3.state = _this3.computeState();
-      return _this3;
+      _this4.state = _this4.computeState();
+      return _this4;
     }
 
     _createClass(ConnectedComponent, [{
       key: 'computeState',
       value: function () {
         function computeState() {
-          var _this4 = this;
+          var _this5 = this;
 
           return Object.keys(this.stores).reduce(function (obj, key) {
-            var store = _this4.stores[key];
+            var store = _this5.stores[key];
             obj[key] = store.getState();
             return obj;
           }, {});
@@ -57386,11 +57462,11 @@ function connect(Component, o) {
       key: 'componentDidMount',
       value: function () {
         function componentDidMount() {
-          var _this5 = this;
+          var _this6 = this;
 
           this.subscriptions = Object.keys(this.stores).map(function (key) {
-            return _this5.stores[key].subscribe(function () {
-              return _this5.setState(_this5.computeState());
+            return _this6.stores[key].subscribe(function () {
+              return _this6.setState(_this6.computeState());
             });
           });
         }
@@ -57439,6 +57515,10 @@ var ConnectedCalculator = connect(Calculator, {
 
     return getProps;
   }()
+});
+
+localforage.getItem('pogoivcalc.searches').then(function (searches) {
+  if (searches) alt.load({ HistoryStore: { searches: searches } });
 });
 
 localforage.getItem('pogoivcalc.trainerLevel').then(function (level) {
