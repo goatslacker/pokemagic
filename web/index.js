@@ -12,6 +12,7 @@ const findPokemon = require('../src/findPokemon')
 const localforage = require('localforage')
 const magic = require('../src/magic')
 const n = require('./n')
+const powerupTools = require('../src/powerup')
 
 const Mon = Pokemon.reduce((obj, mon) => {
   obj[mon.name] = mon.id
@@ -532,6 +533,59 @@ const ConnectedMoves = connect(MovesCheck, {
   getProps: state => state.movesStore,
 })
 
+function CheckStardust(props) {
+  const dust = DustToLevel[props.stardust] || []
+  const minPokemonLevel = Math.min.apply(null, dust)
+
+  const power = powerupTools.howMuchPowerUp(
+    Number(props.level || minPokemonLevel),
+    Number(props.trainerLevel)
+  )
+
+  return (
+    n(B.Row, [
+      n(B.PageHeader, 'Check stardust and candy cost'),
+      n(B.FormGroup, { controlId: 'trainerlevel' }, [
+        n(B.ControlLabel, 'Trainer Level'),
+        n(B.FormControl, {
+          type: 'number',
+          onChange: actions.changedTrainerLevel,
+          value: props.trainerLevel,
+        }),
+      ]),
+      n(B.FormGroup, { controlId: 'dust' }, [
+        n(B.ControlLabel, 'Stardust'),
+        n(Select, {
+          name: 'stardust-selector',
+          value: props.stardust,
+          options: dustOptions,
+          onChange: logStardust,
+        }),
+      ]),
+      n(B.FormGroup, { controlId: 'level' }, [
+        n(B.ControlLabel, 'Pokemon Level (optional)'),
+        n(B.FormControl, {
+          type: 'number',
+          onChange: actions.changedLevel,
+          value: props.level,
+        }),
+      ]),
+      power && (
+        n(B.ListGroup, [
+          n(B.ListGroupItem, `Candy cost: ${power.candy}`),
+          n(B.ListGroupItem, `Stardust cost: ${power.stardust}`),
+        ])
+      ),
+    ])
+  )
+}
+
+const ConnectedCheckStardust = connect(CheckStardust, {
+  // TODO split inventoryStore and use pokemonStore or playerStore
+  listenTo: () => ({ inventoryStore }),
+  getProps: state => state.inventoryStore,
+})
+
 function Form(props) {
   if (props.results) return n('noscript')
 
@@ -602,6 +656,7 @@ function Form(props) {
       n(B.Button, { onClick: actions.valuesReset }, 'Clear'),
       n('hr'),
       n(ConnectedMoves),
+      n(ConnectedCheckStardust),
     ])
   ])
 }
