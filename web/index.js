@@ -203,7 +203,7 @@ function calculateValues() {
       hp: Number(state.hp),
       stardust: Number(state.stardust),
       level: state.level ? Number(state.level) : null,
-      trainerLevel: Number(state.trainerLevel) || 26,
+      trainerLevel: Number(state.trainerLevel) || 27,
     })
     actions.resultsCalculated(results)
   } catch (err) {
