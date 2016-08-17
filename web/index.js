@@ -1,16 +1,17 @@
+const B = require('react-bootstrap')
+const DustToLevel = require('../json/dust-to-level.json')
+const Moves = require('../json/moves.json')
+const Pokemon = require('../json/pokemon.json')
 const React = require('react')
 const ReactDOM = require('react-dom')
 const Select = require('react-select')
-const Pokemon = require('../json/pokemon.json')
-const Moves = require('../json/moves.json')
-const DustToLevel = require('../json/dust-to-level.json')
-const n = require('./n')
-const magic = require('../src/magic')
-const B = require('react-bootstrap')
-const bestMovesFor = require('../src/best-moves')
-const localforage = require('localforage')
 const Spinner = require('react-spinkit')
+const bestMovesFor = require('../src/best-moves')
 const finalEvolutions = require('../json/finalEvolutions')
+const findPokemon = require('../src/findPokemon')
+const localforage = require('localforage')
+const magic = require('../src/magic')
+const n = require('./n')
 
 const Mon = Pokemon.reduce((obj, mon) => {
   obj[mon.name] = mon.id
@@ -69,11 +70,11 @@ class Inventory extends Alt.Store {
     super()
     this.bindActions(actions)
     this.state = {
-      name: 'KADABRA',
-      cp: 593,
-      hp: 54,
+      name: 'FLAREON',
+      cp: 1418,
+      hp: 84,
       stardust: '2500',
-      trainerLevel: 26,
+      trainerLevel: 27,
       level: 0,
       results: null,
       processingImage: false,
@@ -235,7 +236,7 @@ const Styles = {
 function Results(props) {
   var bestMoves = null
   if (finalEvolutions[props.pokemon.name]) {
-    bestMoves = bestMovesFor(props.pokemon.name)
+    bestMoves = bestMovesFor(props.pokemon.name, props.best.ivs.IndAtk)
   }
 
   console.log(props)
@@ -252,7 +253,13 @@ function Results(props) {
         n('div', { style: Styles.pokemonImage }, [
           n('img', { src: `images/${props.pokemon.name}.png`, height: 150, width: 150 }),
         ]),
-        n('div', { style: Styles.bigText }, `${props.range.iv[0]}% - ${props.range.iv[1]}%`),
+        n(
+          'div',
+          { style: Styles.bigText },
+          props.range.iv[0] === props.range.iv[1]
+            ? `${props.range.iv[0]}%`
+            : `${props.range.iv[0]}% - ${props.range.iv[1]}%`
+        ),
         n('div', { style: Styles.resultsRow }, [
           props.chance === 100
             ? `Keep your ${props.pokemon.cp}CP ${props.pokemon.name}`
@@ -265,15 +272,23 @@ function Results(props) {
       n(B.Row, [
         n('h3', { style: Styles.resultsRow }, `Possible values (${props.values.length})`),
         n('p', { style: Styles.resultsRow }, [
-          'There are ',
-          n('strong', props.values.length),
-          ' possibilities and a ',
-          n('strong', `${props.chance}%`),
-          ` chance you will have a good ${props.pokemon.name}. `,
-          'We are showing up to ',
-          n('strong', 10),
-          ' possibilities below.',
-          ' Highlighted rows show even levels since you can only catch even leveled Pokemon.',
+          props.values.length === 1
+            ? n('span', 'Congrats, here are your Pokemon\'s values')
+            : n('span', [
+              'There are ',
+              n('strong', props.values.length),
+              ' possibilities and a ',
+              n('strong', `${props.chance}%`),
+              ` chance you will have a good ${props.pokemon.name}. `,
+              props.values.length > 10 && (
+                n('span', [
+                  'We are showing up to ',
+                  n('strong', 10),
+                  ' possibilities below. ',
+                ])
+              ),
+              'Highlighted rows show even levels since you can only catch even leveled Pokemon.',
+            ]),
         ]),
         n(B.Table, {
           bordered: true,
@@ -316,20 +331,27 @@ function Results(props) {
       // We should only show best moveset if it is in its final evolved form...
       bestMoves && (
         n(B.Row, [
-          n('h3', { style: Styles.resultsRow }, `Best moveset for ${props.pokemon.name}`),
-          n(B.Col, { xs: 6, style: Styles.resultsRow }, [
-            n(B.Panel, [
-              n('div', 'Quick Move'),
-              n('h5', bestMoves.quick),
-              n('div', `${bestMoves.dps1} dmg/sec`),
+          n('h3', { style: Styles.resultsRow }, `Best moveset combos for ${props.pokemon.name}`),
+          n(B.Table, {
+            bordered: true,
+            condensed: true,
+            hover: true,
+            striped: true,
+          }, [
+            n('thead', [
+              n('tr', [
+                n('th', 'Quick Move'),
+                n('th', 'Charge Move'),
+                n('th', 'Combo DPS'),
+              ]),
             ]),
-          ]),
-          n(B.Col, { xs: 6, style: Styles.resultsRow }, [
-            n(B.Panel, [
-              n('div', 'Charge Move'),
-              n('h5', bestMoves.charge),
-              n('div', `${bestMoves.dps2} dmg/sec`),
-            ]),
+            n('tbody', bestMoves.map((move) => (
+              n('tr', [
+                n('td', move.quick.name),
+                n('td', move.charge.name),
+                n('td', move.dps),
+              ])
+            ))),
           ]),
         ])
       ),

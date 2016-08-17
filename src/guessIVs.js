@@ -105,6 +105,7 @@ function guessIVs(pokemon, mon, ECpM) {
         var MaxEvolveCP = null
 
         // If we can evolve it, what would it evolve to and what does it power up to?
+        // TODO if flareon, jolteon, vaporeon...
         if (CPM[pokemon.name.toUpperCase()]) {
           EvolveCP = Math.floor(CPM[pokemon.name.toUpperCase()][1] * CP / 100) * 100
           MaxEvolveCP = Math.floor(CPM[pokemon.name.toUpperCase()][1] * MaxCP / 100) * 100
