@@ -7,6 +7,7 @@ const Results = require('./Results')
 const calculateValues = require('../utils/calculateValues')
 const n = require('../utils/n')
 const pokemonActions = require('../actions/pokemonActions')
+const SearchHistoryContainer = require('../containers/SearchHistoryContainer')
 
 function Rater(props) {
   if (props.results) return n(Results, props.results)
@@ -37,6 +38,7 @@ function Rater(props) {
     n(FormPokemonLevel, { level: props.level }),
     n(B.Button, { bsStyle: 'primary', onClick: () => calculateValues() }, 'Calculate'),
     n(B.Button, { onClick: pokemonActions.valuesReset }, 'Clear'),
+    n(SearchHistoryContainer),
   ])
 }
 

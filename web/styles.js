@@ -1,4 +1,16 @@
 module.exports = {
+  main: {
+    display: 'flex',
+    height: '100%',
+    flexDirection: 'column',
+  },
+
+  container: {
+    flex: 9,
+    margin: '0 auto',
+    overflowY: 'scroll',
+  },
+
   resultsRow: {
     textAlign: 'center',
   },
@@ -15,5 +27,21 @@ module.exports = {
   bigText: {
     fontSize: '1.5em',
     fontWeight: 'bold',
+  },
+
+  menu: {
+    alignItems: 'center',
+    backgroundColor: '#6297de',
+    display: 'flex',
+    flex: 1,
+    justifyContent: 'space-around',
+  },
+
+  link: {
+    color: '#fff',
+  },
+
+  activeLink: {
+    color: '#f0d827',
   },
 }
