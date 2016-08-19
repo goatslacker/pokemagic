@@ -18,6 +18,7 @@ function PowerUp(props) {
   return (
     n(B.Row, [
       n(B.PageHeader, 'Power Up costs'),
+      n('p', 'Find out how much stardust and candy it will cost to max your Pokemon out.'),
       n(FormTrainerLevel, {
         trainerLevel: props.trainerLevel,
       }),
