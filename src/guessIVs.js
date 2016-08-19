@@ -23,6 +23,12 @@ function calcIndSta(hp, BaseSta, ECpM) {
     .filter(IndSta => hp === Math.floor(ECpM * (BaseSta + IndSta)))
 }
 
+const EEVEELUTIONS = {
+  JOLTEON: 1,
+  FLAREON: 1,
+  VAPOREON: 1,
+}
+
 // A formula that determines in which percentile you are for Atk + Def
 function getAttackPercentage(IndAtk, IndDef) {
   return Math.round((IndAtk + IndDef) / 30 * 100)
@@ -105,8 +111,7 @@ function guessIVs(pokemon, mon, ECpM) {
         var MaxEvolveCP = null
 
         // If we can evolve it, what would it evolve to and what does it power up to?
-        // TODO if flareon, jolteon, vaporeon...
-        if (CPM[pokemon.name.toUpperCase()]) {
+        if (!EEVEELUTIONS.hasOwnProperty(pokemon.name.toUpperCase()) && CPM[pokemon.name.toUpperCase()]) {
           EvolveCP = Math.floor(CPM[pokemon.name.toUpperCase()][1] * CP / 100) * 100
           MaxEvolveCP = Math.floor(CPM[pokemon.name.toUpperCase()][1] * MaxCP / 100) * 100
         }
