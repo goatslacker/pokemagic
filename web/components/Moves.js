@@ -40,6 +40,7 @@ function Moves(props) {
   return (
     n(B.Row, [
       n(B.PageHeader, 'Moveset Information'),
+      n('p', 'Calculate the ideal combination movesets for your Pokemon. Featuring a combined DPS score for each possible move combination. The DPS is calculated assuming a Pokemon will be using their quick move constantly and their charge move immediately when it becomes available. STAB damage is taken into account as well as each move\'s animation time. You can also use this search to look up which Pokemon can learn a particular move.'),
       n(B.FormGroup, { controlId: 'moves' }, [
         n(B.ControlLabel, 'Moves'),
         n(Select, {
