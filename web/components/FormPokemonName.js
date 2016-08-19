@@ -5,7 +5,7 @@ const n = require('../utils/n')
 const pokemonActions = require('../actions/pokemonActions')
 
 const options = Pokemon.map(x => ({ label: x.name.replace(/_/g, ' '), value: x.name }))
-const logName = x => pokemonActions.changedName(x.value)
+const logName = x => pokemonActions.changedName(x && x.value)
 
 function FormPokemonName(props) {
   return (

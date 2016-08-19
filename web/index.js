@@ -48,7 +48,7 @@ function Main(props) {
         className: 'container',
       }, props.children),
     ]),
-    n(B.View, { style: Styles.menu }, [
+    n(B.View, { className: 'nav', style: Styles.menu }, [
       n(RR.Link, { style: Styles.link, to: '/' }, 'Rater'),
       n(RR.Link, { style: Styles.link, to: 'moves' }, 'Moves'),
       n(RR.Link, { style: Styles.link, to: 'power' }, 'PowerUp Cost'),

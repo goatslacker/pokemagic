@@ -5,7 +5,7 @@ const n = require('../utils/n')
 const pokemonActions = require('../actions/pokemonActions')
 
 const dustOptions = Object.keys(DustToLevel).map(x => ({ value: x, label: x }))
-const logStardust = x => pokemonActions.changedStardust(x.value)
+const logStardust = x => pokemonActions.changedStardust(x && x.value)
 
 function FormStardust(props) {
   return (

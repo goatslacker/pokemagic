@@ -42745,79 +42745,83 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 module.exports = require('./lib/React');
 
 },{"./lib/React":115}],262:[function(require,module,exports){
-const Pokemon = require('../json/pokemon.json')
+var Pokemon = require('../json/pokemon.json');
 
 function getDmg(atk, power, stab) {
-  const def = 100
-  const ECpM = 0.790300
-  return (0.5 * atk * ECpM / (def * ECpM ) * power * stab) + 1
+  var def = 100;
+  var ECpM = 0.790300;
+  return 0.5 * atk * ECpM / (def * ECpM) * power * stab + 1;
 }
 
 function getDPS(dmg, duration) {
-  return Number((dmg / (duration / 1000)).toFixed(2)) || 0
+  return Number((dmg / (duration / 1000)).toFixed(2)) || 0;
 }
 
 function battleDPS(atk, move1, move2, stab1, stab2) {
-  const quickHits = Math.ceil(100 / move1.Energy)
-  const chargeHits = Math.abs(Math.ceil(100 / move2.Energy))
+  var quickHits = Math.ceil(100 / move1.Energy);
+  var chargeHits = Math.abs(Math.ceil(100 / move2.Energy));
 
-  const timeToQuick = quickHits * move1.DurationMs
-  const timeToCharge = chargeHits * move2.DurationMs
+  var timeToQuick = quickHits * move1.DurationMs;
+  var timeToCharge = chargeHits * move2.DurationMs;
 
-  const chargeDmg = getDmg(atk, move2.Power, stab2) * chargeHits
-  const quickDmg = getDmg(atk, move1.Power, stab1) * quickHits
+  var chargeDmg = getDmg(atk, move2.Power, stab2) * chargeHits;
+  var quickDmg = getDmg(atk, move1.Power, stab1) * quickHits;
 
-  const dps = getDPS(chargeDmg + quickDmg, timeToQuick + timeToCharge)
+  var dps = getDPS(chargeDmg + quickDmg, timeToQuick + timeToCharge);
 
   return {
-    quickHits,
-    chargeHits,
-    dps,
-  }
+    quickHits: quickHits,
+    chargeHits: chargeHits,
+    dps: dps
+  };
 }
 
 function getBestMoves(mon, IndAtk) {
-  const stuff = []
+  var stuff = [];
 
-  mon.moves1.forEach((move1) => {
-    mon.moves2.forEach((move2) => {
-      const stab1 = move1.Type === mon.type1 || move1.Type === mon.type2 ? 1.25 : 1
-      const stab2 = move2.Type === mon.type1 || move2.Type === mon.type2 ? 1.25 : 1
+  mon.moves1.forEach(function (move1) {
+    mon.moves2.forEach(function (move2) {
+      var stab1 = move1.Type === mon.type1 || move1.Type === mon.type2 ? 1.25 : 1;
+      var stab2 = move2.Type === mon.type1 || move2.Type === mon.type2 ? 1.25 : 1;
 
-      const total = battleDPS(mon.stats.attack, move1, move2, stab1, stab2)
-      const dps = total.dps
+      var total = battleDPS(mon.stats.attack, move1, move2, stab1, stab2);
+      var dps = total.dps;
 
-      const dmg1 = getDmg(mon.stats.attack, move1.Power, stab1)
-      const dmg2 = getDmg(mon.stats.attack, move2.Power, stab2)
-      const dps1 = getDPS(dmg1, move1.DurationMs)
-      const dps2 = getDPS(dmg2, move2.DurationMs)
+      var dmg1 = getDmg(mon.stats.attack, move1.Power, stab1);
+      var dmg2 = getDmg(mon.stats.attack, move2.Power, stab2);
+      var dps1 = getDPS(dmg1, move1.DurationMs);
+      var dps2 = getDPS(dmg2, move2.DurationMs);
 
       stuff.push({
-        dps,
+        dps: dps,
         quick: {
           name: move1.Name,
-          dps: dps1,
+          dps: dps1
         },
         charge: {
           name: move2.Name,
-          dps: dps2,
+          dps: dps2
         },
-        total,
-      })
-    })
-  })
+        total: total
+      });
+    });
+  });
 
-  return stuff.sort((a, b) => a.dps > b.dps ? -1 : 1)
+  return stuff.sort(function (a, b) {
+    return a.dps > b.dps ? -1 : 1;
+  });
 }
 
 function bestMovesFor(pokemonName, IndAtk) {
-  const fmtName = pokemonName.toUpperCase().trim()
-  const mon = Pokemon.filter(x => x.name === fmtName)[0]
-  if (!mon) throw new Error(`Cannot find ${fmtName}`)
-  return getBestMoves(mon, IndAtk || 0)
+  var fmtName = pokemonName.toUpperCase().trim();
+  var mon = Pokemon.filter(function (x) {
+    return x.name === fmtName;
+  })[0];
+  if (!mon) throw new Error('Cannot find ' + String(fmtName));
+  return getBestMoves(mon, IndAtk || 0);
 }
 
-module.exports = bestMovesFor
+module.exports = bestMovesFor;
 
 // Find the top 20 Pokemon with the most DPS and their moveset
 //console.log(
@@ -42844,20 +42848,14 @@ module.exports = bestMovesFor
 },{"../json/pokemon.json":7}],263:[function(require,module,exports){
 // Formula to calculate the CP given the IVs and ECpM
 function getCP(mon, ivs, ECpM) {
-  const BaseAtk = mon.stats.attack
-  const BaseDef = mon.stats.defense
-  const BaseSta = mon.stats.stamina
-  const IndAtk = ivs.atk
-  const IndDef = ivs.def
-  const IndSta = ivs.sta
+  var BaseAtk = mon.stats.attack;
+  var BaseDef = mon.stats.defense;
+  var BaseSta = mon.stats.stamina;
+  var IndAtk = ivs.atk;
+  var IndDef = ivs.def;
+  var IndSta = ivs.sta;
 
-  return Math.floor(
-    (BaseAtk + IndAtk) *
-    Math.pow(BaseDef + IndDef, 0.5) *
-    Math.pow(BaseSta + IndSta, 0.5) *
-    Math.pow(ECpM, 2) /
-    10
-  )
+  return Math.floor((BaseAtk + IndAtk) * Math.pow(BaseDef + IndDef, 0.5) * Math.pow(BaseSta + IndSta, 0.5) * Math.pow(ECpM, 2) / 10);
 }
 
 // The minimum CP for your Pokemon's level
@@ -42865,8 +42863,8 @@ function getMinCPForLevel(mon, ECpM) {
   return getCP(mon, {
     atk: 0,
     def: 0,
-    sta: 0,
-  }, ECpM)
+    sta: 0
+  }, ECpM);
 }
 
 // The maximum CP for your Pokemon's level
@@ -42874,447 +42872,445 @@ function getMaxCPForLevel(mon, ECpM) {
   return getCP(mon, {
     atk: 15,
     def: 15,
-    sta: 15,
-  }, ECpM)
+    sta: 15
+  }, ECpM);
 }
-
 
 module.exports = {
-  getCP,
-  getMaxCPForLevel,
-  getMinCPForLevel,
-}
+  getCP: getCP,
+  getMaxCPForLevel: getMaxCPForLevel,
+  getMinCPForLevel: getMinCPForLevel
+};
 
 },{}],264:[function(require,module,exports){
-const Pokemon = require('../json/pokemon')
+var Pokemon = require('../json/pokemon');
 
 function findPokemon(name) {
-  const fmtName = name.toUpperCase()
+  var fmtName = name.toUpperCase();
 
-  return Object.keys(Pokemon).reduce((a, key) => {
-    if (a) return a
-    if (Pokemon[key].name === fmtName) return Pokemon[key]
-    return null
-  }, null)
+  return Object.keys(Pokemon).reduce(function (a, key) {
+    if (a) return a;
+    if (Pokemon[key].name === fmtName) return Pokemon[key];
+    return null;
+  }, null);
 }
 
-module.exports = findPokemon
+module.exports = findPokemon;
 
 },{"../json/pokemon":7}],265:[function(require,module,exports){
-'use strict'
+'use strict';
 
-const Pokemon = require('../json/pokemon.json')
-const LevelToCPM = require('../json/level-to-cpm.json')
-const CPM = require('../json/cpm.json')
-const DustToLevel = require('../json/dust-to-level')
+var Pokemon = require('../json/pokemon.json');
+var LevelToCPM = require('../json/level-to-cpm.json');
+var CPM = require('../json/cpm.json');
+var DustToLevel = require('../json/dust-to-level');
 
-const cpTools = require('./cp')
-const hpTools = require('./hp')
-const powerupTools = require('./powerup')
+var cpTools = require('./cp');
+var hpTools = require('./hp');
+var powerupTools = require('./powerup');
 
 function getMaxLevel(trainerLevel) {
-  return LevelToCPM[String((trainerLevel || 0) + 1.5)]
+  return LevelToCPM[String((trainerLevel || 0) + 1.5)];
 }
 
 function percentInRange(num, min, max) {
-  return ((num - min) * 100) / (max - min)
+  return (num - min) * 100 / (max - min);
 }
 
 function calcIndSta(hp, BaseSta, ECpM) {
-  return Array.from(Array(16))
-    .map((_, i) => i)
-    .filter(IndSta => hp === Math.floor(ECpM * (BaseSta + IndSta)))
+  return Array.from(Array(16)).map(function (_, i) {
+    return i;
+  }).filter(function (IndSta) {
+    return hp === Math.floor(ECpM * (BaseSta + IndSta));
+  });
 }
 
-const EEVEELUTIONS = {
+var EEVEELUTIONS = {
   JOLTEON: 1,
   FLAREON: 1,
-  VAPOREON: 1,
-}
+  VAPOREON: 1
+};
 
 // A formula that determines in which percentile you are for Atk + Def
 function getAttackPercentage(IndAtk, IndDef) {
-  return Math.round((IndAtk + IndDef) / 30 * 100)
+  return Math.round((IndAtk + IndDef) / 30 * 100);
 }
 
 function guessIVs(pokemon, mon, ECpM) {
-  const Name = pokemon.name.toUpperCase()
+  var Name = pokemon.name.toUpperCase();
 
-  const BaseSta = mon.stats.stamina
+  var BaseSta = mon.stats.stamina;
 
-  const Level = Object.keys(LevelToCPM).reduce((lvl, key) => {
+  var Level = Object.keys(LevelToCPM).reduce(function (lvl, key) {
     if (LevelToCPM[key] === ECpM) {
-      return key
+      return key;
     }
-    return lvl
-  }, null)
+    return lvl;
+  }, null);
 
-  const IndStaValues = calcIndSta(pokemon.hp, BaseSta, ECpM)
+  var IndStaValues = calcIndSta(pokemon.hp, BaseSta, ECpM);
 
-  const MaxLevel = Number(pokemon.trainerLevel) + 1.5
-  const MaxLevelCpM = getMaxLevel(pokemon.trainerLevel)
+  var MaxLevel = Number(pokemon.trainerLevel) + 1.5;
+  var MaxLevelCpM = getMaxLevel(pokemon.trainerLevel);
 
   // If you max this pokemon out, what CP/HP would it have given Perfect IVs
-  const MaxedPossibleCP = cpTools.getMaxCPForLevel(mon, MaxLevelCpM)
-  const MaxedPossibleHP = hpTools.getMaxHPForLevel(mon, MaxLevelCpM)
+  var MaxedPossibleCP = cpTools.getMaxCPForLevel(mon, MaxLevelCpM);
+  var MaxedPossibleHP = hpTools.getMaxHPForLevel(mon, MaxLevelCpM);
 
   // What is this Pokemon's Max/Min CP/HP for your current level given Perfect IVs
-  const MaxLevelCP = cpTools.getMaxCPForLevel(mon, ECpM)
-  const MinLevelCP = cpTools.getMinCPForLevel(mon, ECpM)
-  const MaxLevelHP = hpTools.getMaxHPForLevel(mon, ECpM)
-  const MinLevelHP = hpTools.getMinHPForLevel(mon, ECpM)
+  var MaxLevelCP = cpTools.getMaxCPForLevel(mon, ECpM);
+  var MinLevelCP = cpTools.getMinCPForLevel(mon, ECpM);
+  var MaxLevelHP = hpTools.getMaxHPForLevel(mon, ECpM);
+  var MinLevelHP = hpTools.getMinHPForLevel(mon, ECpM);
 
   // Where is your Pokemon in terms of the CP/HP scale
-  const PercentHP = Math.round(percentInRange(pokemon.hp, MinLevelHP, MaxLevelHP))
-  const PercentCP = Math.round(percentInRange(pokemon.cp, MinLevelCP, MaxLevelCP))
+  var PercentHP = Math.round(percentInRange(pokemon.hp, MinLevelHP, MaxLevelHP));
+  var PercentCP = Math.round(percentInRange(pokemon.cp, MinLevelCP, MaxLevelCP));
 
-  const maxLevel = pokemon.level || Math.max.apply(null, DustToLevel[pokemon.stardust])
+  var maxLevel = pokemon.level || Math.max.apply(null, DustToLevel[pokemon.stardust]);
 
   // How much powerup does it cost
-  const powerup = powerupTools.howMuchPowerUp(maxLevel, pokemon.trainerLevel)
-  const Stardust = powerup.stardust
-  const Candy = powerup.candy
+  var powerup = powerupTools.howMuchPowerUp(maxLevel, pokemon.trainerLevel);
+  var Stardust = powerup.stardust;
+  var Candy = powerup.candy;
 
   // Brute force find the IVs.
   // For every possible IndSta we'll loop through IndAtk and IndDef until we
   // find CPs that match your Pokemon's CP. Those are possible matches and are
   // returned by this function.
-  const possibleValues = []
-  IndStaValues.forEach((IndSta) => {
-    for (let IndAtk = 0; IndAtk <= 15; IndAtk += 1) {
-      for (let IndDef = 0; IndDef <= 15; IndDef += 1) {
-        const CP = cpTools.getCP(mon, {
+  var possibleValues = [];
+  IndStaValues.forEach(function (IndSta) {
+    for (var IndAtk = 0; IndAtk <= 15; IndAtk += 1) {
+      for (var IndDef = 0; IndDef <= 15; IndDef += 1) {
+        var CP = cpTools.getCP(mon, {
           atk: IndAtk,
           def: IndDef,
-          sta: IndSta,
-        }, ECpM)
-        const HP = pokemon.hp
+          sta: IndSta
+        }, ECpM);
+        var HP = pokemon.hp;
 
-        const BaseAtk = mon.stats.attack
-        const Atk = (BaseAtk + IndAtk) * ECpM
+        var BaseAtk = mon.stats.attack;
+        var Atk = (BaseAtk + IndAtk) * ECpM;
 
-        const BaseDef = mon.stats.defense
-        const Def = (BaseDef + IndDef) * ECpM
+        var BaseDef = mon.stats.defense;
+        var Def = (BaseDef + IndDef) * ECpM;
 
-        const BaseSta = mon.stats.stamina
-        const Sta = (BaseSta + IndSta) * ECpM
+        var _BaseSta = mon.stats.stamina;
+        var Sta = (_BaseSta + IndSta) * ECpM;
 
         // The maximum CP and HP potential this Pokemon has
-        const MaxCP = cpTools.getCP(mon, {
+        var MaxCP = cpTools.getCP(mon, {
           atk: IndAtk,
           def: IndDef,
-          sta: IndSta,
-        }, MaxLevelCpM)
-        const MaxHP = hpTools.getHP(mon, IndSta, MaxLevelCpM)
+          sta: IndSta
+        }, MaxLevelCpM);
+        var MaxHP = hpTools.getHP(mon, IndSta, MaxLevelCpM);
 
-        const PerfectIV = Math.round((IndAtk + IndDef + IndSta) / 45 * 100)
-        const PercentBatt = getAttackPercentage(IndAtk, IndDef)
+        var PerfectIV = Math.round((IndAtk + IndDef + IndSta) / 45 * 100);
+        var PercentBatt = getAttackPercentage(IndAtk, IndDef);
 
-        var EvolveCP = null
-        var MaxEvolveCP = null
+        var EvolveCP = null;
+        var MaxEvolveCP = null;
 
         // If we can evolve it, what would it evolve to and what does it power up to?
         if (!EEVEELUTIONS.hasOwnProperty(pokemon.name.toUpperCase()) && CPM[pokemon.name.toUpperCase()]) {
-          EvolveCP = Math.floor(CPM[pokemon.name.toUpperCase()][1] * CP / 100) * 100
-          MaxEvolveCP = Math.floor(CPM[pokemon.name.toUpperCase()][1] * MaxCP / 100) * 100
+          EvolveCP = Math.floor(CPM[pokemon.name.toUpperCase()][1] * CP / 100) * 100;
+          MaxEvolveCP = Math.floor(CPM[pokemon.name.toUpperCase()][1] * MaxCP / 100) * 100;
         }
 
         if (pokemon.cp === CP) {
           possibleValues.push({
-            Name,
-            Level,
-            CP,
-            HP,
-            Atk,
-            Def,
-            Sta,
-            ECpM,
+            Name: Name,
+            Level: Level,
+            CP: CP,
+            HP: HP,
+            Atk: Atk,
+            Def: Def,
+            Sta: Sta,
+            ECpM: ECpM,
             ivs: {
-              IndAtk,
-              IndDef,
-              IndSta,
+              IndAtk: IndAtk,
+              IndDef: IndDef,
+              IndSta: IndSta
             },
             strings: {
-              iv: `${IndAtk}/${IndDef}/${IndSta}`,
-              batt: `${IndAtk + IndDef}/30`,
-              maxcp: `${MaxCP}/${MaxedPossibleCP}`,
-              maxhp: `${MaxHP}/${MaxedPossibleHP}`,
+              iv: IndAtk + '/' + IndDef + '/' + String(IndSta),
+              batt: IndAtk + IndDef + '/30',
+              maxcp: String(MaxCP) + '/' + String(MaxedPossibleCP),
+              maxhp: String(MaxHP) + '/' + String(MaxedPossibleHP)
             },
             percent: {
-              PercentBatt,
-              PercentCP,
-              PercentHP,
-              PerfectIV,
+              PercentBatt: PercentBatt,
+              PercentCP: PercentCP,
+              PercentHP: PercentHP,
+              PerfectIV: PerfectIV
             },
             meta: {
-              Stardust,
-              Candy,
-              EvolveCP,
-              MaxEvolveCP,
-              MinLevelCP,
-              MaxLevelCP,
-              MinLevelHP,
-              MaxLevelHP,
-              MaxCP,
-              MaxHP,
-              MaxLevel,
-              MaxedPossibleCP,
-              MaxedPossibleHP,
-            },
-          })
+              Stardust: Stardust,
+              Candy: Candy,
+              EvolveCP: EvolveCP,
+              MaxEvolveCP: MaxEvolveCP,
+              MinLevelCP: MinLevelCP,
+              MaxLevelCP: MaxLevelCP,
+              MinLevelHP: MinLevelHP,
+              MaxLevelHP: MaxLevelHP,
+              MaxCP: MaxCP,
+              MaxHP: MaxHP,
+              MaxLevel: MaxLevel,
+              MaxedPossibleCP: MaxedPossibleCP,
+              MaxedPossibleHP: MaxedPossibleHP
+            }
+          });
         }
       }
     }
-  })
+  });
 
-  return possibleValues
+  return possibleValues;
 }
 
-module.exports = guessIVs
+module.exports = guessIVs;
 
 },{"../json/cpm.json":1,"../json/dust-to-level":2,"../json/level-to-cpm.json":4,"../json/pokemon.json":7,"./cp":263,"./hp":266,"./powerup":271}],266:[function(require,module,exports){
 // Formula to calculate the HP given the IV stamina and ECpM
 function getHP(mon, IndSta, ECpM) {
-  const BaseSta = mon.stats.stamina
-  return Math.floor(ECpM * (BaseSta + IndSta))
+  var BaseSta = mon.stats.stamina;
+  return Math.floor(ECpM * (BaseSta + IndSta));
 }
 
 // The maximum HP for your Pokemon's current level
 function getMaxHPForLevel(mon, ECpM) {
-  return getHP(mon, 15, ECpM)
+  return getHP(mon, 15, ECpM);
 }
 
 // The minimum HP for your Pokemon's current level
 function getMinHPForLevel(mon, ECpM) {
-  return getHP(mon, 0, ECpM)
+  return getHP(mon, 0, ECpM);
 }
 
 module.exports = {
-  getHP,
-  getMaxHPForLevel,
-  getMinHPForLevel,
-}
+  getHP: getHP,
+  getMaxHPForLevel: getMaxHPForLevel,
+  getMinHPForLevel: getMinHPForLevel
+};
 
 },{}],267:[function(require,module,exports){
-const Pokemon = require('../json/pokemon.json')
+var Pokemon = require('../json/pokemon.json');
 
-const LegendaryPokemon = {
+var LegendaryPokemon = {
   ARTICUNO: 1,
   MEW: 1,
   MEWTWO: 1,
   MOLTRES: 1,
-  ZAPDOS: 1,
-}
+  ZAPDOS: 1
+};
 
-const BUG = 'BUG'
-const DARK = 'DARK'
-const DRAGON = 'DRAGON'
-const ELECTRIC = 'ELECTRIC'
-const FAIRY = 'FAIRY'
-const FIGHTING = 'FIGHTING'
-const FIRE = 'FIRE'
-const FLYING = 'FLYING'
-const GHOST = 'GHOST'
-const GRASS = 'GRASS'
-const GROUND = ' GROUND'
-const ICE = 'ICE'
-const NORMAL = 'NORMAL'
-const POISON = 'POISON'
-const PSYCHIC = 'PSYCHIC'
-const ROCK = 'ROCK'
-const STEEL = 'STEEL'
-const WATER = 'WATER'
+var BUG = 'BUG';
+var DARK = 'DARK';
+var DRAGON = 'DRAGON';
+var ELECTRIC = 'ELECTRIC';
+var FAIRY = 'FAIRY';
+var FIGHTING = 'FIGHTING';
+var FIRE = 'FIRE';
+var FLYING = 'FLYING';
+var GHOST = 'GHOST';
+var GRASS = 'GRASS';
+var GROUND = ' GROUND';
+var ICE = 'ICE';
+var NORMAL = 'NORMAL';
+var POISON = 'POISON';
+var PSYCHIC = 'PSYCHIC';
+var ROCK = 'ROCK';
+var STEEL = 'STEEL';
+var WATER = 'WATER';
 
-const SuperEffectiveTypes = {
-  BUG: { FLYING, ROCK, FIRE },
-  DARK: { FIGHTING, BUG, FAIRY },
-  DRAGON: { ICE, DRAGON, FAIRY },
-  ELECTRIC: { GROUND },
-  FAIRY: { POISON, STEEL },
-  FIGHTING: { FLYING, PSYCHIC, FAIRY },
-  FIRE: { GROUND, ROCK, WATER },
-  FLYING: { ROCK, ELECTRIC, ICE },
-  GHOST: { GHOST, DARK },
-  GRASS: { FLYING, POISON, BUG, FIRE, ICE },
-  GROUND: { WATER, GRASS, ICE },
-  ICE: { FIGHTING, ROCK, STEEL, FIRE },
-  NORMAL: { FIGHTING },
-  POISON: { GROUND, PSYCHIC },
-  PSYCHIC: { BUG, GHOST, DARK },
-  ROCK: { FIGHTING, GROUND, STEEL, WATER, GRASS },
-  STEEL: { FIGHTING, GROUND, FIRE },
-  WATER: { GRASS, ELECTRIC },
-}
+var SuperEffectiveTypes = {
+  BUG: { FLYING: FLYING, ROCK: ROCK, FIRE: FIRE },
+  DARK: { FIGHTING: FIGHTING, BUG: BUG, FAIRY: FAIRY },
+  DRAGON: { ICE: ICE, DRAGON: DRAGON, FAIRY: FAIRY },
+  ELECTRIC: { GROUND: GROUND },
+  FAIRY: { POISON: POISON, STEEL: STEEL },
+  FIGHTING: { FLYING: FLYING, PSYCHIC: PSYCHIC, FAIRY: FAIRY },
+  FIRE: { GROUND: GROUND, ROCK: ROCK, WATER: WATER },
+  FLYING: { ROCK: ROCK, ELECTRIC: ELECTRIC, ICE: ICE },
+  GHOST: { GHOST: GHOST, DARK: DARK },
+  GRASS: { FLYING: FLYING, POISON: POISON, BUG: BUG, FIRE: FIRE, ICE: ICE },
+  GROUND: { WATER: WATER, GRASS: GRASS, ICE: ICE },
+  ICE: { FIGHTING: FIGHTING, ROCK: ROCK, STEEL: STEEL, FIRE: FIRE },
+  NORMAL: { FIGHTING: FIGHTING },
+  POISON: { GROUND: GROUND, PSYCHIC: PSYCHIC },
+  PSYCHIC: { BUG: BUG, GHOST: GHOST, DARK: DARK },
+  ROCK: { FIGHTING: FIGHTING, GROUND: GROUND, STEEL: STEEL, WATER: WATER, GRASS: GRASS },
+  STEEL: { FIGHTING: FIGHTING, GROUND: GROUND, FIRE: FIRE },
+  WATER: { GRASS: GRASS, ELECTRIC: ELECTRIC }
+};
 
-const ResistantTypes = {
-  BUG: { FIGHTING, GROUND, GRASS },
-  DARK: { GHOST, DARK },
-  DRAGON: { FIRE, WATER, GRASS, ELECTRIC },
-  ELECTRIC: { FLYING, STEEL, ELECTRIC },
-  FAIRY: { FIGHTING, BUG, DARK },
-  FIGHTING: { ROCK, BUG, DARK },
-  FIRE: { BUG, STEEL, FIRE, GRASS, ICE, FAIRY },
-  FLYING: { FIGHTING, BUG, GRASS },
-  GHOST: { POISON, BUG },
-  GRASS: { GROUND, WATER, GRASS, ELECTRIC },
-  GROUND: { POISON, ROCK },
-  ICE: { ICE },
+var ResistantTypes = {
+  BUG: { FIGHTING: FIGHTING, GROUND: GROUND, GRASS: GRASS },
+  DARK: { GHOST: GHOST, DARK: DARK },
+  DRAGON: { FIRE: FIRE, WATER: WATER, GRASS: GRASS, ELECTRIC: ELECTRIC },
+  ELECTRIC: { FLYING: FLYING, STEEL: STEEL, ELECTRIC: ELECTRIC },
+  FAIRY: { FIGHTING: FIGHTING, BUG: BUG, DARK: DARK },
+  FIGHTING: { ROCK: ROCK, BUG: BUG, DARK: DARK },
+  FIRE: { BUG: BUG, STEEL: STEEL, FIRE: FIRE, GRASS: GRASS, ICE: ICE, FAIRY: FAIRY },
+  FLYING: { FIGHTING: FIGHTING, BUG: BUG, GRASS: GRASS },
+  GHOST: { POISON: POISON, BUG: BUG },
+  GRASS: { GROUND: GROUND, WATER: WATER, GRASS: GRASS, ELECTRIC: ELECTRIC },
+  GROUND: { POISON: POISON, ROCK: ROCK },
+  ICE: { ICE: ICE },
   NORMAL: {},
-  POISON: { FIGHTING, POISON, BUG, GRASS, FAIRY },
-  PSYCHIC: { FIGHTING, PSYCHIC },
-  ROCK: { NORMAL, FLYING, POISON, FIRE },
-  STEEL: { NORMAL, FLYING, ROCK, BUG, STEEL, GRASS, PSYCHIC, ICE, DRAGON, FAIRY },
-  WATER: { STEEL, FIRE, WATER, ICE },
-}
+  POISON: { FIGHTING: FIGHTING, POISON: POISON, BUG: BUG, GRASS: GRASS, FAIRY: FAIRY },
+  PSYCHIC: { FIGHTING: FIGHTING, PSYCHIC: PSYCHIC },
+  ROCK: { NORMAL: NORMAL, FLYING: FLYING, POISON: POISON, FIRE: FIRE },
+  STEEL: { NORMAL: NORMAL, FLYING: FLYING, ROCK: ROCK, BUG: BUG, STEEL: STEEL, GRASS: GRASS, PSYCHIC: PSYCHIC, ICE: ICE, DRAGON: DRAGON, FAIRY: FAIRY },
+  WATER: { STEEL: STEEL, FIRE: FIRE, WATER: WATER, ICE: ICE }
+};
 
-const ImmuneTypes = {
-  DARK: { PSYCHIC },
+var ImmuneTypes = {
+  DARK: { PSYCHIC: PSYCHIC },
   DRAGON: {},
   ELECTRIC: {},
-  FAIRY: { DRAGON },
+  FAIRY: { DRAGON: DRAGON },
   FIRE: {},
-  FLYING: { GROUND },
-  GHOST: { NORMAL, FIGHTING },
+  FLYING: { GROUND: GROUND },
+  GHOST: { NORMAL: NORMAL, FIGHTING: FIGHTING },
   GRASS: {},
-  GROUND: { ELECTRIC },
+  GROUND: { ELECTRIC: ELECTRIC },
   ICE: {},
-  NORMAL: { GHOST },
+  NORMAL: { GHOST: GHOST },
   POISON: {},
   PSYCHIC: {},
-  STEEL: { POISON },
-  WATER: {},
-}
+  STEEL: { POISON: POISON },
+  WATER: {}
+};
 
 function isNotLegendary(pokemon) {
-  return !LegendaryPokemon.hasOwnProperty(pokemon.name || pokemon)
+  return !LegendaryPokemon.hasOwnProperty(pokemon.name || pokemon);
 }
 
 function getDmgVs(player, opponent, moves) {
-  const atk = player.stats.attack
-  const def = opponent.stats.defense
+  var atk = player.stats.attack;
+  var def = opponent.stats.defense;
 
-  return moves.map((move) => {
-    const stab = move.Type === player.type1 || move.Type === player.type2 ? 1.25 : 1
-    const power = move.Power
+  return moves.map(function (move) {
+    var stab = move.Type === player.type1 || move.Type === player.type2 ? 1.25 : 1;
+    var power = move.Power;
 
-    const effectiveness = (
-      SuperEffectiveTypes[opponent.type1].hasOwnProperty(move.Type) ||
-      (opponent.type2 && SuperEffectiveTypes[opponent.type2].hasOwnProperty(move.Type))
-    ) ? 1.25 : (
-      ResistantTypes[opponent.type1].hasOwnProperty(move.Type) ||
-      (opponent.type2 && ResistantTypes[opponent.type2].hasOwnProperty(move.Type))
-    ) ? 0.8 : 1
+    var effectiveness = SuperEffectiveTypes[opponent.type1].hasOwnProperty(move.Type) || opponent.type2 && SuperEffectiveTypes[opponent.type2].hasOwnProperty(move.Type) ? 1.25 : ResistantTypes[opponent.type1].hasOwnProperty(move.Type) || opponent.type2 && ResistantTypes[opponent.type2].hasOwnProperty(move.Type) ? 0.8 : 1;
 
-    const ECpM = 0.790300
-    return (0.5 * atk * ECpM / (def * ECpM ) * power * stab * effectiveness) + 1
-  })
+    var ECpM = 0.790300;
+    return 0.5 * atk * ECpM / (def * ECpM) * power * stab * effectiveness + 1;
+  });
 }
 
 function effectiveness(player, opponent) {
-  const moves = []
+  var moves = [];
 
-  player.moves1.forEach((move1) => {
-    player.moves2.forEach((move2) => {
-      const dmg1 = getDmgVs(player, opponent, [move1, move2])
+  player.moves1.forEach(function (move1) {
+    player.moves2.forEach(function (move2) {
+      var dmg1 = getDmgVs(player, opponent, [move1, move2]);
 
-      const quickHits = Math.ceil(100 / move1.Energy)
-      const chargeHits = Math.abs(Math.ceil(100 / move2.Energy))
+      var quickHits = Math.ceil(100 / move1.Energy);
+      var chargeHits = Math.abs(Math.ceil(100 / move2.Energy));
 
-      const timeToQuick = quickHits * move1.DurationMs
-      const timeToCharge = chargeHits * move2.DurationMs
+      var timeToQuick = quickHits * move1.DurationMs;
+      var timeToCharge = chargeHits * move2.DurationMs;
 
-      const quickDmg = dmg1[0] * quickHits
-      const chargeDmg = dmg1[1] * chargeHits
+      var quickDmg = dmg1[0] * quickHits;
+      var chargeDmg = dmg1[1] * chargeHits;
 
-      const totalTime = timeToQuick + timeToCharge
-      const dps = getDPS(chargeDmg + quickDmg, totalTime)
+      var totalTime = timeToQuick + timeToCharge;
+      var dps = getDPS(chargeDmg + quickDmg, totalTime);
 
       moves.push({
-        dps,
+        dps: dps,
         quick: {
-          name: move1.Name,
+          name: move1.Name
         },
         charge: {
-          name: move2.Name,
-        },
-      })
-    })
-  })
+          name: move2.Name
+        }
+      });
+    });
+  });
 
-  const bestMoves = moves.sort((a, b) => a.dps > b.dps ? -1 : 1)
+  var bestMoves = moves.sort(function (a, b) {
+    return a.dps > b.dps ? -1 : 1;
+  });
 
+  var oppMoves = [];
+  opponent.moves1.forEach(function (move1) {
+    opponent.moves2.forEach(function (move2) {
+      var dmg1 = getDmgVs(opponent, player, [move1, move2]);
 
-  const oppMoves = []
-  opponent.moves1.forEach((move1) => {
-    opponent.moves2.forEach((move2) => {
-      const dmg1 = getDmgVs(opponent, player, [move1, move2])
+      var quickHits = Math.ceil(100 / move1.Energy);
+      var chargeHits = Math.abs(Math.ceil(100 / move2.Energy));
 
-      const quickHits = Math.ceil(100 / move1.Energy)
-      const chargeHits = Math.abs(Math.ceil(100 / move2.Energy))
+      var timeToQuick = quickHits * move1.DurationMs;
+      var timeToCharge = chargeHits * move2.DurationMs;
 
-      const timeToQuick = quickHits * move1.DurationMs
-      const timeToCharge = chargeHits * move2.DurationMs
+      var quickDmg = dmg1[0] * quickHits;
+      var chargeDmg = dmg1[1] * chargeHits;
 
-      const quickDmg = dmg1[0] * quickHits
-      const chargeDmg = dmg1[1] * chargeHits
-
-      const totalTime = timeToQuick + timeToCharge
+      var totalTime = timeToQuick + timeToCharge;
 
       // Slow it down to 1.5 secs
-      const dps = getDPS(chargeDmg + quickDmg, totalTime) * 0.75
+      var dps = getDPS(chargeDmg + quickDmg, totalTime) * 0.75;
 
       oppMoves.push({
-        dps,
+        dps: dps,
         quick: {
-          name: move1.Name,
+          name: move1.Name
         },
         charge: {
-          name: move2.Name,
-        },
-      })
-    })
-  })
+          name: move2.Name
+        }
+      });
+    });
+  });
 
-  const bestMovesOpp = oppMoves.sort((a, b) => a.dps > b.dps ? -1 : 1)
+  var bestMovesOpp = oppMoves.sort(function (a, b) {
+    return a.dps > b.dps ? -1 : 1;
+  });
 
-  return bestMoves.map((x) => {
+  return bestMoves.map(function (x) {
     return {
       playerDps: x.dps,
       opponentDps: bestMovesOpp[0].dps,
       score: x.dps - bestMovesOpp[0].dps,
       quick: x.quick,
-      charge: x.charge,
-    }
-  }).sort((a, b) => a.score > b.score ? -1 : 1)
+      charge: x.charge
+    };
+  }).sort(function (a, b) {
+    return a.score > b.score ? -1 : 1;
+  });
 }
 
-
 function getDPS(dmg, duration) {
-  return Number((dmg / (duration / 1000)).toFixed(2)) || 0
+  return Number((dmg / (duration / 1000)).toFixed(2)) || 0;
 }
 
 function bestPokemonVs(opponentName) {
-  const opponent = Pokemon.filter(x => x.name === opponentName.toUpperCase())[0]
-  return (
-    Pokemon.reduce((arr, mon) => {
-      const moves = effectiveness(mon, opponent)
-      moves.forEach(move => arr.push({
+  var opponent = Pokemon.filter(function (x) {
+    return x.name === opponentName.toUpperCase();
+  })[0];
+  return Pokemon.reduce(function (arr, mon) {
+    var moves = effectiveness(mon, opponent);
+    moves.forEach(function (move) {
+      return arr.push({
         name: mon.name,
         score: move.score,
         quick: move.quick.name,
-        charge: move.charge.name,
-      }))
-      return arr
-    }, [])
-    .filter(isNotLegendary)
-    .sort((a, b) => {
-      return a.score > b.score ? -1 : 1
-    })
-    .slice(0, 10)
-  )
+        charge: move.charge.name
+      });
+    });
+    return arr;
+  }, []).filter(isNotLegendary).sort(function (a, b) {
+    return a.score > b.score ? -1 : 1;
+  }).slice(0, 10);
 }
 
-module.exports = bestPokemonVs
+module.exports = bestPokemonVs;
 
 //console.log(bestPokemonVs(process.argv[2] || 'arcanine'))
 
@@ -43326,92 +43322,90 @@ module.exports = bestPokemonVs
 //)
 
 },{"../json/pokemon.json":7}],268:[function(require,module,exports){
-const DECENT_POKEMON_RATING = 80
+var DECENT_POKEMON_RATING = 80;
 
-const getOverallRating = v => (
-  (v.ivs.IndAtk * 1.10) +
-  (v.ivs.IndDef * 1.05) +
-  (v.ivs.IndSta * 0.85)
-) / 45 * 100
+var getOverallRating = function getOverallRating(v) {
+  return (v.ivs.IndAtk * 1.10 + v.ivs.IndDef * 1.05 + v.ivs.IndSta * 0.85) / 45 * 100;
+};
 
 // A good pokemon is in the 80th percentile for Atk, CP, HP, and IV.
 // This 80th percentile thing was made up by me.
-const isGoodPokemonForItsClass = v => getOverallRating(v) > DECENT_POKEMON_RATING
+var isGoodPokemonForItsClass = function isGoodPokemonForItsClass(v) {
+  return getOverallRating(v) > DECENT_POKEMON_RATING;
+};
 
-module.exports = isGoodPokemonForItsClass
+module.exports = isGoodPokemonForItsClass;
 
 },{}],269:[function(require,module,exports){
-const chalk = require('chalk')
+var chalk = require('chalk');
 
-const LevelToCPM = require('../json/level-to-cpm.json')
-const Levels = require('../json/levels')
-const cpTools = require('./cp')
-const hpTools = require('./hp')
+var LevelToCPM = require('../json/level-to-cpm.json');
+var Levels = require('../json/levels');
+var cpTools = require('./cp');
+var hpTools = require('./hp');
 
-const TRAINER_LEVEL = 26
+var TRAINER_LEVEL = 26;
 
-const getOverallRating = v => (
-  (v.ivs.IndAtk * 1.10) +
-  (v.ivs.IndDef * 1.05) +
-  (v.ivs.IndSta * 0.85)
-) / 45 * 100
+var getOverallRating = function getOverallRating(v) {
+  return (v.ivs.IndAtk * 1.10 + v.ivs.IndDef * 1.05 + v.ivs.IndSta * 0.85) / 45 * 100;
+};
 
 function colorPercent(num, mod) {
-  const mul = num * (mod || 1)
+  var mul = num * (mod || 1);
   if (mul < 70) {
-    return chalk.red(num + '%')
+    return chalk.red(num + '%');
   } else if (mul < 90) {
-    return chalk.yellow(num + '%')
+    return chalk.yellow(num + '%');
   }
-  return chalk.green.bold(num + '%')
+  return chalk.green.bold(num + '%');
 }
 
 function logPokemon(pokemon) {
-  const response = []
+  var response = [];
 
-  response.push(`Level: ${pokemon.Level}`)
-  response.push(`IVs: ${pokemon.ivs.IndAtk}/${pokemon.ivs.IndDef}/${pokemon.ivs.IndSta} (${colorPercent(pokemon.percent.PerfectIV)})`)
-  response.push(`Atk+Def: ${pokemon.ivs.IndAtk + pokemon.ivs.IndDef}/30 (${colorPercent(pokemon.percent.PercentBatt)})`)
-  response.push(`CP: ${pokemon.CP} (${colorPercent(pokemon.percent.PercentCP, 1.05)})`)
-  response.push(`HP: ${pokemon.HP} (${colorPercent(pokemon.percent.PercentHP, 1.5)})`)
+  response.push('Level: ' + String(pokemon.Level));
+  response.push('IVs: ' + String(pokemon.ivs.IndAtk) + '/' + String(pokemon.ivs.IndDef) + '/' + String(pokemon.ivs.IndSta) + ' (' + String(colorPercent(pokemon.percent.PerfectIV)) + ')');
+  response.push('Atk+Def: ' + String(pokemon.ivs.IndAtk + pokemon.ivs.IndDef) + '/30 (' + String(colorPercent(pokemon.percent.PercentBatt)) + ')');
+  response.push('CP: ' + String(pokemon.CP) + ' (' + String(colorPercent(pokemon.percent.PercentCP, 1.05)) + ')');
+  response.push('HP: ' + String(pokemon.HP) + ' (' + String(colorPercent(pokemon.percent.PercentHP, 1.5)) + ')');
 
-  response.push(`Atk: ${pokemon.Atk.toFixed(2)}`)
-  response.push(`Def: ${pokemon.Def.toFixed(2)}`)
-  response.push(`Sta: ${pokemon.Sta.toFixed(2)}`)
+  response.push('Atk: ' + String(pokemon.Atk.toFixed(2)));
+  response.push('Def: ' + String(pokemon.Def.toFixed(2)));
+  response.push('Sta: ' + String(pokemon.Sta.toFixed(2)));
 
-  response.push('')
+  response.push('');
 
-  response.push(`At level ${TRAINER_LEVEL + 1.5}, this pokemon would have:`)
-  response.push(`Maximum CP: ${pokemon.meta.MaxCP}/${pokemon.meta.MaxedPossibleCP}`)
-  response.push(`Maximum HP: ${pokemon.meta.MaxHP}/${pokemon.meta.MaxedPossibleHP}`)
+  response.push('At level ' + (TRAINER_LEVEL + 1.5) + ', this pokemon would have:');
+  response.push('Maximum CP: ' + String(pokemon.meta.MaxCP) + '/' + String(pokemon.meta.MaxedPossibleCP));
+  response.push('Maximum HP: ' + String(pokemon.meta.MaxHP) + '/' + String(pokemon.meta.MaxedPossibleHP));
 
   if (pokemon.meta.EvolveCP || pokemon.meta.Stardust) {
-    response.push('')
+    response.push('');
   }
 
   if (pokemon.meta.EvolveCP) {
-    response.push(`If evolved, it would have ~${pokemon.meta.EvolveCP}CP with a max of ~${pokemon.meta.MaxEvolveCP}CP`)
+    response.push('If evolved, it would have ~' + String(pokemon.meta.EvolveCP) + 'CP with a max of ~' + String(pokemon.meta.MaxEvolveCP) + 'CP');
   }
 
   if (pokemon.meta.Stardust) {
-    response.push(`It would take ${chalk.bold(pokemon.meta.Stardust)} stardust and ${chalk.bold(pokemon.meta.Candy)} candy to max this pokemon out`)
+    response.push('It would take ' + String(chalk.bold(pokemon.meta.Stardust)) + ' stardust and ' + String(chalk.bold(pokemon.meta.Candy)) + ' candy to max this pokemon out');
   }
 
-  const ovRating = getOverallRating(pokemon)
-  const ovRatingPercent = Math.round(ovRating)
+  var ovRating = getOverallRating(pokemon);
+  var ovRatingPercent = Math.round(ovRating);
 
-  response.push('')
+  response.push('');
 
-  response.push(`${pokemon.Name} Rating: ${ovRatingPercent}%`)
+  response.push(String(pokemon.Name) + ' Rating: ' + String(ovRatingPercent) + '%');
 
-  return response
+  return response;
 
   return {
     level: pokemon.Level,
     name: pokemon.Name,
-    iv: `${pokemon.ivs.IndAtk}/${pokemon.ivs.IndDef}/${pokemon.ivs.IndSta}`,
+    iv: String(pokemon.ivs.IndAtk) + '/' + String(pokemon.ivs.IndDef) + '/' + String(pokemon.ivs.IndSta),
     ivp: pokemon.percent.PerfectIV,
-    atkdef: `${pokemon.ivs.IndAtk + pokemon.ivs.IndDef}/30`,
+    atkdef: String(pokemon.ivs.IndAtk + pokemon.ivs.IndDef) + '/30',
     atkdefp: pokemon.percent.PercentBatt,
     cp: pokemon.CP,
     cpp: pokemon.percent.PercentCP,
@@ -43421,47 +43415,51 @@ function logPokemon(pokemon) {
     def: pokemon.Def.toFixed(2),
     sta: pokemon.Sta.toFixed(2),
     maxlevel: TRAINER_LEVEL + 1.5,
-    maxcp: `${pokemon.meta.MaxCP}/${pokemon.meta.MaxLeveledCP}`,
+    maxcp: String(pokemon.meta.MaxCP) + '/' + String(pokemon.meta.MaxLeveledCP),
     maxcpcur: pokemon.meta.MaxCP,
     maxcpperfect: pokemon.meta.MaxLeveledCP,
     maxhpcur: pokemon.meta.MaxHP,
     maxhpperfect: pokemon.meta.MaxLeveledHP,
-    maxhp: `${pokemon.meta.MaxHP}/${pokemon.meta.MaxLeveledHP}`,
+    maxhp: String(pokemon.meta.MaxHP) + '/' + String(pokemon.meta.MaxLeveledHP),
     rating: Math.round(getOverallRating(pokemon)),
     evolvecp: pokemon.meta.EvolveCP,
     stardust: pokemon.meta.Stardust,
     candy: pokemon.meta.Candy,
-    value: pokemon,
-  }
+    value: pokemon
+  };
 }
 
-module.exports = logPokemon
+module.exports = logPokemon;
 
 },{"../json/level-to-cpm.json":4,"../json/levels":5,"./cp":263,"./hp":266,"chalk":9}],270:[function(require,module,exports){
-'use strict'
+'use strict';
 
-const chalk = require('chalk')
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-const LevelToCPM = require('../json/level-to-cpm.json')
-const DustToLevel = require('../json/dust-to-level')
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-const findPokemon = require('./findPokemon')
-const logPokemon = require('./logPokemon')
-const isGoodPokemonForItsClass = require('./isGoodPokemon')
-const guessIVs = require('./guessIVs')
+var chalk = require('chalk');
 
-const init = {
+var LevelToCPM = require('../json/level-to-cpm.json');
+var DustToLevel = require('../json/dust-to-level');
+
+var findPokemon = require('./findPokemon');
+var logPokemon = require('./logPokemon');
+var isGoodPokemonForItsClass = require('./isGoodPokemon');
+var guessIVs = require('./guessIVs');
+
+var init = {
   atk: [Infinity, -Infinity],
   cp: [Infinity, -Infinity],
   hp: [Infinity, -Infinity],
   iv: [Infinity, -Infinity],
   iva: [Infinity, -Infinity],
   ivd: [Infinity, -Infinity],
-  ivs: [Infinity, -Infinity],
+  ivs: [Infinity, -Infinity]
 };
 
 function magic(pokemon) {
-  const results = (new IvCalculator(pokemon)).results;
+  var results = new IvCalculator(pokemon).results;
 
   if (!results.isValid()) {
     throw new Error(results.errors.join('. '));
@@ -43471,955 +43469,1066 @@ function magic(pokemon) {
 }
 
 function sortByBest(values) {
-  return values.sort((a, b) => {
-    return a.percent.PerfectIV > b.percent.PerfectIV ? -1 : 1
+  return values.sort(function (a, b) {
+    return a.percent.PerfectIV > b.percent.PerfectIV ? -1 : 1;
   });
 }
 
-class IvResults {
-  constructor(pokemon, results) {
+var IvResults = function () {
+  function IvResults(pokemon, results) {
+    _classCallCheck(this, IvResults);
+
     this.pokemon = pokemon;
     this.results = results;
     this.errors = [];
 
     if (!results.length) {
-      this.errors.push('I have no idea. You might have entered the wrong values.')
+      this.errors.push('I have no idea. You might have entered the wrong values.');
     }
 
-    this.bestPossible = results.reduce((best, mon) => {
-      if (!best) return mon
-      return mon.percent.PerfectIV > best.percent.PerfectIV ? mon : best
-    }, null)
+    this.bestPossible = results.reduce(function (best, mon) {
+      if (!best) return mon;
+      return mon.percent.PerfectIV > best.percent.PerfectIV ? mon : best;
+    }, null);
 
-    this.yes = results.every(isGoodPokemonForItsClass)
-    this.maybeValues = results.filter(isGoodPokemonForItsClass)
-    this.maybe = this.maybeValues.length > 0
+    this.yes = results.every(isGoodPokemonForItsClass);
+    this.maybeValues = results.filter(isGoodPokemonForItsClass);
+    this.maybe = this.maybeValues.length > 0;
     this.valuesRange = this.findValuesRange(results);
   }
 
-  isValid() {
-    return !this.errors.length;
-  }
-
-  toString() {
-    const response = [];
-
-    if (this.results.length === 1) {
-      response.push('Congrats! Here are your Pokemon\'s stats')
-      response.push('')
-
-      response.push.apply(response, logPokemon(this.results[0]))
-    } else {
-      response.push('Your possible Pokemon\'s values')
-
-      response.push('')
-
-      response.push('Range in values')
-      response.push(`IV: ${this.valuesRange.iv[0]} -- ${this.valuesRange.iv[1]}%`)
-      response.push(`Atk+Def: ${this.valuesRange.atk[0]} -- ${this.valuesRange.atk[1]}%`)
-      response.push(`CP: ${this.valuesRange.cp[0]} -- ${this.valuesRange.cp[1]}%`)
-      response.push(`HP: ${this.valuesRange.hp[0]} -- ${this.valuesRange.hp[1]}%`)
-
-      response.push('')
-
-      response.push(`There are ${this.results.length} possibilities.`)
-      if (this.results.length < 7) {
-        this.results.forEach((value) => {
-          const ivPercent = Math.round((value.ivs.IndAtk + value.ivs.IndDef + value.ivs.IndSta) / 45 * 100)
-          response.push(`${value.ivs.IndAtk}/${value.ivs.IndDef}/${value.ivs.IndSta} (${ivPercent}%)`)
-        })
+  _createClass(IvResults, [{
+    key: 'isValid',
+    value: function () {
+      function isValid() {
+        return !this.errors.length;
       }
-      response.push(`There is a ${chalk.bold(Math.round(1 / this.results.length * 100))}% chance you'll get the one below.`)
 
-      response.push('')
+      return isValid;
+    }()
+  }, {
+    key: 'toString',
+    value: function () {
+      function toString() {
+        var response = [];
 
-      response.push('Best possible Pokemon\'s values')
-      response.push.apply(response, logPokemon(this.bestPossible))
-    }
+        if (this.results.length === 1) {
+          response.push('Congrats! Here are your Pokemon\'s stats');
+          response.push('');
 
-    response.push('')
+          response.push.apply(response, logPokemon(this.results[0]));
+        } else {
+          response.push('Your possible Pokemon\'s values');
 
-    const pokemonId = chalk.blue.bold(`${this.pokemon.name.toUpperCase()} ${this.pokemon.cp}`)
+          response.push('');
 
-    if (this.yes) {
-      response.push(`>> Yes, keep your ${pokemonId}.`)
-    } else if (this.maybe) {
-      response.push(
-        `>> Maybe you should keep ${pokemonId} around.`,
-        '\n  ',
-        `There is a ${chalk.bold(Math.round(this.maybeValues.length / this.results.length * 100))}% chance you've got a winner.`
-      )
-    } else {
-      response.push(`>> Send ${pokemonId} to Willow's grinder.`)
-    }
+          response.push('Range in values');
+          response.push('IV: ' + String(this.valuesRange.iv[0]) + ' -- ' + String(this.valuesRange.iv[1]) + '%');
+          response.push('Atk+Def: ' + String(this.valuesRange.atk[0]) + ' -- ' + String(this.valuesRange.atk[1]) + '%');
+          response.push('CP: ' + String(this.valuesRange.cp[0]) + ' -- ' + String(this.valuesRange.cp[1]) + '%');
+          response.push('HP: ' + String(this.valuesRange.hp[0]) + ' -- ' + String(this.valuesRange.hp[1]) + '%');
 
-    return response;
-  }
+          response.push('');
 
-  asObject() {
-    return {
-      chance: Math.round(this.maybeValues.length / this.results.length * 100),
-      best: this.bestPossible,
-      pokemon: this.pokemon,
-      range: this.valuesRange,
-      values: sortByBest(this.results),
-    };
-  }
+          response.push('There are ' + String(this.results.length) + ' possibilities.');
+          if (this.results.length < 7) {
+            this.results.forEach(function (value) {
+              var ivPercent = Math.round((value.ivs.IndAtk + value.ivs.IndDef + value.ivs.IndSta) / 45 * 100);
+              response.push(String(value.ivs.IndAtk) + '/' + String(value.ivs.IndDef) + '/' + String(value.ivs.IndSta) + ' (' + String(ivPercent) + '%)');
+            });
+          }
+          response.push('There is a ' + String(chalk.bold(Math.round(1 / this.results.length * 100))) + '% chance you\'ll get the one below.');
 
-  findValuesRange(results) {
-    return results.reduce((obj, v) => {
-      return {
-        atk: [
-          Math.min(v.percent.PercentBatt, obj.atk[0]),
-          Math.max(v.percent.PercentBatt, obj.atk[1]),
-        ],
-        cp: [
-          Math.min(v.percent.PercentCP, obj.cp[0]),
-          Math.max(v.percent.PercentCP, obj.cp[1]),
-        ],
-        hp: [
-          Math.min(v.percent.PercentHP, obj.hp[0]),
-          Math.max(v.percent.PercentHP, obj.hp[1]),
-        ],
-        iv: [
-          Math.min(v.percent.PerfectIV, obj.iv[0]),
-          Math.max(v.percent.PerfectIV, obj.iv[1]),
-        ],
-        iva: [
-          Math.min(v.ivs.IndAtk, obj.iva[0]),
-          Math.max(v.ivs.IndAtk, obj.iva[1]),
-        ],
-        ivd: [
-          Math.min(v.ivs.IndDef, obj.ivd[0]),
-          Math.max(v.ivs.IndDef, obj.ivd[1]),
-        ],
-        ivs: [
-          Math.min(v.ivs.IndSta, obj.ivs[0]),
-          Math.max(v.ivs.IndSta, obj.ivs[1]),
-        ],
+          response.push('');
+
+          response.push('Best possible Pokemon\'s values');
+          response.push.apply(response, logPokemon(this.bestPossible));
+        }
+
+        response.push('');
+
+        var pokemonId = chalk.blue.bold(String(this.pokemon.name.toUpperCase()) + ' ' + String(this.pokemon.cp));
+
+        if (this.yes) {
+          response.push('>> Yes, keep your ' + String(pokemonId) + '.');
+        } else if (this.maybe) {
+          response.push('>> Maybe you should keep ' + String(pokemonId) + ' around.', '\n  ', 'There is a ' + String(chalk.bold(Math.round(this.maybeValues.length / this.results.length * 100))) + '% chance you\'ve got a winner.');
+        } else {
+          response.push('>> Send ' + String(pokemonId) + ' to Willow\'s grinder.');
+        }
+
+        return response;
       }
-    }, init);
-  }
-}
 
-class IvCalculator {
-  constructor(pokemon) {
+      return toString;
+    }()
+  }, {
+    key: 'asObject',
+    value: function () {
+      function asObject() {
+        return {
+          chance: Math.round(this.maybeValues.length / this.results.length * 100),
+          best: this.bestPossible,
+          pokemon: this.pokemon,
+          range: this.valuesRange,
+          values: sortByBest(this.results)
+        };
+      }
+
+      return asObject;
+    }()
+  }, {
+    key: 'findValuesRange',
+    value: function () {
+      function findValuesRange(results) {
+        return results.reduce(function (obj, v) {
+          return {
+            atk: [Math.min(v.percent.PercentBatt, obj.atk[0]), Math.max(v.percent.PercentBatt, obj.atk[1])],
+            cp: [Math.min(v.percent.PercentCP, obj.cp[0]), Math.max(v.percent.PercentCP, obj.cp[1])],
+            hp: [Math.min(v.percent.PercentHP, obj.hp[0]), Math.max(v.percent.PercentHP, obj.hp[1])],
+            iv: [Math.min(v.percent.PerfectIV, obj.iv[0]), Math.max(v.percent.PerfectIV, obj.iv[1])],
+            iva: [Math.min(v.ivs.IndAtk, obj.iva[0]), Math.max(v.ivs.IndAtk, obj.iva[1])],
+            ivd: [Math.min(v.ivs.IndDef, obj.ivd[0]), Math.max(v.ivs.IndDef, obj.ivd[1])],
+            ivs: [Math.min(v.ivs.IndSta, obj.ivs[0]), Math.max(v.ivs.IndSta, obj.ivs[1])]
+          };
+        }, init);
+      }
+
+      return findValuesRange;
+    }()
+  }]);
+
+  return IvResults;
+}();
+
+var IvCalculator = function () {
+  function IvCalculator(pokemon) {
+    _classCallCheck(this, IvCalculator);
+
     this.pokemon = pokemon || {};
-    this.results = new IvResults(
-      pokemon, this.calculateIvResults()
-    );
+    this.results = new IvResults(pokemon, this.calculateIvResults());
   }
 
-  calculateIvResults() {
-    const mon = findPokemon(this.pokemon.name)
+  _createClass(IvCalculator, [{
+    key: 'calculateIvResults',
+    value: function () {
+      function calculateIvResults() {
+        var _this = this;
 
-    // If the level has been provided then we can get a better accurate reading
-    // since we'll be able to determine the exact ECpM.
-    if (this.pokemon.level) {
-      if (DustToLevel[this.pokemon.stardust].indexOf(this.pokemon.level) === -1) {
-        throw new Error('Stardust does not match level')
+        var mon = findPokemon(this.pokemon.name);
+
+        // If the level has been provided then we can get a better accurate reading
+        // since we'll be able to determine the exact ECpM.
+        if (this.pokemon.level) {
+          if (DustToLevel[this.pokemon.stardust].indexOf(this.pokemon.level) === -1) {
+            throw new Error('Stardust does not match level');
+          }
+
+          var ECpM = LevelToCPM[String(this.pokemon.level)];
+          return guessIVs(this.pokemon, mon, ECpM);
+        }
+
+        // If we're just going on stardust then we'll have to iterate through
+        // each level and concatenate all possible values
+        return DustToLevel[this.pokemon.stardust].reduce(function (arr, level) {
+          var ECpM = LevelToCPM[String(level)];
+          return arr.concat(guessIVs(_this.pokemon, mon, ECpM));
+        }, []);
       }
 
-      const ECpM = LevelToCPM[String(this.pokemon.level)]
-      return guessIVs(this.pokemon, mon, ECpM)
-    }
+      return calculateIvResults;
+    }()
+  }]);
 
-    // If we're just going on stardust then we'll have to iterate through
-    // each level and concatenate all possible values
-    return DustToLevel[this.pokemon.stardust].reduce((arr, level) => {
-      const ECpM = LevelToCPM[String(level)]
-      return arr.concat(guessIVs(this.pokemon, mon, ECpM))
-    }, []);
-  }
-}
+  return IvCalculator;
+}();
 
-module.exports = magic
+module.exports = magic;
 
 },{"../json/dust-to-level":2,"../json/level-to-cpm.json":4,"./findPokemon":264,"./guessIVs":265,"./isGoodPokemon":268,"./logPokemon":269,"chalk":9}],271:[function(require,module,exports){
-const DustToLevel = require('../json/dust-to-level')
-const Levels = require('../json/levels')
+var DustToLevel = require('../json/dust-to-level');
+var Levels = require('../json/levels');
 
 function howMuchCandy(currentLevel, trainerLevel) {
-  const maxLevel = (trainerLevel + 1.5) * 2
-  const minLevel = currentLevel * 2
-  return Levels.reduce((sum, level) => {
-    if (level.level < maxLevel && level.level >= minLevel) return sum + level.candy
-    return sum
-  }, 0)
+  var maxLevel = (trainerLevel + 1.5) * 2;
+  var minLevel = currentLevel * 2;
+  return Levels.reduce(function (sum, level) {
+    if (level.level < maxLevel && level.level >= minLevel) return sum + level.candy;
+    return sum;
+  }, 0);
 }
 
 function howMuchStardust(currentLevel, trainerLevel) {
-  const maxPokemonLevel = trainerLevel + 1.5
+  var maxPokemonLevel = trainerLevel + 1.5;
 
   // Returns the candy cost of upgrading to the current maximum Pokemon level
   // cap based on the trainer's level
-  return Object.keys(DustToLevel).reduce((sum, dust) => {
-    const levels = DustToLevel[dust]
-    const stardustIncrease = levels.reduce((num, level) => {
-      return level >= currentLevel && level < maxPokemonLevel
-        ? num + Number(dust)
-        : num
-    }, 0)
+  return Object.keys(DustToLevel).reduce(function (sum, dust) {
+    var levels = DustToLevel[dust];
+    var stardustIncrease = levels.reduce(function (num, level) {
+      return level >= currentLevel && level < maxPokemonLevel ? num + Number(dust) : num;
+    }, 0);
 
-    return sum + stardustIncrease
-  }, 0)
+    return sum + stardustIncrease;
+  }, 0);
 }
 
 function howMuchPowerUp(currentLevel, trainerLevel) {
-  const candy = howMuchCandy(currentLevel, trainerLevel)
-  const stardust = howMuchStardust(currentLevel, trainerLevel)
-  return { candy, stardust }
+  var candy = howMuchCandy(currentLevel, trainerLevel);
+  var stardust = howMuchStardust(currentLevel, trainerLevel);
+  return { candy: candy, stardust: stardust };
 }
 
 module.exports = {
-  howMuchCandy,
-  howMuchPowerUp,
-  howMuchStardust,
-}
+  howMuchCandy: howMuchCandy,
+  howMuchPowerUp: howMuchPowerUp,
+  howMuchStardust: howMuchStardust
+};
 
 },{"../json/dust-to-level":2,"../json/levels":5}],272:[function(require,module,exports){
-const alt = require('../alt')
+var alt = require('../alt');
 
-const historyActions = alt.generateActions('HistoryActions', [
-  'pokemonChecked',
-])
+var historyActions = alt.generateActions('HistoryActions', ['pokemonChecked']);
 
-module.exports = historyActions
+module.exports = historyActions;
 
 },{"../alt":275}],273:[function(require,module,exports){
-const alt = require('../alt')
+var alt = require('../alt');
 
-const moveActions = alt.generateActions('MoveActions', [
-  'movesChanged',
-  'pokemonChanged',
-  'textChanged',
-])
+var moveActions = alt.generateActions('MoveActions', ['movesChanged', 'pokemonChanged', 'textChanged']);
 
-module.exports = moveActions
+module.exports = moveActions;
 
 },{"../alt":275}],274:[function(require,module,exports){
-const alt = require('../alt')
+var alt = require('../alt');
 
-module.exports = alt.generateActions('InventoryActions', [
-  'changedName',
-  'changedCP',
-  'changedHP',
-  'changedStardust',
-  'changedLevel',
-  'changedTrainerLevel',
-  'imageProcessing',
-  'resultsCalculated',
-  'resultsReset',
-  'trainerLevelChanged',
-  'valuesReset',
-])
+module.exports = alt.generateActions('InventoryActions', ['changedName', 'changedCP', 'changedHP', 'changedStardust', 'changedLevel', 'changedTrainerLevel', 'imageProcessing', 'resultsCalculated', 'resultsReset', 'trainerLevelChanged', 'valuesReset']);
 
 },{"../alt":275}],275:[function(require,module,exports){
-const Alt = require('./assets/alt.min')
-const alt = new Alt()
-module.exports = alt
+var Alt = require('./assets/alt.min');
+var alt = new Alt();
+module.exports = alt;
 
 },{"./assets/alt.min":276}],276:[function(require,module,exports){
-!function(t,n){"object"==typeof exports&&"object"==typeof module?module.exports=n():"function"==typeof define&&define.amd?define([],n):"object"==typeof exports?exports.Alt=n():t.Alt=n()}(this,function(){return function(t){function n(r){if(e[r])return e[r].exports;var i=e[r]={exports:{},id:r,loaded:!1};return t[r].call(i.exports,i,i.exports,n),i.loaded=!0,i.exports}var e={};return n.m=t,n.c=e,n.p="",n(0)}([function(t,n,e){t.exports=e(3)},function(t,n){function e(t){return"f"===("undefined"==typeof t?"undefined":u(t))[0]}function r(t){var n=t.constructor;return!!t&&"[object Object]"===Object.prototype.toString.call(t)&&e(n)&&!Object.isFrozen(t)&&n instanceof n}function i(t){return arguments.length>1?Array.from(arguments):void 0===t?null:t}function o(){return Math.random().toString(18).substr(2,16)}Object.defineProperty(n,"__esModule",{value:!0});var u="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol?"symbol":typeof t};n.isFunction=e,n.isMutableObject=r,n.dispatchIdentity=i,n.id=o},function(t,n){"use strict";function e(){var t=[],n=!1,e={},r=function(r){var i=t.indexOf(r);if(!(0>i))return n?void(e[i]=r):void t.splice(i,1)},i=function(n){var e=(t.push(n),function(){return r(n)});return{dispose:e}},o=function(){for(var i=arguments.length,o=Array(i),u=0;i>u;u++)o[u]=arguments[u];n=!0;try{t.forEach(function(t,n){return e[n]||t.apply(void 0,o)})}finally{n=!1,Object.keys(e).forEach(function(t){return r(e[t])}),e={}}};return{publish:o,subscribe:i,$subscriptions:t}}t.exports=e},function(t,n,e){function r(t){return t&&t.__esModule?t:{"default":t}}function i(t,n){if(!(t instanceof n))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(n,"__esModule",{value:!0});var o=e(2),u=r(o),s=e(4),c=r(s),a=e(1),f=a.id(),l=function(){function t(n){var e=this;i(this,t);var r=u["default"]();Object.assign(this,{publish:function(){function t(t){t.meta||(t.meta={}),t.meta.id=a.id(),r.publish(t)}return t}(),subscribe:r.subscribe,serialize:JSON.stringify,deserialize:JSON.parse},n),this[f]=[],this.Store=c["default"],this.actions={},this.stores={},this.subscribe(function(t){e[f].forEach(function(n){return n.dispatch(t)}),e[f].forEach(function(t){return t.emitChange()})})}return t.prototype.createActions=function(){function t(t,n){var e=this,r=Object.keys(n).reduce(function(r,i){var o=String(t)+"/"+String(i),u=function(){function t(t){return e.publish({type:o,payload:t})}return t}();return r[i]=function(){var t=n[i].apply(n,arguments);return a.isFunction(t)?t(u,e):(void 0!==t&&u(t),t)},Object.assign(r[i],{type:o,actionName:i}),r},{});return this.actions[t]=r}return t}(),t.prototype.createAsyncActions=function(){function t(t,n){var e=this;return Object.keys(n).reduce(function(r,i){var o=String(t)+"/"+String(i),u=function(){function t(t,n){var r={};n.loading&&(r.loading=!0);var i=n.loading?i:String(i)+"/loading",o={type:i,payload:t,meta:r};return n.error&&(o.error=!0),e.publish(o),o}return t}();return r[i]=function(){var t=n[i].apply(n,arguments);return u(null,{loading:!0}),Promise.resolve(t).then(function(t){return u(t,{})},function(t){return u(t,{error:!0})})},Object.assign(r[i],{type:o,actionName:i}),r},{})}return t}(),t.prototype.generateActions=function(){function t(t,n){var e=Array.isArray(n)?n:[n];return this.createActions(t,e.reduce(function(t,n){return t[n]=a.dispatchIdentity,t},{}))}return t}(),t.prototype.createStore=function(){function t(t,n){var e=this,r=u["default"](),i=function(){function t(t,e){n.lifecycle[t]&&n.lifecycle[t].publish({state:n.state,action:e})}return t}(),o=function(){function t(t){n._noChange=!1;try{return t()}catch(e){if(!n.lifecycle.error)throw e;i("error",e)}}return t}(),s=function(){function t(t){return n._noChange=!0,i("beforeEach",t),n.dispatchHandlers[t.type]?o(function(){n.dispatchHandlers[t.type].publish(t.payload,t)}):n.otherwise&&o(function(){n.otherwise(t.payload,t)}),n.reduce&&o(function(){var e=n.reduce(n.state,t);void 0!==e&&(n.state=e)}),i("afterEach",t),n.state}return t}(),c=function(){function t(){return n._noChange||r.publish(n.state)}return t}();return this[f].push({displayName:t,setState:function(){function t(t){return n.state=t}return t}(),getState:function(){function t(){return{state:n.state}}return t}(),runLifecycle:i,initialState:this.serialize({state:n.state}),dispatch:s,emitChange:c}),this.stores[t]={displayName:t,dispatch:s,getState:function(){function t(){return n.state}return t}(),subscribe:function(){function t(t){var n=r.subscribe(t);return{dispose:function(){function t(){i("unlisten"),n.dispose()}return t}()}}return t}(),destroy:function(){function n(){e[f]=e[f].filter(function(n){return n.displayName!==t}),delete e.stores[t]}return n}()}}return t}(),t.prototype.load=function(){function t(t){var n="string"==typeof t?this.deserialize(t):t;this[f].forEach(function(t){n.hasOwnProperty(t.displayName)&&(t.setState(n[t.displayName]),t.runLifecycle("load"))})}return t}(),t.prototype.save=function(){function t(t){return this.serialize(this[f].reduce(function(n,e){return(!t||t.hasOwnProperty(e.displayName))&&(n[e.displayName]=e.getState().state,e.runLifecycle("save")),n},{}))}return t}(),t.prototype.flush=function(){function t(t){var n=this,e=this.save(t);return this[f].forEach(function(e){(!t||t.hasOwnProperty(e.displayName))&&e.setState(n.deserialize(e.initialState).state)}),e}return t}(),t.debug=function(){function t(t,n){var e="alt.js.org";return"undefined"!=typeof window&&(window[e]||(window[e]=[]),window[e].push({name:t,alt:n})),n}return t}(),t}();l.Store=c["default"],n["default"]=l,t.exports=n["default"]},function(t,n,e){function r(t){return t&&t.__esModule?t:{"default":t}}function i(t,n){if(!(t instanceof n))throw new TypeError("Cannot call a class as a function")}function o(t,n,e){var r=/./,i=e.replace(r,function(t){return"on"+String(t[0].toUpperCase())});if(t[e]&&t[i])throw new ReferenceError("You have multiple handlers bound to an action: "+(String(e)+" and "+String(i)));var o=t[e]||t[i];o&&t.bindAction(n,function(n,r){t[e]?t[e](n,r):t[i]&&t[i](n,r)})}Object.defineProperty(n,"__esModule",{value:!0});var u=e(2),s=r(u),c=e(1),a=function(){function t(){i(this,t),this.dispatchHandlers={},this.boundListeners=[],this.lifecycle={},this._noChange=!1}return t.prototype.bindActions=function(){function t(t){var n=this;Object.keys(t).forEach(function(e){return o(n,t[e].type,e)})}return t}(),t.prototype.bindAction=function(){function t(t,n){var e=t.type?t.type:t;this.dispatchHandlers[e]||(this.dispatchHandlers[e]=s["default"]()),this.dispatchHandlers[e].subscribe(n),this.boundListeners.push(e)}return t}(),t.prototype.bindListeners=function(){function t(t){var n=this;Object.keys(t).forEach(function(e){if(!n[e])throw new ReferenceError(String(e)+" defined but does not exist in self");var r=t[e],i=function(){function t(t){return n[e](t)}return t}();Array.isArray(r)?r.forEach(function(t){return n.bindAction(t,i)}):n.bindAction(r,i)})}return t}(),t.prototype.on=function(){function t(t,n){this.lifecycle[t]||(this.lifecycle[t]=s["default"]()),this.lifecycle[t].subscribe(n)}return t}(),t.prototype.setState=function(){function t(t){c.isMutableObject(this.state)?this.state=Object.assign({},this.state,t):this.state=t}return t}(),t.prototype.preventDefault=function(){function t(){this._noChange=!0}return t}(),t}();n["default"]=a,t.exports=n["default"]}])});
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+!function (t, n) {
+  "object" == (typeof exports === "undefined" ? "undefined" : _typeof(exports)) && "object" == (typeof module === "undefined" ? "undefined" : _typeof(module)) ? module.exports = n() : "function" == typeof define && define.amd ? define([], n) : "object" == (typeof exports === "undefined" ? "undefined" : _typeof(exports)) ? exports.Alt = n() : t.Alt = n();
+}(undefined, function () {
+  return function (t) {
+    function n(r) {
+      if (e[r]) return e[r].exports;var i = e[r] = { exports: {}, id: r, loaded: !1 };return t[r].call(i.exports, i, i.exports, n), i.loaded = !0, i.exports;
+    }var e = {};return n.m = t, n.c = e, n.p = "", n(0);
+  }([function (t, n, e) {
+    t.exports = e(3);
+  }, function (t, n) {
+    function e(t) {
+      return "f" === ("undefined" == typeof t ? "undefined" : u(t))[0];
+    }function r(t) {
+      var n = t.constructor;return !!t && "[object Object]" === Object.prototype.toString.call(t) && e(n) && !Object.isFrozen(t) && n instanceof n;
+    }function i(t) {
+      return arguments.length > 1 ? Array.from(arguments) : void 0 === t ? null : t;
+    }function o() {
+      return Math.random().toString(18).substr(2, 16);
+    }Object.defineProperty(n, "__esModule", { value: !0 });var u = "function" == typeof Symbol && "symbol" == _typeof(Symbol.iterator) ? function (t) {
+      return typeof t === "undefined" ? "undefined" : _typeof(t);
+    } : function (t) {
+      return t && "function" == typeof Symbol && t.constructor === Symbol ? "symbol" : typeof t === "undefined" ? "undefined" : _typeof(t);
+    };n.isFunction = e, n.isMutableObject = r, n.dispatchIdentity = i, n.id = o;
+  }, function (t, n) {
+    "use strict";
+    function e() {
+      var t = [],
+          n = !1,
+          e = {},
+          r = function r(_r) {
+        var i = t.indexOf(_r);if (!(0 > i)) return n ? void (e[i] = _r) : void t.splice(i, 1);
+      },
+          i = function i(n) {
+        var e = (t.push(n), function () {
+          return r(n);
+        });return { dispose: e };
+      },
+          o = function o() {
+        for (var i = arguments.length, o = Array(i), u = 0; i > u; u++) {
+          o[u] = arguments[u];
+        }n = !0;try {
+          t.forEach(function (t, n) {
+            return e[n] || t.apply(void 0, o);
+          });
+        } finally {
+          n = !1, Object.keys(e).forEach(function (t) {
+            return r(e[t]);
+          }), e = {};
+        }
+      };return { publish: o, subscribe: i, $subscriptions: t };
+    }t.exports = e;
+  }, function (t, n, e) {
+    function r(t) {
+      return t && t.__esModule ? t : { "default": t };
+    }function i(t, n) {
+      if (!(t instanceof n)) throw new TypeError("Cannot call a class as a function");
+    }Object.defineProperty(n, "__esModule", { value: !0 });var o = e(2),
+        u = r(o),
+        s = e(4),
+        c = r(s),
+        a = e(1),
+        f = a.id(),
+        l = function () {
+      function t(n) {
+        var e = this;i(this, t);var r = u["default"]();Object.assign(this, { publish: function () {
+            function t(t) {
+              t.meta || (t.meta = {}), t.meta.id = a.id(), r.publish(t);
+            }return t;
+          }(), subscribe: r.subscribe, serialize: JSON.stringify, deserialize: JSON.parse }, n), this[f] = [], this.Store = c["default"], this.actions = {}, this.stores = {}, this.subscribe(function (t) {
+          e[f].forEach(function (n) {
+            return n.dispatch(t);
+          }), e[f].forEach(function (t) {
+            return t.emitChange();
+          });
+        });
+      }return t.prototype.createActions = function () {
+        function t(t, n) {
+          var e = this,
+              r = Object.keys(n).reduce(function (r, i) {
+            var o = String(t) + "/" + String(i),
+                u = function () {
+              function t(t) {
+                return e.publish({ type: o, payload: t });
+              }return t;
+            }();return r[i] = function () {
+              var t = n[i].apply(n, arguments);return a.isFunction(t) ? t(u, e) : (void 0 !== t && u(t), t);
+            }, Object.assign(r[i], { type: o, actionName: i }), r;
+          }, {});return this.actions[t] = r;
+        }return t;
+      }(), t.prototype.createAsyncActions = function () {
+        function t(t, n) {
+          var e = this;return Object.keys(n).reduce(function (r, i) {
+            var o = String(t) + "/" + String(i),
+                u = function () {
+              function t(t, n) {
+                var r = {};n.loading && (r.loading = !0);var i = n.loading ? i : String(i) + "/loading",
+                    o = { type: i, payload: t, meta: r };return n.error && (o.error = !0), e.publish(o), o;
+              }return t;
+            }();return r[i] = function () {
+              var t = n[i].apply(n, arguments);return u(null, { loading: !0 }), Promise.resolve(t).then(function (t) {
+                return u(t, {});
+              }, function (t) {
+                return u(t, { error: !0 });
+              });
+            }, Object.assign(r[i], { type: o, actionName: i }), r;
+          }, {});
+        }return t;
+      }(), t.prototype.generateActions = function () {
+        function t(t, n) {
+          var e = Array.isArray(n) ? n : [n];return this.createActions(t, e.reduce(function (t, n) {
+            return t[n] = a.dispatchIdentity, t;
+          }, {}));
+        }return t;
+      }(), t.prototype.createStore = function () {
+        function t(t, n) {
+          var e = this,
+              r = u["default"](),
+              i = function () {
+            function t(t, e) {
+              n.lifecycle[t] && n.lifecycle[t].publish({ state: n.state, action: e });
+            }return t;
+          }(),
+              o = function () {
+            function t(t) {
+              n._noChange = !1;try {
+                return t();
+              } catch (e) {
+                if (!n.lifecycle.error) throw e;i("error", e);
+              }
+            }return t;
+          }(),
+              s = function () {
+            function t(t) {
+              return n._noChange = !0, i("beforeEach", t), n.dispatchHandlers[t.type] ? o(function () {
+                n.dispatchHandlers[t.type].publish(t.payload, t);
+              }) : n.otherwise && o(function () {
+                n.otherwise(t.payload, t);
+              }), n.reduce && o(function () {
+                var e = n.reduce(n.state, t);void 0 !== e && (n.state = e);
+              }), i("afterEach", t), n.state;
+            }return t;
+          }(),
+              c = function () {
+            function t() {
+              return n._noChange || r.publish(n.state);
+            }return t;
+          }();return this[f].push({ displayName: t, setState: function () {
+              function t(t) {
+                return n.state = t;
+              }return t;
+            }(), getState: function () {
+              function t() {
+                return { state: n.state };
+              }return t;
+            }(), runLifecycle: i, initialState: this.serialize({ state: n.state }), dispatch: s, emitChange: c }), this.stores[t] = { displayName: t, dispatch: s, getState: function () {
+              function t() {
+                return n.state;
+              }return t;
+            }(), subscribe: function () {
+              function t(t) {
+                var n = r.subscribe(t);return { dispose: function () {
+                    function t() {
+                      i("unlisten"), n.dispose();
+                    }return t;
+                  }() };
+              }return t;
+            }(), destroy: function () {
+              function n() {
+                e[f] = e[f].filter(function (n) {
+                  return n.displayName !== t;
+                }), delete e.stores[t];
+              }return n;
+            }() };
+        }return t;
+      }(), t.prototype.load = function () {
+        function t(t) {
+          var n = "string" == typeof t ? this.deserialize(t) : t;this[f].forEach(function (t) {
+            n.hasOwnProperty(t.displayName) && (t.setState(n[t.displayName]), t.runLifecycle("load"));
+          });
+        }return t;
+      }(), t.prototype.save = function () {
+        function t(t) {
+          return this.serialize(this[f].reduce(function (n, e) {
+            return (!t || t.hasOwnProperty(e.displayName)) && (n[e.displayName] = e.getState().state, e.runLifecycle("save")), n;
+          }, {}));
+        }return t;
+      }(), t.prototype.flush = function () {
+        function t(t) {
+          var n = this,
+              e = this.save(t);return this[f].forEach(function (e) {
+            (!t || t.hasOwnProperty(e.displayName)) && e.setState(n.deserialize(e.initialState).state);
+          }), e;
+        }return t;
+      }(), t.debug = function () {
+        function t(t, n) {
+          var e = "alt.js.org";return "undefined" != typeof window && (window[e] || (window[e] = []), window[e].push({ name: t, alt: n })), n;
+        }return t;
+      }(), t;
+    }();l.Store = c["default"], n["default"] = l, t.exports = n["default"];
+  }, function (t, n, e) {
+    function r(t) {
+      return t && t.__esModule ? t : { "default": t };
+    }function i(t, n) {
+      if (!(t instanceof n)) throw new TypeError("Cannot call a class as a function");
+    }function o(t, n, e) {
+      var r = /./,
+          i = e.replace(r, function (t) {
+        return "on" + String(t[0].toUpperCase());
+      });if (t[e] && t[i]) throw new ReferenceError("You have multiple handlers bound to an action: " + (String(e) + " and " + String(i)));var o = t[e] || t[i];o && t.bindAction(n, function (n, r) {
+        t[e] ? t[e](n, r) : t[i] && t[i](n, r);
+      });
+    }Object.defineProperty(n, "__esModule", { value: !0 });var u = e(2),
+        s = r(u),
+        c = e(1),
+        a = function () {
+      function t() {
+        i(this, t), this.dispatchHandlers = {}, this.boundListeners = [], this.lifecycle = {}, this._noChange = !1;
+      }return t.prototype.bindActions = function () {
+        function t(t) {
+          var n = this;Object.keys(t).forEach(function (e) {
+            return o(n, t[e].type, e);
+          });
+        }return t;
+      }(), t.prototype.bindAction = function () {
+        function t(t, n) {
+          var e = t.type ? t.type : t;this.dispatchHandlers[e] || (this.dispatchHandlers[e] = s["default"]()), this.dispatchHandlers[e].subscribe(n), this.boundListeners.push(e);
+        }return t;
+      }(), t.prototype.bindListeners = function () {
+        function t(t) {
+          var n = this;Object.keys(t).forEach(function (e) {
+            if (!n[e]) throw new ReferenceError(String(e) + " defined but does not exist in self");var r = t[e],
+                i = function () {
+              function t(t) {
+                return n[e](t);
+              }return t;
+            }();Array.isArray(r) ? r.forEach(function (t) {
+              return n.bindAction(t, i);
+            }) : n.bindAction(r, i);
+          });
+        }return t;
+      }(), t.prototype.on = function () {
+        function t(t, n) {
+          this.lifecycle[t] || (this.lifecycle[t] = s["default"]()), this.lifecycle[t].subscribe(n);
+        }return t;
+      }(), t.prototype.setState = function () {
+        function t(t) {
+          c.isMutableObject(this.state) ? this.state = Object.assign({}, this.state, t) : this.state = t;
+        }return t;
+      }(), t.prototype.preventDefault = function () {
+        function t() {
+          this._noChange = !0;
+        }return t;
+      }(), t;
+    }();n["default"] = a, t.exports = n["default"];
+  }]);
+});
+
 },{}],277:[function(require,module,exports){
-const B = require('../utils/Lotus.react')
-const n = require('../utils/n')
-const pokemonActions = require('../actions/pokemonActions')
+var B = require('../utils/Lotus.react');
+var n = require('../utils/n');
+var pokemonActions = require('../actions/pokemonActions');
 
 function FormPokemonLevel(props) {
-  return (
-    n(B.FormControl, { label: 'Pokemon Level (optional)' }, [
-      n(B.Input, {
-        type: 'number',
-        onChange: pokemonActions.changedLevel,
-        value: props.level,
-      }),
-    ])
-  )
+  return n(B.FormControl, { label: 'Pokemon Level (optional)' }, [n(B.Input, {
+    type: 'number',
+    onChange: pokemonActions.changedLevel,
+    value: props.level
+  })]);
 }
 
-module.exports = FormPokemonLevel
+module.exports = FormPokemonLevel;
 
 },{"../actions/pokemonActions":274,"../utils/Lotus.react":295,"../utils/n":299}],278:[function(require,module,exports){
-const B = require('../utils/Lotus.react')
-const Pokemon = require('../../json/pokemon.json')
-const Select = require('react-select')
-const n = require('../utils/n')
-const pokemonActions = require('../actions/pokemonActions')
+var B = require('../utils/Lotus.react');
+var Pokemon = require('../../json/pokemon.json');
+var Select = require('react-select');
+var n = require('../utils/n');
+var pokemonActions = require('../actions/pokemonActions');
 
-const options = Pokemon.map(x => ({ label: x.name.replace(/_/g, ' '), value: x.name }))
-const logName = x => pokemonActions.changedName(x.value)
+var options = Pokemon.map(function (x) {
+  return { label: x.name.replace(/_/g, ' '), value: x.name };
+});
+var logName = function logName(x) {
+  return pokemonActions.changedName(x && x.value);
+};
 
 function FormPokemonName(props) {
-  return (
-    n(B.FormControl, { label: 'Name' }, [
-      n(Select, {
-        inputProps: {
-          autoCorrect: 'off',
-          autoCapitalize: 'off',
-          spellCheck: 'off',
-        },
-        name: 'pokemon-selector',
-        value: props.name,
-        options,
-        onChange: logName,
-      }),
-    ])
-  )
+  return n(B.FormControl, { label: 'Name' }, [n(Select, {
+    inputProps: {
+      autoCorrect: 'off',
+      autoCapitalize: 'off',
+      spellCheck: 'off'
+    },
+    name: 'pokemon-selector',
+    value: props.name,
+    options: options,
+    onChange: logName
+  })]);
 }
 
-module.exports = FormPokemonName
+module.exports = FormPokemonName;
 
 },{"../../json/pokemon.json":7,"../actions/pokemonActions":274,"../utils/Lotus.react":295,"../utils/n":299,"react-select":84}],279:[function(require,module,exports){
-const B = require('../utils/Lotus.react')
-const DustToLevel = require('../../json/dust-to-level.json')
-const Select = require('react-select')
-const n = require('../utils/n')
-const pokemonActions = require('../actions/pokemonActions')
+var B = require('../utils/Lotus.react');
+var DustToLevel = require('../../json/dust-to-level.json');
+var Select = require('react-select');
+var n = require('../utils/n');
+var pokemonActions = require('../actions/pokemonActions');
 
-const dustOptions = Object.keys(DustToLevel).map(x => ({ value: x, label: x }))
-const logStardust = x => pokemonActions.changedStardust(x.value)
+var dustOptions = Object.keys(DustToLevel).map(function (x) {
+  return { value: x, label: x };
+});
+var logStardust = function logStardust(x) {
+  return pokemonActions.changedStardust(x && x.value);
+};
 
 function FormStardust(props) {
-  return (
-    n(B.FormControl, { label: 'Stardust' }, [
-      n(Select, {
-        name: 'stardust-selector',
-        value: props.stardust,
-        options: dustOptions,
-        onChange: logStardust,
-      }),
-    ])
-  )
+  return n(B.FormControl, { label: 'Stardust' }, [n(Select, {
+    name: 'stardust-selector',
+    value: props.stardust,
+    options: dustOptions,
+    onChange: logStardust
+  })]);
 }
 
-module.exports = FormStardust
+module.exports = FormStardust;
 
 },{"../../json/dust-to-level.json":2,"../actions/pokemonActions":274,"../utils/Lotus.react":295,"../utils/n":299,"react-select":84}],280:[function(require,module,exports){
-const B = require('../utils/Lotus.react')
-const n = require('../utils/n')
-const pokemonActions = require('../actions/pokemonActions')
+var B = require('../utils/Lotus.react');
+var n = require('../utils/n');
+var pokemonActions = require('../actions/pokemonActions');
 
 function FormTrainerLevel(props) {
-  return (
-    n(B.FormControl, { label: 'Trainer Level' }, [
-      n(B.Input, {
-        type: 'number',
-        onChange: pokemonActions.changedTrainerLevel,
-        value: props.trainerLevel,
-      }),
-    ])
-  )
+  return n(B.FormControl, { label: 'Trainer Level' }, [n(B.Input, {
+    type: 'number',
+    onChange: pokemonActions.changedTrainerLevel,
+    value: props.trainerLevel
+  })]);
 }
 
-module.exports = FormTrainerLevel
+module.exports = FormTrainerLevel;
 
 },{"../actions/pokemonActions":274,"../utils/Lotus.react":295,"../utils/n":299}],281:[function(require,module,exports){
-const B = require('../utils/Lotus.react')
-const FormPokemonName = require('./FormPokemonName')
-const idealMatchup = require('../../src/idealMatchup')
-const n = require('../utils/n')
+var B = require('../utils/Lotus.react');
+var FormPokemonName = require('./FormPokemonName');
+var idealMatchup = require('../../src/idealMatchup');
+var n = require('../utils/n');
 
 function Matchup(props) {
-  const matchups = props.name ? idealMatchup(props.name) : []
-  return (
-    n(B.View, [
-      n(B.Header, 'Ideal Matchup'),
-      n(B.Text, 'This is calculated based on the opposing Pokemon\'s type and assuming the opponent has the best possible moveset combination for their Pokemon. The results do not include legendaries. Pokemon type effectiveness and resistances are also taken into account.'),
-      n('hr'),
-      n(FormPokemonName, { name: props.name }),
-      matchups.length ? (
-        n(B.Table, {
-          border: true,
-        }, [
-          n('thead', [
-            n('tr', [
-              n('th', 'Name'),
-              n('th', 'Moves'),
-            ]),
-          ]),
-          n('tbody', matchups.map((value) => (
-            n('tr', [
-              n('td', value.name),
-              n('td', [
-                n(B.Text, value.quick),
-                n(B.Text, value.charge),
-              ]),
-            ])
-          ))),
-        ])
-      ) : undefined,
-    ])
-  )
+  var matchups = props.name ? idealMatchup(props.name) : [];
+  return n(B.View, [n(B.Header, 'Ideal Matchup'), n(B.Text, 'This is calculated based on the opposing Pokemon\'s type and assuming the opponent has the best possible moveset combination for their Pokemon. The results do not include legendaries. Pokemon type effectiveness and resistances are also taken into account.'), n('hr'), n(FormPokemonName, { name: props.name }), matchups.length ? n(B.Table, {
+    border: true
+  }, [n('thead', [n('tr', [n('th', 'Name'), n('th', 'Moves')])]), n('tbody', matchups.map(function (value) {
+    return n('tr', [n('td', value.name), n('td', [n(B.Text, value.quick), n(B.Text, value.charge)])]);
+  }))]) : undefined]);
 }
 
-module.exports = Matchup
+module.exports = Matchup;
 
 },{"../../src/idealMatchup":267,"../utils/Lotus.react":295,"../utils/n":299,"./FormPokemonName":278}],282:[function(require,module,exports){
-const B = require('../utils/Lotus.react')
-const n = require('../utils/n')
+var B = require('../utils/Lotus.react');
+var n = require('../utils/n');
 
 function MoveCombos(props) {
-  return (
-    n(B.Table, [
-      n('thead', [
-        n('tr', [
-          n('th', 'Moves'),
-          n('th', 'Combo DPS'),
-        ]),
-      ]),
-      n('tbody', props.moves.map((move) => (
-        n('tr', [
-          n('td', [
-            n(B.Text, move.quick.name),
-            n(B.Text, move.charge.name),
-          ]),
-          n('td', move.dps),
-        ])
-      ))),
-    ])
-  )
+  return n(B.Table, [n('thead', [n('tr', [n('th', 'Moves'), n('th', 'Combo DPS')])]), n('tbody', props.moves.map(function (move) {
+    return n('tr', [n('td', [n(B.Text, move.quick.name), n(B.Text, move.charge.name)]), n('td', move.dps)]);
+  }))]);
 }
 
-module.exports = MoveCombos
+module.exports = MoveCombos;
 
 },{"../utils/Lotus.react":295,"../utils/n":299}],283:[function(require,module,exports){
-const B = require('../utils/Lotus.react')
-const MoveCombos = require('./MoveCombos')
-const MovesList = require('../../json/moves.json')
-const Pokemon = require('../../json/pokemon.json')
-const Select = require('react-select')
-const n = require('../utils/n')
-const moveActions = require('../actions/moveActions')
-const bestMovesFor = require('../../src/best-moves')
+var B = require('../utils/Lotus.react');
+var MoveCombos = require('./MoveCombos');
+var MovesList = require('../../json/moves.json');
+var Pokemon = require('../../json/pokemon.json');
+var Select = require('react-select');
+var n = require('../utils/n');
+var moveActions = require('../actions/moveActions');
+var bestMovesFor = require('../../src/best-moves');
 
-const pokemonList = Pokemon.map(x => ({ label: x.name.replace(/_/g, ' '), value: x.name }))
-const movesList = pokemonList.slice()
-movesList.push.apply(
-  movesList,
-  MovesList.map(x => ({ label: x.Name.replace(/_/g, ' '), value: x.Name }))
-)
+var pokemonList = Pokemon.map(function (x) {
+  return { label: x.name.replace(/_/g, ' '), value: x.name };
+});
+var movesList = pokemonList.slice();
+movesList.push.apply(movesList, MovesList.map(function (x) {
+  return { label: x.Name.replace(/_/g, ' '), value: x.Name };
+}));
 
-const Mon = Pokemon.reduce((obj, mon) => {
-  obj[mon.name] = mon.id
-  return obj
-}, {})
-const ObjMoves = MovesList.reduce((obj, move) => {
-  obj[move.Name] = move
-  return obj
-}, {})
+var Mon = Pokemon.reduce(function (obj, mon) {
+  obj[mon.name] = mon.id;
+  return obj;
+}, {});
+var ObjMoves = MovesList.reduce(function (obj, move) {
+  obj[move.Name] = move;
+  return obj;
+}, {});
 
 function sweetMoves(x) {
   if (!x) {
-    moveActions.pokemonChanged([])
-    moveActions.movesChanged([])
-    moveActions.textChanged('')
-    return
+    moveActions.pokemonChanged([]);
+    moveActions.movesChanged([]);
+    moveActions.textChanged('');
+    return;
   }
 
   if (Mon.hasOwnProperty(x.value)) {
-    const best = bestMovesFor(x.value)
-    const mon = Pokemon[Mon[x.value] - 1]
-    moveActions.pokemonChanged([])
-    moveActions.movesChanged(best)
+    var best = bestMovesFor(x.value);
+    var mon = Pokemon[Mon[x.value] - 1];
+    moveActions.pokemonChanged([]);
+    moveActions.movesChanged(best);
   } else if (ObjMoves.hasOwnProperty(x.value)) {
-    moveActions.movesChanged(ObjMoves[x.value])
-    moveActions.pokemonChanged(
-      Pokemon.filter(mon => (
-        mon.moves1.some(m => m.Name === x.value) ||
-        mon.moves2.some(m => m.Name === x.value)
-      )).map(x => x.name)
-    )
+    moveActions.movesChanged(ObjMoves[x.value]);
+    moveActions.pokemonChanged(Pokemon.filter(function (mon) {
+      return mon.moves1.some(function (m) {
+        return m.Name === x.value;
+      }) || mon.moves2.some(function (m) {
+        return m.Name === x.value;
+      });
+    }).map(function (x) {
+      return x.name;
+    }));
   }
-  moveActions.textChanged(x.value)
+  moveActions.textChanged(x.value);
 }
 
 function Moves(props) {
-  return (
-    n(B.View, [
-      n(B.Header, 'Moveset Information'),
-      n(B.Text, 'Calculate the ideal combination movesets for your Pokemon.'),
-      n('hr'),
-      n(B.FormControl, { label: 'Moves' }, [
-        n(Select, {
-          inputProps: {
-            autoCorrect: 'off',
-            autoCapitalize: 'off',
-            spellCheck: 'off',
-          },
-          name: 'move-selector',
-          value: props.text,
-          options: movesList,
-          onChange: sweetMoves,
-        }),
-      ]),
-      props.moves.length && (
-        n(MoveCombos, { moves: props.moves })
-      ) || undefined,
-      props.moves.Name && (
-        n(B.Panel, [
-          n(B.Text, `Name: ${props.moves.Name}`),
-          n(B.Text, `Power: ${props.moves.Power}`),
-          n(B.Text, `Duration: ${(props.moves.DurationMs / 1000).toFixed(1)} seconds`),
-          n(B.Text, `DPS: ${(props.moves.Power / (props.moves.DurationMs / 1000)).toFixed(3)}`),
-          n(B.Text, `Energy: ${props.moves.EnergyDelta}`),
-        ])
-      ) || undefined,
-      props.pokemon.length && (
-        n(B.Panel, props.pokemon.map(mon => (
-          n(B.Image, {
-            onClick: () => sweetMoves({ value: mon }),
-            src: `images/${mon}.png`,
-            height: 60,
-            width: 60,
-          })
-        )))
-      ) || undefined,
-      n('hr'),
-      n('h3', 'More Info'),
-      n(B.Text, 'The tables above feature a combined DPS score for each possible move combination. The DPS is calculated assuming a Pokemon will be using their quick move constantly and their charge move immediately when it becomes available. STAB damage is taken into account as well as each move\'s animation time. You can also use this search to look up which Pokemon can learn a particular move.'),
-    ])
-  )
+  return n(B.View, [n(B.Header, 'Moveset Information'), n(B.Text, 'Calculate the ideal combination movesets for your Pokemon.'), n('hr'), n(B.FormControl, { label: 'Moves' }, [n(Select, {
+    inputProps: {
+      autoCorrect: 'off',
+      autoCapitalize: 'off',
+      spellCheck: 'off'
+    },
+    name: 'move-selector',
+    value: props.text,
+    options: movesList,
+    onChange: sweetMoves
+  })]), props.moves.length && n(MoveCombos, { moves: props.moves }) || undefined, props.moves.Name && n(B.Panel, [n(B.Text, 'Name: ' + String(props.moves.Name)), n(B.Text, 'Power: ' + String(props.moves.Power)), n(B.Text, 'Duration: ' + String((props.moves.DurationMs / 1000).toFixed(1)) + ' seconds'), n(B.Text, 'DPS: ' + String((props.moves.Power / (props.moves.DurationMs / 1000)).toFixed(3))), n(B.Text, 'Energy: ' + String(props.moves.EnergyDelta))]) || undefined, props.pokemon.length && n(B.Panel, props.pokemon.map(function (mon) {
+    return n(B.Image, {
+      onClick: function () {
+        function onClick() {
+          return sweetMoves({ value: mon });
+        }
+
+        return onClick;
+      }(),
+      src: 'images/' + String(mon) + '.png',
+      height: 60,
+      width: 60
+    });
+  })) || undefined, n('hr'), n('h3', 'More Info'), n(B.Text, 'The tables above feature a combined DPS score for each possible move combination. The DPS is calculated assuming a Pokemon will be using their quick move constantly and their charge move immediately when it becomes available. STAB damage is taken into account as well as each move\'s animation time. You can also use this search to look up which Pokemon can learn a particular move.')]);
 }
 
-module.exports = Moves
+module.exports = Moves;
 
 },{"../../json/moves.json":6,"../../json/pokemon.json":7,"../../src/best-moves":262,"../actions/moveActions":273,"../utils/Lotus.react":295,"../utils/n":299,"./MoveCombos":282,"react-select":84}],284:[function(require,module,exports){
-const B = require('../utils/Lotus.react')
-const DustToLevel = require('../../json/dust-to-level.json')
-const n = require('../utils/n')
-const powerupTools = require('../../src/powerup')
-const FormTrainerLevel = require('./FormTrainerLevel')
-const FormStardust = require('./FormStardust')
-const FormPokemonLevel = require('./FormPokemonLevel')
+var B = require('../utils/Lotus.react');
+var DustToLevel = require('../../json/dust-to-level.json');
+var n = require('../utils/n');
+var powerupTools = require('../../src/powerup');
+var FormTrainerLevel = require('./FormTrainerLevel');
+var FormStardust = require('./FormStardust');
+var FormPokemonLevel = require('./FormPokemonLevel');
 
 function PowerUp(props) {
-  const dust = DustToLevel[props.stardust] || []
-  const minPokemonLevel = Math.min.apply(null, dust)
+  var dust = DustToLevel[props.stardust] || [];
+  var minPokemonLevel = Math.min.apply(null, dust);
 
-  const power = powerupTools.howMuchPowerUp(
-    Number(props.level || minPokemonLevel),
-    Number(props.trainerLevel)
-  )
+  var power = powerupTools.howMuchPowerUp(Number(props.level || minPokemonLevel), Number(props.trainerLevel));
 
-  return (
-    n(B.View, [
-      n(B.Header, 'Power Up costs'),
-      n(B.Text, 'Find out how much stardust and candy it will cost to max your Pokemon out.'),
-      n('hr'),
-      n(FormTrainerLevel, {
-        trainerLevel: props.trainerLevel,
-      }),
-      n(FormStardust, {
-        stardust: props.stardust,
-      }),
-      n(FormPokemonLevel, {
-        level: props.level,
-      }),
-      power && (
-        n(B.View, { spacingVertical: 'md' }, [
-          n('h3', 'Results'),
-          n(B.Panel, `Candy cost: ${power.candy}`),
-          n(B.Panel, `Stardust cost: ${power.stardust}`),
-        ])
-      ),
-    ])
-  )
+  return n(B.View, [n(B.Header, 'Power Up costs'), n(B.Text, 'Find out how much stardust and candy it will cost to max your Pokemon out.'), n('hr'), n(FormTrainerLevel, {
+    trainerLevel: props.trainerLevel
+  }), n(FormStardust, {
+    stardust: props.stardust
+  }), n(FormPokemonLevel, {
+    level: props.level
+  }), power && n(B.View, { spacingVertical: 'md' }, [n('h3', 'Results'), n(B.Panel, 'Candy cost: ' + String(power.candy)), n(B.Panel, 'Stardust cost: ' + String(power.stardust))])]);
 }
 
-module.exports = PowerUp
+module.exports = PowerUp;
 
 },{"../../json/dust-to-level.json":2,"../../src/powerup":271,"../utils/Lotus.react":295,"../utils/n":299,"./FormPokemonLevel":277,"./FormStardust":279,"./FormTrainerLevel":280}],285:[function(require,module,exports){
-const B = require('../utils/Lotus.React')
-const FormPokemonLevel = require('./FormPokemonLevel')
-const FormPokemonName = require('./FormPokemonName')
-const FormStardust = require('./FormStardust')
-const FormTrainerLevel = require('./FormTrainerLevel')
-const Results = require('./Results')
-const calculateValues = require('../utils/calculateValues')
-const n = require('../utils/n')
-const pokemonActions = require('../actions/pokemonActions')
-const SearchHistoryContainer = require('../containers/SearchHistoryContainer')
+var B = require('../utils/Lotus.React');
+var FormPokemonLevel = require('./FormPokemonLevel');
+var FormPokemonName = require('./FormPokemonName');
+var FormStardust = require('./FormStardust');
+var FormTrainerLevel = require('./FormTrainerLevel');
+var Results = require('./Results');
+var calculateValues = require('../utils/calculateValues');
+var n = require('../utils/n');
+var pokemonActions = require('../actions/pokemonActions');
+var SearchHistoryContainer = require('../containers/SearchHistoryContainer');
 
 function Rater(props) {
-  if (props.results) return n(Results, props.results)
+  if (props.results) return n(Results, props.results);
 
-  return n(B.View, [
-    n(FormTrainerLevel, { trainerLevel: props.trainerLevel }),
-    n(FormPokemonName, { name: props.name }),
-    n(B.FormControl, { label: 'CP' }, [
-      n(B.Input, {
-        type: 'number',
-        onChange: pokemonActions.changedCP,
-        onClick: () => pokemonActions.changedCP({ currentTarget: { value: '' }}),
-        value: props.cp,
-      }),
-    ]),
-    n(B.FormControl, { label: 'HP' }, [
-      n(B.Input, {
-        type: 'number',
-        onChange: pokemonActions.changedHP,
-        onClick: () => pokemonActions.changedHP({ currentTarget: { value: '' }}),
-        value: props.hp,
-      }),
-    ]),
-    n(FormStardust, { stardust: props.stardust }),
-    n(FormPokemonLevel, { level: props.level }),
-    n(B.Button, {
-      size: 'sm',
-      onClick: () => calculateValues(),
-      style: {
-        backgroundColor: '#6297de',
-      },
-    }, 'Calculate'),
-    ' ',
-    n(B.Button, { size: 'sm', onClick: pokemonActions.valuesReset }, 'Clear'),
-    n('hr'),
-    n(SearchHistoryContainer),
-  ])
+  return n(B.View, [n(FormTrainerLevel, { trainerLevel: props.trainerLevel }), n(FormPokemonName, { name: props.name }), n(B.FormControl, { label: 'CP' }, [n(B.Input, {
+    type: 'number',
+    onChange: pokemonActions.changedCP,
+    onClick: function () {
+      function onClick() {
+        return pokemonActions.changedCP({ currentTarget: { value: '' } });
+      }
+
+      return onClick;
+    }(),
+    value: props.cp
+  })]), n(B.FormControl, { label: 'HP' }, [n(B.Input, {
+    type: 'number',
+    onChange: pokemonActions.changedHP,
+    onClick: function () {
+      function onClick() {
+        return pokemonActions.changedHP({ currentTarget: { value: '' } });
+      }
+
+      return onClick;
+    }(),
+    value: props.hp
+  })]), n(FormStardust, { stardust: props.stardust }), n(FormPokemonLevel, { level: props.level }), n(B.Button, {
+    size: 'sm',
+    onClick: function () {
+      function onClick() {
+        return calculateValues();
+      }
+
+      return onClick;
+    }(),
+    style: {
+      backgroundColor: '#6297de'
+    }
+  }, 'Calculate'), ' ', n(B.Button, { size: 'sm', onClick: pokemonActions.valuesReset }, 'Clear'), n('hr'), n(SearchHistoryContainer)]);
 }
 
-module.exports = Rater
+module.exports = Rater;
 
 },{"../actions/pokemonActions":274,"../containers/SearchHistoryContainer":288,"../utils/Lotus.React":294,"../utils/calculateValues":296,"../utils/n":299,"./FormPokemonLevel":277,"./FormPokemonName":278,"./FormStardust":279,"./FormTrainerLevel":280,"./Results":286}],286:[function(require,module,exports){
-const B = require('../utils/Lotus.react')
-const MoveCombos = require('./MoveCombos')
-const Styles = require('../styles')
-const bestMovesFor = require('../../src/best-moves')
-const finalEvolutions = require('../../json/finalEvolutions')
-const getWithContext = require('../utils/getWithContext')
-const n = require('../utils/n')
-const pokemonActions = require('../actions/pokemonActions')
+var B = require('../utils/Lotus.react');
+var MoveCombos = require('./MoveCombos');
+var Styles = require('../styles');
+var bestMovesFor = require('../../src/best-moves');
+var finalEvolutions = require('../../json/finalEvolutions');
+var getWithContext = require('../utils/getWithContext');
+var n = require('../utils/n');
+var pokemonActions = require('../actions/pokemonActions');
 
 function Results(props) {
-  var bestMoves = null
+  var bestMoves = null;
   if (finalEvolutions[props.pokemon.name]) {
-    bestMoves = bestMovesFor(props.pokemon.name, props.best.ivs.IndAtk)
+    bestMoves = bestMovesFor(props.pokemon.name, props.best.ivs.IndAtk);
   }
 
-  console.log(props)
+  console.log(props);
 
-  return (
-    n(B.View, [
-      n(B.View, [
-        n(B.Button, { size: 'sm', onClick: pokemonActions.resultsReset }, 'Check Another'),
-      ]),
+  return n(B.View, [n(B.View, [n(B.Button, { size: 'sm', onClick: pokemonActions.resultsReset }, 'Check Another')]), n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n(B.Text, { style: Styles.bigText }, props.pokemon.name), n(B.Text, 'CP: ' + String(props.pokemon.cp) + ' | HP: ' + String(props.pokemon.hp)), n(B.View, { style: Styles.pokemonImage }, [n(B.Image, { src: 'images/' + String(props.pokemon.name) + '.png', height: 150, width: 150 })]), n(B.Text, { style: Styles.bigText }, props.range.iv[0] === props.range.iv[1] ? String(props.range.iv[0]) + '%' : String(props.range.iv[0]) + '% - ' + String(props.range.iv[1]) + '%'), n(B.Text, { style: Styles.resultsRow }, [props.chance === 100 ? 'Keep your ' + String(props.pokemon.cp) + 'CP ' + String(props.pokemon.name) : props.chance === 0 ? 'Send this Pokemon to the grinder for candy.' : 'Maybe you should keep this Pokemon around.'])]), n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Possible values (' + String(props.values.length) + ')'), n(B.Text, { style: Styles.resultsRow }, [props.values.length === 1 ? n('span', 'Congrats, here are your Pokemon\'s values') : n('span', ['There are ', n('strong', props.values.length), ' possibilities and a ', n('strong', String(props.chance) + '%'), ' chance you will have a good ' + String(props.pokemon.name) + '. ', props.values.length > 10 && n('span', ['We are showing up to ', n('strong', 10), ' possibilities below. ']), 'Highlighted rows show even levels since you can only catch even leveled Pokemon.'])]), n(B.Table, { clean: true, border: true }, [n('thead', [n('tr', [n('th', 'IV'), n('th', 'Level'), n('th', 'CP %'), n('th', 'HP %'), n('th', 'Battle %')])]), n('tbody', getWithContext(props.values).map(function (value) {
+    return n('tr', {
+      style: {
+        backgroundColor: Number(value.Level) % 1 === 0 ? '#fef4f4' : ''
+      }
+    }, [n('td', [n(B.Text, {
+      className: 'label',
+      style: value.percent.PerfectIV > 80 ? Styles.good : value.percent.PerfectIV > 69 ? Styles.ok : Styles.bad
+    }, String(value.percent.PerfectIV) + '%'), ' ', n('strong', value.strings.iv)]), n('td', value.Level), n('td', value.percent.PercentCP), n('td', value.percent.PercentHP), n('td', value.percent.PercentBatt)]);
+  }))])]),
 
-      n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [
-        n(B.Text, { style: Styles.bigText }, props.pokemon.name),
-        n(B.Text, `CP: ${props.pokemon.cp} | HP: ${props.pokemon.hp}`),
-        n(B.View, { style: Styles.pokemonImage }, [
-          n(B.Image, { src: `images/${props.pokemon.name}.png`, height: 150, width: 150 }),
-        ]),
-        n(
-          B.Text,
-          { style: Styles.bigText },
-          props.range.iv[0] === props.range.iv[1]
-            ? `${props.range.iv[0]}%`
-            : `${props.range.iv[0]}% - ${props.range.iv[1]}%`
-        ),
-        n(B.Text, { style: Styles.resultsRow }, [
-          props.chance === 100
-            ? `Keep your ${props.pokemon.cp}CP ${props.pokemon.name}`
-            : props.chance === 0
-              ? `Send this Pokemon to the grinder for candy.`
-              : `Maybe you should keep this Pokemon around.`
-        ]),
-      ]),
-
-      n(B.View, { spacingVertical: 'md' }, [
-        n('h3', { style: Styles.resultsRow }, `Possible values (${props.values.length})`),
-        n(B.Text, { style: Styles.resultsRow }, [
-          props.values.length === 1
-            ? n('span', 'Congrats, here are your Pokemon\'s values')
-            : n('span', [
-              'There are ',
-              n('strong', props.values.length),
-              ' possibilities and a ',
-              n('strong', `${props.chance}%`),
-              ` chance you will have a good ${props.pokemon.name}. `,
-              props.values.length > 10 && (
-                n('span', [
-                  'We are showing up to ',
-                  n('strong', 10),
-                  ' possibilities below. ',
-                ])
-              ),
-              'Highlighted rows show even levels since you can only catch even leveled Pokemon.',
-            ]),
-        ]),
-        n(B.Table, { clean: true, border: true }, [
-          n('thead', [
-            n('tr', [
-              n('th', 'IV'),
-              n('th', 'Level'),
-              n('th', 'CP %'),
-              n('th', 'HP %'),
-              n('th', 'Battle %'),
-            ]),
-          ]),
-          n('tbody', getWithContext(props.values).map((value) => (
-            n('tr', {
-              style: {
-                backgroundColor: Number(value.Level) % 1 === 0 ? '#fef4f4' : '',
-              },
-            }, [
-              n('td', [
-                n(B.Text, {
-                  className: 'label',
-                  style: value.percent.PerfectIV > 80
-                    ? Styles.good
-                    : value.percent.PerfectIV > 69
-                    ? Styles.ok
-                    : Styles.bad,
-                }, `${value.percent.PerfectIV}%`),
-                ' ',
-                n('strong', value.strings.iv),
-              ]),
-              n('td', value.Level),
-              n('td', value.percent.PercentCP),
-              n('td', value.percent.PercentHP),
-              n('td', value.percent.PercentBatt),
-            ])
-          ))),
-        ]),
-      ]),
-
-      // We should only show best moveset if it is in its final evolved form...
-      bestMoves && (
-        n(B.View, { spacingVertical: 'md' }, [
-          n('h3', { style: Styles.resultsRow }, `Best moveset combos for ${props.pokemon.name}`),
-          n(MoveCombos, { moves: bestMoves }),
-        ])
-      ),
-
-      props.best.meta.EvolveCP && (
-        n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [
-          n('h3', 'Evolution'),
-          n(B.Panel, [
-            n(B.Text, `If evolved it would have a CP of about ${props.best.meta.EvolveCP}`),
-          ]),
-        ])
-      ),
-
-      props.best.meta.Stardust > 0 && (
-        n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [
-          n('h3', { style: Styles.resultsRow }, `Maxing out to level ${props.best.meta.MaxLevel}`),
-          props.pokemon.level === null && (
-            n(B.Text, `Assuming that your Pokemon's current level is ${props.best.Level}. The information below is just an estimate.`)
-          ),
-          n(B.View, [
-            n(B.Panel, `Current level: ${props.best.Level}`),
-            n(B.Panel, `Candy cost: ${props.best.meta.Candy}`),
-            n(B.Panel, `Stardust cost: ${props.best.meta.Stardust}`),
-            n(B.Panel, `CP: ${props.best.meta.MaxCP}`),
-            n(B.Panel, `HP: ${props.best.meta.MaxHP}`),
-          ]),
-        ])
-      ),
-
-      n(B.View, { spacingVertical: 'md' }, [
-        n('h3', { style: Styles.resultsRow }, 'Yours vs Perfect by level'),
-        n(B.Table, [
-          n('thead', [
-            n('tr', [
-              n('th', 'Level'),
-              n('th', 'Your CP'),
-              n('th', 'Best CP'),
-              n('th', 'Your HP'),
-              n('th', 'Best HP'),
-            ]),
-          ]),
-          n('tbody', props.values.reduce((o, value) => {
-            if (o._[value.Level]) return o
-            o._[value.Level] = 1
-            o.rows.push(
-              n('tr', [
-                n('td', value.Level),
-                n('td', value.CP),
-                n('td', value.meta.MaxLevelCP),
-                n('td', value.HP),
-                n('td', value.meta.MaxLevelHP),
-              ])
-            )
-            return o
-          }, { rows: [], _: {} }).rows),
-        ]),
-      ]),
-    ])
-  )
+  // We should only show best moveset if it is in its final evolved form...
+  bestMoves && n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Best moveset combos for ' + String(props.pokemon.name)), n(MoveCombos, { moves: bestMoves })]), props.best.meta.EvolveCP && n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n('h3', 'Evolution'), n(B.Panel, [n(B.Text, 'If evolved it would have a CP of about ' + String(props.best.meta.EvolveCP))])]), props.best.meta.Stardust > 0 && n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n('h3', { style: Styles.resultsRow }, 'Maxing out to level ' + String(props.best.meta.MaxLevel)), props.pokemon.level === null && n(B.Text, 'Assuming that your Pokemon\'s current level is ' + String(props.best.Level) + '. The information below is just an estimate.'), n(B.View, [n(B.Panel, 'Current level: ' + String(props.best.Level)), n(B.Panel, 'Candy cost: ' + String(props.best.meta.Candy)), n(B.Panel, 'Stardust cost: ' + String(props.best.meta.Stardust)), n(B.Panel, 'CP: ' + String(props.best.meta.MaxCP)), n(B.Panel, 'HP: ' + String(props.best.meta.MaxHP))])]), n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Yours vs Perfect by level'), n(B.Table, [n('thead', [n('tr', [n('th', 'Level'), n('th', 'Your CP'), n('th', 'Best CP'), n('th', 'Your HP'), n('th', 'Best HP')])]), n('tbody', props.values.reduce(function (o, value) {
+    if (o._[value.Level]) return o;
+    o._[value.Level] = 1;
+    o.rows.push(n('tr', [n('td', value.Level), n('td', value.CP), n('td', value.meta.MaxLevelCP), n('td', value.HP), n('td', value.meta.MaxLevelHP)]));
+    return o;
+  }, { rows: [], _: {} }).rows)])])]);
 }
 
-module.exports = Results
+module.exports = Results;
 
 },{"../../json/finalEvolutions":3,"../../src/best-moves":262,"../actions/pokemonActions":274,"../styles":293,"../utils/Lotus.react":295,"../utils/getWithContext":298,"../utils/n":299,"./MoveCombos":282}],287:[function(require,module,exports){
-const B = require('../utils/Lotus.react')
-const Styles = require('../styles')
-const calculateValues = require('../utils/calculateValues')
-const n = require('../utils/n')
+var B = require('../utils/Lotus.react');
+var Styles = require('../styles');
+var calculateValues = require('../utils/calculateValues');
+var n = require('../utils/n');
 
 function SearchHistory(props) {
-  return (
-    n(B.View, [
-      n('h3', { style: Styles.resultsRow }, 'Recent Searches'),
-      n(B.View, props.searches.map((search) => (
-        n(B.Panel, [
-          n('a', {
-            onClick: () => calculateValues(search.values),
-          }, search.text),
-        ])
-      )))
-    ])
-  )
+  return n(B.View, [n('h3', { style: Styles.resultsRow }, 'Recent Searches'), n(B.View, props.searches.map(function (search) {
+    return n(B.Panel, [n('a', {
+      onClick: function () {
+        function onClick() {
+          return calculateValues(search.values);
+        }
+
+        return onClick;
+      }()
+    }, search.text)]);
+  }))]);
 }
 
-module.exports = SearchHistory
+module.exports = SearchHistory;
 
 },{"../styles":293,"../utils/Lotus.react":295,"../utils/calculateValues":296,"../utils/n":299}],288:[function(require,module,exports){
-const SearchHistory = require('../components/SearchHistory')
-const connect = require('../utils/connect')
-const historyStore = require('../stores/HistoryStore')
+var SearchHistory = require('../components/SearchHistory');
+var connect = require('../utils/connect');
+var historyStore = require('../stores/HistoryStore');
 
-const SearchHistoryContainer = connect(SearchHistory, {
-  listenTo: () => ({ historyStore }),
-  getProps: state => state.historyStore,
-})
+var SearchHistoryContainer = connect(SearchHistory, {
+  listenTo: function () {
+    function listenTo() {
+      return { historyStore: historyStore };
+    }
 
-module.exports = SearchHistoryContainer
+    return listenTo;
+  }(),
+  getProps: function () {
+    function getProps(state) {
+      return state.historyStore;
+    }
+
+    return getProps;
+  }()
+});
+
+module.exports = SearchHistoryContainer;
 
 },{"../components/SearchHistory":287,"../stores/HistoryStore":290,"../utils/connect":297}],289:[function(require,module,exports){
-const B = require('./utils/Lotus.react')
-const RR = require('react-router')
-const ReactDOM = require('react-dom')
-const Styles = require('./styles')
-const alt = require('./alt')
-const connect = require('./utils/connect')
-const n = require('./utils/n')
-const localforage = require('localforage')
+var B = require('./utils/Lotus.react');
+var RR = require('react-router');
+var ReactDOM = require('react-dom');
+var Styles = require('./styles');
+var alt = require('./alt');
+var connect = require('./utils/connect');
+var n = require('./utils/n');
+var localforage = require('localforage');
 
-const Matchup = require('./components/Matchup')
-const Moves = require('./components/Moves')
-const PowerUp = require('./components/PowerUp')
-const Rater = require('./components/Rater')
+var Matchup = require('./components/Matchup');
+var Moves = require('./components/Moves');
+var PowerUp = require('./components/PowerUp');
+var Rater = require('./components/Rater');
 
-const pokemonActions = require('./actions/pokemonActions')
+var pokemonActions = require('./actions/pokemonActions');
 
-const movesStore = require('./stores/MovesStore')
-const inventoryStore = require('./stores/InventoryStore')
+var movesStore = require('./stores/MovesStore');
+var inventoryStore = require('./stores/InventoryStore');
 
-const ConnectedMoves = connect(Moves, {
-  listenTo: () => ({ movesStore }),
-  getProps: state => state.movesStore,
-})
+var ConnectedMoves = connect(Moves, {
+  listenTo: function () {
+    function listenTo() {
+      return { movesStore: movesStore };
+    }
 
+    return listenTo;
+  }(),
+  getProps: function () {
+    function getProps(state) {
+      return state.movesStore;
+    }
 
-const ConnectedPowerUp = connect(PowerUp, {
+    return getProps;
+  }()
+});
+
+var ConnectedPowerUp = connect(PowerUp, {
   // TODO split inventoryStore and use pokemonStore or playerStore
-  listenTo: () => ({ inventoryStore }),
-  getProps: state => state.inventoryStore,
-})
+  listenTo: function () {
+    function listenTo() {
+      return { inventoryStore: inventoryStore };
+    }
 
-const ConnectedMatchup = connect(Matchup, {
-  listenTo: () => ({ inventoryStore }),
-  getProps: state => state.inventoryStore,
-})
+    return listenTo;
+  }(),
+  getProps: function () {
+    function getProps(state) {
+      return state.inventoryStore;
+    }
 
-const ConnectedRater = connect(Rater, {
-  listenTo: () => ({ inventoryStore }),
-  getProps: state => state.inventoryStore,
-})
+    return getProps;
+  }()
+});
+
+var ConnectedMatchup = connect(Matchup, {
+  listenTo: function () {
+    function listenTo() {
+      return { inventoryStore: inventoryStore };
+    }
+
+    return listenTo;
+  }(),
+  getProps: function () {
+    function getProps(state) {
+      return state.inventoryStore;
+    }
+
+    return getProps;
+  }()
+});
+
+var ConnectedRater = connect(Rater, {
+  listenTo: function () {
+    function listenTo() {
+      return { inventoryStore: inventoryStore };
+    }
+
+    return listenTo;
+  }(),
+  getProps: function () {
+    function getProps(state) {
+      return state.inventoryStore;
+    }
+
+    return getProps;
+  }()
+});
 
 // Styles.add(Styles.spacing.horizontal.large)
 
 function Main(props) {
-  return n(B.View, { style: Styles.main }, [
-    n(B.View, { spacing: 'lg', style: Styles.container }, [
-      n(B.View, {
-        className: 'container',
-      }, props.children),
-    ]),
-    n(B.View, { style: Styles.menu }, [
-      n(RR.Link, { style: Styles.link, to: '/' }, 'Rater'),
-      n(RR.Link, { style: Styles.link, to: 'moves' }, 'Moves'),
-      n(RR.Link, { style: Styles.link, to: 'power' }, 'PowerUp Cost'),
-      n(RR.Link, { style: Styles.link, to: 'matchup' }, 'Matchup'),
-    ]),
-  ])
+  return n(B.View, { style: Styles.main }, [n(B.View, { spacing: 'lg', style: Styles.container }, [n(B.View, {
+    className: 'container'
+  }, props.children)]), n(B.View, { className: 'nav', style: Styles.menu }, [n(RR.Link, { style: Styles.link, to: '/' }, 'Rater'), n(RR.Link, { style: Styles.link, to: 'moves' }, 'Moves'), n(RR.Link, { style: Styles.link, to: 'power' }, 'PowerUp Cost'), n(RR.Link, { style: Styles.link, to: 'matchup' }, 'Matchup')])]);
 }
 
-const Routes = n(RR.Router, { history: RR.browserHistory }, [
-  n(RR.Route, { path: '/', component: Main }, [
-    n(RR.IndexRoute, { component: ConnectedRater }),
-    n(RR.Route, { path: 'moves', component: ConnectedMoves }),
-    n(RR.Route, { path: 'power', component: ConnectedPowerUp }),
-    n(RR.Route, { path: 'matchup', component: ConnectedMatchup }),
-  ]),
-])
+var Routes = n(RR.Router, { history: RR.browserHistory }, [n(RR.Route, { path: '/', component: Main }, [n(RR.IndexRoute, { component: ConnectedRater }), n(RR.Route, { path: 'moves', component: ConnectedMoves }), n(RR.Route, { path: 'power', component: ConnectedPowerUp }), n(RR.Route, { path: 'matchup', component: ConnectedMatchup })])]);
 
-localforage.getItem('pogoivcalc.searches').then((searches) => {
-  if (searches) alt.load({ HistoryStore: { searches } })
-})
+localforage.getItem('pogoivcalc.searches').then(function (searches) {
+  if (searches) alt.load({ HistoryStore: { searches: searches } });
+});
 
-localforage.getItem('pogoivcalc.trainerLevel').then((trainerLevel) => {
+localforage.getItem('pogoivcalc.trainerLevel').then(function (trainerLevel) {
   if (trainerLevel) {
-    localforage.setItem('pogoivcalc.trainerLevel', trainerLevel)
-    pokemonActions.trainerLevelChanged(trainerLevel)
+    localforage.setItem('pogoivcalc.trainerLevel', trainerLevel);
+    pokemonActions.trainerLevelChanged(trainerLevel);
   }
 
-  ReactDOM.render(
-    Routes,
-    document.querySelector('#app')
-  )
-})
+  ReactDOM.render(Routes, document.querySelector('#app'));
+});
 
 },{"./actions/pokemonActions":274,"./alt":275,"./components/Matchup":281,"./components/Moves":283,"./components/PowerUp":284,"./components/Rater":285,"./stores/InventoryStore":291,"./stores/MovesStore":292,"./styles":293,"./utils/Lotus.react":295,"./utils/connect":297,"./utils/n":299,"localforage":17,"react-dom":18,"react-router":48}],290:[function(require,module,exports){
-const alt = require('../alt')
-const historyActions = require('../actions/historyActions')
-const localforage = require('localforage')
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-class HistoryStore extends alt.Store {
-  constructor() {
-    super()
-    this.state = {
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var alt = require('../alt');
+var historyActions = require('../actions/historyActions');
+var localforage = require('localforage');
+
+var HistoryStore = function (_alt$Store) {
+  _inherits(HistoryStore, _alt$Store);
+
+  function HistoryStore() {
+    _classCallCheck(this, HistoryStore);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(HistoryStore).call(this));
+
+    _this.state = {
       searches: []
-    }
-    this.bindActions(historyActions)
+    };
+    _this.bindActions(historyActions);
+    return _this;
   }
 
-  pokemonChecked(pokemon) {
-    const searches = []
+  _createClass(HistoryStore, [{
+    key: 'pokemonChecked',
+    value: function () {
+      function pokemonChecked(pokemon) {
+        var searches = [];
 
-    searches.push(pokemon)
+        searches.push(pokemon);
 
-    const inSearch = {
-      [pokemon.text]: 1,
-    }
-    this.state.searches.forEach((mon) => {
-      // make sure there are no dupes
-      if (inSearch.hasOwnProperty(mon.text)) return
-      // max 10 recent searches
-      if (searches.length === 10) return
+        var inSearch = _defineProperty({}, pokemon.text, 1);
+        this.state.searches.forEach(function (mon) {
+          // make sure there are no dupes
+          if (inSearch.hasOwnProperty(mon.text)) return;
+          // max 10 recent searches
+          if (searches.length === 10) return;
 
-      searches.push(mon)
-      inSearch[mon.text] = 1
-    })
+          searches.push(mon);
+          inSearch[mon.text] = 1;
+        });
 
-    this.setState({ searches })
-    localforage.setItem('pogoivcalc.searches', searches)
-  }
-}
+        this.setState({ searches: searches });
+        localforage.setItem('pogoivcalc.searches', searches);
+      }
 
-module.exports = alt.createStore('HistoryStore', new HistoryStore())
+      return pokemonChecked;
+    }()
+  }]);
+
+  return HistoryStore;
+}(alt.Store);
+
+module.exports = alt.createStore('HistoryStore', new HistoryStore());
 
 },{"../actions/historyActions":272,"../alt":275,"localforage":17}],291:[function(require,module,exports){
-const alt = require('../alt')
-const pokemonActions = require('../actions/pokemonActions')
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-class InventoryStore extends alt.Store {
-  constructor() {
-    super()
-    this.bindActions(pokemonActions)
-    this.state = {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var alt = require('../alt');
+var pokemonActions = require('../actions/pokemonActions');
+
+var InventoryStore = function (_alt$Store) {
+  _inherits(InventoryStore, _alt$Store);
+
+  function InventoryStore() {
+    _classCallCheck(this, InventoryStore);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(InventoryStore).call(this));
+
+    _this.bindActions(pokemonActions);
+    _this.state = {
       name: 'FLAREON',
       cp: 1418,
       hp: 84,
@@ -44427,119 +44536,217 @@ class InventoryStore extends alt.Store {
       trainerLevel: 27,
       level: 0,
       results: null,
-      processingImage: false,
-    }
+      processingImage: false
+    };
+    return _this;
   }
 
-  fromEvent(ev) {
-    return ev.currentTarget.value
-  }
+  _createClass(InventoryStore, [{
+    key: 'fromEvent',
+    value: function () {
+      function fromEvent(ev) {
+        return ev.currentTarget.value;
+      }
 
-  changedName(name) {
-    this.setState({ name })
-  }
+      return fromEvent;
+    }()
+  }, {
+    key: 'changedName',
+    value: function () {
+      function changedName(name) {
+        this.setState({ name: name });
+      }
 
-  imageProcessing() {
-    this.setState({ processingImage: true })
-  }
+      return changedName;
+    }()
+  }, {
+    key: 'imageProcessing',
+    value: function () {
+      function imageProcessing() {
+        this.setState({ processingImage: true });
+      }
 
-  changedCP(ev) {
-    const cp = this.fromEvent(ev)
-    this.setState({ cp })
-  }
+      return imageProcessing;
+    }()
+  }, {
+    key: 'changedCP',
+    value: function () {
+      function changedCP(ev) {
+        var cp = this.fromEvent(ev);
+        this.setState({ cp: cp });
+      }
 
-  changedHP(ev) {
-    const hp = this.fromEvent(ev)
-    this.setState({ hp })
-  }
+      return changedCP;
+    }()
+  }, {
+    key: 'changedHP',
+    value: function () {
+      function changedHP(ev) {
+        var hp = this.fromEvent(ev);
+        this.setState({ hp: hp });
+      }
 
-  changedStardust(stardust) {
-    this.setState({ stardust })
-  }
+      return changedHP;
+    }()
+  }, {
+    key: 'changedStardust',
+    value: function () {
+      function changedStardust(stardust) {
+        this.setState({ stardust: stardust });
+      }
 
-  changedTrainerLevel(ev) {
-    const trainerLevel = Number(this.fromEvent(ev))
-    this.setState({ trainerLevel })
-  }
+      return changedStardust;
+    }()
+  }, {
+    key: 'changedTrainerLevel',
+    value: function () {
+      function changedTrainerLevel(ev) {
+        var trainerLevel = Number(this.fromEvent(ev));
+        this.setState({ trainerLevel: trainerLevel });
+      }
 
-  changedLevel(ev) {
-    const level = this.fromEvent(ev)
-    this.setState({ level })
-  }
+      return changedTrainerLevel;
+    }()
+  }, {
+    key: 'changedLevel',
+    value: function () {
+      function changedLevel(ev) {
+        var level = this.fromEvent(ev);
+        this.setState({ level: level });
+      }
 
-  resultsCalculated(results) {
-    this.setState({ results: results.asObject() })
-  }
+      return changedLevel;
+    }()
+  }, {
+    key: 'resultsCalculated',
+    value: function () {
+      function resultsCalculated(results) {
+        this.setState({ results: results.asObject() });
+      }
 
-  trainerLevelChanged(trainerLevel) {
-    this.setState({ trainerLevel })
-  }
+      return resultsCalculated;
+    }()
+  }, {
+    key: 'trainerLevelChanged',
+    value: function () {
+      function trainerLevelChanged(trainerLevel) {
+        this.setState({ trainerLevel: trainerLevel });
+      }
 
-  valuesReset() {
-    this.setState({
-      name: '',
-      cp: 0,
-      hp: 0,
-      stardust: '',
-      level: 0,
-      results: null,
-      processingImage: false,
-    })
-  }
+      return trainerLevelChanged;
+    }()
+  }, {
+    key: 'valuesReset',
+    value: function () {
+      function valuesReset() {
+        this.setState({
+          name: '',
+          cp: 0,
+          hp: 0,
+          stardust: '',
+          level: 0,
+          results: null,
+          processingImage: false
+        });
+      }
 
-  resultsReset() {
-    this.setState({ results: null })
-  }
-}
+      return valuesReset;
+    }()
+  }, {
+    key: 'resultsReset',
+    value: function () {
+      function resultsReset() {
+        this.setState({ results: null });
+      }
 
-module.exports = alt.createStore('InventoryStore', new InventoryStore())
+      return resultsReset;
+    }()
+  }]);
+
+  return InventoryStore;
+}(alt.Store);
+
+module.exports = alt.createStore('InventoryStore', new InventoryStore());
 
 },{"../actions/pokemonActions":274,"../alt":275}],292:[function(require,module,exports){
-const alt = require('../alt')
-const moveActions = require('../actions/moveActions')
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-class MovesStore extends alt.Store {
-  constructor() {
-    super()
-    this.state = {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var alt = require('../alt');
+var moveActions = require('../actions/moveActions');
+
+var MovesStore = function (_alt$Store) {
+  _inherits(MovesStore, _alt$Store);
+
+  function MovesStore() {
+    _classCallCheck(this, MovesStore);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(MovesStore).call(this));
+
+    _this.state = {
       text: '',
       moves: [],
-      pokemon: [],
-    }
-    this.bindActions(moveActions)
+      pokemon: []
+    };
+    _this.bindActions(moveActions);
+    return _this;
   }
 
-  textChanged(text) {
-    this.setState({ text })
-  }
+  _createClass(MovesStore, [{
+    key: 'textChanged',
+    value: function () {
+      function textChanged(text) {
+        this.setState({ text: text });
+      }
 
-  movesChanged(moves) {
-    this.setState({ moves })
-  }
+      return textChanged;
+    }()
+  }, {
+    key: 'movesChanged',
+    value: function () {
+      function movesChanged(moves) {
+        this.setState({ moves: moves });
+      }
 
-  pokemonChanged(pokemon) {
-    this.setState({ pokemon })
-  }
-}
+      return movesChanged;
+    }()
+  }, {
+    key: 'pokemonChanged',
+    value: function () {
+      function pokemonChanged(pokemon) {
+        this.setState({ pokemon: pokemon });
+      }
 
-module.exports = alt.createStore('MovesStore', new MovesStore())
+      return pokemonChanged;
+    }()
+  }]);
+
+  return MovesStore;
+}(alt.Store);
+
+module.exports = alt.createStore('MovesStore', new MovesStore());
 
 },{"../actions/moveActions":273,"../alt":275}],293:[function(require,module,exports){
 module.exports = {
   main: {
     display: 'flex',
     height: '100%',
-    flexDirection: 'column',
+    flexDirection: 'column'
   },
 
   container: {
     flex: 9,
     overflowY: 'scroll',
-    WebkitOverflowScrolling: 'touch',
+    WebkitOverflowScrolling: 'touch'
   },
 
   resultsRow: {
-    textAlign: 'center',
+    textAlign: 'center'
   },
 
   pokemonImage: {
@@ -44548,12 +44755,12 @@ module.exports = {
     height: 150,
     margin: '-16px auto',
     justifyContent: 'center',
-    width: 150,
+    width: 150
   },
 
   bigText: {
     fontSize: '1.5em',
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
 
   menu: {
@@ -44561,227 +44768,353 @@ module.exports = {
     backgroundColor: '#6297de',
     display: 'flex',
     flex: 1,
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
   },
 
   link: {
-    color: '#fff',
+    color: '#fff'
   },
 
   activeLink: {
-    color: '#f0d827',
+    color: '#f0d827'
   },
 
   good: {
-    backgroundColor: '#67ba72',
+    backgroundColor: '#67ba72'
   },
 
   ok: {
-    backgroundColor: '#ffdd69',
+    backgroundColor: '#ffdd69'
   },
 
   bad: {
-    backgroundColor: '#ff7772',
-  },
-}
+    backgroundColor: '#ff7772'
+  }
+};
 
 },{}],294:[function(require,module,exports){
-const n = require('./n')
+var n = require('./n');
 //const RN = require('react-native-web')
 //const View = RN.View
 
 function Table(props) {
-  const classList = props.className ? props.className.split(' ') : []
-  classList.push('table')
+  var classList = props.className ? props.className.split(' ') : [];
+  classList.push('table');
 
-  if (props.clean) classList.push('clean')
-  if (props.border) classList.push('border')
+  if (props.clean) classList.push('clean');
+  if (props.border) classList.push('border');
 
   return n('table', {
-    className: classList.join(' '),
-  }, props.children)
+    className: classList.join(' ')
+  }, props.children);
 }
 
 function View(props) {
-  const classList = props.className ? props.className.split(' ') : []
+  var classList = props.className ? props.className.split(' ') : [];
 
-  if (props.spacing) classList.push(`sp-${props.spacing}`)
-  if (props.spacingVertical) classList.push(`sp-vert-${props.spacingVertical}`)
-  if (props.spacingHorizontal) classList.push(`sp-horiz-${props.spacingHorizontal}`)
+  if (props.spacing) classList.push('sp-' + String(props.spacing));
+  if (props.spacingVertical) classList.push('sp-vert-' + String(props.spacingVertical));
+  if (props.spacingHorizontal) classList.push('sp-horiz-' + String(props.spacingHorizontal));
 
   return n('div', {
     className: classList.join(' '),
-    style: props.style,
-  }, props.children)
+    style: props.style
+  }, props.children);
 }
 
-const Header = props => (
-  n('h1', { style: { textAlign: 'center' } }, props.children)
-)
+var Header = function Header(props) {
+  return n('h1', { style: { textAlign: 'center' } }, props.children);
+};
 
-const Button = props => (
-  n('button', {
-    className: `btn btn-${props.size}`,
+var Button = function Button(props) {
+  return n('button', {
+    className: 'btn btn-' + String(props.size),
     onClick: props.onClick,
-    style: props.style,
-  }, props.children)
-)
+    style: props.style
+  }, props.children);
+};
 
-const FormControl = props => (
-  n('label', [
-    n('strong', props.label),
-  ].concat(props.children))
-)
+var FormControl = function FormControl(props) {
+  return n('label', [n('strong', props.label)].concat(props.children));
+};
 
-const Input = props => n('input', props)
-const Text = props => n('div', props, props.children)
-const Image = props => n('img', props)
+var Input = function Input(props) {
+  return n('input', props);
+};
+var Text = function Text(props) {
+  return n('div', props, props.children);
+};
+var Image = function Image(props) {
+  return n('img', props);
+};
 
-const Panel = props => (
-  n('div', {
+var Panel = function Panel(props) {
+  return n('div', {
     style: {
       border: '1px solid #b2b2b2',
-      padding: '0.5em',
-    },
-  }, props.children)
-)
+      padding: '0.5em'
+    }
+  }, props.children);
+};
 
 module.exports = {
-  Button,
-  FormControl,
-  Header,
-  Image,
-  Input,
-  Panel,
-  Table,
-  Text,
-  View,
-}
+  Button: Button,
+  FormControl: FormControl,
+  Header: Header,
+  Image: Image,
+  Input: Input,
+  Panel: Panel,
+  Table: Table,
+  Text: Text,
+  View: View
+};
 
 },{"./n":299}],295:[function(require,module,exports){
-arguments[4][294][0].apply(exports,arguments)
-},{"./n":299,"dup":294}],296:[function(require,module,exports){
-const inventoryStore = require('../stores/InventoryStore')
-const historyActions = require('../actions/historyActions')
-const magic = require('../../src/magic')
-const pokemonActions = require('../actions/pokemonActions')
+var n = require('./n');
+//const RN = require('react-native-web')
+//const View = RN.View
+
+function Table(props) {
+  var classList = props.className ? props.className.split(' ') : [];
+  classList.push('table');
+
+  if (props.clean) classList.push('clean');
+  if (props.border) classList.push('border');
+
+  return n('table', {
+    className: classList.join(' ')
+  }, props.children);
+}
+
+function View(props) {
+  var classList = props.className ? props.className.split(' ') : [];
+
+  if (props.spacing) classList.push('sp-' + String(props.spacing));
+  if (props.spacingVertical) classList.push('sp-vert-' + String(props.spacingVertical));
+  if (props.spacingHorizontal) classList.push('sp-horiz-' + String(props.spacingHorizontal));
+
+  return n('div', {
+    className: classList.join(' '),
+    style: props.style
+  }, props.children);
+}
+
+var Header = function Header(props) {
+  return n('h1', { style: { textAlign: 'center' } }, props.children);
+};
+
+var Button = function Button(props) {
+  return n('button', {
+    className: 'btn btn-' + String(props.size),
+    onClick: props.onClick,
+    style: props.style
+  }, props.children);
+};
+
+var FormControl = function FormControl(props) {
+  return n('label', [n('strong', props.label)].concat(props.children));
+};
+
+var Input = function Input(props) {
+  return n('input', props);
+};
+var Text = function Text(props) {
+  return n('div', props, props.children);
+};
+var Image = function Image(props) {
+  return n('img', props);
+};
+
+var Panel = function Panel(props) {
+  return n('div', {
+    style: {
+      border: '1px solid #b2b2b2',
+      padding: '0.5em'
+    }
+  }, props.children);
+};
+
+module.exports = {
+  Button: Button,
+  FormControl: FormControl,
+  Header: Header,
+  Image: Image,
+  Input: Input,
+  Panel: Panel,
+  Table: Table,
+  Text: Text,
+  View: View
+};
+
+},{"./n":299}],296:[function(require,module,exports){
+var inventoryStore = require('../stores/InventoryStore');
+var historyActions = require('../actions/historyActions');
+var magic = require('../../src/magic');
+var pokemonActions = require('../actions/pokemonActions');
 
 function calculateValues(nextState) {
-  const state = nextState || inventoryStore.getState()
+  var state = nextState || inventoryStore.getState();
   try {
-    const values = {
+    var values = {
       name: state.name,
       cp: Number(state.cp),
       hp: Number(state.hp),
       stardust: Number(state.stardust),
       level: state.level ? Number(state.level) : null,
-      trainerLevel: Number(state.trainerLevel) || 27,
-    }
-    const results = magic(values)
-    pokemonActions.resultsCalculated(results)
+      trainerLevel: Number(state.trainerLevel) || 27
+    };
+    var results = magic(values);
+    pokemonActions.resultsCalculated(results);
     historyActions.pokemonChecked({
-      text: `${state.name} ${state.cp}CP`,
-      values,
-    })
+      text: String(state.name) + ' ' + String(state.cp) + 'CP',
+      values: values
+    });
   } catch (err) {
-    console.error(err)
-    alert('Looks like there is a problem with the values you entered.')
+    console.error(err);
+    alert('Looks like there is a problem with the values you entered.');
   }
 }
 
-module.exports = calculateValues
+module.exports = calculateValues;
 
 },{"../../src/magic":270,"../actions/historyActions":272,"../actions/pokemonActions":274,"../stores/InventoryStore":291}],297:[function(require,module,exports){
-const React = require('react')
-const n = require('./n')
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = require('react');
+var n = require('./n');
 
 function connect(Component, o) {
-  return class ConnectedComponent extends React.Component {
-    constructor() {
-      super()
+  return function (_React$Component) {
+    _inherits(ConnectedComponent, _React$Component);
 
-      this.stores = o.listenTo()
-      this.subscriptions = []
+    function ConnectedComponent() {
+      _classCallCheck(this, ConnectedComponent);
 
-      this.state = this.computeState()
+      var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ConnectedComponent).call(this));
+
+      _this.stores = o.listenTo();
+      _this.subscriptions = [];
+
+      _this.state = _this.computeState();
+      return _this;
     }
 
-    computeState() {
-      return Object.keys(this.stores).reduce((obj, key) => {
-        const store = this.stores[key]
-        obj[key] = store.getState()
-        return obj
-      }, {})
-    }
+    _createClass(ConnectedComponent, [{
+      key: 'computeState',
+      value: function () {
+        function computeState() {
+          var _this2 = this;
 
-    componentDidMount() {
-      this.subscriptions = Object.keys(this.stores).map((key) => {
-        return this.stores[key].subscribe(
-          () => this.setState(this.computeState())
-        )
-      })
-    }
+          return Object.keys(this.stores).reduce(function (obj, key) {
+            var store = _this2.stores[key];
+            obj[key] = store.getState();
+            return obj;
+          }, {});
+        }
 
-    componentWillUnmount() {
-      this.subscriptions.forEach(sub => sub.dispose())
-      this.subscriptions = []
-    }
+        return computeState;
+      }()
+    }, {
+      key: 'componentDidMount',
+      value: function () {
+        function componentDidMount() {
+          var _this3 = this;
 
-    render() {
-      return n(Component, o.getProps(this.state, this.props), this.props.children)
-    }
-  }
+          this.subscriptions = Object.keys(this.stores).map(function (key) {
+            return _this3.stores[key].subscribe(function () {
+              return _this3.setState(_this3.computeState());
+            });
+          });
+        }
+
+        return componentDidMount;
+      }()
+    }, {
+      key: 'componentWillUnmount',
+      value: function () {
+        function componentWillUnmount() {
+          this.subscriptions.forEach(function (sub) {
+            return sub.dispose();
+          });
+          this.subscriptions = [];
+        }
+
+        return componentWillUnmount;
+      }()
+    }, {
+      key: 'render',
+      value: function () {
+        function render() {
+          return n(Component, o.getProps(this.state, this.props), this.props.children);
+        }
+
+        return render;
+      }()
+    }]);
+
+    return ConnectedComponent;
+  }(React.Component);
 }
 
-module.exports = connect
+module.exports = connect;
 
 },{"./n":299,"react":261}],298:[function(require,module,exports){
 function getWithContext(values) {
-  const third = Math.floor(values.length / 3)
-  var l = 0
+  var third = Math.floor(values.length / 3);
+  var l = 0;
 
-  return values.reduce((arr, value, i) => {
+  return values.reduce(function (arr, value, i) {
     if (l < 3) {
-      arr.push(value)
-      l += 1
+      arr.push(value);
+      l += 1;
     } else if (i >= third && l < 7) {
-      arr.push(value)
-      l += 1
+      arr.push(value);
+      l += 1;
     } else if (i > values.length - 4 & l < 10) {
-      arr.push(value)
-      l += 1
+      arr.push(value);
+      l += 1;
     }
 
-    return arr
-  }, [])
+    return arr;
+  }, []);
 }
 
-module.exports = getWithContext
+module.exports = getWithContext;
 
 },{}],299:[function(require,module,exports){
-const React = require('react')
+var React = require('react');
 
-module.exports = function n(a, b, c) {
-  var component = a
-  var props = null
-  var children = undefined
+module.exports = function () {
+  function n(a, b, c) {
+    var component = a;
+    var props = null;
+    var children = undefined;
 
-  var len = arguments.length
+    var len = arguments.length;
 
-  if (len === 2) {
-    component = a
-    if (Array.isArray(b) || typeof b === 'string' || typeof b === 'number') {
-      children = b
-    } else {
-      props = b
+    if (len === 2) {
+      component = a;
+      if (Array.isArray(b) || typeof b === 'string' || typeof b === 'number') {
+        children = b;
+      } else {
+        props = b;
+      }
+    } else if (len === 3) {
+      props = b;
+      children = c;
     }
-  } else if (len === 3) {
-    props = b
-    children = c
+
+    var args = [component, props].concat(children);
+    return React.createElement.apply(React, args);
   }
 
-  const args = [component, props].concat(children)
-  return React.createElement.apply(React, args)
-}
+  return n;
+}();
 
 },{"react":261}]},{},[289]);
