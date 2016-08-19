@@ -17,15 +17,20 @@ const Mon = Pokemon.reduce((obj, mon) => {
   obj[mon.name] = mon.id
   return obj
 }, {})
+const ObjMoves = MovesList.reduce((obj, move) => {
+  obj[move.Name] = move
+  return obj
+}, {})
 
 function sweetMoves(x) {
+  console.log('@', x.value, ObjMoves)
   if (Mon.hasOwnProperty(x.value)) {
     const best = bestMovesFor(x.value)
     const mon = Pokemon[Mon[x.value] - 1]
     moveActions.pokemonChanged([])
     moveActions.movesChanged(best)
-  } else {
-    moveActions.movesChanged([])
+  } else if (ObjMoves.hasOwnProperty(x.value)) {
+    moveActions.movesChanged(ObjMoves[x.value])
     moveActions.pokemonChanged(
       Pokemon.filter(mon => (
         mon.moves1.some(m => m.Name === x.value) ||
@@ -55,16 +60,6 @@ function Moves(props) {
           onChange: sweetMoves,
         }),
       ]),
-      props.pokemon.length && (
-        n(B.Panel, props.pokemon.map(mon => (
-          n('img', {
-            onClick: () => sweetMoves({ value: mon }),
-            src: `images/${mon}.png`,
-            height: 60,
-            width: 60,
-          })
-        )))
-      ) || undefined,
       props.moves.length && (
         n(B.Table, {
           bordered: true,
@@ -86,6 +81,25 @@ function Moves(props) {
             ])
           ))),
         ])
+      ) || undefined,
+      props.moves.Name && (
+        n(B.Panel, [
+          n('div', `Name: ${props.moves.Name}`),
+          n('div', `Power: ${props.moves.Power}`),
+          n('div', `Duration: ${(props.moves.DurationMs / 1000).toFixed(1)} seconds`),
+          n('div', `DPS: ${(props.moves.Power / (props.moves.DurationMs / 1000)).toFixed(3)}`),
+          n('div', `Energy: ${props.moves.EnergyDelta}`),
+        ])
+      ) || undefined,
+      props.pokemon.length && (
+        n(B.Panel, props.pokemon.map(mon => (
+          n('img', {
+            onClick: () => sweetMoves({ value: mon }),
+            src: `images/${mon}.png`,
+            height: 60,
+            width: 60,
+          })
+        )))
       ) || undefined,
     ])
   )
