@@ -61627,7 +61627,7 @@ var n = require('../utils/n');
 var pokemonActions = require('../actions/pokemonActions');
 
 var options = Pokemon.map(function (x) {
-  return { value: x.name.replace(/_/g, ' '), label: x.name };
+  return { label: x.name.replace(/_/g, ' '), value: x.name };
 });
 var logName = function logName(x) {
   return pokemonActions.changedName(x.value);
@@ -61718,11 +61718,11 @@ var moveActions = require('../actions/moveActions');
 var bestMovesFor = require('../../src/best-moves');
 
 var pokemonList = Pokemon.map(function (x) {
-  return { value: x.name.replace(/_/g, ' '), label: x.name };
+  return { label: x.name.replace(/_/g, ' '), value: x.name };
 });
 var movesList = pokemonList.slice();
 movesList.push.apply(movesList, MovesList.map(function (x) {
-  return { value: x.Name.replace(/_/g, ' '), label: x.Name };
+  return { label: x.Name.replace(/_/g, ' '), value: x.Name };
 }));
 
 var Mon = Pokemon.reduce(function (obj, mon) {

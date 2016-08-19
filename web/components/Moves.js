@@ -6,11 +6,11 @@ const n = require('../utils/n')
 const moveActions = require('../actions/moveActions')
 const bestMovesFor = require('../../src/best-moves')
 
-const pokemonList = Pokemon.map(x => ({ value: x.name.replace(/_/g, ' '), label: x.name }))
+const pokemonList = Pokemon.map(x => ({ label: x.name.replace(/_/g, ' '), value: x.name }))
 const movesList = pokemonList.slice()
 movesList.push.apply(
   movesList,
-  MovesList.map(x => ({ value: x.Name.replace(/_/g, ' '), label: x.Name }))
+  MovesList.map(x => ({ label: x.Name.replace(/_/g, ' '), value: x.Name }))
 )
 
 const Mon = Pokemon.reduce((obj, mon) => {
