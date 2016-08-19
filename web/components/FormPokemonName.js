@@ -1,4 +1,4 @@
-const B = require('react-bootstrap')
+const B = require('../utils/Lotus.react')
 const Pokemon = require('../../json/pokemon.json')
 const Select = require('react-select')
 const n = require('../utils/n')
@@ -9,8 +9,7 @@ const logName = x => pokemonActions.changedName(x.value)
 
 function FormPokemonName(props) {
   return (
-    n(B.FormGroup, { controlId: 'pokemon' }, [
-      n(B.ControlLabel, 'Name'),
+    n(B.FormControl, { label: 'Name' }, [
       n(Select, {
         inputProps: {
           autoCorrect: 'off',

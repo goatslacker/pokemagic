@@ -7,8 +7,8 @@ module.exports = {
 
   container: {
     flex: 9,
-    margin: '0 auto',
     overflowY: 'scroll',
+    WebkitOverflowScrolling: 'touch',
   },
 
   resultsRow: {
@@ -43,5 +43,17 @@ module.exports = {
 
   activeLink: {
     color: '#f0d827',
+  },
+
+  good: {
+    backgroundColor: '#67ba72',
+  },
+
+  ok: {
+    backgroundColor: '#ffdd69',
+  },
+
+  bad: {
+    backgroundColor: '#ff7772',
   },
 }

@@ -1,4 +1,4 @@
-const B = require('react-bootstrap')
+const B = require('./utils/Lotus.react')
 const RR = require('react-router')
 const ReactDOM = require('react-dom')
 const Styles = require('./styles')
@@ -39,14 +39,16 @@ const ConnectedRater = connect(Rater, {
   getProps: state => state.inventoryStore,
 })
 
+// Styles.add(Styles.spacing.horizontal.large)
+
 function Main(props) {
-  return n('div', { style: Styles.main }, [
-    n('div', { style: Styles.container }, [
-      n('div', {
+  return n(B.View, { style: Styles.main }, [
+    n(B.View, { spacing: 'lg', style: Styles.container }, [
+      n(B.View, {
         className: 'container',
       }, props.children),
     ]),
-    n('div', { style: Styles.menu }, [
+    n(B.View, { style: Styles.menu }, [
       n(RR.Link, { style: Styles.link, to: '/' }, 'Rater'),
       n(RR.Link, { style: Styles.link, to: 'moves' }, 'Moves'),
       n(RR.Link, { style: Styles.link, to: 'power' }, 'PowerUp Cost'),

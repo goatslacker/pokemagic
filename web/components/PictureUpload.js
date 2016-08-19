@@ -1,5 +1,5 @@
+const B = require('../utils/Lotus.react')
 const Spinner = require('react-spinkit')
-const B = require('react-bootstrap')
 const n = require('../utils/n')
 
 function scanResults(data) {
@@ -53,10 +53,9 @@ function PictureUpload(props) {
     return n(Spinner, { spinnerName: 'three-bounce' })
   }
 
-  return n(B.Row,[
-    n(B.FormGroup, { controlId: 'screenshot' }, [
-      n(B.ControlLabel, 'Select Screenshot'),
-      n('input', {
+  return n(B.View,[
+    n(B.FormControl, { label: 'Select Screenshot' }, [
+      n(B.Input, {
         type: 'file',
         accept: 'image/*',
         capture: 'camera',

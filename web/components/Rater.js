@@ -1,4 +1,4 @@
-const B = require('react-bootstrap')
+const B = require('../utils/Lotus.React')
 const FormPokemonLevel = require('./FormPokemonLevel')
 const FormPokemonName = require('./FormPokemonName')
 const FormStardust = require('./FormStardust')
@@ -12,22 +12,19 @@ const SearchHistoryContainer = require('../containers/SearchHistoryContainer')
 function Rater(props) {
   if (props.results) return n(Results, props.results)
 
-  return n(B.Row, [
-    n(B.PageHeader, 'Pokemon Rater'),
+  return n(B.View, [
     n(FormTrainerLevel, { trainerLevel: props.trainerLevel }),
     n(FormPokemonName, { name: props.name }),
-    n(B.FormGroup, { controlId: 'cp' }, [
-      n(B.ControlLabel, 'CP'),
-      n(B.FormControl, {
+    n(B.FormControl, { label: 'CP' }, [
+      n(B.Input, {
         type: 'number',
         onChange: pokemonActions.changedCP,
         onClick: () => pokemonActions.changedCP({ currentTarget: { value: '' }}),
         value: props.cp,
       }),
     ]),
-    n(B.FormGroup, { controlId: 'hp' }, [
-      n(B.ControlLabel, 'HP'),
-      n(B.FormControl, {
+    n(B.FormControl, { label: 'HP' }, [
+      n(B.Input, {
         type: 'number',
         onChange: pokemonActions.changedHP,
         onClick: () => pokemonActions.changedHP({ currentTarget: { value: '' }}),
@@ -36,8 +33,16 @@ function Rater(props) {
     ]),
     n(FormStardust, { stardust: props.stardust }),
     n(FormPokemonLevel, { level: props.level }),
-    n(B.Button, { bsStyle: 'primary', onClick: () => calculateValues() }, 'Calculate'),
-    n(B.Button, { onClick: pokemonActions.valuesReset }, 'Clear'),
+    n(B.Button, {
+      size: 'sm',
+      onClick: () => calculateValues(),
+      style: {
+        backgroundColor: '#6297de',
+      },
+    }, 'Calculate'),
+    ' ',
+    n(B.Button, { size: 'sm', onClick: pokemonActions.valuesReset }, 'Clear'),
+    n('hr'),
     n(SearchHistoryContainer),
   ])
 }

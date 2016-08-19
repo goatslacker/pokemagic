@@ -1,4 +1,4 @@
-const B = require('react-bootstrap')
+const B = require('../utils/Lotus.react')
 const DustToLevel = require('../../json/dust-to-level.json')
 const n = require('../utils/n')
 const powerupTools = require('../../src/powerup')
@@ -16,9 +16,10 @@ function PowerUp(props) {
   )
 
   return (
-    n(B.Row, [
-      n(B.PageHeader, 'Power Up costs'),
-      n('p', 'Find out how much stardust and candy it will cost to max your Pokemon out.'),
+    n(B.View, [
+      n(B.Header, 'Power Up costs'),
+      n(B.Text, 'Find out how much stardust and candy it will cost to max your Pokemon out.'),
+      n('hr'),
       n(FormTrainerLevel, {
         trainerLevel: props.trainerLevel,
       }),
@@ -29,9 +30,10 @@ function PowerUp(props) {
         level: props.level,
       }),
       power && (
-        n(B.ListGroup, [
-          n(B.ListGroupItem, `Candy cost: ${power.candy}`),
-          n(B.ListGroupItem, `Stardust cost: ${power.stardust}`),
+        n(B.View, { spacingVertical: 'md' }, [
+          n('h3', 'Results'),
+          n(B.Panel, `Candy cost: ${power.candy}`),
+          n(B.Panel, `Stardust cost: ${power.stardust}`),
         ])
       ),
     ])

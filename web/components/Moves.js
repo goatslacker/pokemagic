@@ -1,4 +1,5 @@
-const B = require('react-bootstrap')
+const B = require('../utils/Lotus.react')
+const MoveCombos = require('./MoveCombos')
 const MovesList = require('../../json/moves.json')
 const Pokemon = require('../../json/pokemon.json')
 const Select = require('react-select')
@@ -23,7 +24,13 @@ const ObjMoves = MovesList.reduce((obj, move) => {
 }, {})
 
 function sweetMoves(x) {
-  console.log('@', x.value, ObjMoves)
+  if (!x) {
+    moveActions.pokemonChanged([])
+    moveActions.movesChanged([])
+    moveActions.textChanged('')
+    return
+  }
+
   if (Mon.hasOwnProperty(x.value)) {
     const best = bestMovesFor(x.value)
     const mon = Pokemon[Mon[x.value] - 1]
@@ -43,11 +50,11 @@ function sweetMoves(x) {
 
 function Moves(props) {
   return (
-    n(B.Row, [
-      n(B.PageHeader, 'Moveset Information'),
-      n('p', 'Calculate the ideal combination movesets for your Pokemon. Featuring a combined DPS score for each possible move combination. The DPS is calculated assuming a Pokemon will be using their quick move constantly and their charge move immediately when it becomes available. STAB damage is taken into account as well as each move\'s animation time. You can also use this search to look up which Pokemon can learn a particular move.'),
-      n(B.FormGroup, { controlId: 'moves' }, [
-        n(B.ControlLabel, 'Moves'),
+    n(B.View, [
+      n(B.Header, 'Moveset Information'),
+      n(B.Text, 'Calculate the ideal combination movesets for your Pokemon.'),
+      n('hr'),
+      n(B.FormControl, { label: 'Moves' }, [
         n(Select, {
           inputProps: {
             autoCorrect: 'off',
@@ -61,39 +68,20 @@ function Moves(props) {
         }),
       ]),
       props.moves.length && (
-        n(B.Table, {
-          bordered: true,
-          hover: true,
-          striped: true,
-        }, [
-          n('thead', [
-            n('tr', [
-              n('th', 'Quick Move'),
-              n('th', 'Charge Move'),
-              n('th', 'Combo DPS'),
-            ]),
-          ]),
-          n('tbody', props.moves.map((move) => (
-            n('tr', [
-              n('td', move.quick.name),
-              n('td', move.charge.name),
-              n('td', move.dps),
-            ])
-          ))),
-        ])
+        n(MoveCombos, { moves: props.moves })
       ) || undefined,
       props.moves.Name && (
         n(B.Panel, [
-          n('div', `Name: ${props.moves.Name}`),
-          n('div', `Power: ${props.moves.Power}`),
-          n('div', `Duration: ${(props.moves.DurationMs / 1000).toFixed(1)} seconds`),
-          n('div', `DPS: ${(props.moves.Power / (props.moves.DurationMs / 1000)).toFixed(3)}`),
-          n('div', `Energy: ${props.moves.EnergyDelta}`),
+          n(B.Text, `Name: ${props.moves.Name}`),
+          n(B.Text, `Power: ${props.moves.Power}`),
+          n(B.Text, `Duration: ${(props.moves.DurationMs / 1000).toFixed(1)} seconds`),
+          n(B.Text, `DPS: ${(props.moves.Power / (props.moves.DurationMs / 1000)).toFixed(3)}`),
+          n(B.Text, `Energy: ${props.moves.EnergyDelta}`),
         ])
       ) || undefined,
       props.pokemon.length && (
         n(B.Panel, props.pokemon.map(mon => (
-          n('img', {
+          n(B.Image, {
             onClick: () => sweetMoves({ value: mon }),
             src: `images/${mon}.png`,
             height: 60,
@@ -101,6 +89,9 @@ function Moves(props) {
           })
         )))
       ) || undefined,
+      n('hr'),
+      n('h3', 'More Info'),
+      n(B.Text, 'The tables above feature a combined DPS score for each possible move combination. The DPS is calculated assuming a Pokemon will be using their quick move constantly and their charge move immediately when it becomes available. STAB damage is taken into account as well as each move\'s animation time. You can also use this search to look up which Pokemon can learn a particular move.'),
     ])
   )
 }
