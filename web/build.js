@@ -60565,6 +60565,12 @@ function calcIndSta(hp, BaseSta, ECpM) {
   });
 }
 
+var EEVEELUTIONS = {
+  JOLTEON: 1,
+  FLAREON: 1,
+  VAPOREON: 1
+};
+
 // A formula that determines in which percentile you are for Atk + Def
 function getAttackPercentage(IndAtk, IndDef) {
   return Math.round((IndAtk + IndDef) / 30 * 100);
@@ -60647,8 +60653,7 @@ function guessIVs(pokemon, mon, ECpM) {
         var MaxEvolveCP = null;
 
         // If we can evolve it, what would it evolve to and what does it power up to?
-        // TODO if flareon, jolteon, vaporeon...
-        if (CPM[pokemon.name.toUpperCase()]) {
+        if (!EEVEELUTIONS.hasOwnProperty(pokemon.name.toUpperCase()) && CPM[pokemon.name.toUpperCase()]) {
           EvolveCP = Math.floor(CPM[pokemon.name.toUpperCase()][1] * CP / 100) * 100;
           MaxEvolveCP = Math.floor(CPM[pokemon.name.toUpperCase()][1] * MaxCP / 100) * 100;
         }
@@ -61288,7 +61293,7 @@ function howMuchCandy(currentLevel, trainerLevel) {
   var maxLevel = (trainerLevel + 1.5) * 2;
   var minLevel = currentLevel * 2;
   return Levels.reduce(function (sum, level) {
-    if (level.level <= maxLevel && level.level >= minLevel) return sum + level.candy;
+    if (level.level < maxLevel && level.level >= minLevel) return sum + level.candy;
     return sum;
   }, 0);
 }
@@ -61301,7 +61306,7 @@ function howMuchStardust(currentLevel, trainerLevel) {
   return Object.keys(DustToLevel).reduce(function (sum, dust) {
     var levels = DustToLevel[dust];
     var stardustIncrease = levels.reduce(function (num, level) {
-      return level >= currentLevel && level <= maxPokemonLevel ? num + Number(dust) : num;
+      return level >= currentLevel && level < maxPokemonLevel ? num + Number(dust) : num;
     }, 0);
 
     return sum + stardustIncrease;
@@ -61902,7 +61907,7 @@ function Results(props) {
     striped: true
   }, [n('thead', [n('tr', [n('th', 'Quick Move'), n('th', 'Charge Move'), n('th', 'Combo DPS')])]), n('tbody', bestMoves.map(function (move) {
     return n('tr', [n('td', move.quick.name), n('td', move.charge.name), n('td', move.dps)]);
-  }))])]), props.best.meta.EvolveCP && n(B.Row, { style: Styles.resultsRow }, [n('h3', 'Evolution'), n(B.Panel, [n('span', 'If evolved it would have a CP of about ' + String(props.best.meta.EvolveCP))])]), n(B.Row, { style: Styles.resultsRow }, [n('h3', { style: Styles.resultsRow }, 'Maxing out to level ' + String(props.best.meta.MaxLevel)), props.pokemon.level === null && n('p', 'Assuming that your Pokemon\'s current level is ' + String(props.best.Level) + '. The information below is just an estimate.'), n(B.ListGroup, [n(B.ListGroupItem, 'Current level: ' + String(props.best.Level)), n(B.ListGroupItem, 'Candy cost: ' + String(props.best.meta.Candy)), n(B.ListGroupItem, 'Stardust cost: ' + String(props.best.meta.Stardust)), n(B.ListGroupItem, 'CP: ' + String(props.best.meta.MaxCP)), n(B.ListGroupItem, 'HP: ' + String(props.best.meta.MaxHP))])]), n(B.Row, [n('h3', { style: Styles.resultsRow }, 'Yours vs Perfect by level'), n(B.Table, {
+  }))])]), props.best.meta.EvolveCP && n(B.Row, { style: Styles.resultsRow }, [n('h3', 'Evolution'), n(B.Panel, [n('span', 'If evolved it would have a CP of about ' + String(props.best.meta.EvolveCP))])]), console.log(props.best), props.best.meta.Stardust > 0 && n(B.Row, { style: Styles.resultsRow }, [n('h3', { style: Styles.resultsRow }, 'Maxing out to level ' + String(props.best.meta.MaxLevel)), props.pokemon.level === null && n('p', 'Assuming that your Pokemon\'s current level is ' + String(props.best.Level) + '. The information below is just an estimate.'), n(B.ListGroup, [n(B.ListGroupItem, 'Current level: ' + String(props.best.Level)), n(B.ListGroupItem, 'Candy cost: ' + String(props.best.meta.Candy)), n(B.ListGroupItem, 'Stardust cost: ' + String(props.best.meta.Stardust)), n(B.ListGroupItem, 'CP: ' + String(props.best.meta.MaxCP)), n(B.ListGroupItem, 'HP: ' + String(props.best.meta.MaxHP))])]), n(B.Row, [n('h3', { style: Styles.resultsRow }, 'Yours vs Perfect by level'), n(B.Table, {
     bordered: true,
     condensed: true,
     hover: true,
@@ -62157,11 +62162,11 @@ var InventoryStore = function (_alt$Store) {
 
     _this.bindActions(pokemonActions);
     _this.state = {
-      name: 'FLAREON',
-      cp: 1418,
-      hp: 84,
-      stardust: '2500',
-      trainerLevel: 27,
+      name: 'VAPOREON',
+      cp: 2099,
+      hp: 187,
+      stardust: '4000',
+      trainerLevel: 25,
       level: 0,
       results: null,
       processingImage: false

@@ -138,19 +138,23 @@ function Results(props) {
         ])
       ),
 
-      n(B.Row, { style: Styles.resultsRow }, [
-        n('h3', { style: Styles.resultsRow }, `Maxing out to level ${props.best.meta.MaxLevel}`),
-        props.pokemon.level === null && (
-          n('p', `Assuming that your Pokemon's current level is ${props.best.Level}. The information below is just an estimate.`)
-        ),
-        n(B.ListGroup, [
-          n(B.ListGroupItem, `Current level: ${props.best.Level}`),
-          n(B.ListGroupItem, `Candy cost: ${props.best.meta.Candy}`),
-          n(B.ListGroupItem, `Stardust cost: ${props.best.meta.Stardust}`),
-          n(B.ListGroupItem, `CP: ${props.best.meta.MaxCP}`),
-          n(B.ListGroupItem, `HP: ${props.best.meta.MaxHP}`),
-        ]),
-      ]),
+      console.log(props.best),
+
+      props.best.meta.Stardust > 0 && (
+        n(B.Row, { style: Styles.resultsRow }, [
+          n('h3', { style: Styles.resultsRow }, `Maxing out to level ${props.best.meta.MaxLevel}`),
+          props.pokemon.level === null && (
+            n('p', `Assuming that your Pokemon's current level is ${props.best.Level}. The information below is just an estimate.`)
+          ),
+          n(B.ListGroup, [
+            n(B.ListGroupItem, `Current level: ${props.best.Level}`),
+            n(B.ListGroupItem, `Candy cost: ${props.best.meta.Candy}`),
+            n(B.ListGroupItem, `Stardust cost: ${props.best.meta.Stardust}`),
+            n(B.ListGroupItem, `CP: ${props.best.meta.MaxCP}`),
+            n(B.ListGroupItem, `HP: ${props.best.meta.MaxHP}`),
+          ]),
+        ])
+      ),
 
       n(B.Row, [
         n('h3', { style: Styles.resultsRow }, 'Yours vs Perfect by level'),
