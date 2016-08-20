@@ -43310,7 +43310,7 @@ function bestPokemonVs(opponentName) {
     .sort((a, b) => {
       return a.score > b.score ? -1 : 1
     })
-    .slice(0, 20)
+    .slice(0, 15)
   )
 }
 
@@ -43838,7 +43838,7 @@ function Matchup(props) {
               n('th', 'Moves'),
             ]),
           ]),
-          n('tbody', matchups.filter(x => x.score >= 0).map((value) => (
+          n('tbody', matchups.map((value) => (
             n('tr', [
               n('td', [
                 n(B.Text, { strong: true }, value.name),
@@ -44293,6 +44293,7 @@ module.exports = SearchHistoryContainer
 },{"../components/SearchHistory":287,"../stores/HistoryStore":290,"../utils/connect":297}],289:[function(require,module,exports){
 const B = require('./utils/Lotus.react')
 const RR = require('react-router')
+const React = require('react')
 const ReactDOM = require('react-dom')
 const Styles = require('./styles')
 const alt = require('./alt')
@@ -44315,7 +44316,6 @@ const ConnectedMoves = connect(Moves, {
   getProps: state => state.movesStore,
 })
 
-
 const ConnectedPowerUp = connect(PowerUp, {
   // TODO split inventoryStore and use pokemonStore or playerStore
   listenTo: () => ({ inventoryStore }),
@@ -44332,22 +44332,47 @@ const ConnectedRater = connect(Rater, {
   getProps: state => state.inventoryStore,
 })
 
-// Styles.add(Styles.spacing.horizontal.large)
+class Main extends React.Component {
+  constructor() {
+    super()
+    this.state = { small: false }
+  }
 
-function Main(props) {
-  return n(B.View, { style: Styles.main }, [
-    n(B.View, { spacing: 'lg', style: Styles.container }, [
-      n(B.View, {
-        className: 'container',
-      }, props.children),
-    ]),
-    n(B.View, { className: 'nav', style: Styles.menu }, [
+  componentDidMount() {
+    if (window.innerWidth < 500) {
+      this.setState({ small: true })
+    }
+  }
+
+  render() {
+    const Main = (
+      n(B.View, { spacing: 'lg', style: Styles.container }, [
+        n(B.View, {
+          className: 'container',
+        }, this.props.children),
+      ])
+    )
+    const Links = [
       n(RR.Link, { style: Styles.link, to: '/' }, 'Rater'),
       n(RR.Link, { style: Styles.link, to: 'moves' }, 'Moves'),
       n(RR.Link, { style: Styles.link, to: 'power' }, 'PowerUp Cost'),
       n(RR.Link, { style: Styles.link, to: 'matchup' }, 'Matchup'),
-    ]),
-  ])
+    ]
+    const Nav = (
+      n(B.View, {
+        className: 'nav',
+        style: this.state.small ? Styles.menu : Styles.menuDesktop,
+      }, Links)
+    )
+
+    const App = this.state.small
+      ? [Main, Nav]
+      : [Nav, Main]
+
+    return n(B.View, {
+      style: this.state.small ? Styles.main : Styles.mainDesktop,
+    }, App)
+  }
 }
 
 const Routes = n(RR.Router, { history: RR.browserHistory }, [
@@ -44375,7 +44400,7 @@ localforage.getItem('pogoivcalc.trainerLevel').then((trainerLevel) => {
   )
 })
 
-},{"./actions/pokemonActions":274,"./alt":275,"./components/Matchup":281,"./components/Moves":283,"./components/PowerUp":284,"./components/Rater":285,"./stores/InventoryStore":291,"./stores/MovesStore":292,"./styles":293,"./utils/Lotus.react":295,"./utils/connect":297,"./utils/n":299,"localforage":17,"react-dom":18,"react-router":48}],290:[function(require,module,exports){
+},{"./actions/pokemonActions":274,"./alt":275,"./components/Matchup":281,"./components/Moves":283,"./components/PowerUp":284,"./components/Rater":285,"./stores/InventoryStore":291,"./stores/MovesStore":292,"./styles":293,"./utils/Lotus.react":295,"./utils/connect":297,"./utils/n":299,"localforage":17,"react":261,"react-dom":18,"react-router":48}],290:[function(require,module,exports){
 const alt = require('../alt')
 const historyActions = require('../actions/historyActions')
 const localforage = require('localforage')
@@ -44535,6 +44560,12 @@ module.exports = {
     flexDirection: 'column',
   },
 
+  mainDesktop: {
+    display: 'flex',
+    height: '100%',
+    flexDirection: 'row',
+  },
+
   container: {
     flex: 9,
     overflowY: 'scroll',
@@ -44564,6 +44595,15 @@ module.exports = {
     backgroundColor: '#6297de',
     display: 'flex',
     flex: 1,
+    justifyContent: 'space-around',
+  },
+
+  menuDesktop: {
+    alignItems: 'center',
+    backgroundColor: '#6297de',
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
     justifyContent: 'space-around',
   },
 

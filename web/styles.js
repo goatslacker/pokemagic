@@ -5,6 +5,12 @@ module.exports = {
     flexDirection: 'column',
   },
 
+  mainDesktop: {
+    display: 'flex',
+    height: '100%',
+    flexDirection: 'row',
+  },
+
   container: {
     flex: 9,
     overflowY: 'scroll',
@@ -34,6 +40,15 @@ module.exports = {
     backgroundColor: '#6297de',
     display: 'flex',
     flex: 1,
+    justifyContent: 'space-around',
+  },
+
+  menuDesktop: {
+    alignItems: 'center',
+    backgroundColor: '#6297de',
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
     justifyContent: 'space-around',
   },
 

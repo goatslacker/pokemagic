@@ -1,5 +1,6 @@
 const B = require('./utils/Lotus.react')
 const RR = require('react-router')
+const React = require('react')
 const ReactDOM = require('react-dom')
 const Styles = require('./styles')
 const alt = require('./alt')
@@ -22,7 +23,6 @@ const ConnectedMoves = connect(Moves, {
   getProps: state => state.movesStore,
 })
 
-
 const ConnectedPowerUp = connect(PowerUp, {
   // TODO split inventoryStore and use pokemonStore or playerStore
   listenTo: () => ({ inventoryStore }),
@@ -39,22 +39,47 @@ const ConnectedRater = connect(Rater, {
   getProps: state => state.inventoryStore,
 })
 
-// Styles.add(Styles.spacing.horizontal.large)
+class Main extends React.Component {
+  constructor() {
+    super()
+    this.state = { small: false }
+  }
 
-function Main(props) {
-  return n(B.View, { style: Styles.main }, [
-    n(B.View, { spacing: 'lg', style: Styles.container }, [
-      n(B.View, {
-        className: 'container',
-      }, props.children),
-    ]),
-    n(B.View, { className: 'nav', style: Styles.menu }, [
+  componentDidMount() {
+    if (window.innerWidth < 500) {
+      this.setState({ small: true })
+    }
+  }
+
+  render() {
+    const Main = (
+      n(B.View, { spacing: 'lg', style: Styles.container }, [
+        n(B.View, {
+          className: 'container',
+        }, this.props.children),
+      ])
+    )
+    const Links = [
       n(RR.Link, { style: Styles.link, to: '/' }, 'Rater'),
       n(RR.Link, { style: Styles.link, to: 'moves' }, 'Moves'),
       n(RR.Link, { style: Styles.link, to: 'power' }, 'PowerUp Cost'),
       n(RR.Link, { style: Styles.link, to: 'matchup' }, 'Matchup'),
-    ]),
-  ])
+    ]
+    const Nav = (
+      n(B.View, {
+        className: 'nav',
+        style: this.state.small ? Styles.menu : Styles.menuDesktop,
+      }, Links)
+    )
+
+    const App = this.state.small
+      ? [Main, Nav]
+      : [Nav, Main]
+
+    return n(B.View, {
+      style: this.state.small ? Styles.main : Styles.mainDesktop,
+    }, App)
+  }
 }
 
 const Routes = n(RR.Router, { history: RR.browserHistory }, [
