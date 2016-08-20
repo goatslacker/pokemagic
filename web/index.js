@@ -39,6 +39,25 @@ const ConnectedRater = connect(Rater, {
   getProps: state => state.inventoryStore,
 })
 
+function Link(props) {
+  return n(B.View, {
+    style: Styles.linkWrapper,
+  }, [
+    n(RR.IndexLink, {
+      activeClassName: 'active',
+      style: Styles.link,
+      to: props.to,
+    }, props.children),
+  ])
+}
+
+const Links = [
+  n(Link, { to: '/' }, 'Rater'),
+  n(Link, { to: 'moves' }, 'Moves'),
+  n(Link, { to: 'power' }, 'PowerUp'),
+  n(Link, { to: 'matchup' }, 'Matchup'),
+]
+
 class Main extends React.Component {
   constructor() {
     super()
@@ -59,12 +78,6 @@ class Main extends React.Component {
         }, this.props.children),
       ])
     )
-    const Links = [
-      n(RR.Link, { style: Styles.link, to: '/' }, 'Rater'),
-      n(RR.Link, { style: Styles.link, to: 'moves' }, 'Moves'),
-      n(RR.Link, { style: Styles.link, to: 'power' }, 'PowerUp Cost'),
-      n(RR.Link, { style: Styles.link, to: 'matchup' }, 'Matchup'),
-    ]
     const Nav = (
       n(B.View, {
         className: 'nav',

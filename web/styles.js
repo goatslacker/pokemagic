@@ -36,24 +36,42 @@ module.exports = {
   },
 
   menu: {
-    alignItems: 'center',
+    alignItems: 'stretch',
     backgroundColor: '#6297de',
+    borderTop: '1px solid #b3b3b3',
+    boxShadow: '0 -1px 16px rgba(0, 0, 0, 0.4)',
     display: 'flex',
     flex: 1,
     justifyContent: 'space-around',
+    zIndex: 2,
   },
 
   menuDesktop: {
-    alignItems: 'center',
+    alignItems: 'stretch',
     backgroundColor: '#6297de',
+    borderTop: '1px solid #b3b3b3',
+    boxShadow: '0 -1px 16px rgba(0, 0, 0, 0.4)',
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-around',
+    zIndex: 2,
+  },
+
+  linkWrapper: {
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    justifyContent: 'center',
   },
 
   link: {
+    alignItems: 'center',
     color: '#fff',
+    display: 'flex',
+    flex: 1,
+    justifyContent: 'center',
   },
 
   activeLink: {
