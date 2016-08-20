@@ -23,7 +23,10 @@ function Matchup(props) {
           ]),
           n('tbody', matchups.map((value) => (
             n('tr', [
-              n('td', value.name),
+              n('td', [
+                n(B.Text, { strong: true }, value.name),
+                n(B.Text, `${value.score.toFixed(3)} ndps`),
+              ]),
               n('td', [
                 n(B.Text, value.quick),
                 n(B.Text, value.charge),

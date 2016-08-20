@@ -45,8 +45,17 @@ const FormControl = props => (
   ].concat(props.children))
 )
 
+function Text(props) {
+  const textProps = { style: {} }
+  if (props.className) textProps.className = props.className
+  if (props.style) textProps.style = props.style
+  if (props.strong) textProps.style.fontWeight = 'bold'
+
+  return n('div', textProps, props.children)
+}
+
+
 const Input = props => n('input', props)
-const Text = props => n('div', props, props.children)
 const Image = props => n('img', props)
 
 const Panel = props => (
