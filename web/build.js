@@ -44441,7 +44441,7 @@ function Link(props) {
   }, props.children)]);
 }
 
-var Links = [n(Link, { to: '/' }, 'Rater'), n(Link, { to: 'moves' }, 'Moves'), n(Link, { to: 'power' }, 'PowerUp'), n(Link, { to: 'matchup' }, 'Matchup')];
+var Links = [n(Link, { to: '/pokemon-go-iv-calculator/' }, 'Rater'), n(Link, { to: '/pokemon-go-iv-calculator/moves' }, 'Moves'), n(Link, { to: '/pokemon-go-iv-calculator/power' }, 'PowerUp'), n(Link, { to: '/pokemon-go-iv-calculator/matchup' }, 'Matchup')];
 
 var Main = function (_React$Component) {
   _inherits(Main, _React$Component);

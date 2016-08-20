@@ -52,10 +52,10 @@ function Link(props) {
 }
 
 const Links = [
-  n(Link, { to: '/' }, 'Rater'),
-  n(Link, { to: 'moves' }, 'Moves'),
-  n(Link, { to: 'power' }, 'PowerUp'),
-  n(Link, { to: 'matchup' }, 'Matchup'),
+  n(Link, { to: '/pokemon-go-iv-calculator/' }, 'Rater'),
+  n(Link, { to: '/pokemon-go-iv-calculator/moves' }, 'Moves'),
+  n(Link, { to: '/pokemon-go-iv-calculator/power' }, 'PowerUp'),
+  n(Link, { to: '/pokemon-go-iv-calculator/matchup' }, 'Matchup'),
 ]
 
 class Main extends React.Component {
