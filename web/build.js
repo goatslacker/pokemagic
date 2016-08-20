@@ -44492,7 +44492,7 @@ var Main = function (_React$Component) {
   return Main;
 }(React.Component);
 
-var Routes = n(RR.Router, { history: RR.browserHistory }, [n(RR.Route, { path: '/', component: Main }, [n(RR.IndexRoute, { component: ConnectedRater }), n(RR.Route, { path: 'moves', component: ConnectedMoves }), n(RR.Route, { path: 'power', component: ConnectedPowerUp }), n(RR.Route, { path: 'matchup', component: ConnectedMatchup })])]);
+var Routes = n(RR.Router, { history: RR.browserHistory }, [n(RR.Route, { path: '/pokemon-go-iv-calculator/', component: Main }, [n(RR.IndexRoute, { component: ConnectedRater }), n(RR.Route, { path: 'moves', component: ConnectedMoves }), n(RR.Route, { path: 'power', component: ConnectedPowerUp }), n(RR.Route, { path: 'matchup', component: ConnectedMatchup })])]);
 
 localforage.getItem('pogoivcalc.searches').then(function (searches) {
   if (searches) alt.load({ HistoryStore: { searches: searches } });

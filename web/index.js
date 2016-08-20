@@ -96,7 +96,7 @@ class Main extends React.Component {
 }
 
 const Routes = n(RR.Router, { history: RR.browserHistory }, [
-  n(RR.Route, { path: '/', component: Main }, [
+  n(RR.Route, { path: '/pokemon-go-iv-calculator/', component: Main }, [
     n(RR.IndexRoute, { component: ConnectedRater }),
     n(RR.Route, { path: 'moves', component: ConnectedMoves }),
     n(RR.Route, { path: 'power', component: ConnectedPowerUp }),
