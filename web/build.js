@@ -44441,7 +44441,7 @@ function Link(props) {
   }, props.children)]);
 }
 
-var Links = [n(Link, { to: '/pokemon-go-iv-calculator/' }, 'Rater'), n(Link, { to: '/pokemon-go-iv-calculator/moves' }, 'Moves'), n(Link, { to: '/pokemon-go-iv-calculator/power' }, 'PowerUp'), n(Link, { to: '/pokemon-go-iv-calculator/matchup' }, 'Matchup')];
+var Links = [n(Link, { to: '/' }, 'Rater'), n(Link, { to: 'moves' }, 'Moves'), n(Link, { to: 'power' }, 'PowerUp'), n(Link, { to: 'matchup' }, 'Matchup')];
 
 var Main = function (_React$Component) {
   _inherits(Main, _React$Component);
@@ -44492,7 +44492,7 @@ var Main = function (_React$Component) {
   return Main;
 }(React.Component);
 
-var Routes = n(RR.Router, { history: RR.browserHistory }, [n(RR.Route, { path: '/pokemon-go-iv-calculator/', component: Main }, [n(RR.IndexRoute, { component: ConnectedRater }), n(RR.Route, { path: 'moves', component: ConnectedMoves }), n(RR.Route, { path: 'power', component: ConnectedPowerUp }), n(RR.Route, { path: 'matchup', component: ConnectedMatchup })])]);
+var Routes = n(RR.Router, { history: RR.hashHistory }, [n(RR.Route, { path: '/', component: Main }, [n(RR.IndexRoute, { component: ConnectedRater }), n(RR.Route, { path: 'moves', component: ConnectedMoves }), n(RR.Route, { path: 'power', component: ConnectedPowerUp }), n(RR.Route, { path: 'matchup', component: ConnectedMatchup })])]);
 
 localforage.getItem('pogoivcalc.searches').then(function (searches) {
   if (searches) alt.load({ HistoryStore: { searches: searches } });

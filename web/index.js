@@ -52,10 +52,10 @@ function Link(props) {
 }
 
 const Links = [
-  n(Link, { to: '/pokemon-go-iv-calculator/' }, 'Rater'),
-  n(Link, { to: '/pokemon-go-iv-calculator/moves' }, 'Moves'),
-  n(Link, { to: '/pokemon-go-iv-calculator/power' }, 'PowerUp'),
-  n(Link, { to: '/pokemon-go-iv-calculator/matchup' }, 'Matchup'),
+  n(Link, { to: '/' }, 'Rater'),
+  n(Link, { to: 'moves' }, 'Moves'),
+  n(Link, { to: 'power' }, 'PowerUp'),
+  n(Link, { to: 'matchup' }, 'Matchup'),
 ]
 
 class Main extends React.Component {
@@ -95,8 +95,8 @@ class Main extends React.Component {
   }
 }
 
-const Routes = n(RR.Router, { history: RR.browserHistory }, [
-  n(RR.Route, { path: '/pokemon-go-iv-calculator/', component: Main }, [
+const Routes = n(RR.Router, { history: RR.hashHistory }, [
+  n(RR.Route, { path: '/', component: Main }, [
     n(RR.IndexRoute, { component: ConnectedRater }),
     n(RR.Route, { path: 'moves', component: ConnectedMoves }),
     n(RR.Route, { path: 'power', component: ConnectedPowerUp }),
