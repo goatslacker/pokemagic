@@ -43150,7 +43150,7 @@ var ResistantTypes = {
   DARK: { GHOST: GHOST, DARK: DARK },
   DRAGON: { FIRE: FIRE, WATER: WATER, GRASS: GRASS, ELECTRIC: ELECTRIC },
   ELECTRIC: { FLYING: FLYING, STEEL: STEEL, ELECTRIC: ELECTRIC },
-  FAIRY: { FIGHTING: FIGHTING, BUG: BUG, DARK: DARK },
+  FAIRY: { FIGHTING: FIGHTING, BUG: BUG, DARK: DARK }, // TODO verify this
   FIGHTING: { ROCK: ROCK, BUG: BUG, DARK: DARK },
   FIRE: { BUG: BUG, STEEL: STEEL, FIRE: FIRE, GRASS: GRASS, ICE: ICE, FAIRY: FAIRY },
   FLYING: { FIGHTING: FIGHTING, BUG: BUG, GRASS: GRASS },
@@ -43167,10 +43167,12 @@ var ResistantTypes = {
 };
 
 var ImmuneTypes = {
+  BUG: {},
   DARK: { PSYCHIC: PSYCHIC },
   DRAGON: {},
   ELECTRIC: {},
   FAIRY: { DRAGON: DRAGON },
+  FIGHTING: {},
   FIRE: {},
   FLYING: { GROUND: GROUND },
   GHOST: { NORMAL: NORMAL, FIGHTING: FIGHTING },
@@ -43180,12 +43182,50 @@ var ImmuneTypes = {
   NORMAL: { GHOST: GHOST },
   POISON: {},
   PSYCHIC: {},
+  ROCK: { ELECTRIC: ELECTRIC },
   STEEL: { POISON: POISON },
   WATER: {}
 };
 
 function isNotLegendary(pokemon) {
   return !LegendaryPokemon.hasOwnProperty(pokemon.name || pokemon);
+}
+
+function getTypeEffectiveness(pokemon, move) {
+  var s1 = SuperEffectiveTypes[pokemon.type1];
+  var s2 = SuperEffectiveTypes[pokemon.type2];
+
+  var r1 = ResistantTypes[pokemon.type1];
+  var r2 = ResistantTypes[pokemon.type2];
+
+  var i1 = ImmuneTypes[pokemon.type1];
+  var i2 = ImmuneTypes[pokemon.type2];
+
+  if (s1.hasOwnProperty(move.Type) && s2 && s2.hasOwnProperty(move.Type)) {
+    return 1.56;
+  }
+
+  if (s1.hasOwnProperty(move.Type) || s2 && s2.hasOwnProperty(move.Type)) {
+    return 1.25;
+  }
+
+  if (r1.hasOwnProperty(move.Type) && r2 && r2.hasOwnProperty(move.Type)) {
+    return 0.64;
+  }
+
+  if (i1.hasOwnProperty(move.Type) && i2 && i2.hasOwnProperty(move.Type)) {
+    return 0.64;
+  }
+
+  if (r1.hasOwnProperty(move.Type) || r2 && r2.hasOwnProperty(move.Type)) {
+    return 0.8;
+  }
+
+  if (i1.hasOwnProperty(move.Type) || i2 && i2.hasOwnProperty(move.Type)) {
+    return 0.8;
+  }
+
+  return 1;
 }
 
 function getDmgVs(player, opponent, moves) {
@@ -43196,10 +43236,10 @@ function getDmgVs(player, opponent, moves) {
     var stab = move.Type === player.type1 || move.Type === player.type2 ? 1.25 : 1;
     var power = move.Power;
 
-    var effectiveness = SuperEffectiveTypes[opponent.type1].hasOwnProperty(move.Type) || opponent.type2 && SuperEffectiveTypes[opponent.type2].hasOwnProperty(move.Type) ? 1.25 : ResistantTypes[opponent.type1].hasOwnProperty(move.Type) || opponent.type2 && ResistantTypes[opponent.type2].hasOwnProperty(move.Type) ? 0.8 : 1;
+    var fxMul = getTypeEffectiveness(opponent, move);
 
     var ECpM = 0.790300;
-    return 0.5 * atk * ECpM / (def * ECpM) * power * stab * effectiveness + 1;
+    return 0.5 * atk * ECpM / (def * ECpM) * power * stab * fxMul + 1;
   });
 }
 

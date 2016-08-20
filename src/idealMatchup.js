@@ -53,7 +53,7 @@ const ResistantTypes = {
   DARK: { GHOST, DARK },
   DRAGON: { FIRE, WATER, GRASS, ELECTRIC },
   ELECTRIC: { FLYING, STEEL, ELECTRIC },
-  FAIRY: { FIGHTING, BUG, DARK },
+  FAIRY: { FIGHTING, BUG, DARK }, // TODO verify this
   FIGHTING: { ROCK, BUG, DARK },
   FIRE: { BUG, STEEL, FIRE, GRASS, ICE, FAIRY },
   FLYING: { FIGHTING, BUG, GRASS },
@@ -70,10 +70,12 @@ const ResistantTypes = {
 }
 
 const ImmuneTypes = {
+  BUG: {},
   DARK: { PSYCHIC },
   DRAGON: {},
   ELECTRIC: {},
   FAIRY: { DRAGON },
+  FIGHTING: {},
   FIRE: {},
   FLYING: { GROUND },
   GHOST: { NORMAL, FIGHTING },
@@ -83,12 +85,50 @@ const ImmuneTypes = {
   NORMAL: { GHOST },
   POISON: {},
   PSYCHIC: {},
+  ROCK: { ELECTRIC },
   STEEL: { POISON },
   WATER: {},
 }
 
 function isNotLegendary(pokemon) {
   return !LegendaryPokemon.hasOwnProperty(pokemon.name || pokemon)
+}
+
+function getTypeEffectiveness(pokemon, move) {
+  const s1 = SuperEffectiveTypes[pokemon.type1]
+  const s2 = SuperEffectiveTypes[pokemon.type2]
+
+  const r1 = ResistantTypes[pokemon.type1]
+  const r2 = ResistantTypes[pokemon.type2]
+
+  const i1 = ImmuneTypes[pokemon.type1]
+  const i2 = ImmuneTypes[pokemon.type2]
+
+  if (s1.hasOwnProperty(move.Type) && s2 && s2.hasOwnProperty(move.Type)) {
+    return 1.56
+  }
+
+  if (s1.hasOwnProperty(move.Type) || (s2 && s2.hasOwnProperty(move.Type))) {
+    return 1.25
+  }
+
+  if (r1.hasOwnProperty(move.Type) && r2 && r2.hasOwnProperty(move.Type)) {
+    return 0.64
+  }
+
+  if (i1.hasOwnProperty(move.Type) && i2 && i2.hasOwnProperty(move.Type)) {
+    return 0.64
+  }
+
+  if (r1.hasOwnProperty(move.Type) || (r2 && r2.hasOwnProperty(move.Type))) {
+    return 0.8
+  }
+
+  if (i1.hasOwnProperty(move.Type) || (i2 && i2.hasOwnProperty(move.Type))) {
+    return 0.8
+  }
+
+  return 1
 }
 
 function getDmgVs(player, opponent, moves) {
@@ -99,16 +139,10 @@ function getDmgVs(player, opponent, moves) {
     const stab = move.Type === player.type1 || move.Type === player.type2 ? 1.25 : 1
     const power = move.Power
 
-    const effectiveness = (
-      SuperEffectiveTypes[opponent.type1].hasOwnProperty(move.Type) ||
-      (opponent.type2 && SuperEffectiveTypes[opponent.type2].hasOwnProperty(move.Type))
-    ) ? 1.25 : (
-      ResistantTypes[opponent.type1].hasOwnProperty(move.Type) ||
-      (opponent.type2 && ResistantTypes[opponent.type2].hasOwnProperty(move.Type))
-    ) ? 0.8 : 1
+    const fxMul = getTypeEffectiveness(opponent, move)
 
     const ECpM = 0.790300
-    return (0.5 * atk * ECpM / (def * ECpM ) * power * stab * effectiveness) + 1
+    return (0.5 * atk * ECpM / (def * ECpM ) * power * stab * fxMul) + 1
   })
 }
 
