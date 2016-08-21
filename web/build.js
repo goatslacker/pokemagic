@@ -44024,7 +44024,7 @@ function FormPokemonLevel(props) {
 
 module.exports = FormPokemonLevel;
 
-},{"../actions/pokemonActions":274,"../utils/Lotus.react":295,"../utils/n":299}],278:[function(require,module,exports){
+},{"../actions/pokemonActions":274,"../utils/Lotus.react":295,"../utils/n":298}],278:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var Pokemon = require('../../json/pokemon.json');
 var Select = require('react-select');
@@ -44054,7 +44054,7 @@ function FormPokemonName(props) {
 
 module.exports = FormPokemonName;
 
-},{"../../json/pokemon.json":7,"../actions/pokemonActions":274,"../utils/Lotus.react":295,"../utils/n":299,"react-select":84}],279:[function(require,module,exports){
+},{"../../json/pokemon.json":7,"../actions/pokemonActions":274,"../utils/Lotus.react":295,"../utils/n":298,"react-select":84}],279:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var DustToLevel = require('../../json/dust-to-level.json');
 var Select = require('react-select');
@@ -44079,7 +44079,7 @@ function FormStardust(props) {
 
 module.exports = FormStardust;
 
-},{"../../json/dust-to-level.json":2,"../actions/pokemonActions":274,"../utils/Lotus.react":295,"../utils/n":299,"react-select":84}],280:[function(require,module,exports){
+},{"../../json/dust-to-level.json":2,"../actions/pokemonActions":274,"../utils/Lotus.react":295,"../utils/n":298,"react-select":84}],280:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
 var pokemonActions = require('../actions/pokemonActions');
@@ -44094,7 +44094,7 @@ function FormTrainerLevel(props) {
 
 module.exports = FormTrainerLevel;
 
-},{"../actions/pokemonActions":274,"../utils/Lotus.react":295,"../utils/n":299}],281:[function(require,module,exports){
+},{"../actions/pokemonActions":274,"../utils/Lotus.react":295,"../utils/n":298}],281:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var FormPokemonName = require('./FormPokemonName');
 var idealMatchup = require('../../src/idealMatchup');
@@ -44111,7 +44111,7 @@ function Matchup(props) {
 
 module.exports = Matchup;
 
-},{"../../src/idealMatchup":267,"../utils/Lotus.react":295,"../utils/n":299,"./FormPokemonName":278}],282:[function(require,module,exports){
+},{"../../src/idealMatchup":267,"../utils/Lotus.react":295,"../utils/n":298,"./FormPokemonName":278}],282:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
 
@@ -44123,7 +44123,7 @@ function MoveCombos(props) {
 
 module.exports = MoveCombos;
 
-},{"../utils/Lotus.react":295,"../utils/n":299}],283:[function(require,module,exports){
+},{"../utils/Lotus.react":295,"../utils/n":298}],283:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var MoveCombos = require('./MoveCombos');
 var MovesList = require('../../json/moves.json');
@@ -44207,7 +44207,7 @@ function Moves(props) {
 
 module.exports = Moves;
 
-},{"../../json/moves.json":6,"../../json/pokemon.json":7,"../../src/best-moves":262,"../actions/moveActions":273,"../utils/Lotus.react":295,"../utils/n":299,"./MoveCombos":282,"react-select":84}],284:[function(require,module,exports){
+},{"../../json/moves.json":6,"../../json/pokemon.json":7,"../../src/best-moves":262,"../actions/moveActions":273,"../utils/Lotus.react":295,"../utils/n":298,"./MoveCombos":282,"react-select":84}],284:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var DustToLevel = require('../../json/dust-to-level.json');
 var n = require('../utils/n');
@@ -44233,7 +44233,7 @@ function PowerUp(props) {
 
 module.exports = PowerUp;
 
-},{"../../json/dust-to-level.json":2,"../../src/powerup":271,"../utils/Lotus.react":295,"../utils/n":299,"./FormPokemonLevel":277,"./FormStardust":279,"./FormTrainerLevel":280}],285:[function(require,module,exports){
+},{"../../json/dust-to-level.json":2,"../../src/powerup":271,"../utils/Lotus.react":295,"../utils/n":298,"./FormPokemonLevel":277,"./FormStardust":279,"./FormTrainerLevel":280}],285:[function(require,module,exports){
 var B = require('../utils/Lotus.React');
 var FormPokemonLevel = require('./FormPokemonLevel');
 var FormPokemonName = require('./FormPokemonName');
@@ -44287,13 +44287,12 @@ function Rater(props) {
 
 module.exports = Rater;
 
-},{"../actions/pokemonActions":274,"../containers/SearchHistoryContainer":288,"../utils/Lotus.React":294,"../utils/calculateValues":296,"../utils/n":299,"./FormPokemonLevel":277,"./FormPokemonName":278,"./FormStardust":279,"./FormTrainerLevel":280,"./Results":286}],286:[function(require,module,exports){
+},{"../actions/pokemonActions":274,"../containers/SearchHistoryContainer":288,"../utils/Lotus.React":294,"../utils/calculateValues":296,"../utils/n":298,"./FormPokemonLevel":277,"./FormPokemonName":278,"./FormStardust":279,"./FormTrainerLevel":280,"./Results":286}],286:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var MoveCombos = require('./MoveCombos');
 var Styles = require('../styles');
 var bestMovesFor = require('../../src/best-moves');
 var finalEvolutions = require('../../json/finalEvolutions');
-var getWithContext = require('../utils/getWithContext');
 var n = require('../utils/n');
 var pokemonActions = require('../actions/pokemonActions');
 
@@ -44305,7 +44304,7 @@ function Results(props) {
 
   console.log(props);
 
-  return n(B.View, [n(B.View, [n(B.Button, { size: 'sm', onClick: pokemonActions.resultsReset }, 'Check Another')]), n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n(B.Text, { style: Styles.bigText }, props.pokemon.name), n(B.Text, 'CP: ' + String(props.pokemon.cp) + ' | HP: ' + String(props.pokemon.hp)), n(B.View, { style: Styles.pokemonImage }, [n(B.Image, { src: 'images/' + String(props.pokemon.name) + '.png', height: 150, width: 150 })]), n(B.Text, { style: Styles.bigText }, props.range.iv[0] === props.range.iv[1] ? String(props.range.iv[0]) + '%' : String(props.range.iv[0]) + '% - ' + String(props.range.iv[1]) + '%'), n(B.Text, { style: Styles.resultsRow }, [props.chance === 100 ? 'Keep your ' + String(props.pokemon.cp) + 'CP ' + String(props.pokemon.name) : props.chance === 0 ? 'Send this Pokemon to the grinder for candy.' : 'Maybe you should keep this Pokemon around.'])]), n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Possible values (' + String(props.values.length) + ')'), n(B.Text, { style: Styles.resultsRow }, [props.values.length === 1 ? n('span', 'Congrats, here are your Pokemon\'s values') : n('span', ['There are ', n('strong', props.values.length), ' possibilities and a ', n('strong', String(props.chance) + '%'), ' chance you will have a good ' + String(props.pokemon.name) + '. ', props.values.length > 10 && n('span', ['We are showing up to ', n('strong', 10), ' possibilities below. ']), 'Highlighted rows show even levels since you can only catch even leveled Pokemon.'])]), n(B.Table, { clean: true, border: true }, [n('thead', [n('tr', [n('th', 'IV'), n('th', 'Level'), n('th', 'CP %'), n('th', 'HP %'), n('th', 'Battle %')])]), n('tbody', getWithContext(props.values).map(function (value) {
+  return n(B.View, [n(B.View, [n(B.Button, { size: 'sm', onClick: pokemonActions.resultsReset }, 'Check Another')]), n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n(B.Text, { style: Styles.bigText }, props.pokemon.name), n(B.Text, 'CP: ' + String(props.pokemon.cp) + ' | HP: ' + String(props.pokemon.hp)), n(B.View, { style: Styles.pokemonImage }, [n(B.Image, { src: 'images/' + String(props.pokemon.name) + '.png', height: 150, width: 150 })]), n(B.Text, { style: Styles.bigText }, props.range.iv[0] === props.range.iv[1] ? String(props.range.iv[0]) + '%' : String(props.range.iv[0]) + '% - ' + String(props.range.iv[1]) + '%'), n(B.Text, { style: Styles.resultsRow }, [props.chance === 100 ? 'Keep your ' + String(props.pokemon.cp) + 'CP ' + String(props.pokemon.name) : props.chance === 0 ? 'Send this Pokemon to the grinder for candy.' : 'Maybe you should keep this Pokemon around.'])]), n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Possible values (' + String(props.values.length) + ')'), n(B.Text, { style: Styles.resultsRow }, [props.values.length === 1 ? n('span', 'Congrats, here are your Pokemon\'s values') : n('span', ['There are ', n('strong', props.values.length), ' possibilities and a ', n('strong', String(props.chance) + '%'), ' chance you will have a good ' + String(props.pokemon.name) + '. ', 'Highlighted rows show even levels since you can only catch even leveled Pokemon.'])]), n(B.Table, { clean: true, border: true }, [n('thead', [n('tr', [n('th', 'IV'), n('th', 'Level'), n('th', 'CP %'), n('th', 'HP %'), n('th', 'Battle %')])]), n('tbody', props.values.map(function (value) {
     return n('tr', {
       style: {
         backgroundColor: Number(value.Level) % 1 === 0 ? '#fef4f4' : ''
@@ -44320,14 +44319,18 @@ function Results(props) {
   bestMoves && n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Best moveset combos for ' + String(props.pokemon.name)), n(MoveCombos, { moves: bestMoves })]), props.best.meta.EvolveCP && n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n('h3', 'Evolution'), n(B.Panel, [n(B.Text, 'If evolved it would have a CP of about ' + String(props.best.meta.EvolveCP))])]), props.best.meta.Stardust > 0 && n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n('h3', { style: Styles.resultsRow }, 'Maxing out to level ' + String(props.best.meta.MaxLevel)), props.pokemon.level === null && n(B.Text, 'Assuming that your Pokemon\'s current level is ' + String(props.best.Level) + '. The information below is just an estimate.'), n(B.View, [n(B.Panel, 'Current level: ' + String(props.best.Level)), n(B.Panel, 'Candy cost: ' + String(props.best.meta.Candy)), n(B.Panel, 'Stardust cost: ' + String(props.best.meta.Stardust)), n(B.Panel, 'CP: ' + String(props.best.meta.MaxCP)), n(B.Panel, 'HP: ' + String(props.best.meta.MaxHP))])]), n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Yours vs Perfect by level'), n(B.Table, [n('thead', [n('tr', [n('th', 'Level'), n('th', 'Your CP'), n('th', 'Best CP'), n('th', 'Your HP'), n('th', 'Best HP')])]), n('tbody', props.values.reduce(function (o, value) {
     if (o._[value.Level]) return o;
     o._[value.Level] = 1;
-    o.rows.push(n('tr', [n('td', value.Level), n('td', value.CP), n('td', value.meta.MaxLevelCP), n('td', value.HP), n('td', value.meta.MaxLevelHP)]));
+    o.rows.push(value);
     return o;
-  }, { rows: [], _: {} }).rows)])])]);
+  }, { rows: [], _: {} }).rows.sort(function (a, b) {
+    return a.Level > b.Level ? 1 : -1;
+  }).map(function (value) {
+    return n('tr', [n('td', value.Level), n('td', value.CP), n('td', value.meta.MaxLevelCP), n('td', value.HP), n('td', value.meta.MaxLevelHP)]);
+  }))])])]);
 }
 
 module.exports = Results;
 
-},{"../../json/finalEvolutions":3,"../../src/best-moves":262,"../actions/pokemonActions":274,"../styles":293,"../utils/Lotus.react":295,"../utils/getWithContext":298,"../utils/n":299,"./MoveCombos":282}],287:[function(require,module,exports){
+},{"../../json/finalEvolutions":3,"../../src/best-moves":262,"../actions/pokemonActions":274,"../styles":293,"../utils/Lotus.react":295,"../utils/n":298,"./MoveCombos":282}],287:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var Styles = require('../styles');
 var calculateValues = require('../utils/calculateValues');
@@ -44349,7 +44352,7 @@ function SearchHistory(props) {
 
 module.exports = SearchHistory;
 
-},{"../styles":293,"../utils/Lotus.react":295,"../utils/calculateValues":296,"../utils/n":299}],288:[function(require,module,exports){
+},{"../styles":293,"../utils/Lotus.react":295,"../utils/calculateValues":296,"../utils/n":298}],288:[function(require,module,exports){
 var SearchHistory = require('../components/SearchHistory');
 var connect = require('../utils/connect');
 var historyStore = require('../stores/HistoryStore');
@@ -44547,7 +44550,7 @@ localforage.getItem('pogoivcalc.trainerLevel').then(function (trainerLevel) {
   ReactDOM.render(Routes, document.querySelector('#app'));
 });
 
-},{"./actions/pokemonActions":274,"./alt":275,"./components/Matchup":281,"./components/Moves":283,"./components/PowerUp":284,"./components/Rater":285,"./stores/InventoryStore":291,"./stores/MovesStore":292,"./styles":293,"./utils/Lotus.react":295,"./utils/connect":297,"./utils/n":299,"localforage":17,"react":261,"react-dom":18,"react-router":48}],290:[function(require,module,exports){
+},{"./actions/pokemonActions":274,"./alt":275,"./components/Matchup":281,"./components/Moves":283,"./components/PowerUp":284,"./components/Rater":285,"./stores/InventoryStore":291,"./stores/MovesStore":292,"./styles":293,"./utils/Lotus.react":295,"./utils/connect":297,"./utils/n":298,"localforage":17,"react":261,"react-dom":18,"react-router":48}],290:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -44631,10 +44634,10 @@ var InventoryStore = function (_alt$Store) {
 
     _this.bindActions(pokemonActions);
     _this.state = {
-      name: 'FLAREON',
-      cp: 1418,
-      hp: 84,
-      stardust: '2500',
+      name: 'PORYGON',
+      cp: 1258,
+      hp: 100,
+      stardust: '4500',
       trainerLevel: 27,
       level: 0,
       results: null,
@@ -45010,7 +45013,7 @@ module.exports = {
   View: View
 };
 
-},{"./n":299}],295:[function(require,module,exports){
+},{"./n":298}],295:[function(require,module,exports){
 var n = require('./n');
 //const RN = require('react-native-web')
 //const View = RN.View
@@ -45093,7 +45096,7 @@ module.exports = {
   View: View
 };
 
-},{"./n":299}],296:[function(require,module,exports){
+},{"./n":298}],296:[function(require,module,exports){
 var inventoryStore = require('../stores/InventoryStore');
 var historyActions = require('../actions/historyActions');
 var magic = require('../../src/magic');
@@ -45211,30 +45214,7 @@ function connect(Component, o) {
 
 module.exports = connect;
 
-},{"./n":299,"react":261}],298:[function(require,module,exports){
-function getWithContext(values) {
-  var third = Math.floor(values.length / 3);
-  var l = 0;
-
-  return values.reduce(function (arr, value, i) {
-    if (l < 3) {
-      arr.push(value);
-      l += 1;
-    } else if (i >= third && l < 7) {
-      arr.push(value);
-      l += 1;
-    } else if (i > values.length - 4 & l < 10) {
-      arr.push(value);
-      l += 1;
-    }
-
-    return arr;
-  }, []);
-}
-
-module.exports = getWithContext;
-
-},{}],299:[function(require,module,exports){
+},{"./n":298,"react":261}],298:[function(require,module,exports){
 var React = require('react');
 
 module.exports = function () {

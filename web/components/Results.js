@@ -3,7 +3,6 @@ const MoveCombos = require('./MoveCombos')
 const Styles = require('../styles')
 const bestMovesFor = require('../../src/best-moves')
 const finalEvolutions = require('../../json/finalEvolutions')
-const getWithContext = require('../utils/getWithContext')
 const n = require('../utils/n')
 const pokemonActions = require('../actions/pokemonActions')
 
@@ -54,13 +53,6 @@ function Results(props) {
               ' possibilities and a ',
               n('strong', `${props.chance}%`),
               ` chance you will have a good ${props.pokemon.name}. `,
-              props.values.length > 10 && (
-                n('span', [
-                  'We are showing up to ',
-                  n('strong', 10),
-                  ' possibilities below. ',
-                ])
-              ),
               'Highlighted rows show even levels since you can only catch even leveled Pokemon.',
             ]),
         ]),
@@ -74,7 +66,7 @@ function Results(props) {
               n('th', 'Battle %'),
             ]),
           ]),
-          n('tbody', getWithContext(props.values).map((value) => (
+          n('tbody', props.values.map((value) => (
             n('tr', {
               style: {
                 backgroundColor: Number(value.Level) % 1 === 0 ? '#fef4f4' : '',
@@ -149,17 +141,19 @@ function Results(props) {
           n('tbody', props.values.reduce((o, value) => {
             if (o._[value.Level]) return o
             o._[value.Level] = 1
-            o.rows.push(
-              n('tr', [
-                n('td', value.Level),
-                n('td', value.CP),
-                n('td', value.meta.MaxLevelCP),
-                n('td', value.HP),
-                n('td', value.meta.MaxLevelHP),
-              ])
-            )
+            o.rows.push(value)
             return o
-          }, { rows: [], _: {} }).rows),
+          }, { rows: [], _: {} }).rows
+          .sort((a, b) => a.Level > b.Level ? 1 : -1)
+          .map((value) => (
+            n('tr', [
+              n('td', value.Level),
+              n('td', value.CP),
+              n('td', value.meta.MaxLevelCP),
+              n('td', value.HP),
+              n('td', value.meta.MaxLevelHP),
+            ])
+          ))),
         ]),
       ]),
     ])

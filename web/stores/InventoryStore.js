@@ -6,10 +6,10 @@ class InventoryStore extends alt.Store {
     super()
     this.bindActions(pokemonActions)
     this.state = {
-      name: 'FLAREON',
-      cp: 1418,
-      hp: 84,
-      stardust: '2500',
+      name: 'PORYGON',
+      cp: 1258,
+      hp: 100,
+      stardust: '4500',
       trainerLevel: 27,
       level: 0,
       results: null,
