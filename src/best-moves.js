@@ -72,23 +72,33 @@ function bestMovesFor(pokemonName, IndAtk) {
 
 module.exports = bestMovesFor
 
+/*
 // Find the top 20 Pokemon with the most DPS and their moveset
-//console.log(
-//  Pokemon.reduce((arr, mon) => {
-//    const moves = getBestMoves(mon)
+console.log(
+  Pokemon.reduce((arr, mon) => {
+    const moves = getBestMoves(mon)
+    arr.push({
+      name: mon.name,
+      type: `${mon.type1}/${mon.type2}`,
+      dps: moves[0].dps,
+    })
+
+    // sort list by best DPS
 //    moves.forEach(move => arr.push({
 //      name: mon.name,
 //      dps: move.dps,
 //      quick: move.quick.name,
 //      charge: move.charge.name,
 //    }))
-//    return arr
-//  }, [])
-//  .sort((a, b) => {
-//    return a.dps > b.dps ? -1 : 1
-//  })
-//  .slice(0, 20)
-//)
+
+    return arr
+  }, [])
+  .sort((a, b) => {
+    return a.dps > b.dps ? -1 : 1
+  })
+  .slice(0, 20)
+)
+*/
 
 //console.log(
 //  bestMovesFor(process.argv[2] || 'victreebel')
