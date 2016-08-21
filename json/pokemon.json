@@ -6359,13 +6359,13 @@
         "DPS": 16.666666666666668
       },
       {
-        "Id": 127,
-        "Name": "STOMP",
-        "Type": "NORMAL",
+        "Id": 123,
+        "Name": "BRICK_BREAK",
+        "Type": "FIGHTING",
         "Power": 30,
-        "DurationMs": 2100,
-        "Energy": -25,
-        "DPS": 14.285714285714285
+        "DurationMs": 1600,
+        "Energy": -33,
+        "DPS": 23.4375
       },
       {
         "Id": 32,
