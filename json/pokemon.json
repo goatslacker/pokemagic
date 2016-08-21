@@ -7238,13 +7238,13 @@
     "family": "FAMILY_STARYU",
     "moves1": [
       {
-        "Id": 219,
-        "Name": "QUICK_ATTACK_FAST",
+        "Id": 221,
+        "Name": "TACKLE_FAST",
         "Type": "NORMAL",
-        "Power": 10,
-        "DurationMs": 1330,
+        "Power": 12,
+        "DurationMs": 1100,
         "Energy": 7,
-        "DPS": 7.518796992481203
+        "DPS": 6.36363636363636
       },
       {
         "Id": 230,
