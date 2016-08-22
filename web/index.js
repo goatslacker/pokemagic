@@ -70,9 +70,17 @@ class Main extends React.Component {
     }
   }
 
+  componentWillReceiveProps() {
+    // When entering routes, scroll the window to the top
+    if (typeof document !== 'undefined') {
+      const node = document.querySelector('.pm')
+      if (node) node.scrollTop = 0
+    }
+  }
+
   render() {
-    const Main = (
-      n(B.View, { spacing: 'lg', style: Styles.container }, [
+    const Container = (
+      n(B.View, { className: 'pm', spacing: 'lg', style: Styles.container }, [
         n(B.View, {
           className: 'container',
         }, this.props.children),
@@ -86,8 +94,8 @@ class Main extends React.Component {
     )
 
     const App = this.state.small
-      ? [Main, Nav]
-      : [Nav, Main]
+      ? [Container, Nav]
+      : [Nav, Container]
 
     return n(B.View, {
       style: this.state.small ? Styles.main : Styles.mainDesktop,
