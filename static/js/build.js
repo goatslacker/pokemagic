@@ -9636,13 +9636,13 @@ module.exports=[
         "DPS": 16.666666666666668
       },
       {
-        "Id": 127,
-        "Name": "STOMP",
-        "Type": "NORMAL",
+        "Id": 123,
+        "Name": "BRICK_BREAK",
+        "Type": "FIGHTING",
         "Power": 30,
-        "DurationMs": 2100,
-        "Energy": -25,
-        "DPS": 14.285714285714285
+        "DurationMs": 1600,
+        "Energy": -33,
+        "DPS": 23.4375
       },
       {
         "Id": 32,
@@ -10515,13 +10515,13 @@ module.exports=[
     "family": "FAMILY_STARYU",
     "moves1": [
       {
-        "Id": 219,
-        "Name": "QUICK_ATTACK_FAST",
+        "Id": 221,
+        "Name": "TACKLE_FAST",
         "Type": "NORMAL",
-        "Power": 10,
-        "DurationMs": 1330,
+        "Power": 12,
+        "DurationMs": 1100,
         "Energy": 7,
-        "DPS": 7.518796992481203
+        "DPS": 6.36363636363636
       },
       {
         "Id": 230,
@@ -42823,23 +42823,33 @@ function bestMovesFor(pokemonName, IndAtk) {
 
 module.exports = bestMovesFor;
 
+/*
 // Find the top 20 Pokemon with the most DPS and their moveset
-//console.log(
-//  Pokemon.reduce((arr, mon) => {
-//    const moves = getBestMoves(mon)
+console.log(
+  Pokemon.reduce((arr, mon) => {
+    const moves = getBestMoves(mon)
+    arr.push({
+      name: mon.name,
+      type: `${mon.type1}/${mon.type2}`,
+      dps: moves[0].dps,
+    })
+
+    // sort list by best DPS
 //    moves.forEach(move => arr.push({
 //      name: mon.name,
 //      dps: move.dps,
 //      quick: move.quick.name,
 //      charge: move.charge.name,
 //    }))
-//    return arr
-//  }, [])
-//  .sort((a, b) => {
-//    return a.dps > b.dps ? -1 : 1
-//  })
-//  .slice(0, 20)
-//)
+
+    return arr
+  }, [])
+  .sort((a, b) => {
+    return a.dps > b.dps ? -1 : 1
+  })
+  .slice(0, 20)
+)
+*/
 
 //console.log(
 //  bestMovesFor(process.argv[2] || 'victreebel')
@@ -44307,7 +44317,7 @@ function Results(props) {
   return n(B.View, [n(B.View, [n(B.Button, { size: 'sm', onClick: pokemonActions.resultsReset }, 'Check Another')]), n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n(B.Text, { style: Styles.bigText }, props.pokemon.name), n(B.Text, 'CP: ' + String(props.pokemon.cp) + ' | HP: ' + String(props.pokemon.hp)), n(B.View, { style: Styles.pokemonImage }, [n(B.Image, { src: 'images/' + String(props.pokemon.name) + '.png', height: 150, width: 150 })]), n(B.Text, { style: Styles.bigText }, props.range.iv[0] === props.range.iv[1] ? String(props.range.iv[0]) + '%' : String(props.range.iv[0]) + '% - ' + String(props.range.iv[1]) + '%'), n(B.Text, { style: Styles.resultsRow }, [props.chance === 100 ? 'Keep your ' + String(props.pokemon.cp) + 'CP ' + String(props.pokemon.name) : props.chance === 0 ? 'Send this Pokemon to the grinder for candy.' : 'Maybe you should keep this Pokemon around.'])]), n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Possible values (' + String(props.values.length) + ')'), n(B.Text, { style: Styles.resultsRow }, [props.values.length === 1 ? n('span', 'Congrats, here are your Pokemon\'s values') : n('span', ['There are ', n('strong', props.values.length), ' possibilities and a ', n('strong', String(props.chance) + '%'), ' chance you will have a good ' + String(props.pokemon.name) + '. ', 'Highlighted rows show even levels since you can only catch even leveled Pokemon.'])]), n(B.Table, { clean: true, border: true }, [n('thead', [n('tr', [n('th', 'IV'), n('th', 'Level'), n('th', 'CP %'), n('th', 'HP %'), n('th', 'Battle %')])]), n('tbody', props.values.map(function (value) {
     return n('tr', {
       style: {
-        backgroundColor: Number(value.Level) % 1 === 0 ? '#fef4f4' : ''
+        backgroundColor: Number(value.Level) % 1 === 0 ? '#ede0c6' : ''
       }
     }, [n('td', [n(B.Text, {
       className: 'label',

@@ -7,9 +7,9 @@
   "homepage": "https://github.com/goatslacker/pokemon-go-iv-calculator",
   "license": "MIT",
   "scripts": {
-    "build": "browserify -t babelify web/index.js > web/build.js",
-    "build:fast": "browserify web/index.js > web/build.js",
-    "deploy": "cd web && surge --domain pocketmaster.surge.sh"
+    "build": "browserify -t babelify web/index.js > static/js/build.js",
+    "build:fast": "browserify web/index.js > static/js/build.js",
+    "deploy": "cd static && surge --domain pocketmaster.surge.sh"
   },
   "dependencies": {
     "chalk": "^1.1.3",
