@@ -69,7 +69,7 @@ function Results(props) {
           n('tbody', props.values.map((value) => (
             n('tr', {
               style: {
-                backgroundColor: Number(value.Level) % 1 === 0 ? '#fef4f4' : '',
+                backgroundColor: Number(value.Level) % 1 === 0 ? '#ede0c6' : '',
               },
             }, [
               n('td', [
