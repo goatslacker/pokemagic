@@ -21805,6 +21805,7 @@ var Select = _react2['default'].createClass({
 
 exports['default'] = Select;
 module.exports = exports['default'];
+
 },{"./Async":82,"./Option":83,"./Value":85,"./utils/stripDiacritics":86,"blacklist":87,"classnames":88,"react":261,"react-dom":18,"react-input-autosize":89}],85:[function(require,module,exports){
 'use strict';
 
@@ -44072,7 +44073,7 @@ var n = require('../utils/n');
 var pokemonActions = require('../actions/pokemonActions');
 
 var dustOptions = Object.keys(DustToLevel).map(function (x) {
-  return { value: x, label: x };
+  return { value: Number(x), label: Number(x) };
 });
 var logStardust = function logStardust(x) {
   return pokemonActions.changedStardust(x && x.value);
@@ -44083,6 +44084,9 @@ function FormStardust(props) {
     name: 'stardust-selector',
     value: props.stardust,
     options: dustOptions,
+    inputProps: {
+      type: 'number'
+    },
     onChange: logStardust
   })]);
 }
@@ -44345,24 +44349,32 @@ var B = require('../utils/Lotus.react');
 var Styles = require('../styles');
 var calculateValues = require('../utils/calculateValues');
 var n = require('../utils/n');
+var scrollTop = require('../utils/scrollTop');
 
+function fromHistory(search) {
+  calculateValues(search);
+  scrollTop();
+}
+
+// TODO input for searching/sorting
+// showing N or X in history
 function SearchHistory(props) {
   return n(B.View, [n('h3', { style: Styles.resultsRow }, 'Recent Searches'), n(B.View, props.searches.map(function (search) {
     return n(B.Panel, [n('a', {
       onClick: function () {
         function onClick() {
-          return calculateValues(search.values);
+          return fromHistory(search);
         }
 
         return onClick;
       }()
-    }, search.text)]);
+    }, String(search.name) + ' ' + String(search.cp) + 'CP ' + String(search.hp) + 'HP')]);
   }))]);
 }
 
 module.exports = SearchHistory;
 
-},{"../styles":293,"../utils/Lotus.react":295,"../utils/calculateValues":296,"../utils/n":298}],288:[function(require,module,exports){
+},{"../styles":293,"../utils/Lotus.react":295,"../utils/calculateValues":296,"../utils/n":298,"../utils/scrollTop":299}],288:[function(require,module,exports){
 var SearchHistory = require('../components/SearchHistory');
 var connect = require('../utils/connect');
 var historyStore = require('../stores/HistoryStore');
@@ -44377,7 +44389,11 @@ var SearchHistoryContainer = connect(SearchHistory, {
   }(),
   getProps: function () {
     function getProps(state) {
-      return state.historyStore;
+      return {
+        searches: Object.keys(state.historyStore.searches).map(function (k) {
+          return state.historyStore.searches[k];
+        })
+      };
     }
 
     return getProps;
@@ -44404,6 +44420,7 @@ var alt = require('./alt');
 var connect = require('./utils/connect');
 var n = require('./utils/n');
 var localforage = require('localforage');
+var scrollTop = require('./utils/scrollTop');
 
 var Matchup = require('./components/Matchup');
 var Moves = require('./components/Moves');
@@ -44520,10 +44537,19 @@ var Main = function (_React$Component) {
       return componentDidMount;
     }()
   }, {
+    key: 'componentWillReceiveProps',
+    value: function () {
+      function componentWillReceiveProps() {
+        scrollTop();
+      }
+
+      return componentWillReceiveProps;
+    }()
+  }, {
     key: 'render',
     value: function () {
       function render() {
-        var Main = n(B.View, { spacing: 'lg', style: Styles.container }, [n(B.View, {
+        var Container = n(B.View, { className: 'pm', spacing: 'lg', style: Styles.container }, [n(B.View, {
           className: 'container'
         }, this.props.children)]);
         var Nav = n(B.View, {
@@ -44531,7 +44557,7 @@ var Main = function (_React$Component) {
           style: this.state.small ? Styles.menu : Styles.menuDesktop
         }, Links);
 
-        var App = this.state.small ? [Main, Nav] : [Nav, Main];
+        var App = this.state.small ? [Container, Nav] : [Nav, Container];
 
         return n(B.View, {
           style: this.state.small ? Styles.main : Styles.mainDesktop
@@ -44560,10 +44586,8 @@ localforage.getItem('pogoivcalc.trainerLevel').then(function (trainerLevel) {
   ReactDOM.render(Routes, document.querySelector('#app'));
 });
 
-},{"./actions/pokemonActions":274,"./alt":275,"./components/Matchup":281,"./components/Moves":283,"./components/PowerUp":284,"./components/Rater":285,"./stores/InventoryStore":291,"./stores/MovesStore":292,"./styles":293,"./utils/Lotus.react":295,"./utils/connect":297,"./utils/n":298,"localforage":17,"react":261,"react-dom":18,"react-router":48}],290:[function(require,module,exports){
+},{"./actions/pokemonActions":274,"./alt":275,"./components/Matchup":281,"./components/Moves":283,"./components/PowerUp":284,"./components/Rater":285,"./stores/InventoryStore":291,"./stores/MovesStore":292,"./styles":293,"./utils/Lotus.react":295,"./utils/connect":297,"./utils/n":298,"./utils/scrollTop":299,"localforage":17,"react":261,"react-dom":18,"react-router":48}],290:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -44584,30 +44608,48 @@ var HistoryStore = function (_alt$Store) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(HistoryStore).call(this));
 
     _this.state = {
-      searches: []
+      searches: {}
     };
     _this.bindActions(historyActions);
+
+    _this.on('load', function (payload) {
+      if (Array.isArray(payload.state.searches)) {
+        _this.compatibilityCheck(payload.state.searches);
+      }
+    });
     return _this;
   }
 
+  // This method turns our searches Array into an object if one exists
+  // already in localStorage
+
+
   _createClass(HistoryStore, [{
+    key: 'compatibilityCheck',
+    value: function () {
+      function compatibilityCheck(prevSearches) {
+        var searches = prevSearches.reduce(function (obj, v) {
+          var key = JSON.stringify(v.values);
+          obj[key] = v.values;
+          return obj;
+        }, {});
+
+        this.setState({ searches: searches });
+      }
+
+      return compatibilityCheck;
+    }()
+  }, {
     key: 'pokemonChecked',
     value: function () {
       function pokemonChecked(pokemon) {
-        var searches = [];
+        var searches = this.state.searches;
 
-        searches.push(pokemon);
+        var key = JSON.stringify(pokemon);
 
-        var inSearch = _defineProperty({}, pokemon.text, 1);
-        this.state.searches.forEach(function (mon) {
-          // make sure there are no dupes
-          if (inSearch.hasOwnProperty(mon.text)) return;
-          // max 10 recent searches
-          if (searches.length === 10) return;
+        if (searches.hasOwnProperty(key)) return this.preventDefault();
 
-          searches.push(mon);
-          inSearch[mon.text] = 1;
-        });
+        searches[key] = pokemon;
 
         this.setState({ searches: searches });
         localforage.setItem('pogoivcalc.searches', searches);
@@ -44647,7 +44689,7 @@ var InventoryStore = function (_alt$Store) {
       name: 'PORYGON',
       cp: 1258,
       hp: 100,
-      stardust: '4500',
+      stardust: 4500,
       trainerLevel: 27,
       level: 0,
       results: null,
@@ -45125,10 +45167,7 @@ function calculateValues(nextState) {
     };
     var results = magic(values);
     pokemonActions.resultsCalculated(results);
-    historyActions.pokemonChecked({
-      text: String(state.name) + ' ' + String(state.cp) + 'CP',
-      values: values
-    });
+    historyActions.pokemonChecked(values);
   } catch (err) {
     console.error(err);
     alert('Looks like there is a problem with the values you entered.');
@@ -45254,4 +45293,14 @@ module.exports = function () {
   return n;
 }();
 
-},{"react":261}]},{},[289]);
+},{"react":261}],299:[function(require,module,exports){
+function scrollTop() {
+  if (typeof document !== 'undefined') {
+    var node = document.querySelector('.pm');
+    if (node) node.scrollTop = 0;
+  }
+}
+
+module.exports = scrollTop;
+
+},{}]},{},[289]);
