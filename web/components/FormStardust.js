@@ -4,7 +4,8 @@ const Select = require('react-select')
 const n = require('../utils/n')
 const pokemonActions = require('../actions/pokemonActions')
 
-const dustOptions = Object.keys(DustToLevel).map(x => ({ value: x, label: x }))
+const dustOptions = Object.keys(DustToLevel)
+  .map(x => ({ value: Number(x), label: Number(x) }))
 const logStardust = x => pokemonActions.changedStardust(x && x.value)
 
 function FormStardust(props) {
@@ -14,6 +15,9 @@ function FormStardust(props) {
         name: 'stardust-selector',
         value: props.stardust,
         options: dustOptions,
+        inputProps: {
+          type: 'number',
+        },
         onChange: logStardust,
       }),
     ])

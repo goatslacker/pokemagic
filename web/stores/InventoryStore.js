@@ -9,7 +9,7 @@ class InventoryStore extends alt.Store {
       name: 'PORYGON',
       cp: 1258,
       hp: 100,
-      stardust: '4500',
+      stardust: 4500,
       trainerLevel: 27,
       level: 0,
       results: null,
