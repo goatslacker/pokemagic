@@ -2,7 +2,15 @@ const B = require('../utils/Lotus.react')
 const Styles = require('../styles')
 const calculateValues = require('../utils/calculateValues')
 const n = require('../utils/n')
+const scrollTop = require('../utils/scrollTop')
 
+function fromHistory(search) {
+  calculateValues(search)
+  scrollTop()
+}
+
+// TODO input for searching/sorting
+// showing N or X in history
 function SearchHistory(props) {
   return (
     n(B.View, [
@@ -10,8 +18,8 @@ function SearchHistory(props) {
       n(B.View, props.searches.map((search) => (
         n(B.Panel, [
           n('a', {
-            onClick: () => calculateValues(search.values),
-          }, search.text),
+            onClick: () => fromHistory(search),
+          }, `${search.name} ${search.cp}CP ${search.hp}HP`),
         ])
       )))
     ])

@@ -6,28 +6,37 @@ class HistoryStore extends alt.Store {
   constructor() {
     super()
     this.state = {
-      searches: []
+      searches: {}
     }
     this.bindActions(historyActions)
+
+    this.on('load', (payload) => {
+      if (Array.isArray(payload.state.searches)) {
+        this.compatibilityCheck(payload.state.searches)
+      }
+    })
+  }
+
+  // This method turns our searches Array into an object if one exists
+  // already in localStorage
+  compatibilityCheck(prevSearches) {
+    const searches = prevSearches.reduce((obj, v) => {
+      const key = JSON.stringify(v.values)
+      obj[key] = v.values
+      return obj
+    }, {})
+
+    this.setState({ searches })
   }
 
   pokemonChecked(pokemon) {
-    const searches = []
+    const searches = this.state.searches
 
-    searches.push(pokemon)
+    const key = JSON.stringify(pokemon)
 
-    const inSearch = {
-      [pokemon.text]: 1,
-    }
-    this.state.searches.forEach((mon) => {
-      // make sure there are no dupes
-      if (inSearch.hasOwnProperty(mon.text)) return
-      // max 10 recent searches
-      if (searches.length === 10) return
+    if (searches.hasOwnProperty(key)) return this.preventDefault()
 
-      searches.push(mon)
-      inSearch[mon.text] = 1
-    })
+    searches[key] = pokemon
 
     this.setState({ searches })
     localforage.setItem('pogoivcalc.searches', searches)

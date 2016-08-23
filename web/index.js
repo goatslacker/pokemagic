@@ -7,6 +7,7 @@ const alt = require('./alt')
 const connect = require('./utils/connect')
 const n = require('./utils/n')
 const localforage = require('localforage')
+const scrollTop = require('./utils/scrollTop')
 
 const Matchup = require('./components/Matchup')
 const Moves = require('./components/Moves')
@@ -71,11 +72,7 @@ class Main extends React.Component {
   }
 
   componentWillReceiveProps() {
-    // When entering routes, scroll the window to the top
-    if (typeof document !== 'undefined') {
-      const node = document.querySelector('.pm')
-      if (node) node.scrollTop = 0
-    }
+    scrollTop()
   }
 
   render() {

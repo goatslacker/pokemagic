@@ -16,10 +16,7 @@ function calculateValues(nextState) {
     }
     const results = magic(values)
     pokemonActions.resultsCalculated(results)
-    historyActions.pokemonChecked({
-      text: `${state.name} ${state.cp}CP`,
-      values,
-    })
+    historyActions.pokemonChecked(values)
   } catch (err) {
     console.error(err)
     alert('Looks like there is a problem with the values you entered.')
