@@ -54,8 +54,10 @@ function Text(props) {
   return n('div', textProps, props.children)
 }
 
+const Link = props => n('a', props, props.children)
 
 const Input = props => n('input', props)
+
 const Image = props => n('img', props)
 
 const Panel = props => (
@@ -73,6 +75,7 @@ module.exports = {
   Header,
   Image,
   Input,
+  Link,
   Panel,
   Table,
   Text,

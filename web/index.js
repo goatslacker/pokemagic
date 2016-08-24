@@ -1,5 +1,4 @@
 const B = require('./utils/Lotus.react')
-const RR = require('react-router')
 const React = require('react')
 const ReactDOM = require('react-dom')
 const Styles = require('./styles')
@@ -8,6 +7,7 @@ const connect = require('./utils/connect')
 const n = require('./utils/n')
 const localforage = require('localforage')
 const scrollTop = require('./utils/scrollTop')
+const SwipeableViews = require('react-swipeable-views').default
 
 const Matchup = require('./components/Matchup')
 const Moves = require('./components/Moves')
@@ -40,29 +40,13 @@ const ConnectedRater = connect(Rater, {
   getProps: state => state.inventoryStore,
 })
 
-function Link(props) {
-  return n(B.View, {
-    style: Styles.linkWrapper,
-  }, [
-    n(RR.IndexLink, {
-      activeClassName: 'active',
-      style: Styles.link,
-      to: props.to,
-    }, props.children),
-  ])
-}
-
-const Links = [
-  n(Link, { to: '/' }, 'Rater'),
-  n(Link, { to: 'moves' }, 'Moves'),
-  n(Link, { to: 'power' }, 'PowerUp'),
-  n(Link, { to: 'matchup' }, 'Matchup'),
-]
-
 class Main extends React.Component {
   constructor() {
     super()
-    this.state = { small: false }
+    this.state = {
+      small: false,
+      selectedSlide: 0,
+    }
   }
 
   componentDidMount() {
@@ -75,39 +59,68 @@ class Main extends React.Component {
     scrollTop()
   }
 
-  render() {
-    const Container = (
-      n(B.View, { className: 'pm', spacing: 'lg', style: Styles.container }, [
-        n(B.View, {
-          className: 'container',
-        }, this.props.children),
-      ])
-    )
-    const Nav = (
+  renderNav() {
+    return (
       n(B.View, {
         className: 'nav',
         style: this.state.small ? Styles.menu : Styles.menuDesktop,
-      }, Links)
+      }, [
+        this.renderLink(0, 'Rater'),
+        this.renderLink(1, 'Moves'),
+        this.renderLink(2, 'PowerUp'),
+        this.renderLink(3, 'Matchup'),
+      ])
+    )
+  }
+
+  renderLink(selectedSlide, text) {
+    return n(B.View, {
+      style: Styles.linkWrapper,
+    }, [
+      n(B.Link, {
+        className: this.state.selectedSlide === selectedSlide ? 'active' : '',
+        onClick: () => this.setState({ selectedSlide }),
+        style: Styles.link,
+      }, text),
+    ])
+  }
+
+  render() {
+    const Slides = [
+      n(ConnectedRater),
+      n(ConnectedMoves),
+      n(ConnectedPowerUp),
+      n(ConnectedMatchup),
+    ]
+
+    const Nav = this.renderNav()
+
+    const Container = (
+      n(SwipeableViews, {
+        animateTransitions: this.state.small,
+//        axis: this.state.small ? 'x' : 'y',
+        className: 'pm',
+        index: this.state.selectedSlide,
+        onChangeIndex: (selectedSlide) => this.setState({ selectedSlide }),
+//          onSwitching: (pos, type) => console.log('Type', type, 'pos', pos),
+        resistance: true,
+        style: Styles.container,
+      }, Slides.map(slide => (
+        n(B.View, { spacing: 'lg' }, [slide])
+      )))
     )
 
-    const App = this.state.small
-      ? [Container, Nav]
-      : [Nav, Container]
+    if (this.state.small) {
+      return n(B.View, {
+        style: Styles.main,
+      }, [Container, Nav])
+    }
 
     return n(B.View, {
-      style: this.state.small ? Styles.main : Styles.mainDesktop,
-    }, App)
+      style: Styles.mainDesktop,
+    }, [Nav, Container])
   }
 }
-
-const Routes = n(RR.Router, { history: RR.hashHistory }, [
-  n(RR.Route, { path: '/', component: Main }, [
-    n(RR.IndexRoute, { component: ConnectedRater }),
-    n(RR.Route, { path: 'moves', component: ConnectedMoves }),
-    n(RR.Route, { path: 'power', component: ConnectedPowerUp }),
-    n(RR.Route, { path: 'matchup', component: ConnectedMatchup }),
-  ]),
-])
 
 localforage.getItem('pogoivcalc.searches').then((searches) => {
   if (searches) alt.load({ HistoryStore: { searches } })
@@ -120,7 +133,7 @@ localforage.getItem('pogoivcalc.trainerLevel').then((trainerLevel) => {
   }
 
   ReactDOM.render(
-    Routes,
+    n(Main),
     document.querySelector('#app')
   )
 })

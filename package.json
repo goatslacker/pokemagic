@@ -16,8 +16,8 @@
     "csv-parser": "^1.9.3",
     "react": "15.3.0",
     "react-dom": "15.3.0",
-    "react-router": "2.6.1",
     "react-select": "1.0.0-beta14",
+    "react-swipeable-views": "0.7.1",
     "react-spinkit": "1.1.8"
   },
   "devDependencies": {
