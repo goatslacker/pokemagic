@@ -5,16 +5,16 @@ const Styles = require('../styles')
 const n = require('../utils/n')
 
 const IV_RANGE = {
-  great: [80, 100],
-  good: [67, 79],
+  great: [82, 100],
+  good: [67, 81],
   bad: [51, 66],
   ugly: [0, 50],
 }
 
 const STATS_RANGE = {
-  great: [15],
-  good: [13, 14],
-  bad: [8, 9, 10, 11, 12],
+  great: [14, 15],
+  good: [12, 13],
+  bad: [8, 9, 10, 11],
   ugly: [0, 1, 2, 3, 4, 5, 6, 7],
 }
 
