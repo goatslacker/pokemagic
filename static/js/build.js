@@ -40684,6 +40684,179 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 },{}],232:[function(require,module,exports){
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var B = require('../utils/Lotus.react');
+var React = require('react');
+var ResultsTable = require('./ResultsTable');
+var Styles = require('../styles');
+var n = require('../utils/n');
+
+var IV_RANGE = {
+  great: [80, 100],
+  good: [67, 79],
+  bad: [51, 66],
+  ugly: [0, 50]
+};
+
+var STATS_RANGE = {
+  great: [15],
+  good: [13, 14],
+  bad: [8, 9, 10, 11, 12],
+  ugly: [0, 1, 2, 3, 4, 5, 6, 7]
+};
+
+var AppraisalRefine = function (_React$Component) {
+  _inherits(AppraisalRefine, _React$Component);
+
+  function AppraisalRefine() {
+    _classCallCheck(this, AppraisalRefine);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AppraisalRefine).call(this));
+
+    _this.state = {
+      show: false,
+      range: null,
+      stats: null
+    };
+    _this.handleChange = _this.handleChange.bind(_this);
+    return _this;
+  }
+
+  _createClass(AppraisalRefine, [{
+    key: 'handleChange',
+    value: function () {
+      function handleChange(ev) {
+        if (ev.currentTarget.name === 'range') {
+          this.setState({
+            range: IV_RANGE[ev.currentTarget.value]
+          });
+        }
+
+        if (ev.currentTarget.name === 'stats') {
+          this.setState({
+            stats: STATS_RANGE[ev.currentTarget.value]
+          });
+        }
+      }
+
+      return handleChange;
+    }()
+  }, {
+    key: 'refine',
+    value: function () {
+      function refine(results) {
+        var _this2 = this;
+
+        return results.filter(function (result) {
+          var rangeCheck = true;
+          var statCheck = true;
+
+          if (_this2.state.range !== null) {
+            rangeCheck = result.percent.PerfectIV >= _this2.state.range[0] && result.percent.PerfectIV <= _this2.state.range[1];
+          }
+
+          if (_this2.state.stats !== null) {
+            statCheck = _this2.state.stats.some(function (stat) {
+              return result.ivs.IndAtk === stat || result.ivs.IndDef === stat || result.ivs.IndSta === stat;
+            });
+          }
+
+          return rangeCheck && statCheck;
+        });
+      }
+
+      return refine;
+    }()
+  }, {
+    key: 'renderAppraisalOptions',
+    value: function () {
+      function renderAppraisalOptions() {
+        var name = this.props.name;
+
+        return n(B.View, [n(B.FormControl, { label: 'IV% Range' }, [n(B.Text, [n(B.Input, {
+          name: 'range',
+          type: 'radio',
+          value: 'great',
+          onChange: this.handleChange
+        }), ' Overall, your ' + String(name) + ' simply amazes me. It can accomplish anything!']), n(B.Text, [n(B.Input, {
+          name: 'range',
+          type: 'radio',
+          value: 'good',
+          onChange: this.handleChange
+        }), ' Overall, your ' + String(name) + ' is a strong Pokemon. You should be proud!']), n(B.Text, [n(B.Input, {
+          name: 'range',
+          type: 'radio',
+          value: 'bad',
+          onChange: this.handleChange
+        }), ' Overall, your ' + String(name) + ' is a decent Pokemon.']), n(B.Text, [n(B.Input, {
+          name: 'range',
+          type: 'radio',
+          value: 'ugly',
+          onChange: this.handleChange
+        }), ' Overall, your ' + String(name) + ' may not be great in battle, but I still like it!'])]), n(B.FormControl, { label: 'Stats' }, [n(B.Text, [n(B.Input, {
+          name: 'stats',
+          type: 'radio',
+          value: 'great',
+          onChange: this.handleChange
+        }), ' It\'s got excellent stats! How exciting!']), n(B.Text, [n(B.Input, {
+          name: 'stats',
+          type: 'radio',
+          value: 'good',
+          onChange: this.handleChange
+        }), ' I\'m blown away by its stats. WOW!']), n(B.Text, [n(B.Input, {
+          name: 'stats',
+          type: 'radio',
+          value: 'bad',
+          onChange: this.handleChange
+        }), ' Its stats indicate that in battle, it\'ll get the job done.']), n(B.Text, [n(B.Input, {
+          name: 'stats',
+          type: 'radio',
+          value: 'ugly',
+          onChange: this.handleChange
+        }), ' Its stats don\'t point to greatness in battle.'])])]);
+      }
+
+      return renderAppraisalOptions;
+    }()
+  }, {
+    key: 'render',
+    value: function () {
+      function render() {
+        var _this3 = this;
+
+        var results = this.refine(this.props.results);
+        var chance = Math.floor(results.filter(function (x) {
+          return x.percent.PerfectIV > 79;
+        }) / results.length) || 0;
+
+        return n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Possible values (' + String(results.length) + ')'), n(B.Text, { style: Styles.resultsRow }, [results.length === 1 ? n('span', 'Congrats, here are your Pokemon\'s values') : n('span', ['There are ', n('strong', results.length), ' possibilities and a ', n('strong', String(chance) + '%'), ' chance you will have a good ' + String(this.props.name) + '. ', 'Highlighted rows show even levels since you can only catch even leveled Pokemon.'])]), !this.state.show && results.length > 1 && n(B.View, { style: Styles.resultsRow }, [n(B.View, { spacing: 'sm' }), n(B.Text, 'Refine results by selecting "Appraise" from the Pokemon screen.'), n(B.Button, {
+          onClick: function () {
+            function onClick() {
+              return _this3.setState({ show: true });
+            }
+
+            return onClick;
+          }()
+        }, 'Refine Results'), n(B.View, { spacing: 'sm' })]), this.state.show && this.renderAppraisalOptions(), n(ResultsTable, { results: results })]);
+      }
+
+      return render;
+    }()
+  }]);
+
+  return AppraisalRefine;
+}(React.Component);
+
+module.exports = AppraisalRefine;
+
+},{"../styles":250,"../utils/Lotus.react":252,"../utils/n":255,"./ResultsTable":243,"react":215}],233:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
 var pokemonActions = require('../actions/pokemonActions');
@@ -40698,7 +40871,7 @@ function FormPokemonLevel(props) {
 
 module.exports = FormPokemonLevel;
 
-},{"../actions/pokemonActions":229,"../utils/Lotus.react":250,"../utils/n":253}],233:[function(require,module,exports){
+},{"../actions/pokemonActions":229,"../utils/Lotus.react":252,"../utils/n":255}],234:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var Pokemon = require('../../json/pokemon.json');
 var Select = require('react-select');
@@ -40728,7 +40901,7 @@ function FormPokemonName(props) {
 
 module.exports = FormPokemonName;
 
-},{"../../json/pokemon.json":7,"../actions/pokemonActions":229,"../utils/Lotus.react":250,"../utils/n":253,"react-select":35}],234:[function(require,module,exports){
+},{"../../json/pokemon.json":7,"../actions/pokemonActions":229,"../utils/Lotus.react":252,"../utils/n":255,"react-select":35}],235:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var DustToLevel = require('../../json/dust-to-level.json');
 var Select = require('react-select');
@@ -40756,7 +40929,7 @@ function FormStardust(props) {
 
 module.exports = FormStardust;
 
-},{"../../json/dust-to-level.json":2,"../actions/pokemonActions":229,"../utils/Lotus.react":250,"../utils/n":253,"react-select":35}],235:[function(require,module,exports){
+},{"../../json/dust-to-level.json":2,"../actions/pokemonActions":229,"../utils/Lotus.react":252,"../utils/n":255,"react-select":35}],236:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
 var pokemonActions = require('../actions/pokemonActions');
@@ -40771,7 +40944,7 @@ function FormTrainerLevel(props) {
 
 module.exports = FormTrainerLevel;
 
-},{"../actions/pokemonActions":229,"../utils/Lotus.react":250,"../utils/n":253}],236:[function(require,module,exports){
+},{"../actions/pokemonActions":229,"../utils/Lotus.react":252,"../utils/n":255}],237:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var FormPokemonName = require('./FormPokemonName');
 var idealMatchup = require('../../src/idealMatchup');
@@ -40788,7 +40961,7 @@ function Matchup(props) {
 
 module.exports = Matchup;
 
-},{"../../src/idealMatchup":222,"../utils/Lotus.react":250,"../utils/n":253,"./FormPokemonName":233}],237:[function(require,module,exports){
+},{"../../src/idealMatchup":222,"../utils/Lotus.react":252,"../utils/n":255,"./FormPokemonName":234}],238:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
 
@@ -40800,7 +40973,7 @@ function MoveCombos(props) {
 
 module.exports = MoveCombos;
 
-},{"../utils/Lotus.react":250,"../utils/n":253}],238:[function(require,module,exports){
+},{"../utils/Lotus.react":252,"../utils/n":255}],239:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var MoveCombos = require('./MoveCombos');
 var MovesList = require('../../json/moves.json');
@@ -40884,7 +41057,7 @@ function Moves(props) {
 
 module.exports = Moves;
 
-},{"../../json/moves.json":6,"../../json/pokemon.json":7,"../../src/best-moves":217,"../actions/moveActions":228,"../utils/Lotus.react":250,"../utils/n":253,"./MoveCombos":237,"react-select":35}],239:[function(require,module,exports){
+},{"../../json/moves.json":6,"../../json/pokemon.json":7,"../../src/best-moves":217,"../actions/moveActions":228,"../utils/Lotus.react":252,"../utils/n":255,"./MoveCombos":238,"react-select":35}],240:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var DustToLevel = require('../../json/dust-to-level.json');
 var n = require('../utils/n');
@@ -40910,7 +41083,7 @@ function PowerUp(props) {
 
 module.exports = PowerUp;
 
-},{"../../json/dust-to-level.json":2,"../../src/powerup":226,"../utils/Lotus.react":250,"../utils/n":253,"./FormPokemonLevel":232,"./FormStardust":234,"./FormTrainerLevel":235}],240:[function(require,module,exports){
+},{"../../json/dust-to-level.json":2,"../../src/powerup":226,"../utils/Lotus.react":252,"../utils/n":255,"./FormPokemonLevel":233,"./FormStardust":235,"./FormTrainerLevel":236}],241:[function(require,module,exports){
 var B = require('../utils/Lotus.React');
 var FormPokemonLevel = require('./FormPokemonLevel');
 var FormPokemonName = require('./FormPokemonName');
@@ -40964,7 +41137,8 @@ function Rater(props) {
 
 module.exports = Rater;
 
-},{"../actions/pokemonActions":229,"../containers/SearchHistoryContainer":243,"../utils/Lotus.React":249,"../utils/calculateValues":251,"../utils/n":253,"./FormPokemonLevel":232,"./FormPokemonName":233,"./FormStardust":234,"./FormTrainerLevel":235,"./Results":241}],241:[function(require,module,exports){
+},{"../actions/pokemonActions":229,"../containers/SearchHistoryContainer":245,"../utils/Lotus.React":251,"../utils/calculateValues":253,"../utils/n":255,"./FormPokemonLevel":233,"./FormPokemonName":234,"./FormStardust":235,"./FormTrainerLevel":236,"./Results":242}],242:[function(require,module,exports){
+var AppraisalRefine = require('./AppraisalRefine');
 var B = require('../utils/Lotus.react');
 var MoveCombos = require('./MoveCombos');
 var Styles = require('../styles');
@@ -40981,16 +41155,7 @@ function Results(props) {
 
   console.log(props);
 
-  return n(B.View, [n(B.View, [n(B.Button, { size: 'sm', onClick: pokemonActions.resultsReset }, 'Check Another')]), n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n(B.Text, { style: Styles.bigText }, props.pokemon.name), n(B.Text, 'CP: ' + String(props.pokemon.cp) + ' | HP: ' + String(props.pokemon.hp)), n(B.View, { style: Styles.pokemonImage }, [n(B.Image, { src: 'images/' + String(props.pokemon.name) + '.png', height: 150, width: 150 })]), n(B.Text, { style: Styles.bigText }, props.range.iv[0] === props.range.iv[1] ? String(props.range.iv[0]) + '%' : String(props.range.iv[0]) + '% - ' + String(props.range.iv[1]) + '%'), n(B.Text, { style: Styles.resultsRow }, [props.chance === 100 ? 'Keep your ' + String(props.pokemon.cp) + 'CP ' + String(props.pokemon.name) : props.chance === 0 ? 'Send this Pokemon to the grinder for candy.' : 'Maybe you should keep this Pokemon around.'])]), n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Possible values (' + String(props.values.length) + ')'), n(B.Text, { style: Styles.resultsRow }, [props.values.length === 1 ? n('span', 'Congrats, here are your Pokemon\'s values') : n('span', ['There are ', n('strong', props.values.length), ' possibilities and a ', n('strong', String(props.chance) + '%'), ' chance you will have a good ' + String(props.pokemon.name) + '. ', 'Highlighted rows show even levels since you can only catch even leveled Pokemon.'])]), n(B.Table, { clean: true, border: true }, [n('thead', [n('tr', [n('th', 'IV'), n('th', 'Level'), n('th', 'CP %'), n('th', 'HP %'), n('th', 'Battle %')])]), n('tbody', props.values.map(function (value) {
-    return n('tr', {
-      style: {
-        backgroundColor: Number(value.Level) % 1 === 0 ? '#ede0c6' : ''
-      }
-    }, [n('td', [n(B.Text, {
-      className: 'label',
-      style: value.percent.PerfectIV > 80 ? Styles.good : value.percent.PerfectIV > 69 ? Styles.ok : Styles.bad
-    }, String(value.percent.PerfectIV) + '%'), ' ', n('strong', value.strings.iv)]), n('td', value.Level), n('td', value.percent.PercentCP), n('td', value.percent.PercentHP), n('td', value.percent.PercentBatt)]);
-  }))])]),
+  return n(B.View, [n(B.View, [n(B.Button, { size: 'sm', onClick: pokemonActions.resultsReset }, 'Check Another')]), n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n(B.Text, { style: Styles.bigText }, props.pokemon.name), n(B.Text, 'CP: ' + String(props.pokemon.cp) + ' | HP: ' + String(props.pokemon.hp)), n(B.View, { style: Styles.pokemonImage }, [n(B.Image, { src: 'images/' + String(props.pokemon.name) + '.png', height: 150, width: 150 })]), n(B.Text, { style: Styles.bigText }, props.range.iv[0] === props.range.iv[1] ? String(props.range.iv[0]) + '%' : String(props.range.iv[0]) + '% - ' + String(props.range.iv[1]) + '%'), n(B.Text, { style: Styles.resultsRow }, [props.chance === 100 ? 'Keep your ' + String(props.pokemon.cp) + 'CP ' + String(props.pokemon.name) : props.chance === 0 ? 'Send this Pokemon to the grinder for candy.' : 'Maybe you should keep this Pokemon around.'])]), n(AppraisalRefine, { name: props.pokemon.name, results: props.values }),
 
   // We should only show best moveset if it is in its final evolved form...
   bestMoves && n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Best moveset combos for ' + String(props.pokemon.name)), n(MoveCombos, { moves: bestMoves })]), props.best.meta.EvolveCP && n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n('h3', 'Evolution'), n(B.Panel, [n(B.Text, 'If evolved it would have a CP of about ' + String(props.best.meta.EvolveCP))])]), props.best.meta.Stardust > 0 && n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n('h3', { style: Styles.resultsRow }, 'Maxing out to level ' + String(props.best.meta.MaxLevel)), props.pokemon.level === null && n(B.Text, 'Assuming that your Pokemon\'s current level is ' + String(props.best.Level) + '. The information below is just an estimate.'), n(B.View, [n(B.Panel, 'Current level: ' + String(props.best.Level)), n(B.Panel, 'Candy cost: ' + String(props.best.meta.Candy)), n(B.Panel, 'Stardust cost: ' + String(props.best.meta.Stardust)), n(B.Panel, 'CP: ' + String(props.best.meta.MaxCP)), n(B.Panel, 'HP: ' + String(props.best.meta.MaxHP))])]), n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Yours vs Perfect by level'), n(B.Table, [n('thead', [n('tr', [n('th', 'Level'), n('th', 'Your CP'), n('th', 'Best CP'), n('th', 'Your HP'), n('th', 'Best HP')])]), n('tbody', props.values.reduce(function (o, value) {
@@ -41007,7 +41172,27 @@ function Results(props) {
 
 module.exports = Results;
 
-},{"../../json/finalEvolutions":3,"../../src/best-moves":217,"../actions/pokemonActions":229,"../styles":248,"../utils/Lotus.react":250,"../utils/n":253,"./MoveCombos":237}],242:[function(require,module,exports){
+},{"../../json/finalEvolutions":3,"../../src/best-moves":217,"../actions/pokemonActions":229,"../styles":250,"../utils/Lotus.react":252,"../utils/n":255,"./AppraisalRefine":232,"./MoveCombos":238}],243:[function(require,module,exports){
+var B = require('../utils/Lotus.react');
+var Styles = require('../styles');
+var n = require('../utils/n');
+
+function ResultsTable(props) {
+  return n(B.View, [n(B.Table, { clean: true, border: true }, [n('thead', [n('tr', [n('th', 'IV'), n('th', 'Level'), n('th', 'CP %'), n('th', 'HP %'), n('th', 'Battle %')])]), n('tbody', props.results.map(function (value) {
+    return n('tr', {
+      style: {
+        backgroundColor: Number(value.Level) % 1 === 0 ? '#ede0c6' : ''
+      }
+    }, [n('td', [n(B.Text, {
+      className: 'label',
+      style: value.percent.PerfectIV > 80 ? Styles.good : value.percent.PerfectIV > 69 ? Styles.ok : Styles.bad
+    }, String(value.percent.PerfectIV) + '%'), ' ', n('strong', value.strings.iv)]), n('td', value.Level), n('td', value.percent.PercentCP), n('td', value.percent.PercentHP), n('td', value.percent.PercentBatt)]);
+  }))]), props.results.length === 0 && n(B.Text, 'No results found')]);
+}
+
+module.exports = ResultsTable;
+
+},{"../styles":250,"../utils/Lotus.react":252,"../utils/n":255}],244:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var Styles = require('../styles');
 var calculateValues = require('../utils/calculateValues');
@@ -41037,7 +41222,7 @@ function SearchHistory(props) {
 
 module.exports = SearchHistory;
 
-},{"../styles":248,"../utils/Lotus.react":250,"../utils/calculateValues":251,"../utils/n":253,"../utils/scrollTop":254}],243:[function(require,module,exports){
+},{"../styles":250,"../utils/Lotus.react":252,"../utils/calculateValues":253,"../utils/n":255,"../utils/scrollTop":256}],245:[function(require,module,exports){
 var SearchHistory = require('../components/SearchHistory');
 var connect = require('../utils/connect');
 var historyStore = require('../stores/HistoryStore');
@@ -41065,7 +41250,7 @@ var SearchHistoryContainer = connect(SearchHistory, {
 
 module.exports = SearchHistoryContainer;
 
-},{"../components/SearchHistory":242,"../stores/HistoryStore":245,"../utils/connect":252}],244:[function(require,module,exports){
+},{"../components/SearchHistory":244,"../stores/HistoryStore":247,"../utils/connect":254}],246:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41294,7 +41479,7 @@ localforage.getItem('pogoivcalc.trainerLevel').then(function (trainerLevel) {
   ReactDOM.render(n(Main), document.querySelector('#app'));
 });
 
-},{"./actions/pokemonActions":229,"./alt":230,"./components/Matchup":236,"./components/Moves":238,"./components/PowerUp":239,"./components/Rater":240,"./stores/InventoryStore":246,"./stores/MovesStore":247,"./styles":248,"./utils/Lotus.react":250,"./utils/connect":252,"./utils/n":253,"./utils/scrollTop":254,"localforage":17,"react":215,"react-dom":18,"react-swipeable-views":42}],245:[function(require,module,exports){
+},{"./actions/pokemonActions":229,"./alt":230,"./components/Matchup":237,"./components/Moves":239,"./components/PowerUp":240,"./components/Rater":241,"./stores/InventoryStore":248,"./stores/MovesStore":249,"./styles":250,"./utils/Lotus.react":252,"./utils/connect":254,"./utils/n":255,"./utils/scrollTop":256,"localforage":17,"react":215,"react-dom":18,"react-swipeable-views":42}],247:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41372,7 +41557,7 @@ var HistoryStore = function (_alt$Store) {
 
 module.exports = alt.createStore('HistoryStore', new HistoryStore());
 
-},{"../actions/historyActions":227,"../alt":230,"localforage":17}],246:[function(require,module,exports){
+},{"../actions/historyActions":227,"../alt":230,"localforage":17}],248:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41533,7 +41718,7 @@ var InventoryStore = function (_alt$Store) {
 
 module.exports = alt.createStore('InventoryStore', new InventoryStore());
 
-},{"../actions/pokemonActions":229,"../alt":230}],247:[function(require,module,exports){
+},{"../actions/pokemonActions":229,"../alt":230}],249:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41596,7 +41781,7 @@ var MovesStore = function (_alt$Store) {
 
 module.exports = alt.createStore('MovesStore', new MovesStore());
 
-},{"../actions/moveActions":228,"../alt":230}],248:[function(require,module,exports){
+},{"../actions/moveActions":228,"../alt":230}],250:[function(require,module,exports){
 module.exports = {
   main: {
     display: 'flex',
@@ -41690,7 +41875,7 @@ module.exports = {
   }
 };
 
-},{}],249:[function(require,module,exports){
+},{}],251:[function(require,module,exports){
 var n = require('./n');
 //const RN = require('react-native-web')
 //const View = RN.View
@@ -41779,7 +41964,7 @@ module.exports = {
   View: View
 };
 
-},{"./n":253}],250:[function(require,module,exports){
+},{"./n":255}],252:[function(require,module,exports){
 var n = require('./n');
 //const RN = require('react-native-web')
 //const View = RN.View
@@ -41868,7 +42053,7 @@ module.exports = {
   View: View
 };
 
-},{"./n":253}],251:[function(require,module,exports){
+},{"./n":255}],253:[function(require,module,exports){
 var inventoryStore = require('../stores/InventoryStore');
 var historyActions = require('../actions/historyActions');
 var magic = require('../../src/magic');
@@ -41896,7 +42081,7 @@ function calculateValues(nextState) {
 
 module.exports = calculateValues;
 
-},{"../../src/magic":225,"../actions/historyActions":227,"../actions/pokemonActions":229,"../stores/InventoryStore":246}],252:[function(require,module,exports){
+},{"../../src/magic":225,"../actions/historyActions":227,"../actions/pokemonActions":229,"../stores/InventoryStore":248}],254:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41983,7 +42168,7 @@ function connect(Component, o) {
 
 module.exports = connect;
 
-},{"./n":253,"react":215}],253:[function(require,module,exports){
+},{"./n":255,"react":215}],255:[function(require,module,exports){
 var React = require('react');
 
 module.exports = function () {
@@ -42013,7 +42198,7 @@ module.exports = function () {
   return n;
 }();
 
-},{"react":215}],254:[function(require,module,exports){
+},{"react":215}],256:[function(require,module,exports){
 function scrollTop() {
   if (typeof document !== 'undefined') {
     var node = document.querySelector('.pm');
@@ -42023,4 +42208,4 @@ function scrollTop() {
 
 module.exports = scrollTop;
 
-},{}]},{},[244]);
+},{}]},{},[246]);

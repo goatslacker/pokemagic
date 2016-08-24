@@ -1,3 +1,4 @@
+const AppraisalRefine = require('./AppraisalRefine')
 const B = require('../utils/Lotus.react')
 const MoveCombos = require('./MoveCombos')
 const Styles = require('../styles')
@@ -42,56 +43,7 @@ function Results(props) {
         ]),
       ]),
 
-      n(B.View, { spacingVertical: 'md' }, [
-        n('h3', { style: Styles.resultsRow }, `Possible values (${props.values.length})`),
-        n(B.Text, { style: Styles.resultsRow }, [
-          props.values.length === 1
-            ? n('span', 'Congrats, here are your Pokemon\'s values')
-            : n('span', [
-              'There are ',
-              n('strong', props.values.length),
-              ' possibilities and a ',
-              n('strong', `${props.chance}%`),
-              ` chance you will have a good ${props.pokemon.name}. `,
-              'Highlighted rows show even levels since you can only catch even leveled Pokemon.',
-            ]),
-        ]),
-        n(B.Table, { clean: true, border: true }, [
-          n('thead', [
-            n('tr', [
-              n('th', 'IV'),
-              n('th', 'Level'),
-              n('th', 'CP %'),
-              n('th', 'HP %'),
-              n('th', 'Battle %'),
-            ]),
-          ]),
-          n('tbody', props.values.map((value) => (
-            n('tr', {
-              style: {
-                backgroundColor: Number(value.Level) % 1 === 0 ? '#ede0c6' : '',
-              },
-            }, [
-              n('td', [
-                n(B.Text, {
-                  className: 'label',
-                  style: value.percent.PerfectIV > 80
-                    ? Styles.good
-                    : value.percent.PerfectIV > 69
-                    ? Styles.ok
-                    : Styles.bad,
-                }, `${value.percent.PerfectIV}%`),
-                ' ',
-                n('strong', value.strings.iv),
-              ]),
-              n('td', value.Level),
-              n('td', value.percent.PercentCP),
-              n('td', value.percent.PercentHP),
-              n('td', value.percent.PercentBatt),
-            ])
-          ))),
-        ]),
-      ]),
+      n(AppraisalRefine, { name: props.pokemon.name, results: props.values }),
 
       // We should only show best moveset if it is in its final evolved form...
       bestMoves && (
