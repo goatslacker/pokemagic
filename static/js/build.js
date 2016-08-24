@@ -41550,7 +41550,8 @@ var Main = function (_React$Component) {
           className: this.state.selectedSlide === selectedSlide ? 'active' : '',
           onClick: function () {
             function onClick() {
-              return _this2.setState({ selectedSlide: selectedSlide });
+              _this2.setState({ selectedSlide: selectedSlide });
+              scrollTop();
             }
 
             return onClick;

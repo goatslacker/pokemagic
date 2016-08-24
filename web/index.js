@@ -75,7 +75,10 @@ class Main extends React.Component {
     }, [
       n(B.Link, {
         className: this.state.selectedSlide === selectedSlide ? 'active' : '',
-        onClick: () => this.setState({ selectedSlide }),
+        onClick: () => {
+          this.setState({ selectedSlide })
+          scrollTop()
+        },
         style: Styles.link,
       }, text),
     ])
