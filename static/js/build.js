@@ -41376,15 +41376,6 @@ var Main = function (_React$Component) {
       return componentDidMount;
     }()
   }, {
-    key: 'componentWillReceiveProps',
-    value: function () {
-      function componentWillReceiveProps() {
-        scrollTop();
-      }
-
-      return componentWillReceiveProps;
-    }()
-  }, {
     key: 'renderNav',
     value: function () {
       function renderNav() {
@@ -41436,7 +41427,8 @@ var Main = function (_React$Component) {
           index: this.state.selectedSlide,
           onChangeIndex: function () {
             function onChangeIndex(selectedSlide) {
-              return _this3.setState({ selectedSlide: selectedSlide });
+              _this3.setState({ selectedSlide: selectedSlide });
+              scrollTop();
             }
 
             return onChangeIndex;

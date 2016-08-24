@@ -55,10 +55,6 @@ class Main extends React.Component {
     }
   }
 
-  componentWillReceiveProps() {
-    scrollTop()
-  }
-
   renderNav() {
     return (
       n(B.View, {
@@ -101,7 +97,10 @@ class Main extends React.Component {
 //        axis: this.state.small ? 'x' : 'y',
         className: 'pm',
         index: this.state.selectedSlide,
-        onChangeIndex: (selectedSlide) => this.setState({ selectedSlide }),
+        onChangeIndex: (selectedSlide) => {
+          this.setState({ selectedSlide })
+          scrollTop()
+        },
 //          onSwitching: (pos, type) => console.log('Type', type, 'pos', pos),
         resistance: true,
         style: Styles.container,
