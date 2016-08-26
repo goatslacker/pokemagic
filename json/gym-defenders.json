@@ -1,0 +1,58 @@
+[
+  {
+    "name": "SNORLAX",
+    "tier": 1
+  },
+  {
+    "name": "LAPRAS",
+    "tier": 1
+  },
+  {
+    "name": "DRAGONITE",
+    "tier": 1
+  },
+  {
+    "name": "SLOWBRO",
+    "tier": 2
+  },
+  {
+    "name": "POLIWRATH",
+    "tier": 2
+  },
+  {
+    "name": "EXEGGUTOR",
+    "tier": 2
+  },
+  {
+    "name": "WIGGLYTUFF",
+    "tier": 2
+  },
+  {
+    "name": "VAPOREON",
+    "tier": 3
+  },
+  {
+    "name": "VENUSAUR",
+    "tier": 3
+  },
+  {
+    "name": "OMASTAR",
+    "tier": 3
+  },
+  {
+    "name": "ARCANINE",
+    "tier": 4
+  },
+  {
+    "name": "VILEPLUME",
+    "tier": 4
+  },
+  {
+    "name": "HYPNO",
+    "tier": 4
+  },
+  {
+    "name": "GYARADOS",
+    "tier": 5
+  }
+]
