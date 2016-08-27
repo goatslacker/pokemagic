@@ -23,7 +23,7 @@ console.log(
     }, 25)
     const type = [mon.type1, mon.type2].filter(Boolean).join('/')
 
-    const baseDPS = Math.floor(effectiveness.avgDPS)
+    const baseDPS = Math.floor(effectiveness.bestAvgDPS)
 
     arr.push({
       name: mon.name,
@@ -35,8 +35,8 @@ console.log(
 
         return arr
       }, []),
-      dps: effectiveness.avgDPS,
-      ttl: effectiveness.avgTTL,
+      dps: effectiveness.bestAvgDPS
+      ttl: effectiveness.bestAvgTTL,
     })
 
     return arr

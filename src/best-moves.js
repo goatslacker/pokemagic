@@ -4,11 +4,13 @@ const analyzeBattleEffectiveness = require('./analyzeBattleEffectiveness')
 // It uses 'analyzeBattleEffectiveness' which takes the top 20 Pokemon and runs a battle sim
 // against them and sees how well ${pokemonName} scores vs them in terms of pure DPS
 function bestMovesFor(pokemonName) {
-  const analysis = analyzeBattleEffectiveness(pokemonName, {
+  const analysis = analyzeBattleEffectiveness({
+    name: pokemonName,
+    level: 20,
     IndAtk: 10,
     IndDef: 10,
     IndSta: 10,
-  }, 20)
+  })
   return Object.keys(analysis.avgMoves).reduce((arr, move) => {
     const split = move.split('/')
 

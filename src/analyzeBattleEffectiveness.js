@@ -7,7 +7,10 @@ const GymPokemon = gymDefenders.map(def => Pokemon.filter(x => x.name === def.na
 
 // A function that analyzes how effective a pokemon is in battle vs another pokemon
 // This uses a list of top pokemon to use at gyms and pits your pokemon vs them.
-function analyzeBattleEffectiveness(pokemonName, ivs, pokemonLevel) {
+function analyzeBattleEffectiveness(obj) {
+  const pokemonName = obj.name
+  const pokemonLevel = obj.level
+
   const fmtName1 = pokemonName.toUpperCase().trim()
   const player = Pokemon.filter(x => x.name === fmtName1)[0]
 
@@ -15,7 +18,11 @@ function analyzeBattleEffectiveness(pokemonName, ivs, pokemonLevel) {
 
   // Pit the Pokemon vs the "Top Defenders" gym list and see how the Pokemon does.
   const defenders = GymPokemon.map((opponent) => {
-    const moves = ttlvs(player, opponent, ivs, pokemonLevel || 20)
+    const moves = ttlvs(player, opponent, {
+      IndAtk: obj.IndAtk,
+      IndDef: obj.IndDef,
+      IndSta: obj.IndSta,
+    }, pokemonLevel || 20)
 
     return {
       vs: opponent.name,
@@ -26,7 +33,10 @@ function analyzeBattleEffectiveness(pokemonName, ivs, pokemonLevel) {
       },
       moves: moves.reduce((moveSets, move) => {
         const movesName = `${move.quick}/${move.charge}`
-        moveSets[movesName] = move.dps.player
+        moveSets[movesName] = {
+          dps: move.dps.player,
+          ttl: move.scores.netTTL,
+        }
         return moveSets
       }, {}),
     }
@@ -36,7 +46,7 @@ function analyzeBattleEffectiveness(pokemonName, ivs, pokemonLevel) {
   const movesTotal = defenders.reduce((obj, x) => {
     Object.keys(x.moves).forEach((moveName) => {
       if (!obj[moveName]) obj[moveName] = 0
-      obj[moveName] = obj[moveName] + x.moves[moveName]
+      obj[moveName] = obj[moveName] + x.moves[moveName].dps
     })
     return obj
   }, {})
@@ -45,6 +55,22 @@ function analyzeBattleEffectiveness(pokemonName, ivs, pokemonLevel) {
   })
   const avgMoves = movesSorted.reduce((obj, moveName) => {
     obj[moveName] = movesTotal[moveName] / defenders.length
+    return obj
+  }, {})
+
+  // Get the average TTL of each move
+  const ttlTotal = defenders.reduce((obj, x) => {
+    Object.keys(x.moves).forEach((moveName) => {
+      if (!obj[moveName]) obj[moveName] = 0
+      obj[moveName] = obj[moveName] + x.moves[moveName].ttl
+    })
+    return obj
+  }, {})
+  const ttlSorted = Object.keys(ttlTotal).sort((a, b) => {
+    return ttlTotal[a] > ttlTotal[b] ? -1 : 1
+  })
+  const avgTTL = ttlSorted.reduce((obj, moveName) => {
+    obj[moveName] = ttlTotal[moveName] / defenders.length
     return obj
   }, {})
 
@@ -59,12 +85,27 @@ function analyzeBattleEffectiveness(pokemonName, ivs, pokemonLevel) {
   // that is considered "good vs"
   const GOOD_VS_THRESHOLD = 0
 
-  const avgTTL = defenders.reduce((n, x) => n + x.best.ttl, 0) / defenders.length
+  if (obj.moves) {
+    const moveComboName = `${obj.moves.quick}/${obj.moves.charge}`
+    return {
+      name: fmtName1,
+      dps: avgMoves[moveComboName],
+      ttl: avgTTL[moveComboName],
+      bestAgainst: defenders.filter(x => x.moves[moveComboName].ttl > GOOD_VS_THRESHOLD).reduce((obj, x) => {
+        obj[x.vs] = x.moves[moveComboName]
+        return obj
+      }, {}),
+      breakdown: defenders.reduce((obj, x) => {
+        obj[x.vs] = x.moves[moveComboName]
+        return obj
+      }, {}),
+    }
+  }
 
   return {
     name: fmtName1,
-    avgDPS: avgMoves[movesSorted[0]],
-    avgTTL,
+    bestAvgDPS: avgMoves[movesSorted[0]],
+    bestAvgTTL: avgTTL[ttlSorted[0]],
     avgMoves,
     bestAgainst: defenders.filter(x => x.best.ttl > GOOD_VS_THRESHOLD).reduce((obj, x) => {
       obj[x.vs] = x.best
@@ -80,6 +121,16 @@ function analyzeBattleEffectiveness(pokemonName, ivs, pokemonLevel) {
 
 module.exports = analyzeBattleEffectiveness
 
-// console.log(
-//   analyzeBattleEffectiveness('vaporeon', { IndAtk: 10, IndDef: 10, IndSta: 10 }, 25)
-// )
+//console.log(
+//  analyzeBattleEffectiveness({
+//    name: 'vaporeon',
+//    level: 26,
+//    IndAtk: 15,
+//    IndDef: 8,
+//    IndSta: 13,
+//    moves: {
+//      quick: 'WATER_GUN_FAST',
+//      charge: 'AQUA_TAIL',
+//    },
+//  })
+//)
