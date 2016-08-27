@@ -10,8 +10,16 @@ function bestMovesFor(pokemonName) {
     IndSta: 10,
   }, 20)
   return Object.keys(analysis.avgMoves).reduce((arr, move) => {
+    const split = move.split('/')
+
     return arr.concat({
       combo: move,
+      quick: {
+        name: split[0],
+      },
+      charge: {
+        name: split[1],
+      },
       dps: analysis.avgMoves[move],
     })
   }, [])
