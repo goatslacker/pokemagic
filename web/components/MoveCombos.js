@@ -16,7 +16,7 @@ function MoveCombos(props) {
             n(B.Text, move.quick.name),
             n(B.Text, move.charge.name),
           ]),
-          n('td', move.dps),
+          n('td', move.dps.toFixed(3)),
         ])
       ))),
     ])

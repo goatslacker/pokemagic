@@ -3,6 +3,9 @@ const FormPokemonName = require('./FormPokemonName')
 const idealMatchup = require('../../src/idealMatchup')
 const n = require('../utils/n')
 
+// TODO present this in a better format.
+// It sucks to see the same pokemon on the list many times. I'd rather have
+// a list of uniques because I might not have many of these Pokemon
 function Matchup(props) {
   const matchups = props.name ? idealMatchup(props.name) : []
   return (
@@ -25,7 +28,7 @@ function Matchup(props) {
             n('tr', [
               n('td', [
                 n(B.Text, { strong: true }, value.name),
-                n(B.Text, `${value.score.toFixed(3)} ndps`),
+                n(B.Text, `${value.score.toFixed(3)} TTL`),
               ]),
               n('td', [
                 n(B.Text, value.quick),
