@@ -80,8 +80,6 @@ function analyzeBattleEffectiveness(pokemonName, ivs, pokemonLevel) {
 
 module.exports = analyzeBattleEffectiveness
 
-/*
-console.log(
-  analyzeBattleEffectiveness('vaporeon', { IndAtk: 10, IndDef: 10, IndSta: 10 }, 25)
-)
-*/
+// console.log(
+//   analyzeBattleEffectiveness('vaporeon', { IndAtk: 10, IndDef: 10, IndSta: 10 }, 25)
+// )

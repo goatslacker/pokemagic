@@ -123,17 +123,20 @@ function getTypeEffectiveness(pokemon, move) {
 }
 
 
-// We determine DPS combo vs a level 25 pokemon because that's what gyms on average will have.
-// There's no hard data for this claim btw, it's completely made up.
-const LVL_25 = 0.667934
-
 function getDmgVs(obj) {
   const atk = obj.atk
   const def = obj.def
-  const pokemonLevel = obj.pokemonLevel
   const moves = obj.moves
   const player = obj.player
   const opponent = obj.opponent
+  const pokemonLevel = obj.pokemonLevel || 25
+
+  // We determine DPS combo vs a level 25 pokemon because that's what gyms on average will have.
+  // There's no hard data for this claim btw, it's completely made up.
+  const opponentLevel = obj.opponentLevel || 25
+
+  const AtkECpM = LevelToCPM[pokemonLevel]
+  const DefECpM = LevelToCPM[opponentLevel]
 
   return moves.map((move) => {
     const stab = move.Type === player.type1 || move.Type === player.type2 ? 1.25 : 1
@@ -141,9 +144,7 @@ function getDmgVs(obj) {
 
     const fxMul = getTypeEffectiveness(opponent, move)
 
-    const ECpM = LevelToCPM[pokemonLevel]
-
-    return (0.5 * atk * ECpM / (def * LVL_25) * power * stab * fxMul) + 1
+    return (0.5 * atk * AtkECpM / (def * DefECpM) * power * stab * fxMul) + 1
   })
 }
 
@@ -181,7 +182,7 @@ function battleDPS(obj) {
 
 // IndAtk is the attacking pokemon's (mon) IV attack
 // IndDef is the defeneding pokemon's (opponent) IV defense
-function dpsvs(mon, opponent, IndAtk, IndDef, pokemonLevel) {
+function dpsvs(mon, opponent, IndAtk, IndDef, pokemonLevel, opponentLevel) {
   const moves = []
   const def = opponent.stats.defense + IndDef
 
@@ -195,6 +196,7 @@ function dpsvs(mon, opponent, IndAtk, IndDef, pokemonLevel) {
         player: mon,
         opponent,
         pokemonLevel,
+        opponentLevel,
         moves: [move1, move2],
       })
 
@@ -210,3 +212,16 @@ function dpsvs(mon, opponent, IndAtk, IndDef, pokemonLevel) {
 }
 
 module.exports = dpsvs
+
+/*
+console.log(
+  dpsvs(
+    Pokemon.filter(x => x.name === 'VAPOREON')[0],
+    Pokemon.filter(x => x.name === 'FLAREON')[0],
+    10,
+    10,
+    25,
+    25
+  )
+)
+*/

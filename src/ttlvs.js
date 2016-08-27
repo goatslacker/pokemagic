@@ -11,7 +11,8 @@ function ttlvs(player, opponent, ivs, pokemonLevel) {
 
   // In order to do a diff we'll take the opponent's best move vs you
   // assuming they have an attack IV of 10 and they're level 25.
-  const opponentsBestMove = dpsvs(opponent, player, 10, IndDef, 25)[0]
+  const opponentLevel = 25
+  const opponentsBestMove = dpsvs(opponent, player, 10, IndDef, opponentLevel, pokemonLevel)[0]
   // Then we multiply by 0.75 because gym opponents only attack every 1.5 seconds
   const opponentDPS = opponentsBestMove.dps * 0.75
 
@@ -21,7 +22,7 @@ function ttlvs(player, opponent, ivs, pokemonLevel) {
 
   const playerTTL = playerHP / opponentDPS
 
-  return dpsvs(player, opponent, IndAtk, IndDef, pokemonLevel).map((x) => {
+  return dpsvs(player, opponent, IndAtk, IndDef, pokemonLevel, opponentLevel).map((x) => {
     const opponentTTL = opponentHP / x.dps
     const hpRemaining = playerHP - (opponentDPS * opponentTTL)
     const hpLoss = playerHP - hpRemaining
@@ -52,14 +53,12 @@ function ttlvs(player, opponent, ivs, pokemonLevel) {
 
 module.exports = ttlvs
 
-/*
-const Pokemon = require('../json/pokemon')
-console.log(
-  ttlvs(
-    Pokemon.filter(x => x.name === 'GYARADOS')[0],
-    Pokemon.filter(x => x.name === 'DRAGONITE')[0],
-    10,
-    25
-  )
-)
-*/
+// const Pokemon = require('../json/pokemon')
+// console.log(
+//   ttlvs(
+//     Pokemon.filter(x => x.name === 'GYARADOS')[0],
+//     Pokemon.filter(x => x.name === 'DRAGONITE')[0],
+//     { IndAtk: 10, IndDef: 10, IndSta: 10 },
+//     25
+//   )
+// )
