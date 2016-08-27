@@ -91,10 +91,6 @@ function analyzeBattleEffectiveness(obj) {
       name: fmtName1,
       dps: avgMoves[moveComboName],
       ttl: avgTTL[moveComboName],
-      bestAgainst: defenders.filter(x => x.moves[moveComboName].ttl > GOOD_VS_THRESHOLD).reduce((obj, x) => {
-        obj[x.vs] = x.moves[moveComboName]
-        return obj
-      }, {}),
       breakdown: defenders.reduce((obj, x) => {
         obj[x.vs] = x.moves[moveComboName]
         return obj
@@ -107,10 +103,6 @@ function analyzeBattleEffectiveness(obj) {
     bestAvgDPS: avgMoves[movesSorted[0]],
     bestAvgTTL: avgTTL[ttlSorted[0]],
     avgMoves,
-    bestAgainst: defenders.filter(x => x.best.ttl > GOOD_VS_THRESHOLD).reduce((obj, x) => {
-      obj[x.vs] = x.best
-      return obj
-    }, {}),
     moveComboUsefulness,
     breakdown: defenders.reduce((obj, x) => {
       obj[x.vs] = x.best
@@ -124,13 +116,13 @@ module.exports = analyzeBattleEffectiveness
 //console.log(
 //  analyzeBattleEffectiveness({
 //    name: 'vaporeon',
-//    level: 26,
+//    level: 28.5,
 //    IndAtk: 15,
-//    IndDef: 8,
-//    IndSta: 13,
+//    IndDef: 9,
+//    IndSta: 0,
 //    moves: {
 //      quick: 'WATER_GUN_FAST',
-//      charge: 'AQUA_TAIL',
+//      charge: 'HYDRO_PUMP',
 //    },
 //  })
 //)
