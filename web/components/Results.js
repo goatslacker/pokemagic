@@ -1,5 +1,6 @@
 const AppraisalRefine = require('./AppraisalRefine')
 const B = require('../utils/Lotus.react')
+const DetailedAnalysis = require('./DetailedAnalysis')
 const MoveCombos = require('./MoveCombos')
 const Styles = require('../styles')
 const bestMovesFor = require('../../src/best-moves')
@@ -108,6 +109,8 @@ function Results(props) {
           ))),
         ]),
       ]),
+
+      n(DetailedAnalysis, { results: props.values }),
     ])
   )
 }

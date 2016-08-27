@@ -16,6 +16,9 @@ function ResultsTable(props) {
       ]),
       n('tbody', props.results.map((value) => (
         n('tr', {
+          onClick: () => {
+            if (props.onSelect) props.onSelect(value)
+          },
           style: {
             backgroundColor: Number(value.Level) % 1 === 0 ? '#ede0c6' : '',
           },

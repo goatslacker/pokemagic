@@ -22,7 +22,8 @@ function ttlvs(player, opponent, ivs, pokemonLevel) {
 
   const playerTTL = playerHP / opponentDPS
 
-  return dpsvs(player, opponent, IndAtk, IndDef, pokemonLevel, opponentLevel).map((x) => {
+  // 10 is the opponent's IV for defense. We're just guesstimating that they're a pretty good pokemon
+  return dpsvs(player, opponent, IndAtk, 10, pokemonLevel, opponentLevel).map((x) => {
     const opponentTTL = opponentHP / x.dps
     const hpRemaining = playerHP - (opponentDPS * opponentTTL)
     const hpLoss = playerHP - hpRemaining

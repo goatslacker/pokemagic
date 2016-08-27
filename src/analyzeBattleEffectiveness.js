@@ -103,6 +103,7 @@ function analyzeBattleEffectiveness(obj) {
     bestAvgDPS: avgMoves[movesSorted[0]],
     bestAvgTTL: avgTTL[ttlSorted[0]],
     avgMoves,
+    avgTTL,
     moveComboUsefulness,
     breakdown: defenders.reduce((obj, x) => {
       obj[x.vs] = x.best
@@ -115,11 +116,11 @@ module.exports = analyzeBattleEffectiveness
 
 //console.log(
 //  analyzeBattleEffectiveness({
-//    name: 'vaporeon',
-//    level: 28.5,
-//    IndAtk: 15,
-//    IndDef: 9,
-//    IndSta: 0,
+//    name: 'arcanine',
+//    level: 25,
+//    IndAtk: 10,
+//    IndDef: 10,
+//    IndSta: 10,
 //    moves: {
 //      quick: 'WATER_GUN_FAST',
 //      charge: 'HYDRO_PUMP',

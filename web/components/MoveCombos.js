@@ -11,7 +11,11 @@ function MoveCombos(props) {
         ]),
       ]),
       n('tbody', props.moves.map((move) => (
-        n('tr', [
+        n('tr', {
+          onClick: () => {
+            if (props.onSelect) props.onSelect(move)
+          },
+        }, [
           n('td', [
             n(B.Text, move.quick.name),
             n(B.Text, move.charge.name),
