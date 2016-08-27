@@ -1,5 +1,5 @@
 const Pokemon = require('../json/pokemon.json')
-const dpsvs = require('./dpsvs')
+const ttlvs = require('./ttlvs')
 
 const LegendaryPokemon = {
   ARTICUNO: 1,
@@ -13,17 +13,19 @@ function isNotLegendary(pokemon) {
   return !LegendaryPokemon.hasOwnProperty(pokemon.name || pokemon)
 }
 
+// Answers the question of which is the best pokemon to go up against ${opponentName}
+// Gives you back a score in terms of TTL (time left to live for your Pokemon) higher TTL is better
 function bestPokemonVs(opponentName) {
   const opponent = Pokemon.filter(x => x.name === opponentName.toUpperCase())[0]
   return (
     Pokemon.reduce((arr, mon) => {
       // We can assume that your Pokemon will have an IndAtk of 10, because it's not shitty
       // and that your Pokemon's level is 20, because you just hatched it from an egg duh!
-      const moves = dpsvs(mon, opponent, 10, 20)
+      const moves = ttlvs(mon, opponent, { IndAtk: 10, IndDef: 10, IndSta: 10 }, 25)
 
       moves.forEach(move => arr.push({
         name: mon.name,
-        score: move.netDPS,
+        score: move.scores.netTTL,
         quick: move.quick,
         charge: move.charge,
       }))
@@ -39,4 +41,4 @@ function bestPokemonVs(opponentName) {
 
 module.exports = bestPokemonVs
 
-// console.log(bestPokemonVs(process.argv[2] || 'dragonite'))
+console.log(bestPokemonVs(process.argv[2] || 'dragonite'))

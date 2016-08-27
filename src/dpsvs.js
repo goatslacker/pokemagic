@@ -1,8 +1,6 @@
 const Pokemon = require('../json/pokemon.json')
 const LevelToCPM = require('../json/level-to-cpm.json')
-const gymDefenders = require('../json/gym-defenders.json')
-
-const GymPokemon = gymDefenders.map(def => Pokemon.filter(x => x.name === def.name)[0])
+const hp = require('./hp')
 
 const BUG = 'BUG'
 const DARK = 'DARK'
@@ -181,10 +179,11 @@ function battleDPS(obj) {
   }
 }
 
-function dpsvs(mon, opponent, IndAtk, pokemonLevel) {
-  const stuff = []
-  // we assume that the defending Pokemon has a defense IV of 10
-  const def = opponent.stats.defense + 10
+// IndAtk is the attacking pokemon's (mon) IV attack
+// IndDef is the defeneding pokemon's (opponent) IV defense
+function dpsvs(mon, opponent, IndAtk, IndDef, pokemonLevel) {
+  const moves = []
+  const def = opponent.stats.defense + IndDef
 
   mon.moves1.forEach((move1) => {
     mon.moves2.forEach((move2) => {
@@ -199,7 +198,7 @@ function dpsvs(mon, opponent, IndAtk, pokemonLevel) {
         moves: [move1, move2],
       })
 
-      stuff.push({
+      moves.push({
         quick: move1.Name,
         charge: move2.Name,
         dps: total.dps,
@@ -207,39 +206,7 @@ function dpsvs(mon, opponent, IndAtk, pokemonLevel) {
     })
   })
 
-  return stuff.sort((a, b) => a.dps > b.dps ? -1 : 1)
+  return moves.sort((a, b) => a.dps > b.dps ? -1 : 1)
 }
 
 module.exports = dpsvs
-
-function bestMovesFor(player, opponent, IndAtk, pokemonLevel) {
-  // In order to do a diff we'll take the opponent's best move vs you
-  // assuming they have an attack IV of 10 and they're level 25.
-  const opponentsBestMove = dpsvs(opponent, player, 10, 25)[0]
-  // Then we multiply by 0.75 because gym opponents only attack every 1.5 seconds
-  const opponentDPS = opponentsBestMove.dps * 0.75
-
-  return dpsvs(player, opponent, IndAtk || 0, pokemonLevel || 20).map((x) => {
-    return {
-      quick: x.quick,
-      charge: x.charge,
-      playerDPS: x.dps,
-      opponentDPS,
-      netDPS: x.dps - opponentDPS,
-    }
-  })
-}
-
-module.exports = bestMovesFor
-
-
-/*
-console.log(
-  bestMovesFor(
-    Pokemon.filter(x => x.name === 'GYARADOS')[0],
-    Pokemon.filter(x => x.name === 'DRAGONITE')[0],
-    10,
-    25
-  )
-)
-*/
