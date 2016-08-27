@@ -75,7 +75,7 @@ function Moves(props) {
           n(B.Text, `Name: ${props.moves.Name}`),
           n(B.Text, `Power: ${props.moves.Power}`),
           n(B.Text, `Duration: ${(props.moves.DurationMs / 1000).toFixed(1)} seconds`),
-          n(B.Text, `DPS: ${(props.moves.Power / (props.moves.DurationMs / 1000)).toFixed(3)}`),
+          n(B.Text, `PPS: ${(props.moves.Power / (props.moves.DurationMs / 1000)).toFixed(3)}`),
           n(B.Text, `Energy: ${props.moves.EnergyDelta}`),
         ])
       ) || undefined,

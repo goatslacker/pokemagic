@@ -40244,34 +40244,78 @@ function isNotLegendary(pokemon) {
   return !LegendaryPokemon.hasOwnProperty(pokemon.name || pokemon);
 }
 
-// Answers the question of which is the best pokemon to go up against ${opponentName}
-// Gives you back a score in terms of TTL (time left to live for your Pokemon) higher TTL is better
-function bestPokemonVs(opponentName) {
-  var opponent = Pokemon.filter(function (x) {
-    return x.name === opponentName.toUpperCase();
-  })[0];
-  return Pokemon.reduce(function (arr, mon) {
-    // We can assume that your Pokemon will have an IndAtk of 10, because it's not shitty
-    // and that your Pokemon's level is 20, because you just hatched it from an egg duh!
-    var moves = ttlvs(mon, opponent, { IndAtk: 10, IndDef: 10, IndSta: 10 }, 25);
-
-    moves.forEach(function (move) {
-      return arr.push({
-        name: mon.name,
-        score: move.scores.netTTL,
-        quick: move.quick,
-        charge: move.charge
-      });
-    });
-    return arr;
-  }, []).filter(isNotLegendary).sort(function (a, b) {
-    return a.score > b.score ? -1 : 1;
-  }).slice(0, 10);
+function lowerIsBetter(a, b) {
+  return a.score > b.score ? 1 : -1;
 }
 
-module.exports = bestPokemonVs;
+function higherIsBetter(a, b) {
+  return a.score > b.score ? -1 : 1;
+}
 
-// console.log(bestPokemonVs(process.argv[2] || 'dragonite'))
+// Answers the question of which is the best pokemon to go up against ${opponentName}
+var idealMatchup = {
+  // Gives you back a score in terms of how long (in sec) until you defeat the
+  // opponent. Lower is better
+  attacking: function () {
+    function attacking(opponentName) {
+      var opponent = Pokemon.filter(function (x) {
+        return x.name === opponentName.toUpperCase();
+      })[0];
+      return Pokemon.reduce(function (arr, mon) {
+        // We can assume that your Pokemon will have an IndAtk of 10, because it's not shitty
+        // and that your Pokemon's level is 20, because you just hatched it from an egg duh!
+        var moves = ttlvs(mon, opponent, { IndAtk: 10, IndDef: 10, IndSta: 10 }, 25);
+
+        moves.forEach(function (move) {
+          return arr.push({
+            name: mon.name,
+            score: move.ttl.opponent,
+            net: move.scores.netTTL,
+            ttl: move.ttl.opponent,
+            quick: move.quick,
+            charge: move.charge
+          });
+        });
+        return arr;
+      }, []).filter(isNotLegendary).sort(lowerIsBetter).slice(0, 10);
+    }
+
+    return attacking;
+  }(),
+
+
+  // Gives you back a score in terms of TTL (time left to live for your Pokemon) higher TTL is better
+  overall: function () {
+    function overall(opponentName) {
+      var opponent = Pokemon.filter(function (x) {
+        return x.name === opponentName.toUpperCase();
+      })[0];
+      return Pokemon.reduce(function (arr, mon) {
+        // We can assume that your Pokemon will have an IndAtk of 10, because it's not shitty
+        // and that your Pokemon's level is 20, because you just hatched it from an egg duh!
+        var moves = ttlvs(mon, opponent, { IndAtk: 10, IndDef: 10, IndSta: 10 }, 25);
+
+        moves.forEach(function (move) {
+          return arr.push({
+            name: mon.name,
+            score: move.scores.netTTL,
+            net: move.scores.netTTL,
+            ttl: move.ttl.opponent,
+            quick: move.quick,
+            charge: move.charge
+          });
+        });
+        return arr;
+      }, []).filter(isNotLegendary).sort(higherIsBetter).slice(0, 10);
+    }
+
+    return overall;
+  }()
+};
+
+module.exports = idealMatchup;
+
+//console.log(idealMatchup.attacking(process.argv[2] || 'dragonite'))
 
 },{"../json/pokemon.json":8,"./ttlvs":232}],228:[function(require,module,exports){
 var DECENT_POKEMON_RATING = 80;
@@ -41258,11 +41302,11 @@ var n = require('../utils/n');
 // It sucks to see the same pokemon on the list many times. I'd rather have
 // a list of uniques because I might not have many of these Pokemon
 function Matchup(props) {
-  var matchups = props.name ? idealMatchup(props.name) : [];
+  var matchups = props.name ? idealMatchup.overall(props.name) : [];
   return n(B.View, [n(B.Header, 'Ideal Matchup'), n(B.Text, 'This is calculated based on the opposing Pokemon\'s type and assuming the opponent has the best possible moveset combination for their Pokemon. The results do not include legendaries. Pokemon type effectiveness and resistances are also taken into account.'), n('hr'), n(FormPokemonName, { name: props.name }), matchups.length ? n(B.Table, {
     border: true
   }, [n('thead', [n('tr', [n('th', 'Name'), n('th', 'Moves')])]), n('tbody', matchups.map(function (value) {
-    return n('tr', [n('td', [n(B.Text, { strong: true }, value.name), n(B.Text, String(value.score.toFixed(3)) + ' TTL')]), n('td', [n(B.Text, value.quick), n(B.Text, value.charge)])]);
+    return n('tr', [n('td', [n(B.Text, { strong: true }, value.name), n(B.Text, String(value.net.toFixed(3)) + ' Net TTL')]), n('td', [n(B.Text, value.quick), n(B.Text, value.charge)])]);
   }))]) : undefined]);
 }
 
@@ -41346,7 +41390,7 @@ function Moves(props) {
     value: props.text,
     options: movesList,
     onChange: sweetMoves
-  })]), props.moves.length && n(MoveCombos, { moves: props.moves }) || undefined, props.moves.Name && n(B.Panel, [n(B.Text, 'Name: ' + String(props.moves.Name)), n(B.Text, 'Power: ' + String(props.moves.Power)), n(B.Text, 'Duration: ' + String((props.moves.DurationMs / 1000).toFixed(1)) + ' seconds'), n(B.Text, 'DPS: ' + String((props.moves.Power / (props.moves.DurationMs / 1000)).toFixed(3))), n(B.Text, 'Energy: ' + String(props.moves.EnergyDelta))]) || undefined, props.pokemon.length && n(B.Panel, props.pokemon.map(function (mon) {
+  })]), props.moves.length && n(MoveCombos, { moves: props.moves }) || undefined, props.moves.Name && n(B.Panel, [n(B.Text, 'Name: ' + String(props.moves.Name)), n(B.Text, 'Power: ' + String(props.moves.Power)), n(B.Text, 'Duration: ' + String((props.moves.DurationMs / 1000).toFixed(1)) + ' seconds'), n(B.Text, 'PPS: ' + String((props.moves.Power / (props.moves.DurationMs / 1000)).toFixed(3))), n(B.Text, 'Energy: ' + String(props.moves.EnergyDelta))]) || undefined, props.pokemon.length && n(B.Panel, props.pokemon.map(function (mon) {
     return n(B.Image, {
       onClick: function () {
         function onClick() {

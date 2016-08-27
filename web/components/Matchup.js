@@ -7,7 +7,7 @@ const n = require('../utils/n')
 // It sucks to see the same pokemon on the list many times. I'd rather have
 // a list of uniques because I might not have many of these Pokemon
 function Matchup(props) {
-  const matchups = props.name ? idealMatchup(props.name) : []
+  const matchups = props.name ? idealMatchup.overall(props.name) : []
   return (
     n(B.View, [
       n(B.Header, 'Ideal Matchup'),
@@ -28,7 +28,7 @@ function Matchup(props) {
             n('tr', [
               n('td', [
                 n(B.Text, { strong: true }, value.name),
-                n(B.Text, `${value.score.toFixed(3)} TTL`),
+                n(B.Text, `${value.net.toFixed(3)} Net TTL`),
               ]),
               n('td', [
                 n(B.Text, value.quick),
