@@ -334,6 +334,16 @@
     "name": "DITTO",
     "family": "FAMILY_DITTO"
   },
+  "VAPOREON": {
+    "id": 134,
+    "name": "VAPOREON",
+    "family": "FAMILY_EEVEE"
+  },
+  "JOLTEON": {
+    "id": 135,
+    "name": "JOLTEON",
+    "family": "FAMILY_EEVEE"
+  },
   "FLAREON": {
     "id": 136,
     "name": "FLAREON",
