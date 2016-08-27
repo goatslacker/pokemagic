@@ -41,4 +41,4 @@ function bestPokemonVs(opponentName) {
 
 module.exports = bestPokemonVs
 
-console.log(bestPokemonVs(process.argv[2] || 'dragonite'))
+// console.log(bestPokemonVs(process.argv[2] || 'dragonite'))
