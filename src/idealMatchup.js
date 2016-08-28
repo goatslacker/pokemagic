@@ -68,8 +68,17 @@ const idealMatchup = {
         }))
         return arr
       }, [])
+      // no legendaries (yet)
       .filter(isNotLegendary)
+      // best net TTL
       .sort(higherIsBetter)
+      // remove dupes...
+      .reduce((o, mon) => {
+        if (o._[mon.name]) return o
+        o.r.push(mon)
+        o._[mon.name] = 1
+        return o
+      }, { _: {}, r: [] }).r
       .slice(0, 10)
     )
   },
@@ -77,4 +86,4 @@ const idealMatchup = {
 
 module.exports = idealMatchup
 
-//console.log(idealMatchup.attacking(process.argv[2] || 'dragonite'))
+//console.log(idealMatchup.overall(process.argv[2] || 'dragonite'))
