@@ -16,11 +16,13 @@ function isNotLegendary(pokemon) {
 console.log(
   JSON.stringify(
   Pokemon.reduce((arr, mon) => {
-    const effectiveness = analyzeBattleEffectiveness(mon.name, {
+    const effectiveness = analyzeBattleEffectiveness({
+      name: mon.name,
       IndAtk: 10,
       IndDef: 10,
       IndSta: 10,
-    }, 25)
+      level: 25,
+    })
     const type = [mon.type1, mon.type2].filter(Boolean).join('/')
 
     const baseDPS = Math.floor(effectiveness.bestAvgDPS)
@@ -35,7 +37,7 @@ console.log(
 
         return arr
       }, []),
-      dps: effectiveness.bestAvgDPS
+      dps: effectiveness.bestAvgDPS,
       ttl: effectiveness.bestAvgTTL,
     })
 
@@ -52,6 +54,11 @@ console.log(
     // Most versatile
     return Object.keys(a.goodAgainst).length > Object.keys(b.goodAgainst).length ? -1 : 1
   })
+  // group by best for type combo
+//  .reduce((obj, mon) => {
+//    if (!obj[mon.type]) obj[mon.type] = mon
+//    return obj
+//  }, {})
   .slice(0, 20)
   )
 )
