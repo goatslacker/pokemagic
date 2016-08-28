@@ -26,6 +26,7 @@ function connect(Component, o) {
           () => this.setState(this.computeState())
         )
       })
+      o.componentDidMount && o.componentDidMount()
     }
 
     componentWillUnmount() {

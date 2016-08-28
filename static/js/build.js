@@ -41920,6 +41920,8 @@ var pokemonActions = require('./actions/pokemonActions');
 var movesStore = require('./stores/MovesStore');
 var inventoryStore = require('./stores/InventoryStore');
 
+var calculateValues = require('./utils/calculateValues');
+
 var ConnectedMoves = connect(Moves, {
   listenTo: function () {
     function listenTo() {
@@ -41986,6 +41988,24 @@ var ConnectedRater = connect(Rater, {
     }
 
     return getProps;
+  }(),
+  componentDidMount: function () {
+    function componentDidMount() {
+      var arr = window.location.hash.split('/');
+
+      function toEv(value) {
+        return { currentTarget: { value: value } };
+      }
+
+      if (arr[1]) pokemonActions.changedName(arr[1].toUpperCase());
+      if (arr[2]) pokemonActions.changedCP(toEv(Number(arr[2])));
+      if (arr[3]) pokemonActions.changedHP(toEv(Number(arr[3])));
+      if (arr[4]) pokemonActions.changedStardust(Number(arr[4]));
+
+      if (arr.length === 5) calculateValues();
+    }
+
+    return componentDidMount;
   }()
 });
 
@@ -42112,7 +42132,7 @@ localforage.getItem('pogoivcalc.trainerLevel').then(function (trainerLevel) {
   ReactDOM.render(n(Main), document.querySelector('#app'));
 });
 
-},{"./actions/pokemonActions":236,"./alt":237,"./components/Matchup":245,"./components/Moves":247,"./components/PowerUp":248,"./components/Rater":249,"./stores/InventoryStore":256,"./stores/MovesStore":257,"./styles":258,"./utils/Lotus.react":260,"./utils/connect":262,"./utils/n":263,"./utils/scrollTop":264,"localforage":18,"react":218,"react-dom":19,"react-swipeable-views":44}],255:[function(require,module,exports){
+},{"./actions/pokemonActions":236,"./alt":237,"./components/Matchup":245,"./components/Moves":247,"./components/PowerUp":248,"./components/Rater":249,"./stores/InventoryStore":256,"./stores/MovesStore":257,"./styles":258,"./utils/Lotus.react":260,"./utils/calculateValues":261,"./utils/connect":262,"./utils/n":263,"./utils/scrollTop":264,"localforage":18,"react":218,"react-dom":19,"react-swipeable-views":44}],255:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42768,6 +42788,7 @@ function connect(Component, o) {
               return _this3.setState(_this3.computeState());
             });
           });
+          o.componentDidMount && o.componentDidMount();
         }
 
         return componentDidMount;

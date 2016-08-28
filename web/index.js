@@ -19,6 +19,8 @@ const pokemonActions = require('./actions/pokemonActions')
 const movesStore = require('./stores/MovesStore')
 const inventoryStore = require('./stores/InventoryStore')
 
+const calculateValues = require('./utils/calculateValues')
+
 const ConnectedMoves = connect(Moves, {
   listenTo: () => ({ movesStore }),
   getProps: state => state.movesStore,
@@ -38,6 +40,20 @@ const ConnectedMatchup = connect(Matchup, {
 const ConnectedRater = connect(Rater, {
   listenTo: () => ({ inventoryStore }),
   getProps: state => state.inventoryStore,
+  componentDidMount() {
+    const arr = window.location.hash.split('/')
+
+    function toEv(value) {
+      return { currentTarget: { value } }
+    }
+
+    if (arr[1]) pokemonActions.changedName(arr[1].toUpperCase())
+    if (arr[2]) pokemonActions.changedCP(toEv(Number(arr[2])))
+    if (arr[3]) pokemonActions.changedHP(toEv(Number(arr[3])))
+    if (arr[4]) pokemonActions.changedStardust(Number(arr[4]))
+
+    if (arr.length === 5) calculateValues()
+  },
 })
 
 class Main extends React.Component {
