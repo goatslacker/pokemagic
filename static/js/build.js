@@ -555,6 +555,10 @@ module.exports=[
     "tier": 4
   },
   {
+    "name": "VICTREEBEL",
+    "tier": 4
+  },
+  {
     "name": "VILEPLUME",
     "tier": 4
   },
@@ -563,8 +567,52 @@ module.exports=[
     "tier": 4
   },
   {
+    "name": "CLEFABLE",
+    "tier": 4
+  },
+  {
     "name": "GYARADOS",
     "tier": 5
+  },
+  {
+    "name": "MUK",
+    "tier": 5
+  },
+  {
+    "name": "GOLDUCK",
+    "tier": 5
+  },
+  {
+    "name": "DEWGONG",
+    "tier": 5
+  },
+  {
+    "name": "CHARIZARD",
+    "tier": 5
+  },
+  {
+    "name": "GOLEM",
+    "tier": 6
+  },
+  {
+    "name": "BLASTOISE",
+    "tier": 6
+  },
+  {
+    "name": "RHYDON",
+    "tier": 6
+  },
+  {
+    "name": "TENTACRUEL",
+    "tier": 6
+  },
+  {
+    "name": "NIDOQUEEN",
+    "tier": 6
+  },
+  {
+    "name": "NIDOKING",
+    "tier": 6
   }
 ]
 
@@ -39636,6 +39684,7 @@ var Pokemon = require('../json/pokemon.json');
 var LevelToCPM = require('../json/level-to-cpm.json');
 var gymDefenders = require('../json/gym-defenders.json');
 var ttlvs = require('./ttlvs');
+var getTypeEffectiveness = require('./getTypeEffectiveness');
 
 var GymPokemon = gymDefenders.map(function (def) {
   return Pokemon.filter(function (x) {
@@ -39657,12 +39706,14 @@ function analyzeBattleEffectiveness(obj) {
   if (!player) throw new Error('Cannot find ' + String(fmtName1));
 
   // Pit the Pokemon vs the "Top Defenders" gym list and see how the Pokemon does.
+  // but only for favorable matchups, because frankly why would you use an
+  // arcanine to try and take down a vape?
   var defenders = GymPokemon.map(function (opponent) {
     var moves = ttlvs(player, opponent, {
       IndAtk: obj.IndAtk,
       IndDef: obj.IndDef,
       IndSta: obj.IndSta
-    }, pokemonLevel || 20);
+    }, pokemonLevel || 25);
 
     return {
       vs: opponent.name,
@@ -39678,14 +39729,43 @@ function analyzeBattleEffectiveness(obj) {
           ttl: move.scores.netTTL
         };
         return moveSets;
-      }, {})
+      }, {}),
+
+      type1: opponent.type1,
+      type2: opponent.type2,
+      moves1: opponent.moves1,
+      moves2: opponent.moves2
     };
   }).sort(function (a, b) {
     return a.best.ttl > b.best.ttl ? -1 : 1;
   });
 
+  var idealDefenders = defenders.filter(function (opponent) {
+    var opponentOk1 = opponent.moves1.every(function (move) {
+      return getTypeEffectiveness(player, move) <= 1;
+    });
+    if (!opponentOk1) return false;
+
+    var opponentOk2 = opponent.moves2.every(function (move) {
+      return getTypeEffectiveness(player, move) <= 1;
+    });
+    if (!opponentOk2) return false;
+
+    var playerOk1 = player.moves1.every(function (move) {
+      return getTypeEffectiveness(opponent, move) >= 1;
+    });
+    if (!playerOk1) return false;
+
+    var playerOk2 = player.moves2.every(function (move) {
+      return getTypeEffectiveness(opponent, move) >= 1;
+    });
+    if (!playerOk2) return false;
+
+    return true;
+  });
+
   // Get the average DPS of each move
-  var movesTotal = defenders.reduce(function (obj, x) {
+  var movesTotal = idealDefenders.reduce(function (obj, x) {
     Object.keys(x.moves).forEach(function (moveName) {
       if (!obj[moveName]) obj[moveName] = 0;
       obj[moveName] = obj[moveName] + x.moves[moveName].dps;
@@ -39696,12 +39776,12 @@ function analyzeBattleEffectiveness(obj) {
     return movesTotal[a] > movesTotal[b] ? -1 : 1;
   });
   var avgMoves = movesSorted.reduce(function (obj, moveName) {
-    obj[moveName] = movesTotal[moveName] / defenders.length;
+    obj[moveName] = movesTotal[moveName] / idealDefenders.length;
     return obj;
   }, {});
 
   // Get the average TTL of each move
-  var ttlTotal = defenders.reduce(function (obj, x) {
+  var ttlTotal = idealDefenders.reduce(function (obj, x) {
     Object.keys(x.moves).forEach(function (moveName) {
       if (!obj[moveName]) obj[moveName] = 0;
       obj[moveName] = obj[moveName] + x.moves[moveName].ttl;
@@ -39712,7 +39792,7 @@ function analyzeBattleEffectiveness(obj) {
     return ttlTotal[a] > ttlTotal[b] ? -1 : 1;
   });
   var avgTTL = ttlSorted.reduce(function (obj, moveName) {
-    obj[moveName] = ttlTotal[moveName] / defenders.length;
+    obj[moveName] = ttlTotal[moveName] / idealDefenders.length;
     return obj;
   }, {});
 
@@ -39764,7 +39844,7 @@ module.exports = analyzeBattleEffectiveness;
 
 //console.log(
 //  analyzeBattleEffectiveness({
-//    name: 'arcanine',
+//    name: 'tentacruel',
 //    level: 25,
 //    IndAtk: 10,
 //    IndDef: 10,
@@ -39776,7 +39856,7 @@ module.exports = analyzeBattleEffectiveness;
 //  })
 //)
 
-},{"../json/gym-defenders.json":4,"../json/level-to-cpm.json":5,"../json/pokemon.json":8,"./ttlvs":232}],221:[function(require,module,exports){
+},{"../json/gym-defenders.json":4,"../json/level-to-cpm.json":5,"../json/pokemon.json":8,"./getTypeEffectiveness":225,"./ttlvs":233}],221:[function(require,module,exports){
 var analyzeBattleEffectiveness = require('./analyzeBattleEffectiveness');
 
 // Figures out the best attacking combination of moves taking into account energy gain and STAB
@@ -39850,6 +39930,132 @@ module.exports = {
 };
 
 },{}],223:[function(require,module,exports){
+var Pokemon = require('../json/pokemon.json');
+var LevelToCPM = require('../json/level-to-cpm.json');
+var hp = require('./hp');
+var getTypeEffectiveness = require('./getTypeEffectiveness');
+
+function getDmgVs(obj) {
+  var atk = obj.atk;
+  var def = obj.def;
+  var moves = obj.moves;
+  var player = obj.player;
+  var opponent = obj.opponent;
+  var pokemonLevel = obj.pokemonLevel || 25;
+
+  // We determine DPS combo vs a level 25 pokemon because that's what gyms on average will have.
+  // There's no hard data for this claim btw, it's completely made up.
+  var opponentLevel = obj.opponentLevel || 25;
+
+  var AtkECpM = LevelToCPM[pokemonLevel];
+  var DefECpM = LevelToCPM[opponentLevel];
+
+  return moves.map(function (move) {
+    var stab = move.Type === player.type1 || move.Type === player.type2 ? 1.25 : 1;
+    var power = move.Power;
+
+    var fxMul = getTypeEffectiveness(opponent, move);
+
+    return 0.5 * atk * AtkECpM / (def * DefECpM) * power * stab * fxMul + 1;
+  });
+}
+
+function getDPS(dmg, duration) {
+  return dmg / (duration / 1000) || 0;
+}
+
+function battleDPS(obj) {
+  var atk = obj.atk;
+  var def = obj.def;
+  var level = obj.pokemonLevel;
+  var moves = obj.moves;
+
+  var quickHits = Math.ceil(100 / moves[0].Energy);
+  var chargeHits = Math.abs(Math.ceil(100 / moves[1].Energy));
+
+  var timeToQuick = quickHits * moves[0].DurationMs;
+  var timeToCharge = chargeHits * moves[1].DurationMs;
+
+  var dmg = getDmgVs(obj);
+
+  var quickDmg = dmg[0] * quickHits;
+  var chargeDmg = dmg[1] * chargeHits;
+
+  var dps = getDPS(chargeDmg + quickDmg, timeToQuick + timeToCharge);
+
+  return {
+    dps: dps,
+    quickHits: quickHits,
+    chargeHits: chargeHits,
+    quickDmg: quickDmg,
+    chargeDmg: chargeDmg
+  };
+}
+
+// IndAtk is the attacking pokemon's (mon) IV attack
+// IndDef is the defeneding pokemon's (opponent) IV defense
+function dpsvs(mon, opponent, IndAtk, IndDef, pokemonLevel, opponentLevel) {
+  var moves = [];
+  var def = opponent.stats.defense + IndDef;
+
+  mon.moves1.forEach(function (move1) {
+    mon.moves2.forEach(function (move2) {
+      var atk = mon.stats.attack + IndAtk;
+
+      var total = battleDPS({
+        atk: atk,
+        def: def,
+        player: mon,
+        opponent: opponent,
+        pokemonLevel: pokemonLevel,
+        opponentLevel: opponentLevel,
+        moves: [move1, move2]
+      });
+
+      moves.push({
+        quick: move1.Name,
+        charge: move2.Name,
+        dps: total.dps
+      });
+    });
+  });
+
+  return moves.sort(function (a, b) {
+    return a.dps > b.dps ? -1 : 1;
+  });
+}
+
+module.exports = dpsvs;
+
+/*
+console.log(
+  dpsvs(
+    Pokemon.filter(x => x.name === 'VAPOREON')[0],
+    Pokemon.filter(x => x.name === 'FLAREON')[0],
+    10,
+    10,
+    25,
+    25
+  )
+)
+*/
+
+},{"../json/level-to-cpm.json":5,"../json/pokemon.json":8,"./getTypeEffectiveness":225,"./hp":227}],224:[function(require,module,exports){
+var Pokemon = require('../json/pokemon');
+
+function findPokemon(name) {
+  var fmtName = name.toUpperCase();
+
+  return Object.keys(Pokemon).reduce(function (a, key) {
+    if (a) return a;
+    if (Pokemon[key].name === fmtName) return Pokemon[key];
+    return null;
+  }, null);
+}
+
+module.exports = findPokemon;
+
+},{"../json/pokemon":8}],225:[function(require,module,exports){
 var Pokemon = require('../json/pokemon.json');
 var LevelToCPM = require('../json/level-to-cpm.json');
 var hp = require('./hp');
@@ -39973,127 +40179,9 @@ function getTypeEffectiveness(pokemon, move) {
   return 1;
 }
 
-function getDmgVs(obj) {
-  var atk = obj.atk;
-  var def = obj.def;
-  var moves = obj.moves;
-  var player = obj.player;
-  var opponent = obj.opponent;
-  var pokemonLevel = obj.pokemonLevel || 25;
+module.exports = getTypeEffectiveness;
 
-  // We determine DPS combo vs a level 25 pokemon because that's what gyms on average will have.
-  // There's no hard data for this claim btw, it's completely made up.
-  var opponentLevel = obj.opponentLevel || 25;
-
-  var AtkECpM = LevelToCPM[pokemonLevel];
-  var DefECpM = LevelToCPM[opponentLevel];
-
-  return moves.map(function (move) {
-    var stab = move.Type === player.type1 || move.Type === player.type2 ? 1.25 : 1;
-    var power = move.Power;
-
-    var fxMul = getTypeEffectiveness(opponent, move);
-
-    return 0.5 * atk * AtkECpM / (def * DefECpM) * power * stab * fxMul + 1;
-  });
-}
-
-function getDPS(dmg, duration) {
-  return dmg / (duration / 1000) || 0;
-}
-
-function battleDPS(obj) {
-  var atk = obj.atk;
-  var def = obj.def;
-  var level = obj.pokemonLevel;
-  var moves = obj.moves;
-
-  var quickHits = Math.ceil(100 / moves[0].Energy);
-  var chargeHits = Math.abs(Math.ceil(100 / moves[1].Energy));
-
-  var timeToQuick = quickHits * moves[0].DurationMs;
-  var timeToCharge = chargeHits * moves[1].DurationMs;
-
-  var dmg = getDmgVs(obj);
-
-  var quickDmg = dmg[0] * quickHits;
-  var chargeDmg = dmg[1] * chargeHits;
-
-  var dps = getDPS(chargeDmg + quickDmg, timeToQuick + timeToCharge);
-
-  return {
-    dps: dps,
-    quickHits: quickHits,
-    chargeHits: chargeHits,
-    quickDmg: quickDmg,
-    chargeDmg: chargeDmg
-  };
-}
-
-// IndAtk is the attacking pokemon's (mon) IV attack
-// IndDef is the defeneding pokemon's (opponent) IV defense
-function dpsvs(mon, opponent, IndAtk, IndDef, pokemonLevel, opponentLevel) {
-  var moves = [];
-  var def = opponent.stats.defense + IndDef;
-
-  mon.moves1.forEach(function (move1) {
-    mon.moves2.forEach(function (move2) {
-      var atk = mon.stats.attack + IndAtk;
-
-      var total = battleDPS({
-        atk: atk,
-        def: def,
-        player: mon,
-        opponent: opponent,
-        pokemonLevel: pokemonLevel,
-        opponentLevel: opponentLevel,
-        moves: [move1, move2]
-      });
-
-      moves.push({
-        quick: move1.Name,
-        charge: move2.Name,
-        dps: total.dps
-      });
-    });
-  });
-
-  return moves.sort(function (a, b) {
-    return a.dps > b.dps ? -1 : 1;
-  });
-}
-
-module.exports = dpsvs;
-
-/*
-console.log(
-  dpsvs(
-    Pokemon.filter(x => x.name === 'VAPOREON')[0],
-    Pokemon.filter(x => x.name === 'FLAREON')[0],
-    10,
-    10,
-    25,
-    25
-  )
-)
-*/
-
-},{"../json/level-to-cpm.json":5,"../json/pokemon.json":8,"./hp":226}],224:[function(require,module,exports){
-var Pokemon = require('../json/pokemon');
-
-function findPokemon(name) {
-  var fmtName = name.toUpperCase();
-
-  return Object.keys(Pokemon).reduce(function (a, key) {
-    if (a) return a;
-    if (Pokemon[key].name === fmtName) return Pokemon[key];
-    return null;
-  }, null);
-}
-
-module.exports = findPokemon;
-
-},{"../json/pokemon":8}],225:[function(require,module,exports){
+},{"../json/level-to-cpm.json":5,"../json/pokemon.json":8,"./hp":227}],226:[function(require,module,exports){
 'use strict';
 
 var Pokemon = require('../json/pokemon.json');
@@ -40267,7 +40355,7 @@ function guessIVs(pokemon, mon, ECpM) {
 
 module.exports = guessIVs;
 
-},{"../json/cpm.json":1,"../json/dust-to-level":2,"../json/level-to-cpm.json":5,"../json/pokemon.json":8,"./cp":222,"./hp":226,"./powerup":231}],226:[function(require,module,exports){
+},{"../json/cpm.json":1,"../json/dust-to-level":2,"../json/level-to-cpm.json":5,"../json/pokemon.json":8,"./cp":222,"./hp":227,"./powerup":232}],227:[function(require,module,exports){
 // Formula to calculate the HP given the IV stamina and ECpM
 function getHP(mon, IndSta, ECpM) {
   var BaseSta = mon.stats.stamina;
@@ -40290,7 +40378,7 @@ module.exports = {
   getMinHPForLevel: getMinHPForLevel
 };
 
-},{}],227:[function(require,module,exports){
+},{}],228:[function(require,module,exports){
 var Pokemon = require('../json/pokemon.json');
 var ttlvs = require('./ttlvs');
 
@@ -40368,7 +40456,18 @@ var idealMatchup = {
           });
         });
         return arr;
-      }, []).filter(isNotLegendary).sort(higherIsBetter).slice(0, 10);
+      }, [])
+      // no legendaries (yet)
+      .filter(isNotLegendary)
+      // best net TTL
+      .sort(higherIsBetter)
+      // remove dupes...
+      .reduce(function (o, mon) {
+        if (o._[mon.name]) return o;
+        o.r.push(mon);
+        o._[mon.name] = 1;
+        return o;
+      }, { _: {}, r: [] }).r.slice(0, 10);
     }
 
     return overall;
@@ -40377,9 +40476,9 @@ var idealMatchup = {
 
 module.exports = idealMatchup;
 
-//console.log(idealMatchup.attacking(process.argv[2] || 'dragonite'))
+//console.log(idealMatchup.overall(process.argv[2] || 'dragonite'))
 
-},{"../json/pokemon.json":8,"./ttlvs":232}],228:[function(require,module,exports){
+},{"../json/pokemon.json":8,"./ttlvs":233}],229:[function(require,module,exports){
 var DECENT_POKEMON_RATING = 80;
 
 var getOverallRating = function getOverallRating(v) {
@@ -40394,7 +40493,7 @@ var isGoodPokemonForItsClass = function isGoodPokemonForItsClass(v) {
 
 module.exports = isGoodPokemonForItsClass;
 
-},{}],229:[function(require,module,exports){
+},{}],230:[function(require,module,exports){
 var chalk = require('chalk');
 
 var LevelToCPM = require('../json/level-to-cpm.json');
@@ -40489,7 +40588,7 @@ function logPokemon(pokemon) {
 
 module.exports = logPokemon;
 
-},{"../json/level-to-cpm.json":5,"../json/levels":6,"./cp":222,"./hp":226,"chalk":10}],230:[function(require,module,exports){
+},{"../json/level-to-cpm.json":5,"../json/levels":6,"./cp":222,"./hp":227,"chalk":10}],231:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -40703,7 +40802,7 @@ var IvCalculator = function () {
 
 module.exports = magic;
 
-},{"../json/dust-to-level":2,"../json/level-to-cpm.json":5,"./findPokemon":224,"./guessIVs":225,"./isGoodPokemon":228,"./logPokemon":229,"chalk":10}],231:[function(require,module,exports){
+},{"../json/dust-to-level":2,"../json/level-to-cpm.json":5,"./findPokemon":224,"./guessIVs":226,"./isGoodPokemon":229,"./logPokemon":230,"chalk":10}],232:[function(require,module,exports){
 var DustToLevel = require('../json/dust-to-level');
 var Levels = require('../json/levels');
 
@@ -40743,7 +40842,7 @@ module.exports = {
   howMuchStardust: howMuchStardust
 };
 
-},{"../json/dust-to-level":2,"../json/levels":6}],232:[function(require,module,exports){
+},{"../json/dust-to-level":2,"../json/levels":6}],233:[function(require,module,exports){
 var dpsvs = require('./dpsvs');
 var hp = require('./hp');
 var LevelToCPM = require('../json/level-to-cpm');
@@ -40751,9 +40850,9 @@ var LevelToCPM = require('../json/level-to-cpm');
 // Find a Pokemon's TTL vs an opponent. This is how much damage they'll do and how long they'll
 // take to wipe out an enemy vs how long they can stand against said opponent.
 function ttlvs(player, opponent, ivs, pokemonLevel) {
-  var IndAtk = ivs.IndAtk;
-  var IndDef = ivs.IndDef;
-  var IndSta = ivs.IndSta;
+  var IndAtk = ivs.IndAtk || 10;
+  var IndDef = ivs.IndDef || 10;
+  var IndSta = ivs.IndSta || 10;
 
   // In order to do a diff we'll take the opponent's best move vs you
   // assuming they have an attack IV of 10 and they're level 25.
@@ -40810,31 +40909,31 @@ module.exports = ttlvs;
 //   )
 // )
 
-},{"../json/level-to-cpm":5,"./dpsvs":223,"./hp":226}],233:[function(require,module,exports){
+},{"../json/level-to-cpm":5,"./dpsvs":223,"./hp":227}],234:[function(require,module,exports){
 var alt = require('../alt');
 
 var historyActions = alt.generateActions('HistoryActions', ['pokemonChecked']);
 
 module.exports = historyActions;
 
-},{"../alt":236}],234:[function(require,module,exports){
+},{"../alt":237}],235:[function(require,module,exports){
 var alt = require('../alt');
 
 var moveActions = alt.generateActions('MoveActions', ['movesChanged', 'pokemonChanged', 'textChanged']);
 
 module.exports = moveActions;
 
-},{"../alt":236}],235:[function(require,module,exports){
+},{"../alt":237}],236:[function(require,module,exports){
 var alt = require('../alt');
 
 module.exports = alt.generateActions('InventoryActions', ['changedName', 'changedCP', 'changedHP', 'changedStardust', 'changedLevel', 'changedTrainerLevel', 'imageProcessing', 'resultsCalculated', 'resultsReset', 'trainerLevelChanged', 'valuesReset']);
 
-},{"../alt":236}],236:[function(require,module,exports){
+},{"../alt":237}],237:[function(require,module,exports){
 var Alt = require('./assets/alt.min');
 var alt = new Alt();
 module.exports = alt;
 
-},{"./assets/alt.min":237}],237:[function(require,module,exports){
+},{"./assets/alt.min":238}],238:[function(require,module,exports){
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 !function (t, n) {
@@ -41094,7 +41193,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   }]);
 });
 
-},{}],238:[function(require,module,exports){
+},{}],239:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41267,7 +41366,7 @@ var AppraisalRefine = function (_React$Component) {
 
 module.exports = AppraisalRefine;
 
-},{"../styles":257,"../utils/Lotus.react":259,"../utils/n":262,"./ResultsTable":250,"react":218}],239:[function(require,module,exports){
+},{"../styles":258,"../utils/Lotus.react":260,"../utils/n":263,"./ResultsTable":251,"react":218}],240:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41378,7 +41477,7 @@ var DetailedAnalysis = function (_React$Component) {
 
 module.exports = DetailedAnalysis;
 
-},{"../../src/analyzeBattleEffectiveness":220,"../../src/best-moves":221,"../styles":257,"../utils/Lotus.react":259,"../utils/n":262,"./MoveCombos":245,"./ResultsTable":250,"react":218}],240:[function(require,module,exports){
+},{"../../src/analyzeBattleEffectiveness":220,"../../src/best-moves":221,"../styles":258,"../utils/Lotus.react":260,"../utils/n":263,"./MoveCombos":246,"./ResultsTable":251,"react":218}],241:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
 var pokemonActions = require('../actions/pokemonActions');
@@ -41393,7 +41492,7 @@ function FormPokemonLevel(props) {
 
 module.exports = FormPokemonLevel;
 
-},{"../actions/pokemonActions":235,"../utils/Lotus.react":259,"../utils/n":262}],241:[function(require,module,exports){
+},{"../actions/pokemonActions":236,"../utils/Lotus.react":260,"../utils/n":263}],242:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var Pokemon = require('../../json/pokemon.json');
 var Select = require('react-select');
@@ -41423,7 +41522,7 @@ function FormPokemonName(props) {
 
 module.exports = FormPokemonName;
 
-},{"../../json/pokemon.json":8,"../actions/pokemonActions":235,"../utils/Lotus.react":259,"../utils/n":262,"react-select":36}],242:[function(require,module,exports){
+},{"../../json/pokemon.json":8,"../actions/pokemonActions":236,"../utils/Lotus.react":260,"../utils/n":263,"react-select":36}],243:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var DustToLevel = require('../../json/dust-to-level.json');
 var Select = require('react-select');
@@ -41451,7 +41550,7 @@ function FormStardust(props) {
 
 module.exports = FormStardust;
 
-},{"../../json/dust-to-level.json":2,"../actions/pokemonActions":235,"../utils/Lotus.react":259,"../utils/n":262,"react-select":36}],243:[function(require,module,exports){
+},{"../../json/dust-to-level.json":2,"../actions/pokemonActions":236,"../utils/Lotus.react":260,"../utils/n":263,"react-select":36}],244:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
 var pokemonActions = require('../actions/pokemonActions');
@@ -41466,7 +41565,7 @@ function FormTrainerLevel(props) {
 
 module.exports = FormTrainerLevel;
 
-},{"../actions/pokemonActions":235,"../utils/Lotus.react":259,"../utils/n":262}],244:[function(require,module,exports){
+},{"../actions/pokemonActions":236,"../utils/Lotus.react":260,"../utils/n":263}],245:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var FormPokemonName = require('./FormPokemonName');
 var idealMatchup = require('../../src/idealMatchup');
@@ -41486,7 +41585,7 @@ function Matchup(props) {
 
 module.exports = Matchup;
 
-},{"../../src/idealMatchup":227,"../utils/Lotus.react":259,"../utils/n":262,"./FormPokemonName":241}],245:[function(require,module,exports){
+},{"../../src/idealMatchup":228,"../utils/Lotus.react":260,"../utils/n":263,"./FormPokemonName":242}],246:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
 
@@ -41506,7 +41605,7 @@ function MoveCombos(props) {
 
 module.exports = MoveCombos;
 
-},{"../utils/Lotus.react":259,"../utils/n":262}],246:[function(require,module,exports){
+},{"../utils/Lotus.react":260,"../utils/n":263}],247:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var MoveCombos = require('./MoveCombos');
 var MovesList = require('../../json/moves.json');
@@ -41590,7 +41689,7 @@ function Moves(props) {
 
 module.exports = Moves;
 
-},{"../../json/moves.json":7,"../../json/pokemon.json":8,"../../src/best-moves":221,"../actions/moveActions":234,"../utils/Lotus.react":259,"../utils/n":262,"./MoveCombos":245,"react-select":36}],247:[function(require,module,exports){
+},{"../../json/moves.json":7,"../../json/pokemon.json":8,"../../src/best-moves":221,"../actions/moveActions":235,"../utils/Lotus.react":260,"../utils/n":263,"./MoveCombos":246,"react-select":36}],248:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var DustToLevel = require('../../json/dust-to-level.json');
 var n = require('../utils/n');
@@ -41616,7 +41715,7 @@ function PowerUp(props) {
 
 module.exports = PowerUp;
 
-},{"../../json/dust-to-level.json":2,"../../src/powerup":231,"../utils/Lotus.react":259,"../utils/n":262,"./FormPokemonLevel":240,"./FormStardust":242,"./FormTrainerLevel":243}],248:[function(require,module,exports){
+},{"../../json/dust-to-level.json":2,"../../src/powerup":232,"../utils/Lotus.react":260,"../utils/n":263,"./FormPokemonLevel":241,"./FormStardust":243,"./FormTrainerLevel":244}],249:[function(require,module,exports){
 var B = require('../utils/Lotus.React');
 var FormPokemonLevel = require('./FormPokemonLevel');
 var FormPokemonName = require('./FormPokemonName');
@@ -41670,7 +41769,7 @@ function Rater(props) {
 
 module.exports = Rater;
 
-},{"../actions/pokemonActions":235,"../containers/SearchHistoryContainer":252,"../utils/Lotus.React":258,"../utils/calculateValues":260,"../utils/n":262,"./FormPokemonLevel":240,"./FormPokemonName":241,"./FormStardust":242,"./FormTrainerLevel":243,"./Results":249}],249:[function(require,module,exports){
+},{"../actions/pokemonActions":236,"../containers/SearchHistoryContainer":253,"../utils/Lotus.React":259,"../utils/calculateValues":261,"../utils/n":263,"./FormPokemonLevel":241,"./FormPokemonName":242,"./FormStardust":243,"./FormTrainerLevel":244,"./Results":250}],250:[function(require,module,exports){
 var AppraisalRefine = require('./AppraisalRefine');
 var B = require('../utils/Lotus.react');
 var DetailedAnalysis = require('./DetailedAnalysis');
@@ -41706,7 +41805,7 @@ function Results(props) {
 
 module.exports = Results;
 
-},{"../../json/finalEvolutions":3,"../../src/best-moves":221,"../actions/pokemonActions":235,"../styles":257,"../utils/Lotus.react":259,"../utils/n":262,"./AppraisalRefine":238,"./DetailedAnalysis":239,"./MoveCombos":245}],250:[function(require,module,exports){
+},{"../../json/finalEvolutions":3,"../../src/best-moves":221,"../actions/pokemonActions":236,"../styles":258,"../utils/Lotus.react":260,"../utils/n":263,"./AppraisalRefine":239,"./DetailedAnalysis":240,"./MoveCombos":246}],251:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var Styles = require('../styles');
 var n = require('../utils/n');
@@ -41733,7 +41832,7 @@ function ResultsTable(props) {
 
 module.exports = ResultsTable;
 
-},{"../styles":257,"../utils/Lotus.react":259,"../utils/n":262}],251:[function(require,module,exports){
+},{"../styles":258,"../utils/Lotus.react":260,"../utils/n":263}],252:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var Styles = require('../styles');
 var calculateValues = require('../utils/calculateValues');
@@ -41763,7 +41862,7 @@ function SearchHistory(props) {
 
 module.exports = SearchHistory;
 
-},{"../styles":257,"../utils/Lotus.react":259,"../utils/calculateValues":260,"../utils/n":262,"../utils/scrollTop":263}],252:[function(require,module,exports){
+},{"../styles":258,"../utils/Lotus.react":260,"../utils/calculateValues":261,"../utils/n":263,"../utils/scrollTop":264}],253:[function(require,module,exports){
 var SearchHistory = require('../components/SearchHistory');
 var connect = require('../utils/connect');
 var historyStore = require('../stores/HistoryStore');
@@ -41791,7 +41890,7 @@ var SearchHistoryContainer = connect(SearchHistory, {
 
 module.exports = SearchHistoryContainer;
 
-},{"../components/SearchHistory":251,"../stores/HistoryStore":254,"../utils/connect":261}],253:[function(require,module,exports){
+},{"../components/SearchHistory":252,"../stores/HistoryStore":255,"../utils/connect":262}],254:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42013,7 +42112,7 @@ localforage.getItem('pogoivcalc.trainerLevel').then(function (trainerLevel) {
   ReactDOM.render(n(Main), document.querySelector('#app'));
 });
 
-},{"./actions/pokemonActions":235,"./alt":236,"./components/Matchup":244,"./components/Moves":246,"./components/PowerUp":247,"./components/Rater":248,"./stores/InventoryStore":255,"./stores/MovesStore":256,"./styles":257,"./utils/Lotus.react":259,"./utils/connect":261,"./utils/n":262,"./utils/scrollTop":263,"localforage":18,"react":218,"react-dom":19,"react-swipeable-views":44}],254:[function(require,module,exports){
+},{"./actions/pokemonActions":236,"./alt":237,"./components/Matchup":245,"./components/Moves":247,"./components/PowerUp":248,"./components/Rater":249,"./stores/InventoryStore":256,"./stores/MovesStore":257,"./styles":258,"./utils/Lotus.react":260,"./utils/connect":262,"./utils/n":263,"./utils/scrollTop":264,"localforage":18,"react":218,"react-dom":19,"react-swipeable-views":44}],255:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42091,7 +42190,7 @@ var HistoryStore = function (_alt$Store) {
 
 module.exports = alt.createStore('HistoryStore', new HistoryStore());
 
-},{"../actions/historyActions":233,"../alt":236,"localforage":18}],255:[function(require,module,exports){
+},{"../actions/historyActions":234,"../alt":237,"localforage":18}],256:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42252,7 +42351,7 @@ var InventoryStore = function (_alt$Store) {
 
 module.exports = alt.createStore('InventoryStore', new InventoryStore());
 
-},{"../actions/pokemonActions":235,"../alt":236}],256:[function(require,module,exports){
+},{"../actions/pokemonActions":236,"../alt":237}],257:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42315,7 +42414,7 @@ var MovesStore = function (_alt$Store) {
 
 module.exports = alt.createStore('MovesStore', new MovesStore());
 
-},{"../actions/moveActions":234,"../alt":236}],257:[function(require,module,exports){
+},{"../actions/moveActions":235,"../alt":237}],258:[function(require,module,exports){
 module.exports = {
   main: {
     display: 'flex',
@@ -42409,7 +42508,7 @@ module.exports = {
   }
 };
 
-},{}],258:[function(require,module,exports){
+},{}],259:[function(require,module,exports){
 var n = require('./n');
 //const RN = require('react-native-web')
 //const View = RN.View
@@ -42498,7 +42597,7 @@ module.exports = {
   View: View
 };
 
-},{"./n":262}],259:[function(require,module,exports){
+},{"./n":263}],260:[function(require,module,exports){
 var n = require('./n');
 //const RN = require('react-native-web')
 //const View = RN.View
@@ -42587,7 +42686,7 @@ module.exports = {
   View: View
 };
 
-},{"./n":262}],260:[function(require,module,exports){
+},{"./n":263}],261:[function(require,module,exports){
 var inventoryStore = require('../stores/InventoryStore');
 var historyActions = require('../actions/historyActions');
 var magic = require('../../src/magic');
@@ -42615,7 +42714,7 @@ function calculateValues(nextState) {
 
 module.exports = calculateValues;
 
-},{"../../src/magic":230,"../actions/historyActions":233,"../actions/pokemonActions":235,"../stores/InventoryStore":255}],261:[function(require,module,exports){
+},{"../../src/magic":231,"../actions/historyActions":234,"../actions/pokemonActions":236,"../stores/InventoryStore":256}],262:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42702,7 +42801,7 @@ function connect(Component, o) {
 
 module.exports = connect;
 
-},{"./n":262,"react":218}],262:[function(require,module,exports){
+},{"./n":263,"react":218}],263:[function(require,module,exports){
 var React = require('react');
 
 module.exports = function () {
@@ -42732,7 +42831,7 @@ module.exports = function () {
   return n;
 }();
 
-},{"react":218}],263:[function(require,module,exports){
+},{"react":218}],264:[function(require,module,exports){
 function scrollTop() {
   if (typeof document !== 'undefined') {
     var node = document.querySelector('.pm');
@@ -42742,4 +42841,4 @@ function scrollTop() {
 
 module.exports = scrollTop;
 
-},{}]},{},[253]);
+},{}]},{},[254]);
