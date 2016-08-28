@@ -5,9 +5,9 @@ const LevelToCPM = require('../json/level-to-cpm')
 // Find a Pokemon's TTL vs an opponent. This is how much damage they'll do and how long they'll
 // take to wipe out an enemy vs how long they can stand against said opponent.
 function ttlvs(player, opponent, ivs, pokemonLevel) {
-  const IndAtk = ivs.IndAtk
-  const IndDef = ivs.IndDef
-  const IndSta = ivs.IndSta
+  const IndAtk = ivs.IndAtk || 10
+  const IndDef = ivs.IndDef || 10
+  const IndSta = ivs.IndSta || 10
 
   // In order to do a diff we'll take the opponent's best move vs you
   // assuming they have an attack IV of 10 and they're level 25.

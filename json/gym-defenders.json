@@ -44,6 +44,10 @@
     "tier": 4
   },
   {
+    "name": "VICTREEBEL",
+    "tier": 4
+  },
+  {
     "name": "VILEPLUME",
     "tier": 4
   },
@@ -52,7 +56,51 @@
     "tier": 4
   },
   {
+    "name": "CLEFABLE",
+    "tier": 4
+  },
+  {
     "name": "GYARADOS",
     "tier": 5
+  },
+  {
+    "name": "MUK",
+    "tier": 5
+  },
+  {
+    "name": "GOLDUCK",
+    "tier": 5
+  },
+  {
+    "name": "DEWGONG",
+    "tier": 5
+  },
+  {
+    "name": "CHARIZARD",
+    "tier": 5
+  },
+  {
+    "name": "GOLEM",
+    "tier": 6
+  },
+  {
+    "name": "BLASTOISE",
+    "tier": 6
+  },
+  {
+    "name": "RHYDON",
+    "tier": 6
+  },
+  {
+    "name": "TENTACRUEL",
+    "tier": 6
+  },
+  {
+    "name": "NIDOQUEEN",
+    "tier": 6
+  },
+  {
+    "name": "NIDOKING",
+    "tier": 6
   }
 ]

@@ -25,7 +25,7 @@ function analyzeBattleEffectiveness(obj) {
       IndAtk: obj.IndAtk,
       IndDef: obj.IndDef,
       IndSta: obj.IndSta,
-    }, pokemonLevel || 20)
+    }, pokemonLevel || 25)
 
     return {
       vs: opponent.name,
@@ -140,7 +140,7 @@ module.exports = analyzeBattleEffectiveness
 
 //console.log(
 //  analyzeBattleEffectiveness({
-//    name: 'vaporeon',
+//    name: 'tentacruel',
 //    level: 25,
 //    IndAtk: 10,
 //    IndDef: 10,
