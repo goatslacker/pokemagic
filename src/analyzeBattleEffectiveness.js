@@ -2,6 +2,7 @@ const Pokemon = require('../json/pokemon.json')
 const LevelToCPM = require('../json/level-to-cpm.json')
 const gymDefenders = require('../json/gym-defenders.json')
 const ttlvs = require('./ttlvs')
+const getTypeEffectiveness = require('./getTypeEffectiveness')
 
 const GymPokemon = gymDefenders.map(def => Pokemon.filter(x => x.name === def.name)[0])
 
@@ -17,6 +18,8 @@ function analyzeBattleEffectiveness(obj) {
   if (!player) throw new Error(`Cannot find ${fmtName1}`)
 
   // Pit the Pokemon vs the "Top Defenders" gym list and see how the Pokemon does.
+  // but only for favorable matchups, because frankly why would you use an
+  // arcanine to try and take down a vape?
   const defenders = GymPokemon.map((opponent) => {
     const moves = ttlvs(player, opponent, {
       IndAtk: obj.IndAtk,
@@ -39,11 +42,32 @@ function analyzeBattleEffectiveness(obj) {
         }
         return moveSets
       }, {}),
+
+      type1: opponent.type1,
+      type2: opponent.type2,
+      moves1: opponent.moves1,
+      moves2: opponent.moves2,
     }
   }).sort((a, b) => a.best.ttl > b.best.ttl ? -1 : 1)
 
+  const idealDefenders = defenders.filter((opponent) => {
+    const opponentOk1 = opponent.moves1.every(move => getTypeEffectiveness(player, move) <= 1)
+    if (!opponentOk1) return false
+
+    const opponentOk2 = opponent.moves2.every(move => getTypeEffectiveness(player, move) <= 1)
+    if (!opponentOk2) return false
+
+    const playerOk1 = player.moves1.every(move => getTypeEffectiveness(opponent, move) >= 1)
+    if (!playerOk1) return false
+
+    const playerOk2 = player.moves2.every(move => getTypeEffectiveness(opponent, move) >= 1)
+    if (!playerOk2) return false
+
+    return true
+  })
+
   // Get the average DPS of each move
-  const movesTotal = defenders.reduce((obj, x) => {
+  const movesTotal = idealDefenders.reduce((obj, x) => {
     Object.keys(x.moves).forEach((moveName) => {
       if (!obj[moveName]) obj[moveName] = 0
       obj[moveName] = obj[moveName] + x.moves[moveName].dps
@@ -54,12 +78,12 @@ function analyzeBattleEffectiveness(obj) {
     return movesTotal[a] > movesTotal[b] ? -1 : 1
   })
   const avgMoves = movesSorted.reduce((obj, moveName) => {
-    obj[moveName] = movesTotal[moveName] / defenders.length
+    obj[moveName] = movesTotal[moveName] / idealDefenders.length
     return obj
   }, {})
 
   // Get the average TTL of each move
-  const ttlTotal = defenders.reduce((obj, x) => {
+  const ttlTotal = idealDefenders.reduce((obj, x) => {
     Object.keys(x.moves).forEach((moveName) => {
       if (!obj[moveName]) obj[moveName] = 0
       obj[moveName] = obj[moveName] + x.moves[moveName].ttl
@@ -70,7 +94,7 @@ function analyzeBattleEffectiveness(obj) {
     return ttlTotal[a] > ttlTotal[b] ? -1 : 1
   })
   const avgTTL = ttlSorted.reduce((obj, moveName) => {
-    obj[moveName] = ttlTotal[moveName] / defenders.length
+    obj[moveName] = ttlTotal[moveName] / idealDefenders.length
     return obj
   }, {})
 
@@ -116,7 +140,7 @@ module.exports = analyzeBattleEffectiveness
 
 //console.log(
 //  analyzeBattleEffectiveness({
-//    name: 'arcanine',
+//    name: 'vaporeon',
 //    level: 25,
 //    IndAtk: 10,
 //    IndDef: 10,
