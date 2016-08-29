@@ -153,7 +153,7 @@ class AppraisalRefine extends React.Component {
   render() {
     const results = this.refine(this.props.results)
     const chance = Math.floor(
-      results.filter(x => x.percent.PerfectIV > 79) / results.length
+      results.filter(x => x.percent.PerfectIV > 66).length / results.length
     ) || 0
 
     return n(B.View, { spacingVertical: 'md' }, [

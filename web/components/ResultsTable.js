@@ -26,9 +26,9 @@ function ResultsTable(props) {
           n('td', [
             n(B.Text, {
               className: 'label',
-              style: value.percent.PerfectIV > 80
+              style: value.percent.PerfectIV > 74
                 ? Styles.good
-                : value.percent.PerfectIV > 69
+                : value.percent.PerfectIV > 66
                 ? Styles.ok
                 : Styles.bad,
             }, `${value.percent.PerfectIV}%`),
