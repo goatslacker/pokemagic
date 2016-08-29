@@ -9,8 +9,8 @@ const localforage = require('localforage')
 const scrollTop = require('./utils/scrollTop')
 const SwipeableViews = require('react-swipeable-views').default
 
+const Dex = require('./components/Dex')
 const Matchup = require('./components/Matchup')
-const Moves = require('./components/Moves')
 const PowerUp = require('./components/PowerUp')
 const Rater = require('./components/Rater')
 
@@ -21,7 +21,7 @@ const inventoryStore = require('./stores/InventoryStore')
 
 const calculateValues = require('./utils/calculateValues')
 
-const ConnectedMoves = connect(Moves, {
+const ConnectedDex = connect(Dex, {
   listenTo: () => ({ movesStore }),
   getProps: state => state.movesStore,
 })
@@ -78,7 +78,7 @@ class Main extends React.Component {
         style: this.state.small ? Styles.menu : Styles.menuDesktop,
       }, [
         this.renderLink(0, 'Rater'),
-        this.renderLink(1, 'Moves'),
+        this.renderLink(1, 'Dex'),
         this.renderLink(2, 'PowerUp'),
         this.renderLink(3, 'Matchup'),
       ])
@@ -103,7 +103,7 @@ class Main extends React.Component {
   render() {
     const Slides = [
       n(ConnectedRater),
-      n(ConnectedMoves),
+      n(ConnectedDex),
       n(ConnectedPowerUp),
       n(ConnectedMatchup),
     ]

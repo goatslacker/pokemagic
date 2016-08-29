@@ -121,4 +121,23 @@ function getTypeEffectiveness(pokemon, move) {
   return 1
 }
 
-module.exports = getTypeEffectiveness
+function getEffectiveness(pokemon) {
+  const s1 = Object.keys(SuperEffectiveTypes[pokemon.type1])
+  const s2 = Object.keys(SuperEffectiveTypes[pokemon.type2] || {})
+
+  const r1 = Object.keys(ResistantTypes[pokemon.type1])
+  const r2 = Object.keys(ResistantTypes[pokemon.type2] || {})
+
+  const i1 = Object.keys(ImmuneTypes[pokemon.type1])
+  const i2 = Object.keys(ImmuneTypes[pokemon.type2] || {})
+
+  return {
+    superEffective: s1.concat(s2),
+    notEffective: r1.concat(r2, i1, i2),
+  }
+}
+
+module.exports = {
+  getTypeEffectiveness,
+  getEffectiveness,
+}

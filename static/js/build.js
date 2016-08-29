@@ -39684,7 +39684,7 @@ var Pokemon = require('../json/pokemon.json');
 var LevelToCPM = require('../json/level-to-cpm.json');
 var gymDefenders = require('../json/gym-defenders.json');
 var ttlvs = require('./ttlvs');
-var getTypeEffectiveness = require('./getTypeEffectiveness');
+var getTypeEffectiveness = require('./getTypeEffectiveness').getTypeEffectiveness;
 
 var GymPokemon = gymDefenders.map(function (def) {
   return Pokemon.filter(function (x) {
@@ -40002,7 +40002,7 @@ module.exports = {
 var Pokemon = require('../json/pokemon.json');
 var LevelToCPM = require('../json/level-to-cpm.json');
 var hp = require('./hp');
-var getTypeEffectiveness = require('./getTypeEffectiveness');
+var getTypeEffectiveness = require('./getTypeEffectiveness').getTypeEffectiveness;
 
 function getDmgVs(obj) {
   var atk = obj.atk;
@@ -40248,7 +40248,26 @@ function getTypeEffectiveness(pokemon, move) {
   return 1;
 }
 
-module.exports = getTypeEffectiveness;
+function getEffectiveness(pokemon) {
+  var s1 = Object.keys(SuperEffectiveTypes[pokemon.type1]);
+  var s2 = Object.keys(SuperEffectiveTypes[pokemon.type2] || {});
+
+  var r1 = Object.keys(ResistantTypes[pokemon.type1]);
+  var r2 = Object.keys(ResistantTypes[pokemon.type2] || {});
+
+  var i1 = Object.keys(ImmuneTypes[pokemon.type1]);
+  var i2 = Object.keys(ImmuneTypes[pokemon.type2] || {});
+
+  return {
+    superEffective: s1.concat(s2),
+    notEffective: r1.concat(r2, i1, i2)
+  };
+}
+
+module.exports = {
+  getTypeEffectiveness: getTypeEffectiveness,
+  getEffectiveness: getEffectiveness
+};
 
 },{"../json/level-to-cpm.json":5,"../json/pokemon.json":8,"./hp":228}],227:[function(require,module,exports){
 'use strict';
@@ -41567,7 +41586,104 @@ var DetailedAnalysis = function (_React$Component) {
 
 module.exports = DetailedAnalysis;
 
-},{"../../src/analyzeBattleEffectiveness":220,"../../src/best-moves":221,"../styles":259,"../utils/Lotus.react":261,"../utils/n":264,"./MoveCombos":247,"./ResultsTable":252,"react":218}],242:[function(require,module,exports){
+},{"../../src/analyzeBattleEffectiveness":220,"../../src/best-moves":221,"../styles":259,"../utils/Lotus.react":261,"../utils/n":264,"./MoveCombos":248,"./ResultsTable":252,"react":218}],242:[function(require,module,exports){
+var B = require('../utils/Lotus.react');
+var MoveCombos = require('./MoveCombos');
+var MovesList = require('../../json/moves.json');
+var Pokemon = require('../../json/pokemon.json');
+var Select = require('react-select');
+var n = require('../utils/n');
+var moveActions = require('../actions/moveActions');
+var bestMovesFor = require('../../src/best-moves');
+var Styles = require('../styles');
+var getEffectiveness = require('../../src/getTypeEffectiveness').getEffectiveness;
+
+var pokemonList = Pokemon.map(function (x) {
+  return { label: x.name.replace(/_/g, ' '), value: x.name };
+});
+var movesList = pokemonList.slice();
+movesList.push.apply(movesList, MovesList.map(function (x) {
+  return { label: x.Name.replace(/_/g, ' '), value: x.Name };
+}));
+
+var Mon = Pokemon.reduce(function (obj, mon) {
+  obj[mon.name] = mon;
+  return obj;
+}, {});
+var ObjMoves = MovesList.reduce(function (obj, move) {
+  obj[move.Name] = move;
+  return obj;
+}, {});
+
+function sweetMoves(x) {
+  if (!x) {
+    moveActions.pokemonChanged([]);
+    moveActions.movesChanged([]);
+    moveActions.textChanged('');
+    return;
+  }
+
+  if (Mon.hasOwnProperty(x.value)) {
+    var best = bestMovesFor(x.value);
+    var mon = Pokemon[Mon[x.value].id - 1];
+    moveActions.pokemonChanged([]);
+    moveActions.movesChanged(best);
+  } else if (ObjMoves.hasOwnProperty(x.value)) {
+    moveActions.movesChanged(ObjMoves[x.value]);
+    moveActions.pokemonChanged(Pokemon.filter(function (mon) {
+      return mon.moves1.some(function (m) {
+        return m.Name === x.value;
+      }) || mon.moves2.some(function (m) {
+        return m.Name === x.value;
+      });
+    }).map(function (x) {
+      return x.name;
+    }));
+  }
+  moveActions.textChanged(x.value);
+}
+
+function Pokedex(props) {
+  var types = [props.pokemon.type1, props.pokemon.type2].filter(Boolean).join('/');
+  var fx = getEffectiveness(props.pokemon);
+
+  return n(B.View, [n(B.View, {
+    style: Styles.dex
+  }, [n(B.View, [n(B.Image, { src: 'images/' + String(props.pokemon.name.toUpperCase()) + '.png', height: 150, width: 150 }), n(B.Text, { strong: true, style: Styles.resultsRow }, types)]), n(B.View, {
+    style: Styles.baseStats
+  }, [n(B.View, { style: Styles.stat }, [n(B.Text, 'Attack'), n(B.Text, { strong: true }, props.pokemon.stats.attack)]), n(B.View, { style: Styles.stat }, [n(B.Text, 'Defense'), n(B.Text, { strong: true }, props.pokemon.stats.defense)]), n(B.View, { style: Styles.stat }, [n(B.Text, 'Stamina'), n(B.Text, { strong: true }, props.pokemon.stats.stamina)])])]), n(B.View, { spacing: 'sm' }), n(B.Text, 'Super Effective: ' + String(fx.superEffective.join(', '))), n(B.Text, 'Not Very Effective: ' + String(fx.notEffective.join(', ')))]);
+}
+
+function Moves(props) {
+  return n(B.View, [n(B.Header, 'Moveset Information'), n(B.Text, 'Calculate the ideal combination movesets for your Pokemon.'), n('hr'), n(B.FormControl, { label: 'Moves' }, [n(Select, {
+    inputProps: {
+      autoCorrect: 'off',
+      autoCapitalize: 'off',
+      spellCheck: 'off'
+    },
+    name: 'move-selector',
+    value: props.text,
+    options: movesList,
+    onChange: sweetMoves
+  })]), Mon.hasOwnProperty(props.text) && n(B.View, [n(Pokedex, { pokemon: Mon[props.text] }), n('hr')]), props.moves.length && n(MoveCombos, { moves: props.moves }) || undefined, props.moves.Name && n(B.Panel, [n(B.Text, 'Name: ' + String(props.moves.Name)), n(B.Text, 'Power: ' + String(props.moves.Power)), n(B.Text, 'Duration: ' + String((props.moves.DurationMs / 1000).toFixed(1)) + ' seconds'), n(B.Text, 'PPS: ' + String((props.moves.Power / (props.moves.DurationMs / 1000)).toFixed(3))), n(B.Text, 'Energy: ' + String(props.moves.EnergyDelta))]) || undefined, props.pokemon.length && n(B.Panel, props.pokemon.map(function (mon) {
+    return n(B.Image, {
+      onClick: function () {
+        function onClick() {
+          return sweetMoves({ value: mon });
+        }
+
+        return onClick;
+      }(),
+      src: 'images/' + String(mon) + '.png',
+      height: 60,
+      width: 60
+    });
+  })) || undefined, n('hr'), n('h3', 'More Info'), n(B.Text, 'The tables above feature a combined DPS score for each possible move combination. The DPS is calculated based on neutral damage for a level 25 Pokemon with 10/10/10 IVs assuming that the Pokemon will be using their quick move constantly and their charge move immediately when it becomes available. STAB damage is taken into account as well as each move\'s animation time. You can also use this search to look up which Pokemon can learn a particular move.')]);
+}
+
+module.exports = Moves;
+
+},{"../../json/moves.json":7,"../../json/pokemon.json":8,"../../src/best-moves":221,"../../src/getTypeEffectiveness":226,"../actions/moveActions":236,"../styles":259,"../utils/Lotus.react":261,"../utils/n":264,"./MoveCombos":248,"react-select":36}],243:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
 var pokemonActions = require('../actions/pokemonActions');
@@ -41582,7 +41698,7 @@ function FormPokemonLevel(props) {
 
 module.exports = FormPokemonLevel;
 
-},{"../actions/pokemonActions":237,"../utils/Lotus.react":261,"../utils/n":264}],243:[function(require,module,exports){
+},{"../actions/pokemonActions":237,"../utils/Lotus.react":261,"../utils/n":264}],244:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var Pokemon = require('../../json/pokemon.json');
 var Select = require('react-select');
@@ -41612,7 +41728,7 @@ function FormPokemonName(props) {
 
 module.exports = FormPokemonName;
 
-},{"../../json/pokemon.json":8,"../actions/pokemonActions":237,"../utils/Lotus.react":261,"../utils/n":264,"react-select":36}],244:[function(require,module,exports){
+},{"../../json/pokemon.json":8,"../actions/pokemonActions":237,"../utils/Lotus.react":261,"../utils/n":264,"react-select":36}],245:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var DustToLevel = require('../../json/dust-to-level.json');
 var Select = require('react-select');
@@ -41640,7 +41756,7 @@ function FormStardust(props) {
 
 module.exports = FormStardust;
 
-},{"../../json/dust-to-level.json":2,"../actions/pokemonActions":237,"../utils/Lotus.react":261,"../utils/n":264,"react-select":36}],245:[function(require,module,exports){
+},{"../../json/dust-to-level.json":2,"../actions/pokemonActions":237,"../utils/Lotus.react":261,"../utils/n":264,"react-select":36}],246:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
 var pokemonActions = require('../actions/pokemonActions');
@@ -41655,7 +41771,7 @@ function FormTrainerLevel(props) {
 
 module.exports = FormTrainerLevel;
 
-},{"../actions/pokemonActions":237,"../utils/Lotus.react":261,"../utils/n":264}],246:[function(require,module,exports){
+},{"../actions/pokemonActions":237,"../utils/Lotus.react":261,"../utils/n":264}],247:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var FormPokemonName = require('./FormPokemonName');
 var idealMatchup = require('../../src/idealMatchup');
@@ -41675,7 +41791,7 @@ function Matchup(props) {
 
 module.exports = Matchup;
 
-},{"../../src/idealMatchup":229,"../utils/Lotus.react":261,"../utils/n":264,"./FormPokemonName":243}],247:[function(require,module,exports){
+},{"../../src/idealMatchup":229,"../utils/Lotus.react":261,"../utils/n":264,"./FormPokemonName":244}],248:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
 
@@ -41695,91 +41811,7 @@ function MoveCombos(props) {
 
 module.exports = MoveCombos;
 
-},{"../utils/Lotus.react":261,"../utils/n":264}],248:[function(require,module,exports){
-var B = require('../utils/Lotus.react');
-var MoveCombos = require('./MoveCombos');
-var MovesList = require('../../json/moves.json');
-var Pokemon = require('../../json/pokemon.json');
-var Select = require('react-select');
-var n = require('../utils/n');
-var moveActions = require('../actions/moveActions');
-var bestMovesFor = require('../../src/best-moves');
-
-var pokemonList = Pokemon.map(function (x) {
-  return { label: x.name.replace(/_/g, ' '), value: x.name };
-});
-var movesList = pokemonList.slice();
-movesList.push.apply(movesList, MovesList.map(function (x) {
-  return { label: x.Name.replace(/_/g, ' '), value: x.Name };
-}));
-
-var Mon = Pokemon.reduce(function (obj, mon) {
-  obj[mon.name] = mon.id;
-  return obj;
-}, {});
-var ObjMoves = MovesList.reduce(function (obj, move) {
-  obj[move.Name] = move;
-  return obj;
-}, {});
-
-function sweetMoves(x) {
-  if (!x) {
-    moveActions.pokemonChanged([]);
-    moveActions.movesChanged([]);
-    moveActions.textChanged('');
-    return;
-  }
-
-  if (Mon.hasOwnProperty(x.value)) {
-    var best = bestMovesFor(x.value);
-    var mon = Pokemon[Mon[x.value] - 1];
-    moveActions.pokemonChanged([]);
-    moveActions.movesChanged(best);
-  } else if (ObjMoves.hasOwnProperty(x.value)) {
-    moveActions.movesChanged(ObjMoves[x.value]);
-    moveActions.pokemonChanged(Pokemon.filter(function (mon) {
-      return mon.moves1.some(function (m) {
-        return m.Name === x.value;
-      }) || mon.moves2.some(function (m) {
-        return m.Name === x.value;
-      });
-    }).map(function (x) {
-      return x.name;
-    }));
-  }
-  moveActions.textChanged(x.value);
-}
-
-function Moves(props) {
-  return n(B.View, [n(B.Header, 'Moveset Information'), n(B.Text, 'Calculate the ideal combination movesets for your Pokemon.'), n('hr'), n(B.FormControl, { label: 'Moves' }, [n(Select, {
-    inputProps: {
-      autoCorrect: 'off',
-      autoCapitalize: 'off',
-      spellCheck: 'off'
-    },
-    name: 'move-selector',
-    value: props.text,
-    options: movesList,
-    onChange: sweetMoves
-  })]), props.moves.length && n(MoveCombos, { moves: props.moves }) || undefined, props.moves.Name && n(B.Panel, [n(B.Text, 'Name: ' + String(props.moves.Name)), n(B.Text, 'Power: ' + String(props.moves.Power)), n(B.Text, 'Duration: ' + String((props.moves.DurationMs / 1000).toFixed(1)) + ' seconds'), n(B.Text, 'PPS: ' + String((props.moves.Power / (props.moves.DurationMs / 1000)).toFixed(3))), n(B.Text, 'Energy: ' + String(props.moves.EnergyDelta))]) || undefined, props.pokemon.length && n(B.Panel, props.pokemon.map(function (mon) {
-    return n(B.Image, {
-      onClick: function () {
-        function onClick() {
-          return sweetMoves({ value: mon });
-        }
-
-        return onClick;
-      }(),
-      src: 'images/' + String(mon) + '.png',
-      height: 60,
-      width: 60
-    });
-  })) || undefined, n('hr'), n('h3', 'More Info'), n(B.Text, 'The tables above feature a combined DPS score for each possible move combination. The DPS is calculated based on neutral damage for a level 25 Pokemon with 10/10/10 IVs assuming that the Pokemon will be using their quick move constantly and their charge move immediately when it becomes available. STAB damage is taken into account as well as each move\'s animation time. You can also use this search to look up which Pokemon can learn a particular move.')]);
-}
-
-module.exports = Moves;
-
-},{"../../json/moves.json":7,"../../json/pokemon.json":8,"../../src/best-moves":221,"../actions/moveActions":236,"../utils/Lotus.react":261,"../utils/n":264,"./MoveCombos":247,"react-select":36}],249:[function(require,module,exports){
+},{"../utils/Lotus.react":261,"../utils/n":264}],249:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var DustToLevel = require('../../json/dust-to-level.json');
 var n = require('../utils/n');
@@ -41805,7 +41837,7 @@ function PowerUp(props) {
 
 module.exports = PowerUp;
 
-},{"../../json/dust-to-level.json":2,"../../src/powerup":233,"../utils/Lotus.react":261,"../utils/n":264,"./FormPokemonLevel":242,"./FormStardust":244,"./FormTrainerLevel":245}],250:[function(require,module,exports){
+},{"../../json/dust-to-level.json":2,"../../src/powerup":233,"../utils/Lotus.react":261,"../utils/n":264,"./FormPokemonLevel":243,"./FormStardust":245,"./FormTrainerLevel":246}],250:[function(require,module,exports){
 var B = require('../utils/Lotus.React');
 var FormPokemonLevel = require('./FormPokemonLevel');
 var FormPokemonName = require('./FormPokemonName');
@@ -41859,7 +41891,7 @@ function Rater(props) {
 
 module.exports = Rater;
 
-},{"../actions/pokemonActions":237,"../containers/SearchHistoryContainer":254,"../utils/Lotus.React":260,"../utils/calculateValues":262,"../utils/n":264,"./FormPokemonLevel":242,"./FormPokemonName":243,"./FormStardust":244,"./FormTrainerLevel":245,"./Results":251}],251:[function(require,module,exports){
+},{"../actions/pokemonActions":237,"../containers/SearchHistoryContainer":254,"../utils/Lotus.React":260,"../utils/calculateValues":262,"../utils/n":264,"./FormPokemonLevel":243,"./FormPokemonName":244,"./FormStardust":245,"./FormTrainerLevel":246,"./Results":251}],251:[function(require,module,exports){
 var AppraisalRefine = require('./AppraisalRefine');
 var B = require('../utils/Lotus.react');
 var DetailedAnalysis = require('./DetailedAnalysis');
@@ -41908,7 +41940,7 @@ function Results(props) {
 
 module.exports = Results;
 
-},{"../../json/finalEvolutions":3,"../../src/best-moves":221,"../actions/pokemonActions":237,"../styles":259,"../utils/Lotus.react":261,"../utils/n":264,"./AppraisalRefine":240,"./DetailedAnalysis":241,"./MoveCombos":247}],252:[function(require,module,exports){
+},{"../../json/finalEvolutions":3,"../../src/best-moves":221,"../actions/pokemonActions":237,"../styles":259,"../utils/Lotus.react":261,"../utils/n":264,"./AppraisalRefine":240,"./DetailedAnalysis":241,"./MoveCombos":248}],252:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var Styles = require('../styles');
 var n = require('../utils/n');
@@ -42013,8 +42045,8 @@ var localforage = require('localforage');
 var scrollTop = require('./utils/scrollTop');
 var SwipeableViews = require('react-swipeable-views')['default'];
 
+var Dex = require('./components/Dex');
 var Matchup = require('./components/Matchup');
-var Moves = require('./components/Moves');
 var PowerUp = require('./components/PowerUp');
 var Rater = require('./components/Rater');
 
@@ -42025,7 +42057,7 @@ var inventoryStore = require('./stores/InventoryStore');
 
 var calculateValues = require('./utils/calculateValues');
 
-var ConnectedMoves = connect(Moves, {
+var ConnectedDex = connect(Dex, {
   listenTo: function () {
     function listenTo() {
       return { movesStore: movesStore };
@@ -42145,7 +42177,7 @@ var Main = function (_React$Component) {
         return n(B.View, {
           className: 'nav',
           style: this.state.small ? Styles.menu : Styles.menuDesktop
-        }, [this.renderLink(0, 'Rater'), this.renderLink(1, 'Moves'), this.renderLink(2, 'PowerUp'), this.renderLink(3, 'Matchup')]);
+        }, [this.renderLink(0, 'Rater'), this.renderLink(1, 'Dex'), this.renderLink(2, 'PowerUp'), this.renderLink(3, 'Matchup')]);
       }
 
       return renderNav;
@@ -42180,7 +42212,7 @@ var Main = function (_React$Component) {
       function render() {
         var _this3 = this;
 
-        var Slides = [n(ConnectedRater), n(ConnectedMoves), n(ConnectedPowerUp), n(ConnectedMatchup)];
+        var Slides = [n(ConnectedRater), n(ConnectedDex), n(ConnectedPowerUp), n(ConnectedMatchup)];
 
         var Nav = this.renderNav();
 
@@ -42233,7 +42265,7 @@ localforage.getItem('pogoivcalc.trainerLevel').then(function (trainerLevel) {
   ReactDOM.render(n(Main), document.querySelector('#app'));
 });
 
-},{"./actions/pokemonActions":237,"./alt":238,"./components/Matchup":246,"./components/Moves":248,"./components/PowerUp":249,"./components/Rater":250,"./stores/InventoryStore":257,"./stores/MovesStore":258,"./styles":259,"./utils/Lotus.react":261,"./utils/calculateValues":262,"./utils/connect":263,"./utils/n":264,"./utils/scrollTop":265,"localforage":18,"react":218,"react-dom":19,"react-swipeable-views":44}],256:[function(require,module,exports){
+},{"./actions/pokemonActions":237,"./alt":238,"./components/Dex":242,"./components/Matchup":247,"./components/PowerUp":249,"./components/Rater":250,"./stores/InventoryStore":257,"./stores/MovesStore":258,"./styles":259,"./utils/Lotus.react":261,"./utils/calculateValues":262,"./utils/connect":263,"./utils/n":264,"./utils/scrollTop":265,"localforage":18,"react":218,"react-dom":19,"react-swipeable-views":44}],256:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42557,6 +42589,27 @@ module.exports = {
   scroll: {
     overflowY: 'scroll',
     WebkitOverflowScrolling: 'touch'
+  },
+
+  dex: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center'
+  },
+
+  baseStats: {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around'
+  },
+
+  stat: {
+    border: '1px solid #808080',
+    textAlign: 'center',
+    margin: '0.25em 0',
+    width: '5em'
   },
 
   resultsRow: {

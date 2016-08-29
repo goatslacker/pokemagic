@@ -6,6 +6,8 @@ const Select = require('react-select')
 const n = require('../utils/n')
 const moveActions = require('../actions/moveActions')
 const bestMovesFor = require('../../src/best-moves')
+const Styles = require('../styles')
+const getEffectiveness = require('../../src/getTypeEffectiveness').getEffectiveness
 
 const pokemonList = Pokemon.map(x => ({ label: x.name.replace(/_/g, ' '), value: x.name }))
 const movesList = pokemonList.slice()
@@ -15,7 +17,7 @@ movesList.push.apply(
 )
 
 const Mon = Pokemon.reduce((obj, mon) => {
-  obj[mon.name] = mon.id
+  obj[mon.name] = mon
   return obj
 }, {})
 const ObjMoves = MovesList.reduce((obj, move) => {
@@ -33,7 +35,7 @@ function sweetMoves(x) {
 
   if (Mon.hasOwnProperty(x.value)) {
     const best = bestMovesFor(x.value)
-    const mon = Pokemon[Mon[x.value] - 1]
+    const mon = Pokemon[Mon[x.value].id - 1]
     moveActions.pokemonChanged([])
     moveActions.movesChanged(best)
   } else if (ObjMoves.hasOwnProperty(x.value)) {
@@ -46,6 +48,42 @@ function sweetMoves(x) {
     )
   }
   moveActions.textChanged(x.value)
+}
+
+function Pokedex(props) {
+  const types = [props.pokemon.type1, props.pokemon.type2]
+    .filter(Boolean).join('/')
+  const fx = getEffectiveness(props.pokemon)
+
+  return n(B.View, [
+    n(B.View, {
+      style: Styles.dex,
+    }, [
+      n(B.View, [
+        n(B.Image, { src: `images/${props.pokemon.name.toUpperCase()}.png`, height: 150, width: 150 }),
+        n(B.Text, { strong: true, style: Styles.resultsRow }, types),
+      ]),
+      n(B.View, {
+        style: Styles.baseStats,
+      }, [
+        n(B.View, { style: Styles.stat }, [
+          n(B.Text, 'Attack'),
+          n(B.Text, { strong: true }, props.pokemon.stats.attack),
+        ]),
+        n(B.View, { style: Styles.stat }, [
+          n(B.Text, 'Defense'),
+          n(B.Text, { strong: true }, props.pokemon.stats.defense),
+        ]),
+        n(B.View, { style: Styles.stat }, [
+          n(B.Text, 'Stamina'),
+          n(B.Text, { strong: true }, props.pokemon.stats.stamina),
+        ]),
+      ]),
+    ]),
+    n(B.View, { spacing: 'sm' }),
+    n(B.Text, `Super Effective: ${fx.superEffective.join(', ')}`),
+    n(B.Text, `Not Very Effective: ${fx.notEffective.join(', ')}`),
+  ])
 }
 
 function Moves(props) {
@@ -67,6 +105,12 @@ function Moves(props) {
           onChange: sweetMoves,
         }),
       ]),
+      Mon.hasOwnProperty(props.text) && (
+        n(B.View, [
+          n(Pokedex, { pokemon: Mon[props.text] }),
+          n('hr'),
+        ])
+      ),
       props.moves.length && (
         n(MoveCombos, { moves: props.moves })
       ) || undefined,

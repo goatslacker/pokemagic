@@ -21,6 +21,27 @@ module.exports = {
     WebkitOverflowScrolling: 'touch',
   },
 
+  dex: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+
+  baseStats: {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+  },
+
+  stat: {
+    border: '1px solid #808080',
+    textAlign: 'center',
+    margin: '0.25em 0',
+    width: '5em',
+  },
+
   resultsRow: {
     textAlign: 'center',
   },

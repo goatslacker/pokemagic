@@ -2,7 +2,7 @@ const Pokemon = require('../json/pokemon.json')
 const LevelToCPM = require('../json/level-to-cpm.json')
 const gymDefenders = require('../json/gym-defenders.json')
 const ttlvs = require('./ttlvs')
-const getTypeEffectiveness = require('./getTypeEffectiveness')
+const getTypeEffectiveness = require('./getTypeEffectiveness').getTypeEffectiveness
 
 const GymPokemon = gymDefenders.map(def => Pokemon.filter(x => x.name === def.name)[0])
 
