@@ -40569,14 +40569,14 @@ module.exports = idealMatchup;
 //console.log(idealMatchup.overall(process.argv[2] || 'dragonite'))
 
 },{"../json/pokemon.json":8,"./ttlvs":234}],230:[function(require,module,exports){
-var DECENT_POKEMON_RATING = 80;
+// 66 because that's what Candela says makes a strong Pokemon.
+// I'm going to believe her. It's all about movesets anyway
+var DECENT_POKEMON_RATING = 66;
 
 var getOverallRating = function getOverallRating(v) {
-  return (v.ivs.IndAtk * 1.10 + v.ivs.IndDef * 1.05 + v.ivs.IndSta * 0.85) / 45 * 100;
+  return (v.ivs.IndAtk + v.ivs.IndDef + v.ivs.IndSta) / 45 * 100;
 };
 
-// A good pokemon is in the 80th percentile for Atk, CP, HP, and IV.
-// This 80th percentile thing was made up by me.
 var isGoodPokemonForItsClass = function isGoodPokemonForItsClass(v) {
   return getOverallRating(v) > DECENT_POKEMON_RATING;
 };
@@ -41433,8 +41433,8 @@ var AppraisalRefine = function (_React$Component) {
 
         var results = this.refine(this.props.results);
         var chance = Math.floor(results.filter(function (x) {
-          return x.percent.PerfectIV > 79;
-        }) / results.length) || 0;
+          return x.percent.PerfectIV > 66;
+        }).length / results.length) || 0;
 
         return n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Possible values (' + String(results.length) + ')'), n(B.Text, { style: Styles.resultsRow }, [results.length === 1 ? n('span', 'Congrats, here are your Pokemon\'s values') : n('span', ['There are ', n('strong', results.length), ' possibilities and a ', n('strong', String(chance) + '%'), ' chance you will have a good ' + String(this.props.name) + '. ', 'Highlighted rows show even levels since you can only catch even leveled Pokemon.'])]), !this.state.show && results.length > 1 && n(B.View, { style: Styles.resultsRow }, [n(B.View, { spacing: 'sm' }), n(B.Text, 'Refine results by selecting "Appraise" from the Pokemon screen.'), n(B.Button, {
           onClick: function () {
@@ -41774,7 +41774,7 @@ function Moves(props) {
       height: 60,
       width: 60
     });
-  })) || undefined, n('hr'), n('h3', 'More Info'), n(B.Text, 'The tables above feature a combined DPS score for each possible move combination. The DPS is calculated assuming a Pokemon will be using their quick move constantly and their charge move immediately when it becomes available. STAB damage is taken into account as well as each move\'s animation time. You can also use this search to look up which Pokemon can learn a particular move.')]);
+  })) || undefined, n('hr'), n('h3', 'More Info'), n(B.Text, 'The tables above feature a combined DPS score for each possible move combination. The DPS is calculated based on neutral damage for a level 25 Pokemon with 10/10/10 IVs assuming that the Pokemon will be using their quick move constantly and their charge move immediately when it becomes available. STAB damage is taken into account as well as each move\'s animation time. You can also use this search to look up which Pokemon can learn a particular move.')]);
 }
 
 module.exports = Moves;
@@ -41928,7 +41928,7 @@ function ResultsTable(props) {
       }
     }, [n('td', [n(B.Text, {
       className: 'label',
-      style: value.percent.PerfectIV > 80 ? Styles.good : value.percent.PerfectIV > 69 ? Styles.ok : Styles.bad
+      style: value.percent.PerfectIV > 74 ? Styles.good : value.percent.PerfectIV > 66 ? Styles.ok : Styles.bad
     }, String(value.percent.PerfectIV) + '%'), ' ', n('strong', value.strings.iv)]), n('td', value.Level), n('td', value.percent.PercentCP), n('td', value.percent.PercentHP), n('td', value.percent.PercentBatt)]);
   }))]), props.results.length === 0 && n(B.Text, 'No results found')]);
 }
