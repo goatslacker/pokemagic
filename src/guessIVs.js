@@ -7,6 +7,7 @@ const DustToLevel = require('../json/dust-to-level')
 
 const cpTools = require('./cp')
 const hpTools = require('./hp')
+const bestCP = require('./bestCP')
 const powerupTools = require('./powerup')
 
 function getMaxLevel(trainerLevel) {
@@ -117,6 +118,14 @@ function guessIVs(pokemon, mon, ECpM) {
         }
 
         if (pokemon.cp === CP) {
+          const typeRating = [
+            mon.type1,
+            mon.type2,
+          ].filter(Boolean).map(type => ({
+            type,
+            rating: bestCP.getCPRangeForType(type, Level, CP),
+          }))
+
           possibleValues.push({
             Name,
             Level,
@@ -130,6 +139,11 @@ function guessIVs(pokemon, mon, ECpM) {
               IndAtk,
               IndDef,
               IndSta,
+            },
+            rating: {
+              pokemon: bestCP.getCPRangeForPokemon(mon, Level, CP),
+              overall: bestCP.getCPRangeOverall(Level, CP),
+              type: typeRating,
             },
             strings: {
               iv: `${IndAtk}/${IndDef}/${IndSta}`,

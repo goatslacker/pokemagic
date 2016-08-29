@@ -39856,7 +39856,7 @@ module.exports = analyzeBattleEffectiveness;
 //  })
 //)
 
-},{"../json/gym-defenders.json":4,"../json/level-to-cpm.json":5,"../json/pokemon.json":8,"./getTypeEffectiveness":225,"./ttlvs":233}],221:[function(require,module,exports){
+},{"../json/gym-defenders.json":4,"../json/level-to-cpm.json":5,"../json/pokemon.json":8,"./getTypeEffectiveness":226,"./ttlvs":234}],221:[function(require,module,exports){
 var analyzeBattleEffectiveness = require('./analyzeBattleEffectiveness');
 
 // Figures out the best attacking combination of moves taking into account energy gain and STAB
@@ -39893,6 +39893,75 @@ module.exports = bestMovesFor;
 //console.log(bestMovesFor('arcanine'))
 
 },{"./analyzeBattleEffectiveness":220}],222:[function(require,module,exports){
+var Pokemon = require('../json/pokemon');
+var LevelToCpM = require('../json/level-to-cpm');
+var cpTools = require('./cp');
+
+function percentInRange(num, min, max) {
+  return (num - min) * 100 / (max - min);
+}
+
+function getCPRangeForPokemon(mon, level, cp) {
+  var ECpM = LevelToCpM[level];
+  var min = cpTools.getMinCPForLevel(mon, ECpM);
+  var max = cpTools.getMaxCPForLevel(mon, ECpM);
+
+  return {
+    min: min,
+    max: max,
+    value: percentInRange(cp, min, max)
+  };
+}
+
+function getCPRangeOverall(level, cp) {
+  var ECpM = LevelToCpM[level];
+  var minmax = Pokemon.reduce(function (obj, mon) {
+    var min = cpTools.getMinCPForLevel(mon, ECpM);
+    var max = cpTools.getMaxCPForLevel(mon, ECpM);
+
+    return {
+      min: Math.min(obj.min, min),
+      max: Math.max(obj.max, max)
+    };
+  }, { min: Infinity, max: -Infinity });
+
+  return {
+    min: minmax.min,
+    max: minmax.max,
+    value: percentInRange(cp, minmax.min, minmax.max)
+  };
+}
+
+function getCPRangeForType(type, level, cp) {
+  var ECpM = LevelToCpM[level];
+  var minmax = Pokemon.reduce(function (obj, mon) {
+    if (mon.type1 === type || mon.type2 === type) {
+      var min = cpTools.getMinCPForLevel(mon, ECpM);
+      var max = cpTools.getMaxCPForLevel(mon, ECpM);
+
+      return {
+        min: Math.min(obj.min, min),
+        max: Math.max(obj.max, max)
+      };
+    }
+
+    return obj;
+  }, { min: Infinity, max: -Infinity });
+
+  return {
+    min: minmax.min,
+    max: minmax.max,
+    value: percentInRange(cp, minmax.min, minmax.max)
+  };
+}
+
+module.exports = {
+  getCPRangeForType: getCPRangeForType,
+  getCPRangeOverall: getCPRangeOverall,
+  getCPRangeForPokemon: getCPRangeForPokemon
+};
+
+},{"../json/level-to-cpm":5,"../json/pokemon":8,"./cp":223}],223:[function(require,module,exports){
 // Formula to calculate the CP given the IVs and ECpM
 function getCP(mon, ivs, ECpM) {
   var BaseAtk = mon.stats.attack;
@@ -39929,7 +39998,7 @@ module.exports = {
   getMinCPForLevel: getMinCPForLevel
 };
 
-},{}],223:[function(require,module,exports){
+},{}],224:[function(require,module,exports){
 var Pokemon = require('../json/pokemon.json');
 var LevelToCPM = require('../json/level-to-cpm.json');
 var hp = require('./hp');
@@ -40040,7 +40109,7 @@ console.log(
 )
 */
 
-},{"../json/level-to-cpm.json":5,"../json/pokemon.json":8,"./getTypeEffectiveness":225,"./hp":227}],224:[function(require,module,exports){
+},{"../json/level-to-cpm.json":5,"../json/pokemon.json":8,"./getTypeEffectiveness":226,"./hp":228}],225:[function(require,module,exports){
 var Pokemon = require('../json/pokemon');
 
 function findPokemon(name) {
@@ -40055,7 +40124,7 @@ function findPokemon(name) {
 
 module.exports = findPokemon;
 
-},{"../json/pokemon":8}],225:[function(require,module,exports){
+},{"../json/pokemon":8}],226:[function(require,module,exports){
 var Pokemon = require('../json/pokemon.json');
 var LevelToCPM = require('../json/level-to-cpm.json');
 var hp = require('./hp');
@@ -40181,7 +40250,7 @@ function getTypeEffectiveness(pokemon, move) {
 
 module.exports = getTypeEffectiveness;
 
-},{"../json/level-to-cpm.json":5,"../json/pokemon.json":8,"./hp":227}],226:[function(require,module,exports){
+},{"../json/level-to-cpm.json":5,"../json/pokemon.json":8,"./hp":228}],227:[function(require,module,exports){
 'use strict';
 
 var Pokemon = require('../json/pokemon.json');
@@ -40191,6 +40260,7 @@ var DustToLevel = require('../json/dust-to-level');
 
 var cpTools = require('./cp');
 var hpTools = require('./hp');
+var bestCP = require('./bestCP');
 var powerupTools = require('./powerup');
 
 function getMaxLevel(trainerLevel) {
@@ -40265,7 +40335,7 @@ function guessIVs(pokemon, mon, ECpM) {
   var possibleValues = [];
   IndStaValues.forEach(function (IndSta) {
     for (var IndAtk = 0; IndAtk <= 15; IndAtk += 1) {
-      for (var IndDef = 0; IndDef <= 15; IndDef += 1) {
+      var _loop = function _loop(IndDef) {
         var CP = cpTools.getCP(mon, {
           atk: IndAtk,
           def: IndDef,
@@ -40279,8 +40349,8 @@ function guessIVs(pokemon, mon, ECpM) {
         var BaseDef = mon.stats.defense;
         var Def = (BaseDef + IndDef) * ECpM;
 
-        var _BaseSta = mon.stats.stamina;
-        var Sta = (_BaseSta + IndSta) * ECpM;
+        var BaseSta = mon.stats.stamina;
+        var Sta = (BaseSta + IndSta) * ECpM;
 
         // The maximum CP and HP potential this Pokemon has
         var MaxCP = cpTools.getCP(mon, {
@@ -40293,16 +40363,24 @@ function guessIVs(pokemon, mon, ECpM) {
         var PerfectIV = Math.round((IndAtk + IndDef + IndSta) / 45 * 100);
         var PercentBatt = getAttackPercentage(IndAtk, IndDef);
 
-        var EvolveCP = null;
-        var MaxEvolveCP = null;
+        EvolveCP = null;
+        MaxEvolveCP = null;
 
         // If we can evolve it, what would it evolve to and what does it power up to?
+
         if (!EEVEELUTIONS.hasOwnProperty(pokemon.name.toUpperCase()) && CPM[pokemon.name.toUpperCase()]) {
           EvolveCP = Math.floor(CPM[pokemon.name.toUpperCase()][1] * CP / 100) * 100;
           MaxEvolveCP = Math.floor(CPM[pokemon.name.toUpperCase()][1] * MaxCP / 100) * 100;
         }
 
         if (pokemon.cp === CP) {
+          var typeRating = [mon.type1, mon.type2].filter(Boolean).map(function (type) {
+            return {
+              type: type,
+              rating: bestCP.getCPRangeForType(type, Level, CP)
+            };
+          });
+
           possibleValues.push({
             Name: Name,
             Level: Level,
@@ -40317,9 +40395,14 @@ function guessIVs(pokemon, mon, ECpM) {
               IndDef: IndDef,
               IndSta: IndSta
             },
+            rating: {
+              pokemon: bestCP.getCPRangeForPokemon(mon, Level, CP),
+              overall: bestCP.getCPRangeOverall(Level, CP),
+              type: typeRating
+            },
             strings: {
-              iv: IndAtk + '/' + IndDef + '/' + String(IndSta),
-              batt: IndAtk + IndDef + '/30',
+              iv: IndAtk + '/' + String(IndDef) + '/' + String(IndSta),
+              batt: String(IndAtk + IndDef) + '/30',
               maxcp: String(MaxCP) + '/' + String(MaxedPossibleCP),
               maxhp: String(MaxHP) + '/' + String(MaxedPossibleHP)
             },
@@ -40346,6 +40429,13 @@ function guessIVs(pokemon, mon, ECpM) {
             }
           });
         }
+      };
+
+      for (var IndDef = 0; IndDef <= 15; IndDef += 1) {
+        var EvolveCP;
+        var MaxEvolveCP;
+
+        _loop(IndDef);
       }
     }
   });
@@ -40355,7 +40445,7 @@ function guessIVs(pokemon, mon, ECpM) {
 
 module.exports = guessIVs;
 
-},{"../json/cpm.json":1,"../json/dust-to-level":2,"../json/level-to-cpm.json":5,"../json/pokemon.json":8,"./cp":222,"./hp":227,"./powerup":232}],227:[function(require,module,exports){
+},{"../json/cpm.json":1,"../json/dust-to-level":2,"../json/level-to-cpm.json":5,"../json/pokemon.json":8,"./bestCP":222,"./cp":223,"./hp":228,"./powerup":233}],228:[function(require,module,exports){
 // Formula to calculate the HP given the IV stamina and ECpM
 function getHP(mon, IndSta, ECpM) {
   var BaseSta = mon.stats.stamina;
@@ -40378,7 +40468,7 @@ module.exports = {
   getMinHPForLevel: getMinHPForLevel
 };
 
-},{}],228:[function(require,module,exports){
+},{}],229:[function(require,module,exports){
 var Pokemon = require('../json/pokemon.json');
 var ttlvs = require('./ttlvs');
 
@@ -40478,7 +40568,7 @@ module.exports = idealMatchup;
 
 //console.log(idealMatchup.overall(process.argv[2] || 'dragonite'))
 
-},{"../json/pokemon.json":8,"./ttlvs":233}],229:[function(require,module,exports){
+},{"../json/pokemon.json":8,"./ttlvs":234}],230:[function(require,module,exports){
 var DECENT_POKEMON_RATING = 80;
 
 var getOverallRating = function getOverallRating(v) {
@@ -40493,7 +40583,7 @@ var isGoodPokemonForItsClass = function isGoodPokemonForItsClass(v) {
 
 module.exports = isGoodPokemonForItsClass;
 
-},{}],230:[function(require,module,exports){
+},{}],231:[function(require,module,exports){
 var chalk = require('chalk');
 
 var LevelToCPM = require('../json/level-to-cpm.json');
@@ -40588,7 +40678,7 @@ function logPokemon(pokemon) {
 
 module.exports = logPokemon;
 
-},{"../json/level-to-cpm.json":5,"../json/levels":6,"./cp":222,"./hp":227,"chalk":10}],231:[function(require,module,exports){
+},{"../json/level-to-cpm.json":5,"../json/levels":6,"./cp":223,"./hp":228,"chalk":10}],232:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -40802,7 +40892,7 @@ var IvCalculator = function () {
 
 module.exports = magic;
 
-},{"../json/dust-to-level":2,"../json/level-to-cpm.json":5,"./findPokemon":224,"./guessIVs":226,"./isGoodPokemon":229,"./logPokemon":230,"chalk":10}],232:[function(require,module,exports){
+},{"../json/dust-to-level":2,"../json/level-to-cpm.json":5,"./findPokemon":225,"./guessIVs":227,"./isGoodPokemon":230,"./logPokemon":231,"chalk":10}],233:[function(require,module,exports){
 var DustToLevel = require('../json/dust-to-level');
 var Levels = require('../json/levels');
 
@@ -40842,7 +40932,7 @@ module.exports = {
   howMuchStardust: howMuchStardust
 };
 
-},{"../json/dust-to-level":2,"../json/levels":6}],233:[function(require,module,exports){
+},{"../json/dust-to-level":2,"../json/levels":6}],234:[function(require,module,exports){
 var dpsvs = require('./dpsvs');
 var hp = require('./hp');
 var LevelToCPM = require('../json/level-to-cpm');
@@ -40909,31 +40999,31 @@ module.exports = ttlvs;
 //   )
 // )
 
-},{"../json/level-to-cpm":5,"./dpsvs":223,"./hp":227}],234:[function(require,module,exports){
+},{"../json/level-to-cpm":5,"./dpsvs":224,"./hp":228}],235:[function(require,module,exports){
 var alt = require('../alt');
 
 var historyActions = alt.generateActions('HistoryActions', ['pokemonChecked']);
 
 module.exports = historyActions;
 
-},{"../alt":237}],235:[function(require,module,exports){
+},{"../alt":238}],236:[function(require,module,exports){
 var alt = require('../alt');
 
 var moveActions = alt.generateActions('MoveActions', ['movesChanged', 'pokemonChanged', 'textChanged']);
 
 module.exports = moveActions;
 
-},{"../alt":237}],236:[function(require,module,exports){
+},{"../alt":238}],237:[function(require,module,exports){
 var alt = require('../alt');
 
 module.exports = alt.generateActions('InventoryActions', ['changedName', 'changedCP', 'changedHP', 'changedStardust', 'changedLevel', 'changedTrainerLevel', 'imageProcessing', 'resultsCalculated', 'resultsReset', 'trainerLevelChanged', 'valuesReset']);
 
-},{"../alt":237}],237:[function(require,module,exports){
+},{"../alt":238}],238:[function(require,module,exports){
 var Alt = require('./assets/alt.min');
 var alt = new Alt();
 module.exports = alt;
 
-},{"./assets/alt.min":238}],238:[function(require,module,exports){
+},{"./assets/alt.min":239}],239:[function(require,module,exports){
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 !function (t, n) {
@@ -41193,7 +41283,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   }]);
 });
 
-},{}],239:[function(require,module,exports){
+},{}],240:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41366,7 +41456,7 @@ var AppraisalRefine = function (_React$Component) {
 
 module.exports = AppraisalRefine;
 
-},{"../styles":258,"../utils/Lotus.react":260,"../utils/n":263,"./ResultsTable":251,"react":218}],240:[function(require,module,exports){
+},{"../styles":259,"../utils/Lotus.react":261,"../utils/n":264,"./ResultsTable":252,"react":218}],241:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41477,7 +41567,7 @@ var DetailedAnalysis = function (_React$Component) {
 
 module.exports = DetailedAnalysis;
 
-},{"../../src/analyzeBattleEffectiveness":220,"../../src/best-moves":221,"../styles":258,"../utils/Lotus.react":260,"../utils/n":263,"./MoveCombos":246,"./ResultsTable":251,"react":218}],241:[function(require,module,exports){
+},{"../../src/analyzeBattleEffectiveness":220,"../../src/best-moves":221,"../styles":259,"../utils/Lotus.react":261,"../utils/n":264,"./MoveCombos":247,"./ResultsTable":252,"react":218}],242:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
 var pokemonActions = require('../actions/pokemonActions');
@@ -41492,7 +41582,7 @@ function FormPokemonLevel(props) {
 
 module.exports = FormPokemonLevel;
 
-},{"../actions/pokemonActions":236,"../utils/Lotus.react":260,"../utils/n":263}],242:[function(require,module,exports){
+},{"../actions/pokemonActions":237,"../utils/Lotus.react":261,"../utils/n":264}],243:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var Pokemon = require('../../json/pokemon.json');
 var Select = require('react-select');
@@ -41522,7 +41612,7 @@ function FormPokemonName(props) {
 
 module.exports = FormPokemonName;
 
-},{"../../json/pokemon.json":8,"../actions/pokemonActions":236,"../utils/Lotus.react":260,"../utils/n":263,"react-select":36}],243:[function(require,module,exports){
+},{"../../json/pokemon.json":8,"../actions/pokemonActions":237,"../utils/Lotus.react":261,"../utils/n":264,"react-select":36}],244:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var DustToLevel = require('../../json/dust-to-level.json');
 var Select = require('react-select');
@@ -41550,7 +41640,7 @@ function FormStardust(props) {
 
 module.exports = FormStardust;
 
-},{"../../json/dust-to-level.json":2,"../actions/pokemonActions":236,"../utils/Lotus.react":260,"../utils/n":263,"react-select":36}],244:[function(require,module,exports){
+},{"../../json/dust-to-level.json":2,"../actions/pokemonActions":237,"../utils/Lotus.react":261,"../utils/n":264,"react-select":36}],245:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
 var pokemonActions = require('../actions/pokemonActions');
@@ -41565,7 +41655,7 @@ function FormTrainerLevel(props) {
 
 module.exports = FormTrainerLevel;
 
-},{"../actions/pokemonActions":236,"../utils/Lotus.react":260,"../utils/n":263}],245:[function(require,module,exports){
+},{"../actions/pokemonActions":237,"../utils/Lotus.react":261,"../utils/n":264}],246:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var FormPokemonName = require('./FormPokemonName');
 var idealMatchup = require('../../src/idealMatchup');
@@ -41585,7 +41675,7 @@ function Matchup(props) {
 
 module.exports = Matchup;
 
-},{"../../src/idealMatchup":228,"../utils/Lotus.react":260,"../utils/n":263,"./FormPokemonName":242}],246:[function(require,module,exports){
+},{"../../src/idealMatchup":229,"../utils/Lotus.react":261,"../utils/n":264,"./FormPokemonName":243}],247:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
 
@@ -41605,7 +41695,7 @@ function MoveCombos(props) {
 
 module.exports = MoveCombos;
 
-},{"../utils/Lotus.react":260,"../utils/n":263}],247:[function(require,module,exports){
+},{"../utils/Lotus.react":261,"../utils/n":264}],248:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var MoveCombos = require('./MoveCombos');
 var MovesList = require('../../json/moves.json');
@@ -41689,7 +41779,7 @@ function Moves(props) {
 
 module.exports = Moves;
 
-},{"../../json/moves.json":7,"../../json/pokemon.json":8,"../../src/best-moves":221,"../actions/moveActions":235,"../utils/Lotus.react":260,"../utils/n":263,"./MoveCombos":246,"react-select":36}],248:[function(require,module,exports){
+},{"../../json/moves.json":7,"../../json/pokemon.json":8,"../../src/best-moves":221,"../actions/moveActions":236,"../utils/Lotus.react":261,"../utils/n":264,"./MoveCombos":247,"react-select":36}],249:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var DustToLevel = require('../../json/dust-to-level.json');
 var n = require('../utils/n');
@@ -41715,7 +41805,7 @@ function PowerUp(props) {
 
 module.exports = PowerUp;
 
-},{"../../json/dust-to-level.json":2,"../../src/powerup":232,"../utils/Lotus.react":260,"../utils/n":263,"./FormPokemonLevel":241,"./FormStardust":243,"./FormTrainerLevel":244}],249:[function(require,module,exports){
+},{"../../json/dust-to-level.json":2,"../../src/powerup":233,"../utils/Lotus.react":261,"../utils/n":264,"./FormPokemonLevel":242,"./FormStardust":244,"./FormTrainerLevel":245}],250:[function(require,module,exports){
 var B = require('../utils/Lotus.React');
 var FormPokemonLevel = require('./FormPokemonLevel');
 var FormPokemonName = require('./FormPokemonName');
@@ -41769,7 +41859,7 @@ function Rater(props) {
 
 module.exports = Rater;
 
-},{"../actions/pokemonActions":236,"../containers/SearchHistoryContainer":253,"../utils/Lotus.React":259,"../utils/calculateValues":261,"../utils/n":263,"./FormPokemonLevel":241,"./FormPokemonName":242,"./FormStardust":243,"./FormTrainerLevel":244,"./Results":250}],250:[function(require,module,exports){
+},{"../actions/pokemonActions":237,"../containers/SearchHistoryContainer":254,"../utils/Lotus.React":260,"../utils/calculateValues":262,"../utils/n":264,"./FormPokemonLevel":242,"./FormPokemonName":243,"./FormStardust":244,"./FormTrainerLevel":245,"./Results":251}],251:[function(require,module,exports){
 var AppraisalRefine = require('./AppraisalRefine');
 var B = require('../utils/Lotus.react');
 var DetailedAnalysis = require('./DetailedAnalysis');
@@ -41800,12 +41890,25 @@ function Results(props) {
     return a.Level > b.Level ? 1 : -1;
   }).map(function (value) {
     return n('tr', [n('td', value.Level), n('td', value.CP), n('td', value.meta.MaxLevelCP), n('td', value.HP), n('td', value.meta.MaxLevelHP)]);
+  }))])]), n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Ratings'), n(B.Table, [n('thead', [n('tr', [n('th', 'Level'), n('th', 'Overall'), n('th', props.pokemon.name)].concat(props.best.rating.type.map(function (type) {
+    return n('th', type.type);
+  })))]), n('tbody', props.values.reduce(function (o, value) {
+    if (o._[value.Level]) return o;
+    o._[value.Level] = 1;
+    o.rows.push(value);
+    return o;
+  }, { rows: [], _: {} }).rows.sort(function (a, b) {
+    return a.Level > b.Level ? 1 : -1;
+  }).map(function (value) {
+    return n('tr', [n('td', value.Level), n('td', Math.round(value.rating.overall.value)), n('td', Math.round(value.rating.pokemon.value))].concat(value.rating.type.map(function (type) {
+      return n('td', Math.round(type.rating.value));
+    })));
   }))])]), n(DetailedAnalysis, { results: props.values })]);
 }
 
 module.exports = Results;
 
-},{"../../json/finalEvolutions":3,"../../src/best-moves":221,"../actions/pokemonActions":236,"../styles":258,"../utils/Lotus.react":260,"../utils/n":263,"./AppraisalRefine":239,"./DetailedAnalysis":240,"./MoveCombos":246}],251:[function(require,module,exports){
+},{"../../json/finalEvolutions":3,"../../src/best-moves":221,"../actions/pokemonActions":237,"../styles":259,"../utils/Lotus.react":261,"../utils/n":264,"./AppraisalRefine":240,"./DetailedAnalysis":241,"./MoveCombos":247}],252:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var Styles = require('../styles');
 var n = require('../utils/n');
@@ -41832,7 +41935,7 @@ function ResultsTable(props) {
 
 module.exports = ResultsTable;
 
-},{"../styles":258,"../utils/Lotus.react":260,"../utils/n":263}],252:[function(require,module,exports){
+},{"../styles":259,"../utils/Lotus.react":261,"../utils/n":264}],253:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var Styles = require('../styles');
 var calculateValues = require('../utils/calculateValues');
@@ -41862,7 +41965,7 @@ function SearchHistory(props) {
 
 module.exports = SearchHistory;
 
-},{"../styles":258,"../utils/Lotus.react":260,"../utils/calculateValues":261,"../utils/n":263,"../utils/scrollTop":264}],253:[function(require,module,exports){
+},{"../styles":259,"../utils/Lotus.react":261,"../utils/calculateValues":262,"../utils/n":264,"../utils/scrollTop":265}],254:[function(require,module,exports){
 var SearchHistory = require('../components/SearchHistory');
 var connect = require('../utils/connect');
 var historyStore = require('../stores/HistoryStore');
@@ -41890,7 +41993,7 @@ var SearchHistoryContainer = connect(SearchHistory, {
 
 module.exports = SearchHistoryContainer;
 
-},{"../components/SearchHistory":252,"../stores/HistoryStore":255,"../utils/connect":262}],254:[function(require,module,exports){
+},{"../components/SearchHistory":253,"../stores/HistoryStore":256,"../utils/connect":263}],255:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42132,7 +42235,7 @@ localforage.getItem('pogoivcalc.trainerLevel').then(function (trainerLevel) {
   ReactDOM.render(n(Main), document.querySelector('#app'));
 });
 
-},{"./actions/pokemonActions":236,"./alt":237,"./components/Matchup":245,"./components/Moves":247,"./components/PowerUp":248,"./components/Rater":249,"./stores/InventoryStore":256,"./stores/MovesStore":257,"./styles":258,"./utils/Lotus.react":260,"./utils/calculateValues":261,"./utils/connect":262,"./utils/n":263,"./utils/scrollTop":264,"localforage":18,"react":218,"react-dom":19,"react-swipeable-views":44}],255:[function(require,module,exports){
+},{"./actions/pokemonActions":237,"./alt":238,"./components/Matchup":246,"./components/Moves":248,"./components/PowerUp":249,"./components/Rater":250,"./stores/InventoryStore":257,"./stores/MovesStore":258,"./styles":259,"./utils/Lotus.react":261,"./utils/calculateValues":262,"./utils/connect":263,"./utils/n":264,"./utils/scrollTop":265,"localforage":18,"react":218,"react-dom":19,"react-swipeable-views":44}],256:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42210,7 +42313,7 @@ var HistoryStore = function (_alt$Store) {
 
 module.exports = alt.createStore('HistoryStore', new HistoryStore());
 
-},{"../actions/historyActions":234,"../alt":237,"localforage":18}],256:[function(require,module,exports){
+},{"../actions/historyActions":235,"../alt":238,"localforage":18}],257:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42371,7 +42474,7 @@ var InventoryStore = function (_alt$Store) {
 
 module.exports = alt.createStore('InventoryStore', new InventoryStore());
 
-},{"../actions/pokemonActions":236,"../alt":237}],257:[function(require,module,exports){
+},{"../actions/pokemonActions":237,"../alt":238}],258:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42434,7 +42537,7 @@ var MovesStore = function (_alt$Store) {
 
 module.exports = alt.createStore('MovesStore', new MovesStore());
 
-},{"../actions/moveActions":235,"../alt":237}],258:[function(require,module,exports){
+},{"../actions/moveActions":236,"../alt":238}],259:[function(require,module,exports){
 module.exports = {
   main: {
     display: 'flex',
@@ -42528,7 +42631,7 @@ module.exports = {
   }
 };
 
-},{}],259:[function(require,module,exports){
+},{}],260:[function(require,module,exports){
 var n = require('./n');
 //const RN = require('react-native-web')
 //const View = RN.View
@@ -42617,7 +42720,7 @@ module.exports = {
   View: View
 };
 
-},{"./n":263}],260:[function(require,module,exports){
+},{"./n":264}],261:[function(require,module,exports){
 var n = require('./n');
 //const RN = require('react-native-web')
 //const View = RN.View
@@ -42706,7 +42809,7 @@ module.exports = {
   View: View
 };
 
-},{"./n":263}],261:[function(require,module,exports){
+},{"./n":264}],262:[function(require,module,exports){
 var inventoryStore = require('../stores/InventoryStore');
 var historyActions = require('../actions/historyActions');
 var magic = require('../../src/magic');
@@ -42734,7 +42837,7 @@ function calculateValues(nextState) {
 
 module.exports = calculateValues;
 
-},{"../../src/magic":231,"../actions/historyActions":234,"../actions/pokemonActions":236,"../stores/InventoryStore":256}],262:[function(require,module,exports){
+},{"../../src/magic":232,"../actions/historyActions":235,"../actions/pokemonActions":237,"../stores/InventoryStore":257}],263:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42822,7 +42925,7 @@ function connect(Component, o) {
 
 module.exports = connect;
 
-},{"./n":263,"react":218}],263:[function(require,module,exports){
+},{"./n":264,"react":218}],264:[function(require,module,exports){
 var React = require('react');
 
 module.exports = function () {
@@ -42852,7 +42955,7 @@ module.exports = function () {
   return n;
 }();
 
-},{"react":218}],264:[function(require,module,exports){
+},{"react":218}],265:[function(require,module,exports){
 function scrollTop() {
   if (typeof document !== 'undefined') {
     var node = document.querySelector('.pm');
@@ -42862,4 +42965,4 @@ function scrollTop() {
 
 module.exports = scrollTop;
 
-},{}]},{},[254]);
+},{}]},{},[255]);

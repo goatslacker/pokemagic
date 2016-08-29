@@ -110,6 +110,37 @@ function Results(props) {
         ]),
       ]),
 
+      n(B.View, { spacingVertical: 'md' }, [
+        n('h3', { style: Styles.resultsRow }, 'Ratings'),
+        n(B.Table, [
+          n('thead', [
+            n('tr', [
+              n('th', 'Level'),
+              n('th', 'Overall'),
+              n('th', props.pokemon.name),
+            ].concat(props.best.rating.type.map(type => (
+              n('th', type.type)
+            )))),
+          ]),
+          n('tbody', props.values.reduce((o, value) => {
+            if (o._[value.Level]) return o
+            o._[value.Level] = 1
+            o.rows.push(value)
+            return o
+          }, { rows: [], _: {} }).rows
+          .sort((a, b) => a.Level > b.Level ? 1 : -1)
+          .map((value) => (
+            n('tr', [
+              n('td', value.Level),
+              n('td', Math.round(value.rating.overall.value)),
+              n('td', Math.round(value.rating.pokemon.value)),
+            ].concat(value.rating.type.map(type => (
+              n('td', Math.round(type.rating.value))
+            ))))
+          ))),
+        ]),
+      ]),
+
       n(DetailedAnalysis, { results: props.values }),
     ])
   )
