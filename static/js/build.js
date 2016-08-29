@@ -42186,7 +42186,6 @@ var Main = function (_React$Component) {
 
         var Container = n(SwipeableViews, {
           animateTransitions: this.state.small,
-          //        axis: this.state.small ? 'x' : 'y',
           className: 'pm',
           index: this.state.selectedSlide,
           onChangeIndex: function () {
@@ -42197,11 +42196,10 @@ var Main = function (_React$Component) {
 
             return onChangeIndex;
           }(),
-          //          onSwitching: (pos, type) => console.log('Type', type, 'pos', pos),
           resistance: true,
           style: Styles.container
         }, Slides.map(function (slide) {
-          return n(B.View, { spacing: 'lg' }, [slide]);
+          return n(B.View, { spacing: 'lg', styles: Styles.scroll }, [slide]);
         }));
 
         if (this.state.small) {
@@ -42553,6 +42551,10 @@ module.exports = {
 
   container: {
     flex: 9,
+    overflow: 'hidden'
+  },
+
+  scroll: {
     overflowY: 'scroll',
     WebkitOverflowScrolling: 'touch'
   },

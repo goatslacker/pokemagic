@@ -113,18 +113,16 @@ class Main extends React.Component {
     const Container = (
       n(SwipeableViews, {
         animateTransitions: this.state.small,
-//        axis: this.state.small ? 'x' : 'y',
         className: 'pm',
         index: this.state.selectedSlide,
         onChangeIndex: (selectedSlide) => {
           this.setState({ selectedSlide })
           scrollTop()
         },
-//          onSwitching: (pos, type) => console.log('Type', type, 'pos', pos),
         resistance: true,
         style: Styles.container,
       }, Slides.map(slide => (
-        n(B.View, { spacing: 'lg' }, [slide])
+        n(B.View, { spacing: 'lg', styles: Styles.scroll }, [slide])
       )))
     )
 
