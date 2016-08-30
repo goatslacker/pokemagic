@@ -8,6 +8,8 @@ const moveActions = require('../actions/moveActions')
 const bestMovesFor = require('../../src/best-moves')
 const Styles = require('../styles')
 const getEffectiveness = require('../../src/getTypeEffectiveness').getEffectiveness
+const analyzeBattleEffectiveness = require('../../src/analyzeBattleEffectiveness')
+const InventoryStore = require('../stores/InventoryStore')
 
 const pokemonList = Pokemon.map(x => ({ label: x.name.replace(/_/g, ' '), value: x.name }))
 const movesList = pokemonList.slice()
@@ -86,13 +88,52 @@ function Pokedex(props) {
   ])
 }
 
-function Moves(props) {
+function Report(props) {
+  const level = InventoryStore.getState().trainerLevel || 20
+  const report = analyzeBattleEffectiveness({
+    name: props.pokemon.name,
+    level,
+    IndAtk: 15,
+    IndDef: 15,
+    IndSta: 15,
+  })
+
+  return n(B.View, [
+    n(B.Text, { strong: true }, 'Avg DPS'),
+    n(B.Text, { small: true }, `Level ${level} perfect IV ${props.pokemon.name}`),
+    n(B.Panel, [
+      n(B.Text, `Average DPS: ${report.bestAvgDPS.toFixed(3)}`),
+      n(B.Text, `Average TTL: ${report.bestAvgTTL.toFixed(3)}`),
+    ]),
+
+    n(B.View, { spacing: 'sm' }),
+
+    n(B.Text, { strong: true }, 'vs Table'),
+    n(B.Table, [
+      n('thead', [
+        n('tr', [
+          n('th', 'Pokemon'),
+          n('th', 'DPS'),
+          n('th', 'TTL'),
+        ]),
+      ]),
+      n('tbody', Object.keys(report.breakdown).map(pokemonName => (
+        n('tr', [
+          n('td', pokemonName),
+          n('td', report.breakdown[pokemonName].dps.toFixed(3)),
+          n('td', report.breakdown[pokemonName].ttl.toFixed(3)),
+        ])
+      ))),
+    ]),
+  ])
+}
+
+function Dex(props) {
   return (
     n(B.View, [
-      n(B.Header, 'Moveset Information'),
-      n(B.Text, 'Calculate the ideal combination movesets for your Pokemon.'),
+      n(B.Header, 'Pokemon Data'),
       n('hr'),
-      n(B.FormControl, { label: 'Moves' }, [
+      n(B.FormControl, { label: 'Pokemon Name or Move Name' }, [
         n(Select, {
           inputProps: {
             autoCorrect: 'off',
@@ -112,7 +153,10 @@ function Moves(props) {
         ])
       ),
       props.moves.length && (
-        n(MoveCombos, { moves: props.moves })
+        n(B.View, [
+          n(B.Text, { strong: true }, 'Possible Movesets'),
+          n(MoveCombos, { moves: props.moves })
+        ])
       ) || undefined,
       props.moves.Name && (
         n(B.Panel, [
@@ -134,10 +178,16 @@ function Moves(props) {
         )))
       ) || undefined,
       n('hr'),
+      Mon.hasOwnProperty(props.text) && (
+        n(B.View, [
+          n(Report, { pokemon: Mon[props.text] }),
+          n('hr'),
+        ])
+      ),
       n('h3', 'More Info'),
       n(B.Text, 'The tables above feature a combined DPS score for each possible move combination. The DPS is calculated based on neutral damage for a level 25 Pokemon with 10/10/10 IVs assuming that the Pokemon will be using their quick move constantly and their charge move immediately when it becomes available. STAB damage is taken into account as well as each move\'s animation time. You can also use this search to look up which Pokemon can learn a particular move.'),
     ])
   )
 }
 
-module.exports = Moves
+module.exports = Dex

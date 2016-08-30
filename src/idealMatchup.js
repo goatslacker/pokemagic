@@ -79,7 +79,7 @@ const idealMatchup = {
         o._[mon.name] = 1
         return o
       }, { _: {}, r: [] }).r
-      .slice(0, 10)
+      .slice(0, 20)
     )
   },
 }

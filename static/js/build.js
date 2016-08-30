@@ -40576,7 +40576,7 @@ var idealMatchup = {
         o.r.push(mon);
         o._[mon.name] = 1;
         return o;
-      }, { _: {}, r: [] }).r.slice(0, 10);
+      }, { _: {}, r: [] }).r.slice(0, 20);
     }
 
     return overall;
@@ -41597,6 +41597,8 @@ var moveActions = require('../actions/moveActions');
 var bestMovesFor = require('../../src/best-moves');
 var Styles = require('../styles');
 var getEffectiveness = require('../../src/getTypeEffectiveness').getEffectiveness;
+var analyzeBattleEffectiveness = require('../../src/analyzeBattleEffectiveness');
+var InventoryStore = require('../stores/InventoryStore');
 
 var pokemonList = Pokemon.map(function (x) {
   return { label: x.name.replace(/_/g, ' '), value: x.name };
@@ -41654,8 +41656,23 @@ function Pokedex(props) {
   }, [n(B.View, { style: Styles.stat }, [n(B.Text, 'Attack'), n(B.Text, { strong: true }, props.pokemon.stats.attack)]), n(B.View, { style: Styles.stat }, [n(B.Text, 'Defense'), n(B.Text, { strong: true }, props.pokemon.stats.defense)]), n(B.View, { style: Styles.stat }, [n(B.Text, 'Stamina'), n(B.Text, { strong: true }, props.pokemon.stats.stamina)])])]), n(B.View, { spacing: 'sm' }), n(B.Text, 'Super Effective: ' + String(fx.superEffective.join(', '))), n(B.Text, 'Not Very Effective: ' + String(fx.notEffective.join(', ')))]);
 }
 
-function Moves(props) {
-  return n(B.View, [n(B.Header, 'Moveset Information'), n(B.Text, 'Calculate the ideal combination movesets for your Pokemon.'), n('hr'), n(B.FormControl, { label: 'Moves' }, [n(Select, {
+function Report(props) {
+  var level = InventoryStore.getState().trainerLevel || 20;
+  var report = analyzeBattleEffectiveness({
+    name: props.pokemon.name,
+    level: level,
+    IndAtk: 15,
+    IndDef: 15,
+    IndSta: 15
+  });
+
+  return n(B.View, [n(B.Text, { strong: true }, 'Avg DPS'), n(B.Text, { small: true }, 'Level ' + String(level) + ' perfect IV ' + String(props.pokemon.name)), n(B.Panel, [n(B.Text, 'Average DPS: ' + String(report.bestAvgDPS.toFixed(3))), n(B.Text, 'Average TTL: ' + String(report.bestAvgTTL.toFixed(3)))]), n(B.View, { spacing: 'sm' }), n(B.Text, { strong: true }, 'vs Table'), n(B.Table, [n('thead', [n('tr', [n('th', 'Pokemon'), n('th', 'DPS'), n('th', 'TTL')])]), n('tbody', Object.keys(report.breakdown).map(function (pokemonName) {
+    return n('tr', [n('td', pokemonName), n('td', report.breakdown[pokemonName].dps.toFixed(3)), n('td', report.breakdown[pokemonName].ttl.toFixed(3))]);
+  }))])]);
+}
+
+function Dex(props) {
+  return n(B.View, [n(B.Header, 'Pokemon Data'), n('hr'), n(B.FormControl, { label: 'Pokemon Name or Move Name' }, [n(Select, {
     inputProps: {
       autoCorrect: 'off',
       autoCapitalize: 'off',
@@ -41665,7 +41682,7 @@ function Moves(props) {
     value: props.text,
     options: movesList,
     onChange: sweetMoves
-  })]), Mon.hasOwnProperty(props.text) && n(B.View, [n(Pokedex, { pokemon: Mon[props.text] }), n('hr')]), props.moves.length && n(MoveCombos, { moves: props.moves }) || undefined, props.moves.Name && n(B.Panel, [n(B.Text, 'Name: ' + String(props.moves.Name)), n(B.Text, 'Power: ' + String(props.moves.Power)), n(B.Text, 'Duration: ' + String((props.moves.DurationMs / 1000).toFixed(1)) + ' seconds'), n(B.Text, 'PPS: ' + String((props.moves.Power / (props.moves.DurationMs / 1000)).toFixed(3))), n(B.Text, 'Energy: ' + String(props.moves.EnergyDelta))]) || undefined, props.pokemon.length && n(B.Panel, props.pokemon.map(function (mon) {
+  })]), Mon.hasOwnProperty(props.text) && n(B.View, [n(Pokedex, { pokemon: Mon[props.text] }), n('hr')]), props.moves.length && n(B.View, [n(B.Text, { strong: true }, 'Possible Movesets'), n(MoveCombos, { moves: props.moves })]) || undefined, props.moves.Name && n(B.Panel, [n(B.Text, 'Name: ' + String(props.moves.Name)), n(B.Text, 'Power: ' + String(props.moves.Power)), n(B.Text, 'Duration: ' + String((props.moves.DurationMs / 1000).toFixed(1)) + ' seconds'), n(B.Text, 'PPS: ' + String((props.moves.Power / (props.moves.DurationMs / 1000)).toFixed(3))), n(B.Text, 'Energy: ' + String(props.moves.EnergyDelta))]) || undefined, props.pokemon.length && n(B.Panel, props.pokemon.map(function (mon) {
     return n(B.Image, {
       onClick: function () {
         function onClick() {
@@ -41678,12 +41695,12 @@ function Moves(props) {
       height: 60,
       width: 60
     });
-  })) || undefined, n('hr'), n('h3', 'More Info'), n(B.Text, 'The tables above feature a combined DPS score for each possible move combination. The DPS is calculated based on neutral damage for a level 25 Pokemon with 10/10/10 IVs assuming that the Pokemon will be using their quick move constantly and their charge move immediately when it becomes available. STAB damage is taken into account as well as each move\'s animation time. You can also use this search to look up which Pokemon can learn a particular move.')]);
+  })) || undefined, n('hr'), Mon.hasOwnProperty(props.text) && n(B.View, [n(Report, { pokemon: Mon[props.text] }), n('hr')]), n('h3', 'More Info'), n(B.Text, 'The tables above feature a combined DPS score for each possible move combination. The DPS is calculated based on neutral damage for a level 25 Pokemon with 10/10/10 IVs assuming that the Pokemon will be using their quick move constantly and their charge move immediately when it becomes available. STAB damage is taken into account as well as each move\'s animation time. You can also use this search to look up which Pokemon can learn a particular move.')]);
 }
 
-module.exports = Moves;
+module.exports = Dex;
 
-},{"../../json/moves.json":7,"../../json/pokemon.json":8,"../../src/best-moves":221,"../../src/getTypeEffectiveness":226,"../actions/moveActions":236,"../styles":259,"../utils/Lotus.react":261,"../utils/n":264,"./MoveCombos":248,"react-select":36}],243:[function(require,module,exports){
+},{"../../json/moves.json":7,"../../json/pokemon.json":8,"../../src/analyzeBattleEffectiveness":220,"../../src/best-moves":221,"../../src/getTypeEffectiveness":226,"../actions/moveActions":236,"../stores/InventoryStore":257,"../styles":259,"../utils/Lotus.react":261,"../utils/n":264,"./MoveCombos":248,"react-select":36}],243:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
 var pokemonActions = require('../actions/pokemonActions');
