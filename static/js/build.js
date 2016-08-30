@@ -41777,9 +41777,6 @@ var FormPokemonName = require('./FormPokemonName');
 var idealMatchup = require('../../src/idealMatchup');
 var n = require('../utils/n');
 
-// TODO present this in a better format.
-// It sucks to see the same pokemon on the list many times. I'd rather have
-// a list of uniques because I might not have many of these Pokemon
 function Matchup(props) {
   var matchups = props.name ? idealMatchup.overall(props.name) : [];
   return n(B.View, [n(B.Header, 'Ideal Matchup'), n(B.Text, 'This is calculated based on the opposing Pokemon\'s type and assuming the opponent has the best possible moveset combination for their Pokemon. The results do not include legendaries. Pokemon type effectiveness and resistances are also taken into account.'), n('hr'), n(FormPokemonName, { name: props.name }), matchups.length ? n(B.Table, {
@@ -41969,35 +41966,43 @@ module.exports = ResultsTable;
 
 },{"../styles":259,"../utils/Lotus.react":261,"../utils/n":264}],253:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
+var Select = require('react-select');
 var Styles = require('../styles');
 var calculateValues = require('../utils/calculateValues');
 var n = require('../utils/n');
 var scrollTop = require('../utils/scrollTop');
 
-function fromHistory(search) {
-  calculateValues(search);
-  scrollTop();
+function fromHistory(ev) {
+  if (ev) {
+    calculateValues(ev.value);
+    scrollTop();
+  }
 }
 
-// TODO input for searching/sorting
-// showing N or X in history
 function SearchHistory(props) {
-  return n(B.View, [n('h3', { style: Styles.resultsRow }, 'Recent Searches'), n(B.View, props.searches.map(function (search) {
-    return n(B.Panel, [n('a', {
-      onClick: function () {
-        function onClick() {
-          return fromHistory(search);
-        }
+  var options = props.searches.reduceRight(function (arr, search) {
+    return arr.concat({
+      label: String(search.name) + ' ' + String(search.cp) + 'CP ' + String(search.hp) + 'HP',
+      value: search
+    });
+  }, []);
 
-        return onClick;
-      }()
-    }, String(search.name) + ' ' + String(search.cp) + 'CP ' + String(search.hp) + 'HP')]);
-  }))]);
+  return n(B.View, [n(B.FormControl, { label: 'Recent Searches' }, [n(Select, {
+    inputProps: {
+      autoCorrect: 'off',
+      autoCapitalize: 'off',
+      spellCheck: 'off'
+    },
+    name: 'history',
+    value: '',
+    options: options,
+    onChange: fromHistory
+  })])]);
 }
 
 module.exports = SearchHistory;
 
-},{"../styles":259,"../utils/Lotus.react":261,"../utils/calculateValues":262,"../utils/n":264,"../utils/scrollTop":265}],254:[function(require,module,exports){
+},{"../styles":259,"../utils/Lotus.react":261,"../utils/calculateValues":262,"../utils/n":264,"../utils/scrollTop":265,"react-select":36}],254:[function(require,module,exports){
 var SearchHistory = require('../components/SearchHistory');
 var connect = require('../utils/connect');
 var historyStore = require('../stores/HistoryStore');
