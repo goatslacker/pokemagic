@@ -42231,7 +42231,7 @@ var Main = function (_React$Component) {
           resistance: true,
           style: Styles.container
         }, Slides.map(function (slide) {
-          return n(B.View, { spacing: 'lg', styles: Styles.scroll }, [slide]);
+          return n(B.View, { spacing: 'lg' }, [slide]);
         }));
 
         if (this.state.small) {
@@ -42583,10 +42583,6 @@ module.exports = {
 
   container: {
     flex: 9,
-    overflow: 'hidden'
-  },
-
-  scroll: {
     overflowY: 'scroll',
     WebkitOverflowScrolling: 'touch'
   },

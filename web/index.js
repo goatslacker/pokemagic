@@ -122,7 +122,7 @@ class Main extends React.Component {
         resistance: true,
         style: Styles.container,
       }, Slides.map(slide => (
-        n(B.View, { spacing: 'lg', styles: Styles.scroll }, [slide])
+        n(B.View, { spacing: 'lg' }, [slide])
       )))
     )
 

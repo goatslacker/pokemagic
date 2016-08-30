@@ -13,10 +13,6 @@ module.exports = {
 
   container: {
     flex: 9,
-    overflow: 'hidden',
-  },
-
-  scroll: {
     overflowY: 'scroll',
     WebkitOverflowScrolling: 'touch',
   },
