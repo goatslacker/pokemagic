@@ -41342,7 +41342,7 @@ var AppraisalRefine = function (_React$Component) {
     _this.state = {
       show: false,
       range: null,
-      stats: null
+      attrs: []
     };
     _this.handleChange = _this.handleChange.bind(_this);
     return _this;
@@ -41358,9 +41358,11 @@ var AppraisalRefine = function (_React$Component) {
           });
         }
 
-        if (ev.currentTarget.name === 'stats') {
+        if (ev.currentTarget.name === 'attr') {
           this.setState({
-            stats: STATS_RANGE[ev.currentTarget.value]
+            attrs: this.state.attrs.concat(ev.currentTarget.value).filter(function (attr) {
+              return attr === ev.currentTarget.value ? ev.currentTarget.checked : true;
+            })
           });
         }
       }
@@ -41381,10 +41383,14 @@ var AppraisalRefine = function (_React$Component) {
             rangeCheck = result.percent.PerfectIV >= _this2.state.range[0] && result.percent.PerfectIV <= _this2.state.range[1];
           }
 
-          if (_this2.state.stats !== null) {
-            statCheck = _this2.state.stats.some(function (stat) {
-              return result.ivs.IndAtk === stat || result.ivs.IndDef === stat || result.ivs.IndSta === stat;
-            });
+          if (_this2.state.attrs.length) {
+            (function () {
+              var maxiv = Math.max(result.ivs.IndAtk, result.ivs.IndDef, result.ivs.IndSta);
+
+              statCheck = _this2.state.attrs.every(function (attr) {
+                return result.ivs[attr] === maxiv;
+              });
+            })();
           }
 
           return rangeCheck && statCheck;
@@ -41419,27 +41425,22 @@ var AppraisalRefine = function (_React$Component) {
           type: 'radio',
           value: 'ugly',
           onChange: this.handleChange
-        }), ' Overall, your ' + String(name) + ' may not be great in battle, but I still like it!'])]), n(B.FormControl, { label: 'Stats' }, [n(B.Text, [n(B.Input, {
-          name: 'stats',
-          type: 'radio',
-          value: 'great',
+        }), ' Overall, your ' + String(name) + ' may not be great in battle, but I still like it!'])]), n(B.FormControl, { label: 'Attribute' }, [n(B.Text, [n(B.Input, {
+          name: 'attr',
+          type: 'checkbox',
+          value: 'IndAtk',
           onChange: this.handleChange
-        }), ' It\'s got excellent stats! How exciting!']), n(B.Text, [n(B.Input, {
-          name: 'stats',
-          type: 'radio',
-          value: 'good',
+        }), ' Attack']), n(B.Text, [n(B.Input, {
+          name: 'attr',
+          type: 'checkbox',
+          value: 'IndDef',
           onChange: this.handleChange
-        }), ' I\'m blown away by its stats. WOW!']), n(B.Text, [n(B.Input, {
-          name: 'stats',
-          type: 'radio',
-          value: 'bad',
+        }), ' Defense']), n(B.Text, [n(B.Input, {
+          name: 'attr',
+          type: 'checkbox',
+          value: 'IndSta',
           onChange: this.handleChange
-        }), ' Its stats indicate that in battle, it\'ll get the job done.']), n(B.Text, [n(B.Input, {
-          name: 'stats',
-          type: 'radio',
-          value: 'ugly',
-          onChange: this.handleChange
-        }), ' Its stats don\'t point to greatness in battle.'])])]);
+        }), ' HP'])])]);
       }
 
       return renderAppraisalOptions;

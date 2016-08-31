@@ -24,7 +24,7 @@ class AppraisalRefine extends React.Component {
     this.state = {
       show: false,
       range: null,
-      stats: null,
+      attrs: [],
     }
     this.handleChange = this.handleChange.bind(this)
   }
@@ -36,9 +36,11 @@ class AppraisalRefine extends React.Component {
       })
     }
 
-    if (ev.currentTarget.name === 'stats') {
+    if (ev.currentTarget.name === 'attr') {
       this.setState({
-        stats: STATS_RANGE[ev.currentTarget.value],
+        attrs: this.state.attrs.concat(ev.currentTarget.value).filter(attr => (
+          attr === ev.currentTarget.value ? ev.currentTarget.checked : true
+        ))
       })
     }
   }
@@ -55,12 +57,14 @@ class AppraisalRefine extends React.Component {
         )
       }
 
-      if (this.state.stats !== null) {
-        statCheck = this.state.stats.some(stat => (
-          result.ivs.IndAtk === stat ||
-          result.ivs.IndDef === stat ||
-          result.ivs.IndSta === stat
-        ))
+      if (this.state.attrs.length) {
+        const maxiv = Math.max(
+          result.ivs.IndAtk,
+          result.ivs.IndDef,
+          result.ivs.IndSta
+        )
+
+        statCheck = this.state.attrs.every(attr => result.ivs[attr] === maxiv)
       }
 
       return rangeCheck && statCheck
@@ -109,42 +113,33 @@ class AppraisalRefine extends React.Component {
           ` Overall, your ${name} may not be great in battle, but I still like it!`,
         ]),
       ]),
-      n(B.FormControl, { label: 'Stats' }, [
+      n(B.FormControl, { label: 'Attribute' }, [
         n(B.Text, [
           n(B.Input, {
-            name: 'stats',
-            type: 'radio',
-            value: 'great',
+            name: 'attr',
+            type: 'checkbox',
+            value: 'IndAtk',
             onChange: this.handleChange,
           }),
-          ' It\'s got excellent stats! How exciting!',
+          ' Attack',
         ]),
         n(B.Text, [
           n(B.Input, {
-            name: 'stats',
-            type: 'radio',
-            value: 'good',
+            name: 'attr',
+            type: 'checkbox',
+            value: 'IndDef',
             onChange: this.handleChange,
           }),
-          ' I\'m blown away by its stats. WOW!',
+          ' Defense',
         ]),
         n(B.Text, [
           n(B.Input, {
-            name: 'stats',
-            type: 'radio',
-            value: 'bad',
+            name: 'attr',
+            type: 'checkbox',
+            value: 'IndSta',
             onChange: this.handleChange,
           }),
-          ' Its stats indicate that in battle, it\'ll get the job done.',
-        ]),
-        n(B.Text, [
-          n(B.Input, {
-            name: 'stats',
-            type: 'radio',
-            value: 'ugly',
-            onChange: this.handleChange,
-          }),
-          ' Its stats don\'t point to greatness in battle.',
+          ' HP',
         ]),
       ]),
     ])
