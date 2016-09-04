@@ -613,6 +613,10 @@ module.exports=[
   {
     "name": "NIDOKING",
     "tier": 6
+  },
+  {
+    "name": "PIDGEOT",
+    "tier": 7
   }
 ]
 
@@ -39741,27 +39745,20 @@ function analyzeBattleEffectiveness(obj) {
   });
 
   var idealDefenders = defenders.filter(function (opponent) {
-    var opponentOk1 = opponent.moves1.every(function (move) {
+    var opponentOk1 = opponent.moves1.some(function (move) {
       return getTypeEffectiveness(player, move) <= 1;
     });
-    if (!opponentOk1) return false;
-
     var opponentOk2 = opponent.moves2.every(function (move) {
       return getTypeEffectiveness(player, move) <= 1;
     });
-    if (!opponentOk2) return false;
-
-    var playerOk1 = player.moves1.every(function (move) {
+    var playerOk1 = player.moves1.some(function (move) {
       return getTypeEffectiveness(opponent, move) >= 1;
     });
-    if (!playerOk1) return false;
-
     var playerOk2 = player.moves2.every(function (move) {
       return getTypeEffectiveness(opponent, move) >= 1;
     });
-    if (!playerOk2) return false;
 
-    return true;
+    return opponentOk1 && opponentOk2 && playerOk1 && playerOk2;
   });
 
   // Get the average DPS of each move

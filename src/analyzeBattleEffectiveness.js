@@ -51,19 +51,12 @@ function analyzeBattleEffectiveness(obj) {
   }).sort((a, b) => a.best.ttl > b.best.ttl ? -1 : 1)
 
   const idealDefenders = defenders.filter((opponent) => {
-    const opponentOk1 = opponent.moves1.every(move => getTypeEffectiveness(player, move) <= 1)
-    if (!opponentOk1) return false
-
+    const opponentOk1 = opponent.moves1.some(move => getTypeEffectiveness(player, move) <= 1)
     const opponentOk2 = opponent.moves2.every(move => getTypeEffectiveness(player, move) <= 1)
-    if (!opponentOk2) return false
-
-    const playerOk1 = player.moves1.every(move => getTypeEffectiveness(opponent, move) >= 1)
-    if (!playerOk1) return false
-
+    const playerOk1 = player.moves1.some(move => getTypeEffectiveness(opponent, move) >= 1)
     const playerOk2 = player.moves2.every(move => getTypeEffectiveness(opponent, move) >= 1)
-    if (!playerOk2) return false
 
-    return true
+    return opponentOk1 && opponentOk2 && playerOk1 && playerOk2
   })
 
   // Get the average DPS of each move
