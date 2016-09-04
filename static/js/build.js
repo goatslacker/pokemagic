@@ -42081,7 +42081,7 @@ var pokemonActions = require('../actions/pokemonActions');
 function Results(props) {
   var bestMoves = null;
   if (finalEvolutions[props.pokemon.name]) {
-    bestMoves = bestMovesFor(props.pokemon.name, props.best.ivs.IndAtk);
+    bestMoves = bestMovesFor(props.pokemon.name, props.best.level, props.best.ivs.IndAtk);
   }
 
   console.log(props);
