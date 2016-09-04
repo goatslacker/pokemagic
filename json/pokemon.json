@@ -2297,13 +2297,23 @@
         "DPS": 8.012820512820513
       },
       {
+        "Id": 86,
+        "Name": "DAZZLING_GLEAM",
+        "Type": "FAIRY",
+        "Power": 55,
+        "DurationMs": 4200,
+        "Energy": -33,
+        "DPS": 16.36904761904762
+      },
+      {
         "Id": 88,
         "Name": "PLAY_ROUGH",
         "Type": "FAIRY",
         "Power": 55,
         "DurationMs": 2900,
         "Energy": -50,
-        "DPS": 23.706896551724135
+        "DPS": 23.706896551724135,
+        "retired": true
       }
     ]
   },
@@ -2941,7 +2951,17 @@
         "Power": 6,
         "DurationMs": 550,
         "Energy": 7,
-        "DPS": 13.636363636363635
+        "DPS": 13.636363636363635,
+        "retired": true
+      },
+      {
+        "Id": 233,
+        "Name": "MUD_SLAP_FAST",
+        "Type": "GROUND",
+        "Power": 15,
+        "DurationMs": 1350,
+        "Energy": 9,
+        "DPS": 11.11111111111111
       },
       {
         "Id": 220,
@@ -3001,7 +3021,17 @@
         "Power": 6,
         "DurationMs": 550,
         "Energy": 7,
-        "DPS": 13.636363636363635
+        "DPS": 13.636363636363635,
+        "retired": true
+      },
+      {
+        "Id": 233,
+        "Name": "MUD_SLAP_FAST",
+        "Type": "GROUND",
+        "Power": 15,
+        "DurationMs": 1350,
+        "Energy": 9,
+        "DPS": 11.11111111111111
       },
       {
         "Id": 203,
@@ -4455,7 +4485,17 @@
         "Power": 6,
         "DurationMs": 550,
         "Energy": 7,
-        "DPS": 13.636363636363635
+        "DPS": 13.636363636363635,
+        "retired": true
+      },
+      {
+        "Id": 233,
+        "Name": "MUD_SLAP_FAST",
+        "Type": "GROUND",
+        "Power": 15,
+        "DurationMs": 1350,
+        "Energy": 9,
+        "DPS": 11.11111111111111
       },
       {
         "Id": 227,
@@ -4516,7 +4556,8 @@
         "Power": 6,
         "DurationMs": 550,
         "Energy": 7,
-        "DPS": 13.636363636363635
+        "DPS": 13.636363636363635,
+        "retired": true
       },
       {
         "Id": 227,
@@ -4526,6 +4567,15 @@
         "DurationMs": 1360,
         "Energy": 7,
         "DPS": 11.02941176470588
+      },
+      {
+        "Id": 233,
+        "Name": "MUD_SLAP_FAST",
+        "Type": "GROUND",
+        "Power": 15,
+        "DurationMs": 1350,
+        "Energy": 9,
+        "DPS": 11.11111111111111
       }
     ],
     "moves2": [
@@ -5137,7 +5187,17 @@
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
-        "DPS": 15
+        "DPS": 15,
+        "retired": true
+      },
+      {
+        "Id": 212,
+        "Name": "LICK_FAST",
+        "Type": "GHOST",
+        "Power": 5,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12.5
       }
     ],
     "moves2": [
@@ -5250,7 +5310,17 @@
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
-        "DPS": 11.904761904761905
+        "DPS": 11.904761904761905,
+        "retired": true
+      },
+      {
+        "Id": 224,
+        "Name": "POISON_JAB_FAST",
+        "Type": "POISON",
+        "Power": 15,
+        "DurationMs": 1050,
+        "Energy": 7,
+        "DPS": 17.857142857142854
       },
       {
         "Id": 233,
@@ -5310,7 +5380,17 @@
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
-        "DPS": 11.904761904761905
+        "DPS": 11.904761904761905,
+        "retired": true
+      },
+      {
+        "Id": 212,
+        "Name": "LICK_FAST",
+        "Type": "GHOST",
+        "Power": 5,
+        "DurationMs": 500,
+        "Energy": 7,
+        "DPS": 12.5
       },
       {
         "Id": 224,
@@ -5649,13 +5729,23 @@
         "DPS": 18.26298701298701
       },
       {
+        "Id": 90,
+        "Name": "SLUDGE_BOMB",
+        "Type": "POISON",
+        "Power": 55,
+        "DurationMs": 2600,
+        "Energy": -50,
+        "DPS": 26.442307692307693
+      },
+      {
         "Id": 91,
         "Name": "SLUDGE_WAVE",
         "Type": "POISON",
         "Power": 70,
         "DurationMs": 3400,
         "Energy": -100,
-        "DPS": 25.73529411764706
+        "DPS": 25.73529411764706,
+        "retired": true
       }
     ]
   },
@@ -6526,7 +6616,8 @@
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
-        "DPS": 11.904761904761905
+        "DPS": 11.904761904761905,
+        "retired": true
       },
       {
         "Id": 221,
@@ -6586,7 +6677,8 @@
         "Power": 10,
         "DurationMs": 1050,
         "Energy": 7,
-        "DPS": 11.904761904761905
+        "DPS": 11.904761904761905,
+        "retired": true
       },
       {
         "Id": 221,
@@ -6792,13 +6884,23 @@
         "DPS": 13.095238095238095
       },
       {
+        "Id": 14,
+        "Name": "HYPER_BEAM",
+        "Type": "NORMAL",
+        "Power": 120,
+        "DurationMs": 5000,
+        "Energy": -100,
+        "DPS": 24
+      },
+      {
         "Id": 30,
         "Name": "PSYBEAM",
         "Type": "PSYCHIC",
         "Power": 40,
         "DurationMs": 3800,
         "Energy": -25,
-        "DPS": 10.526315789473685
+        "DPS": 10.526315789473685,
+        "retired": true
       },
       {
         "Id": 108,
@@ -7183,7 +7285,8 @@
         "Power": 10,
         "DurationMs": 1330,
         "Energy": 7,
-        "DPS": 7.518796992481203
+        "DPS": 7.518796992481203,
+        "retired": true
       },
       {
         "Id": 230,
@@ -7282,7 +7385,17 @@
         "Power": 40,
         "DurationMs": 3800,
         "Energy": -25,
-        "DPS": 13.157894736842106
+        "DPS": 13.157894736842106,
+        "retired": true
+      },
+      {
+        "Id": 108,
+        "Name": "PSYCHIC",
+        "Type": "PSYCHIC",
+        "Power": 55,
+        "DurationMs": 2800,
+        "Energy": -50,
+        "DPS": 24.553571428571427
       }
     ]
   },
@@ -7770,7 +7883,8 @@
         "Power": 6,
         "DurationMs": 500,
         "Energy": 7,
-        "DPS": 12
+        "DPS": 12,
+        "retired": true
       }
     ],
     "moves2": [
@@ -8252,7 +8366,17 @@
         "Power": 12,
         "DurationMs": 1360,
         "Energy": 7,
-        "DPS": 11.02941176470588
+        "DPS": 11.02941176470588,
+        "retired": true
+      },
+      {
+        "Id": 216,
+        "Name": "MUD_SHOT_FAST",
+        "Type": "GROUND",
+        "Power": 6,
+        "DurationMs": 550,
+        "Energy": 7,
+        "DPS": 10.909090909090908
       },
       {
         "Id": 230,
@@ -8951,6 +9075,15 @@
         "DPS": 18.055555555555554
       },
       {
+        "Id": 40,
+        "Name": "BLIZZARD",
+        "Type": "ICE",
+        "Power": 100,
+        "DurationMs": 3900,
+        "Energy": -100,
+        "DPS": 25.641025641025642
+      },
+      {
         "Id": 31,
         "Name": "EARTHQUAKE",
         "Type": "GROUND",
@@ -8975,7 +9108,8 @@
         "Power": 80,
         "DurationMs": 3200,
         "Energy": -100,
-        "DPS": 25
+        "DPS": 25,
+        "retired": true
       },
       {
         "Id": 14,
@@ -8993,7 +9127,8 @@
         "Power": 85,
         "DurationMs": 4100,
         "Energy": -100,
-        "DPS": 20.731707317073173
+        "DPS": 20.731707317073173,
+        "retired": true
       },
       {
         "Id": 108,
