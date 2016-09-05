@@ -40039,7 +40039,7 @@ function bestMovesFor(pokemonName, pokemonLevel, IndAtk, IndDef, IndSta) {
 
 module.exports = bestMovesFor;
 
-//console.log(bestMovesFor('omastar'))
+//console.log(bestMovesFor('arcanine', 26))
 
 },{"../json/pokemon":8,"./analyzeBattleEffectiveness":220}],222:[function(require,module,exports){
 var Pokemon = require('../json/pokemon');
@@ -42081,7 +42081,7 @@ var pokemonActions = require('../actions/pokemonActions');
 function Results(props) {
   var bestMoves = null;
   if (finalEvolutions[props.pokemon.name]) {
-    bestMoves = bestMovesFor(props.pokemon.name, props.best.level, props.best.ivs.IndAtk);
+    bestMoves = bestMovesFor(props.pokemon.name, props.best.Level, props.best.ivs.IndAtk);
   }
 
   console.log(props);

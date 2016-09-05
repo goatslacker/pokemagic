@@ -41,4 +41,4 @@ function bestMovesFor(pokemonName, pokemonLevel, IndAtk, IndDef, IndSta) {
 
 module.exports = bestMovesFor
 
-//console.log(bestMovesFor('omastar'))
+//console.log(bestMovesFor('arcanine', 26))
