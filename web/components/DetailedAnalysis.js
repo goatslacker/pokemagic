@@ -8,11 +8,12 @@ const n = require('../utils/n')
 const React = require('react')
 
 class DetailedAnalysis extends React.Component {
-  constructor() {
+  constructor(props) {
     super()
+
     this.state = {
       show: false,
-      ivs: null,
+      ivs: props.results.length === 1 ? props.results[0] : null,
       moveset: null,
     }
   }

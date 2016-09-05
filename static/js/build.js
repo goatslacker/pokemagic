@@ -41646,14 +41646,14 @@ var React = require('react');
 var DetailedAnalysis = function (_React$Component) {
   _inherits(DetailedAnalysis, _React$Component);
 
-  function DetailedAnalysis() {
+  function DetailedAnalysis(props) {
     _classCallCheck(this, DetailedAnalysis);
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(DetailedAnalysis).call(this));
 
     _this.state = {
       show: false,
-      ivs: null,
+      ivs: props.results.length === 1 ? props.results[0] : null,
       moveset: null
     };
     return _this;
@@ -42549,10 +42549,10 @@ var InventoryStore = function (_alt$Store) {
 
     _this.bindActions(pokemonActions);
     _this.state = {
-      name: 'VAPOREON',
-      cp: 2193,
-      hp: 185,
-      stardust: 4500,
+      name: 'ARCANINE',
+      cp: 2207,
+      hp: 129,
+      stardust: 4000,
       trainerLevel: 28,
       level: 0,
       results: null,
