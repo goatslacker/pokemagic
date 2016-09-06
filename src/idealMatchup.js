@@ -45,7 +45,13 @@ const idealMatchup = {
       }, [])
       .filter(isNotLegendary)
       .sort(lowerIsBetter)
-      .slice(0, 10)
+      .reduce((o, mon) => {
+        if (o._[mon.name]) return o
+        o.r.push(mon)
+        o._[mon.name] = 1
+        return o
+      }, { _: {}, r: [] }).r
+      .slice(0, 15)
     )
   },
 

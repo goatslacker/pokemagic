@@ -40685,7 +40685,12 @@ var idealMatchup = {
           });
         });
         return arr;
-      }, []).filter(isNotLegendary).sort(lowerIsBetter).slice(0, 10);
+      }, []).filter(isNotLegendary).sort(lowerIsBetter).reduce(function (o, mon) {
+        if (o._[mon.name]) return o;
+        o.r.push(mon);
+        o._[mon.name] = 1;
+        return o;
+      }, { _: {}, r: [] }).r.slice(0, 15);
     }
 
     return attacking;
@@ -41945,11 +41950,11 @@ var idealMatchup = require('../../src/idealMatchup');
 var n = require('../utils/n');
 
 function Matchup(props) {
-  var matchups = props.name ? idealMatchup.overall(props.name) : [];
+  var matchups = props.name ? idealMatchup.attacking(props.name) : [];
   return n(B.View, [n(B.Header, 'Ideal Matchup'), n(B.Text, 'This is calculated based on the opposing Pokemon\'s type and assuming the opponent has the best possible moveset combination for their Pokemon. The results do not include legendaries. Pokemon type effectiveness and resistances are also taken into account.'), n('hr'), n(FormPokemonName, { name: props.name }), matchups.length ? n(B.Table, {
     border: true
   }, [n('thead', [n('tr', [n('th', 'Name'), n('th', 'Moves')])]), n('tbody', matchups.map(function (value) {
-    return n('tr', [n('td', [n(B.Text, { strong: true }, value.name), n(B.Text, String(value.net.toFixed(3)) + ' Net TTL')]), n('td', [n(B.Text, value.quick), n(B.Text, value.charge)])]);
+    return n('tr', [n('td', [n(B.Text, { strong: true }, value.name), n(B.Text, String(value.score.toFixed(3)) + ' Opp TTL')]), n('td', [n(B.Text, value.quick), n(B.Text, value.charge)])]);
   }))]) : undefined]);
 }
 

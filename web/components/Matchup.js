@@ -4,7 +4,7 @@ const idealMatchup = require('../../src/idealMatchup')
 const n = require('../utils/n')
 
 function Matchup(props) {
-  const matchups = props.name ? idealMatchup.overall(props.name) : []
+  const matchups = props.name ? idealMatchup.attacking(props.name) : []
   return (
     n(B.View, [
       n(B.Header, 'Ideal Matchup'),
@@ -25,7 +25,7 @@ function Matchup(props) {
             n('tr', [
               n('td', [
                 n(B.Text, { strong: true }, value.name),
-                n(B.Text, `${value.net.toFixed(3)} Net TTL`),
+                n(B.Text, `${value.score.toFixed(3)} Opp TTL`),
               ]),
               n('td', [
                 n(B.Text, value.quick),
