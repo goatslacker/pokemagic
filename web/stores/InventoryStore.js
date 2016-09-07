@@ -10,7 +10,7 @@ class InventoryStore extends alt.Store {
       cp: 2207,
       hp: 129,
       stardust: 4000,
-      trainerLevel: 28,
+      trainerLevel: '',
       level: 0,
       results: null,
       processingImage: false,
