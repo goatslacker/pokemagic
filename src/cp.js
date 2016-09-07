@@ -7,13 +7,13 @@ function getCP(mon, ivs, ECpM) {
   const IndDef = ivs.def
   const IndSta = ivs.sta
 
-  return Math.floor(
+  return Math.max(10, Math.floor(
     (BaseAtk + IndAtk) *
     Math.pow(BaseDef + IndDef, 0.5) *
     Math.pow(BaseSta + IndSta, 0.5) *
     Math.pow(ECpM, 2) /
     10
-  )
+  ))
 }
 
 // The minimum CP for your Pokemon's level
