@@ -4,16 +4,18 @@ const FormPokemonName = require('./FormPokemonName')
 const FormStardust = require('./FormStardust')
 const FormTrainerLevel = require('./FormTrainerLevel')
 const Results = require('./Results')
+const SearchHistoryContainer = require('../containers/SearchHistoryContainer')
+const AppraisalContainer = require('../containers/AppraisalContainer')
 const calculateValues = require('../utils/calculateValues')
 const n = require('../utils/n')
 const pokemonActions = require('../actions/pokemonActions')
-const SearchHistoryContainer = require('../containers/SearchHistoryContainer')
 
 function Rater(props) {
   if (props.results) return n(Results, props.results)
 
   return n(B.View, [
-    n(FormTrainerLevel, { trainerLevel: props.trainerLevel }),
+    // TODO we can just ask for trainerLevel later...
+//    n(FormTrainerLevel, { trainerLevel: props.trainerLevel }),
     n(FormPokemonName, { name: props.name }),
     n(B.FormControl, { label: 'CP' }, [
       n(B.Input, {
@@ -32,7 +34,7 @@ function Rater(props) {
       }),
     ]),
     n(FormStardust, { stardust: props.stardust }),
-    n(FormPokemonLevel, { level: props.level }),
+    n(AppraisalContainer),
     n(B.Button, {
       size: 'sm',
       onClick: () => calculateValues(),

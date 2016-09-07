@@ -1,7 +1,7 @@
-const AppraisalRefine = require('./AppraisalRefine')
 const B = require('../utils/Lotus.react')
 const DetailedAnalysis = require('./DetailedAnalysis')
 const MoveCombos = require('./MoveCombos')
+const RefineResults = require('./RefineResults')
 const Styles = require('../styles')
 const bestMovesFor = require('../../src/best-moves')
 const finalEvolutions = require('../../json/finalEvolutions')
@@ -44,7 +44,7 @@ function Results(props) {
         ]),
       ]),
 
-      n(AppraisalRefine, { name: props.pokemon.name, results: props.values }),
+      n(RefineResults, { name: props.pokemon.name, results: props.values }),
 
       // We should only show best moveset if it is in its final evolved form...
       bestMoves && (

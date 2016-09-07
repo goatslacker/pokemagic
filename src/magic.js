@@ -18,51 +18,79 @@ const init = {
   iva: [Infinity, -Infinity],
   ivd: [Infinity, -Infinity],
   ivs: [Infinity, -Infinity],
-};
+}
 
 function magic(pokemon) {
-  const results = (new IvCalculator(pokemon)).results;
+  const results = (new IvCalculator(pokemon)).results
 
   if (!results.isValid()) {
-    throw new Error(results.errors.join('. '));
+    throw new Error(results.errors.join('. '))
   }
 
-  return results;
+  return results
 }
 
 function sortByBest(values) {
   return values.sort((a, b) => {
     return a.percent.PerfectIV > b.percent.PerfectIV ? -1 : 1
-  });
+  })
 }
 
 class IvResults {
   constructor(pokemon, results) {
-    this.pokemon = pokemon;
-    this.results = results;
-    this.errors = [];
+    this.pokemon = pokemon
+    this.errors = []
 
-    if (!results.length) {
+    // Filter by appraisal
+    if (pokemon.attrs || pokemon.ivRange) {
+      this.results = results.filter((result) => {
+        var rangeCheck = true
+        var statCheck = true
+
+        if (pokemon.ivRange != null) {
+          rangeCheck = (
+            result.percent.PerfectIV >= pokemon.ivRange[0] &&
+            result.percent.PerfectIV <= pokemon.ivRange[1]
+          )
+        }
+
+        if (pokemon.attrs.length) {
+          const maxiv = Math.max(
+            result.ivs.IndAtk,
+            result.ivs.IndDef,
+            result.ivs.IndSta
+          )
+
+          statCheck = pokemon.attrs.every(attr => result.ivs[attr] === maxiv)
+        }
+
+        return rangeCheck && statCheck
+      })
+    } else {
+      this.results = results
+    }
+
+    if (!this.results.length) {
       this.errors.push('I have no idea. You might have entered the wrong values.')
     }
 
-    this.bestPossible = results.reduce((best, mon) => {
+    this.bestPossible = this.results.reduce((best, mon) => {
       if (!best) return mon
       return mon.percent.PerfectIV > best.percent.PerfectIV ? mon : best
     }, null)
 
-    this.yes = results.every(isGoodPokemonForItsClass)
-    this.maybeValues = results.filter(isGoodPokemonForItsClass)
+    this.yes = this.results.every(isGoodPokemonForItsClass)
+    this.maybeValues = this.results.filter(isGoodPokemonForItsClass)
     this.maybe = this.maybeValues.length > 0
-    this.valuesRange = this.findValuesRange(results);
+    this.valuesRange = this.findValuesRange(this.results)
   }
 
   isValid() {
-    return !this.errors.length;
+    return !this.errors.length
   }
 
   toString() {
-    const response = [];
+    const response = []
 
     if (this.results.length === 1) {
       response.push('Congrats! Here are your Pokemon\'s stats')
@@ -113,7 +141,7 @@ class IvResults {
       response.push(`>> Send ${pokemonId} to Willow's grinder.`)
     }
 
-    return response;
+    return response
   }
 
   asObject() {
@@ -123,7 +151,7 @@ class IvResults {
       pokemon: this.pokemon,
       range: this.valuesRange,
       values: sortByBest(this.results),
-    };
+    }
   }
 
   findValuesRange(results) {
@@ -158,16 +186,14 @@ class IvResults {
           Math.max(v.ivs.IndSta, obj.ivs[1]),
         ],
       }
-    }, init);
+    }, init)
   }
 }
 
 class IvCalculator {
   constructor(pokemon) {
-    this.pokemon = pokemon || {};
-    this.results = new IvResults(
-      pokemon, this.calculateIvResults()
-    );
+    this.pokemon = pokemon || {}
+    this.results = new IvResults(pokemon, this.calculateIvResults())
   }
 
   calculateIvResults() {
@@ -189,7 +215,7 @@ class IvCalculator {
     return DustToLevel[this.pokemon.stardust].reduce((arr, level) => {
       const ECpM = LevelToCPM[String(level)]
       return arr.concat(guessIVs(this.pokemon, mon, ECpM))
-    }, []);
+    }, [])
   }
 }
 

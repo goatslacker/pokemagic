@@ -40899,22 +40899,47 @@ var IvResults = function () {
     _classCallCheck(this, IvResults);
 
     this.pokemon = pokemon;
-    this.results = results;
     this.errors = [];
 
-    if (!results.length) {
+    // Filter by appraisal
+    if (pokemon.attrs || pokemon.ivRange) {
+      this.results = results.filter(function (result) {
+        var rangeCheck = true;
+        var statCheck = true;
+
+        if (pokemon.ivRange != null) {
+          rangeCheck = result.percent.PerfectIV >= pokemon.ivRange[0] && result.percent.PerfectIV <= pokemon.ivRange[1];
+        }
+
+        if (pokemon.attrs.length) {
+          (function () {
+            var maxiv = Math.max(result.ivs.IndAtk, result.ivs.IndDef, result.ivs.IndSta);
+
+            statCheck = pokemon.attrs.every(function (attr) {
+              return result.ivs[attr] === maxiv;
+            });
+          })();
+        }
+
+        return rangeCheck && statCheck;
+      });
+    } else {
+      this.results = results;
+    }
+
+    if (!this.results.length) {
       this.errors.push('I have no idea. You might have entered the wrong values.');
     }
 
-    this.bestPossible = results.reduce(function (best, mon) {
+    this.bestPossible = this.results.reduce(function (best, mon) {
       if (!best) return mon;
       return mon.percent.PerfectIV > best.percent.PerfectIV ? mon : best;
     }, null);
 
-    this.yes = results.every(isGoodPokemonForItsClass);
-    this.maybeValues = results.filter(isGoodPokemonForItsClass);
+    this.yes = this.results.every(isGoodPokemonForItsClass);
+    this.maybeValues = this.results.filter(isGoodPokemonForItsClass);
     this.maybe = this.maybeValues.length > 0;
-    this.valuesRange = this.findValuesRange(results);
+    this.valuesRange = this.findValuesRange(this.results);
   }
 
   _createClass(IvResults, [{
@@ -41175,28 +41200,35 @@ module.exports = ttlvs;
 },{"../json/level-to-cpm":5,"./dpsvs":224,"./hp":228}],235:[function(require,module,exports){
 var alt = require('../alt');
 
+var appraisalActions = alt.generateActions('AppraisalActions', ['teamSelected', 'ivRangeSet', 'attrToggled']);
+
+module.exports = appraisalActions;
+
+},{"../alt":239}],236:[function(require,module,exports){
+var alt = require('../alt');
+
 var historyActions = alt.generateActions('HistoryActions', ['pokemonChecked']);
 
 module.exports = historyActions;
 
-},{"../alt":238}],236:[function(require,module,exports){
+},{"../alt":239}],237:[function(require,module,exports){
 var alt = require('../alt');
 
 var moveActions = alt.generateActions('MoveActions', ['movesChanged', 'pokemonChanged', 'textChanged']);
 
 module.exports = moveActions;
 
-},{"../alt":238}],237:[function(require,module,exports){
+},{"../alt":239}],238:[function(require,module,exports){
 var alt = require('../alt');
 
 module.exports = alt.generateActions('InventoryActions', ['changedName', 'changedCP', 'changedHP', 'changedStardust', 'changedLevel', 'changedTrainerLevel', 'imageProcessing', 'resultsCalculated', 'resultsReset', 'trainerLevelChanged', 'valuesReset']);
 
-},{"../alt":238}],238:[function(require,module,exports){
+},{"../alt":239}],239:[function(require,module,exports){
 var Alt = require('./assets/alt.min');
 var alt = new Alt();
 module.exports = alt;
 
-},{"./assets/alt.min":239}],239:[function(require,module,exports){
+},{"./assets/alt.min":240}],240:[function(require,module,exports){
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 !function (t, n) {
@@ -41456,181 +41488,129 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   }]);
 });
 
-},{}],240:[function(require,module,exports){
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var B = require('../utils/Lotus.react');
+},{}],241:[function(require,module,exports){
+var B = require('../utils/Lotus.React');
 var React = require('react');
-var ResultsTable = require('./ResultsTable');
 var Styles = require('../styles');
 var n = require('../utils/n');
+var appraisal = require('../utils/appraisal');
+var appraisalActions = require('../actions/appraisalActions');
 
-var IV_RANGE = {
-  great: [82, 100],
-  good: [67, 81],
-  bad: [51, 66],
-  ugly: [0, 50]
+var COLORS = ['#0677ee', // Mystic
+'#f3150a', // Valor
+'#ffea00'];
+
+var Shield = function Shield(props) {
+  return n(B.Image, {
+    height: 80,
+    onClick: function () {
+      function onClick() {
+        return props.onSelect(appraisal[props.team]);
+      }
+
+      return onClick;
+    }(),
+    src: 'images/' + String(props.team.toLowerCase()) + '.png',
+    style: { opacity: props.current === appraisal[props.team] ? 1 : 0.4 }
+  });
 };
 
-var STATS_RANGE = {
-  great: [14, 15],
-  good: [12, 13],
-  bad: [8, 9, 10, 11],
-  ugly: [0, 1, 2, 3, 4, 5, 6, 7]
+var Phrase = function Phrase(props) {
+  return n(B.Link, {
+    onClick: function () {
+      function onClick() {
+        return props.onSelect(props.value);
+      }
+
+      return onClick;
+    }(),
+    style: Object.assign({
+      backgroundColor: props.range === props.value ? COLORS[props.team] : ''
+    }, Styles.box)
+  }, appraisal[props.value][props.team]);
 };
 
-var AppraisalRefine = function (_React$Component) {
-  _inherits(AppraisalRefine, _React$Component);
-
-  function AppraisalRefine() {
-    _classCallCheck(this, AppraisalRefine);
-
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AppraisalRefine).call(this));
-
-    _this.state = {
-      show: false,
-      range: null,
-      attrs: []
-    };
-    _this.handleChange = _this.handleChange.bind(_this);
-    return _this;
-  }
-
-  _createClass(AppraisalRefine, [{
-    key: 'handleChange',
-    value: function () {
-      function handleChange(ev) {
-        if (ev.currentTarget.name === 'range') {
-          this.setState({
-            range: IV_RANGE[ev.currentTarget.value]
-          });
-        }
-
-        if (ev.currentTarget.name === 'attr') {
-          this.setState({
-            attrs: this.state.attrs.concat(ev.currentTarget.value).filter(function (attr) {
-              return attr === ev.currentTarget.value ? ev.currentTarget.checked : true;
-            })
-          });
-        }
+function Appraisal(props) {
+  return n(B.View, { spacingVertical: 'md' }, [n(B.View, {
+    style: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      alignItems: 'center'
+    }
+  }, [n(Shield, {
+    current: props.team,
+    onSelect: appraisalActions.teamSelected,
+    team: 'VALOR'
+  }), n(Shield, {
+    current: props.team,
+    onSelect: appraisalActions.teamSelected,
+    team: 'MYSTIC'
+  }), n(Shield, {
+    current: props.team,
+    onSelect: appraisalActions.teamSelected,
+    team: 'INSTINCT'
+  })]), props.team !== null && n(B.View, [n(B.FormControl, { label: 'IV% Range' }, [n(Phrase, {
+    onSelect: appraisalActions.ivRangeSet,
+    range: props.ivRange,
+    team: props.team,
+    value: 'great'
+  }), n(Phrase, {
+    onSelect: appraisalActions.ivRangeSet,
+    range: props.ivRange,
+    team: props.team,
+    value: 'good'
+  }), n(Phrase, {
+    onSelect: appraisalActions.ivRangeSet,
+    range: props.ivRange,
+    team: props.team,
+    value: 'bad'
+  }), n(Phrase, {
+    onSelect: appraisalActions.ivRangeSet,
+    range: props.ivRange,
+    team: props.team,
+    value: 'ugly'
+  })]), n(B.FormControl, { label: 'Attributes' }, [n(B.View, {
+    style: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      alignItems: 'center'
+    }
+  }, [n(B.Link, {
+    onClick: function () {
+      function onClick() {
+        return appraisalActions.attrToggled('IndAtk');
       }
 
-      return handleChange;
-    }()
-  }, {
-    key: 'refine',
-    value: function () {
-      function refine(results) {
-        var _this2 = this;
-
-        return results.filter(function (result) {
-          var rangeCheck = true;
-          var statCheck = true;
-
-          if (_this2.state.range !== null) {
-            rangeCheck = result.percent.PerfectIV >= _this2.state.range[0] && result.percent.PerfectIV <= _this2.state.range[1];
-          }
-
-          if (_this2.state.attrs.length) {
-            (function () {
-              var maxiv = Math.max(result.ivs.IndAtk, result.ivs.IndDef, result.ivs.IndSta);
-
-              statCheck = _this2.state.attrs.every(function (attr) {
-                return result.ivs[attr] === maxiv;
-              });
-            })();
-          }
-
-          return rangeCheck && statCheck;
-        });
+      return onClick;
+    }(),
+    onSelect: appraisalActions.ivRangeSet,
+    style: { fontWeight: props.attrs.IndAtk ? 'bold' : '' }
+  }, 'Atk'), n(B.Link, {
+    onClick: function () {
+      function onClick() {
+        return appraisalActions.attrToggled('IndDef');
       }
 
-      return refine;
-    }()
-  }, {
-    key: 'renderAppraisalOptions',
-    value: function () {
-      function renderAppraisalOptions() {
-        var name = this.props.name;
-
-        return n(B.View, [n(B.FormControl, { label: 'IV% Range' }, [n(B.Text, [n(B.Input, {
-          name: 'range',
-          type: 'radio',
-          value: 'great',
-          onChange: this.handleChange
-        }), ' Overall, your ' + String(name) + ' simply amazes me. It can accomplish anything!']), n(B.Text, [n(B.Input, {
-          name: 'range',
-          type: 'radio',
-          value: 'good',
-          onChange: this.handleChange
-        }), ' Overall, your ' + String(name) + ' is a strong Pokemon. You should be proud!']), n(B.Text, [n(B.Input, {
-          name: 'range',
-          type: 'radio',
-          value: 'bad',
-          onChange: this.handleChange
-        }), ' Overall, your ' + String(name) + ' is a decent Pokemon.']), n(B.Text, [n(B.Input, {
-          name: 'range',
-          type: 'radio',
-          value: 'ugly',
-          onChange: this.handleChange
-        }), ' Overall, your ' + String(name) + ' may not be great in battle, but I still like it!'])]), n(B.FormControl, { label: 'Attribute' }, [n(B.Text, [n(B.Input, {
-          name: 'attr',
-          type: 'checkbox',
-          value: 'IndAtk',
-          onChange: this.handleChange
-        }), ' Attack']), n(B.Text, [n(B.Input, {
-          name: 'attr',
-          type: 'checkbox',
-          value: 'IndDef',
-          onChange: this.handleChange
-        }), ' Defense']), n(B.Text, [n(B.Input, {
-          name: 'attr',
-          type: 'checkbox',
-          value: 'IndSta',
-          onChange: this.handleChange
-        }), ' HP'])])]);
+      return onClick;
+    }(),
+    style: { fontWeight: props.attrs.IndDef ? 'bold' : '' }
+  }, 'Def'), n(B.Link, {
+    onClick: function () {
+      function onClick() {
+        return appraisalActions.attrToggled('IndSta');
       }
 
-      return renderAppraisalOptions;
-    }()
-  }, {
-    key: 'render',
-    value: function () {
-      function render() {
-        var _this3 = this;
+      return onClick;
+    }(),
+    style: { fontWeight: props.attrs.IndSta ? 'bold' : '' }
+  }, 'HP')])])])]);
+}
 
-        var results = this.refine(this.props.results);
-        var chance = Math.floor(results.filter(function (x) {
-          return x.percent.PerfectIV > 66;
-        }).length / results.length) || 0;
+module.exports = Appraisal;
 
-        return n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Possible values (' + String(results.length) + ')'), n(B.Text, { style: Styles.resultsRow }, [results.length === 1 ? n('span', 'Congrats, here are your Pokemon\'s values') : n('span', ['There are ', n('strong', results.length), ' possibilities and a ', n('strong', String(chance) + '%'), ' chance you will have a good ' + String(this.props.name) + '. ', 'Highlighted rows show even levels since you can only catch even leveled Pokemon.'])]), !this.state.show && results.length > 1 && n(B.View, { style: Styles.resultsRow }, [n(B.View, { spacing: 'sm' }), n(B.Text, 'Refine results by selecting "Appraise" from the Pokemon screen.'), n(B.Button, {
-          onClick: function () {
-            function onClick() {
-              return _this3.setState({ show: true });
-            }
-
-            return onClick;
-          }()
-        }, 'Refine Results'), n(B.View, { spacing: 'sm' })]), this.state.show && this.renderAppraisalOptions(), n(ResultsTable, { results: results })]);
-      }
-
-      return render;
-    }()
-  }]);
-
-  return AppraisalRefine;
-}(React.Component);
-
-module.exports = AppraisalRefine;
-
-},{"../styles":259,"../utils/Lotus.react":261,"../utils/n":264,"./ResultsTable":252,"react":218}],241:[function(require,module,exports){
+},{"../actions/appraisalActions":235,"../styles":264,"../utils/Lotus.React":265,"../utils/appraisal":267,"../utils/n":271,"react":218}],242:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41741,7 +41721,7 @@ var DetailedAnalysis = function (_React$Component) {
 
 module.exports = DetailedAnalysis;
 
-},{"../../src/analyzeBattleEffectiveness":220,"../../src/best-moves":221,"../styles":259,"../utils/Lotus.react":261,"../utils/n":264,"./MoveCombos":248,"./ResultsTable":252,"react":218}],242:[function(require,module,exports){
+},{"../../src/analyzeBattleEffectiveness":220,"../../src/best-moves":221,"../styles":264,"../utils/Lotus.react":266,"../utils/n":271,"./MoveCombos":249,"./ResultsTable":254,"react":218}],243:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var MoveCombos = require('./MoveCombos');
 var MovesList = require('../../json/moves.json');
@@ -41855,7 +41835,7 @@ function Dex(props) {
 
 module.exports = Dex;
 
-},{"../../json/moves.json":7,"../../json/pokemon.json":8,"../../src/analyzeBattleEffectiveness":220,"../../src/best-moves":221,"../../src/getTypeEffectiveness":226,"../actions/moveActions":236,"../stores/InventoryStore":257,"../styles":259,"../utils/Lotus.react":261,"../utils/n":264,"./MoveCombos":248,"react-select":36}],243:[function(require,module,exports){
+},{"../../json/moves.json":7,"../../json/pokemon.json":8,"../../src/analyzeBattleEffectiveness":220,"../../src/best-moves":221,"../../src/getTypeEffectiveness":226,"../actions/moveActions":237,"../stores/InventoryStore":261,"../styles":264,"../utils/Lotus.react":266,"../utils/n":271,"./MoveCombos":249,"react-select":36}],244:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
 var pokemonActions = require('../actions/pokemonActions');
@@ -41870,7 +41850,7 @@ function FormPokemonLevel(props) {
 
 module.exports = FormPokemonLevel;
 
-},{"../actions/pokemonActions":237,"../utils/Lotus.react":261,"../utils/n":264}],244:[function(require,module,exports){
+},{"../actions/pokemonActions":238,"../utils/Lotus.react":266,"../utils/n":271}],245:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var Pokemon = require('../../json/pokemon.json');
 var Select = require('react-select');
@@ -41900,7 +41880,7 @@ function FormPokemonName(props) {
 
 module.exports = FormPokemonName;
 
-},{"../../json/pokemon.json":8,"../actions/pokemonActions":237,"../utils/Lotus.react":261,"../utils/n":264,"react-select":36}],245:[function(require,module,exports){
+},{"../../json/pokemon.json":8,"../actions/pokemonActions":238,"../utils/Lotus.react":266,"../utils/n":271,"react-select":36}],246:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var DustToLevel = require('../../json/dust-to-level.json');
 var Select = require('react-select');
@@ -41928,7 +41908,7 @@ function FormStardust(props) {
 
 module.exports = FormStardust;
 
-},{"../../json/dust-to-level.json":2,"../actions/pokemonActions":237,"../utils/Lotus.react":261,"../utils/n":264,"react-select":36}],246:[function(require,module,exports){
+},{"../../json/dust-to-level.json":2,"../actions/pokemonActions":238,"../utils/Lotus.react":266,"../utils/n":271,"react-select":36}],247:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
 var pokemonActions = require('../actions/pokemonActions');
@@ -41943,7 +41923,7 @@ function FormTrainerLevel(props) {
 
 module.exports = FormTrainerLevel;
 
-},{"../actions/pokemonActions":237,"../utils/Lotus.react":261,"../utils/n":264}],247:[function(require,module,exports){
+},{"../actions/pokemonActions":238,"../utils/Lotus.react":266,"../utils/n":271}],248:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var FormPokemonName = require('./FormPokemonName');
 var idealMatchup = require('../../src/idealMatchup');
@@ -41960,7 +41940,7 @@ function Matchup(props) {
 
 module.exports = Matchup;
 
-},{"../../src/idealMatchup":229,"../utils/Lotus.react":261,"../utils/n":264,"./FormPokemonName":244}],248:[function(require,module,exports){
+},{"../../src/idealMatchup":229,"../utils/Lotus.react":266,"../utils/n":271,"./FormPokemonName":245}],249:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
 
@@ -41992,7 +41972,7 @@ function MoveCombos(props) {
 
 module.exports = MoveCombos;
 
-},{"../utils/Lotus.react":261,"../utils/n":264}],249:[function(require,module,exports){
+},{"../utils/Lotus.react":266,"../utils/n":271}],250:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var DustToLevel = require('../../json/dust-to-level.json');
 var n = require('../utils/n');
@@ -42018,22 +41998,26 @@ function PowerUp(props) {
 
 module.exports = PowerUp;
 
-},{"../../json/dust-to-level.json":2,"../../src/powerup":233,"../utils/Lotus.react":261,"../utils/n":264,"./FormPokemonLevel":243,"./FormStardust":245,"./FormTrainerLevel":246}],250:[function(require,module,exports){
+},{"../../json/dust-to-level.json":2,"../../src/powerup":233,"../utils/Lotus.react":266,"../utils/n":271,"./FormPokemonLevel":244,"./FormStardust":246,"./FormTrainerLevel":247}],251:[function(require,module,exports){
 var B = require('../utils/Lotus.React');
 var FormPokemonLevel = require('./FormPokemonLevel');
 var FormPokemonName = require('./FormPokemonName');
 var FormStardust = require('./FormStardust');
 var FormTrainerLevel = require('./FormTrainerLevel');
 var Results = require('./Results');
+var SearchHistoryContainer = require('../containers/SearchHistoryContainer');
+var AppraisalContainer = require('../containers/AppraisalContainer');
 var calculateValues = require('../utils/calculateValues');
 var n = require('../utils/n');
 var pokemonActions = require('../actions/pokemonActions');
-var SearchHistoryContainer = require('../containers/SearchHistoryContainer');
 
 function Rater(props) {
   if (props.results) return n(Results, props.results);
 
-  return n(B.View, [n(FormTrainerLevel, { trainerLevel: props.trainerLevel }), n(FormPokemonName, { name: props.name }), n(B.FormControl, { label: 'CP' }, [n(B.Input, {
+  return n(B.View, [
+  // TODO we can just ask for trainerLevel later...
+  //    n(FormTrainerLevel, { trainerLevel: props.trainerLevel }),
+  n(FormPokemonName, { name: props.name }), n(B.FormControl, { label: 'CP' }, [n(B.Input, {
     type: 'number',
     onChange: pokemonActions.changedCP,
     onClick: function () {
@@ -42055,7 +42039,7 @@ function Rater(props) {
       return onClick;
     }(),
     value: props.hp
-  })]), n(FormStardust, { stardust: props.stardust }), n(FormPokemonLevel, { level: props.level }), n(B.Button, {
+  })]), n(FormStardust, { stardust: props.stardust }), n(AppraisalContainer), n(B.Button, {
     size: 'sm',
     onClick: function () {
       function onClick() {
@@ -42072,11 +42056,94 @@ function Rater(props) {
 
 module.exports = Rater;
 
-},{"../actions/pokemonActions":237,"../containers/SearchHistoryContainer":254,"../utils/Lotus.React":260,"../utils/calculateValues":262,"../utils/n":264,"./FormPokemonLevel":243,"./FormPokemonName":244,"./FormStardust":245,"./FormTrainerLevel":246,"./Results":251}],251:[function(require,module,exports){
-var AppraisalRefine = require('./AppraisalRefine');
+},{"../actions/pokemonActions":238,"../containers/AppraisalContainer":256,"../containers/SearchHistoryContainer":257,"../utils/Lotus.React":265,"../utils/calculateValues":268,"../utils/n":271,"./FormPokemonLevel":244,"./FormPokemonName":245,"./FormStardust":246,"./FormTrainerLevel":247,"./Results":253}],252:[function(require,module,exports){
+var AppraisalContainer = require('../containers/AppraisalContainer');
+var B = require('../utils/Lotus.react');
+var ResultsTable = require('./ResultsTable');
+var Styles = require('../styles');
+var connect = require('../utils/connect');
+var n = require('../utils/n');
+var liftState = require('../utils/liftState');
+var appraisalStore = require('../stores/appraisalStore');
+
+var IV_RANGE = {
+  great: [82, 100],
+  good: [67, 81],
+  bad: [51, 66],
+  ugly: [0, 50]
+};
+
+function refine(results) {
+  var appraisal = appraisalStore.getState();
+
+  var attrs = Object.keys(appraisal.attrs);
+  var ivRange = IV_RANGE[appraisal.ivRange];
+
+  return results.filter(function (result) {
+    var rangeCheck = true;
+    var statCheck = true;
+
+    if (ivRange != null) {
+      rangeCheck = result.percent.PerfectIV >= ivRange[0] && result.percent.PerfectIV <= ivRange[1];
+    }
+
+    if (attrs.length) {
+      (function () {
+        var maxiv = Math.max(result.ivs.IndAtk, result.ivs.IndDef, result.ivs.IndSta);
+
+        statCheck = attrs.every(function (attr) {
+          return result.ivs[attr] === maxiv;
+        });
+      })();
+    }
+
+    return rangeCheck && statCheck;
+  });
+}
+
+function RefineResults(props) {
+  var results = refine(props.results);
+  var chance = Math.floor(results.filter(function (x) {
+    return x.percent.PerfectIV > 66;
+  }).length / results.length) || 0;
+
+  return n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Possible values (' + String(results.length) + ')'), n(B.Text, { style: Styles.resultsRow }, [results.length === 1 ? n('span', 'Congrats, here are your Pokemon\'s values') : n('span', ['There are ', n('strong', results.length), ' possibilities and a ', n('strong', String(chance) + '%'), ' chance you will have a good ' + String(props.name) + '. ', 'Highlighted rows show even levels since you can only catch even leveled Pokemon.'])]), !props.show && results.length > 1 && n(B.View, { style: Styles.resultsRow }, [n(B.View, { spacing: 'sm' }), n(B.Text, 'Refine results by selecting "Appraise" from the Pokemon screen.'), n(B.Button, {
+    onClick: function () {
+      function onClick() {
+        return props.setState({ show: true });
+      }
+
+      return onClick;
+    }()
+  }, 'Refine Results'), n(B.View, { spacing: 'sm' })]), props.show && n(AppraisalContainer), n(ResultsTable, { results: results })]);
+}
+
+var RefineResultsStateful = liftState({
+  show: false
+}, RefineResults);
+
+module.exports = connect(RefineResultsStateful, {
+  listenTo: function () {
+    function listenTo() {
+      return { appraisalStore: appraisalStore };
+    }
+
+    return listenTo;
+  }(),
+  getProps: function () {
+    function getProps(state, props) {
+      return props;
+    }
+
+    return getProps;
+  }()
+});
+
+},{"../containers/AppraisalContainer":256,"../stores/appraisalStore":263,"../styles":264,"../utils/Lotus.react":266,"../utils/connect":269,"../utils/liftState":270,"../utils/n":271,"./ResultsTable":254}],253:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var DetailedAnalysis = require('./DetailedAnalysis');
 var MoveCombos = require('./MoveCombos');
+var RefineResults = require('./RefineResults');
 var Styles = require('../styles');
 var bestMovesFor = require('../../src/best-moves');
 var finalEvolutions = require('../../json/finalEvolutions');
@@ -42091,7 +42158,7 @@ function Results(props) {
 
   console.log(props);
 
-  return n(B.View, [n(B.View, [n(B.Button, { size: 'sm', onClick: pokemonActions.resultsReset }, 'Check Another')]), n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n(B.Text, { style: Styles.bigText }, props.pokemon.name), n(B.Text, 'CP: ' + String(props.pokemon.cp) + ' | HP: ' + String(props.pokemon.hp)), n(B.View, { style: Styles.pokemonImage }, [n(B.Image, { src: 'images/' + String(props.pokemon.name) + '.png', height: 150, width: 150 })]), n(B.Text, { style: Styles.bigText }, props.range.iv[0] === props.range.iv[1] ? String(props.range.iv[0]) + '%' : String(props.range.iv[0]) + '% - ' + String(props.range.iv[1]) + '%'), n(B.Text, { style: Styles.resultsRow }, [props.chance === 100 ? 'Keep your ' + String(props.pokemon.cp) + 'CP ' + String(props.pokemon.name) : props.chance === 0 ? 'Send this Pokemon to the grinder for candy.' : 'Maybe you should keep this Pokemon around.'])]), n(AppraisalRefine, { name: props.pokemon.name, results: props.values }),
+  return n(B.View, [n(B.View, [n(B.Button, { size: 'sm', onClick: pokemonActions.resultsReset }, 'Check Another')]), n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n(B.Text, { style: Styles.bigText }, props.pokemon.name), n(B.Text, 'CP: ' + String(props.pokemon.cp) + ' | HP: ' + String(props.pokemon.hp)), n(B.View, { style: Styles.pokemonImage }, [n(B.Image, { src: 'images/' + String(props.pokemon.name) + '.png', height: 150, width: 150 })]), n(B.Text, { style: Styles.bigText }, props.range.iv[0] === props.range.iv[1] ? String(props.range.iv[0]) + '%' : String(props.range.iv[0]) + '% - ' + String(props.range.iv[1]) + '%'), n(B.Text, { style: Styles.resultsRow }, [props.chance === 100 ? 'Keep your ' + String(props.pokemon.cp) + 'CP ' + String(props.pokemon.name) : props.chance === 0 ? 'Send this Pokemon to the grinder for candy.' : 'Maybe you should keep this Pokemon around.'])]), n(RefineResults, { name: props.pokemon.name, results: props.values }),
 
   // We should only show best moveset if it is in its final evolved form...
   bestMoves && n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Best moveset combos for ' + String(props.pokemon.name)), n(MoveCombos, { moves: bestMoves })]), props.best.meta.EvolveCP && n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n('h3', 'Evolution'), n(B.Panel, [n(B.Text, 'If evolved it would have a CP of about ' + String(props.best.meta.EvolveCP))])]), props.best.meta.Stardust > 0 && n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n('h3', { style: Styles.resultsRow }, 'Maxing out to level ' + String(props.best.meta.MaxLevel)), props.pokemon.level === null && n(B.Text, 'Assuming that your Pokemon\'s current level is ' + String(props.best.Level) + '. The information below is just an estimate.'), n(B.View, [n(B.Panel, 'Current level: ' + String(props.best.Level)), n(B.Panel, 'Candy cost: ' + String(props.best.meta.Candy)), n(B.Panel, 'Stardust cost: ' + String(props.best.meta.Stardust)), n(B.Panel, 'CP: ' + String(props.best.meta.MaxCP)), n(B.Panel, 'HP: ' + String(props.best.meta.MaxHP))])]), n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Yours vs Perfect by level'), n(B.Table, [n('thead', [n('tr', [n('th', 'Level'), n('th', 'Your CP'), n('th', 'Best CP'), n('th', 'Your HP'), n('th', 'Best HP')])]), n('tbody', props.values.reduce(function (o, value) {
@@ -42121,7 +42188,7 @@ function Results(props) {
 
 module.exports = Results;
 
-},{"../../json/finalEvolutions":3,"../../src/best-moves":221,"../actions/pokemonActions":237,"../styles":259,"../utils/Lotus.react":261,"../utils/n":264,"./AppraisalRefine":240,"./DetailedAnalysis":241,"./MoveCombos":248}],252:[function(require,module,exports){
+},{"../../json/finalEvolutions":3,"../../src/best-moves":221,"../actions/pokemonActions":238,"../styles":264,"../utils/Lotus.react":266,"../utils/n":271,"./DetailedAnalysis":242,"./MoveCombos":249,"./RefineResults":252}],254:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var Styles = require('../styles');
 var n = require('../utils/n');
@@ -42148,7 +42215,7 @@ function ResultsTable(props) {
 
 module.exports = ResultsTable;
 
-},{"../styles":259,"../utils/Lotus.react":261,"../utils/n":264}],253:[function(require,module,exports){
+},{"../styles":264,"../utils/Lotus.react":266,"../utils/n":271}],255:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var Select = require('react-select');
 var Styles = require('../styles');
@@ -42186,7 +42253,31 @@ function SearchHistory(props) {
 
 module.exports = SearchHistory;
 
-},{"../styles":259,"../utils/Lotus.react":261,"../utils/calculateValues":262,"../utils/n":264,"../utils/scrollTop":265,"react-select":36}],254:[function(require,module,exports){
+},{"../styles":264,"../utils/Lotus.react":266,"../utils/calculateValues":268,"../utils/n":271,"../utils/scrollTop":272,"react-select":36}],256:[function(require,module,exports){
+var connect = require('../utils/connect');
+var appraisalStore = require('../stores/AppraisalStore');
+var Appraisal = require('../components/Appraisal');
+
+var AppraisalContainer = connect(Appraisal, {
+  listenTo: function () {
+    function listenTo() {
+      return { appraisalStore: appraisalStore };
+    }
+
+    return listenTo;
+  }(),
+  getProps: function () {
+    function getProps(state) {
+      return state.appraisalStore;
+    }
+
+    return getProps;
+  }()
+});
+
+module.exports = AppraisalContainer;
+
+},{"../components/Appraisal":241,"../stores/AppraisalStore":259,"../utils/connect":269}],257:[function(require,module,exports){
 var SearchHistory = require('../components/SearchHistory');
 var connect = require('../utils/connect');
 var historyStore = require('../stores/HistoryStore');
@@ -42214,7 +42305,7 @@ var SearchHistoryContainer = connect(SearchHistory, {
 
 module.exports = SearchHistoryContainer;
 
-},{"../components/SearchHistory":253,"../stores/HistoryStore":256,"../utils/connect":263}],255:[function(require,module,exports){
+},{"../components/SearchHistory":255,"../stores/HistoryStore":260,"../utils/connect":269}],258:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42446,15 +42537,116 @@ localforage.getItem('pogoivcalc.searches').then(function (searches) {
 });
 
 localforage.getItem('pogoivcalc.trainerLevel').then(function (trainerLevel) {
-  if (trainerLevel) {
-    localforage.setItem('pogoivcalc.trainerLevel', trainerLevel);
-    pokemonActions.trainerLevelChanged(trainerLevel);
-  }
+  // TODO ask for trainerLevel later...
+  //  if (trainerLevel) {
+  //    localforage.setItem('pogoivcalc.trainerLevel', trainerLevel)
+  //    pokemonActions.trainerLevelChanged(trainerLevel)
+  //  }
 
   ReactDOM.render(n(Main), document.querySelector('#app'));
 });
 
-},{"./actions/pokemonActions":237,"./alt":238,"./components/Dex":242,"./components/Matchup":247,"./components/PowerUp":249,"./components/Rater":250,"./stores/InventoryStore":257,"./stores/MovesStore":258,"./styles":259,"./utils/Lotus.react":261,"./utils/calculateValues":262,"./utils/connect":263,"./utils/n":264,"./utils/scrollTop":265,"localforage":18,"react":218,"react-dom":19,"react-swipeable-views":44}],256:[function(require,module,exports){
+},{"./actions/pokemonActions":238,"./alt":239,"./components/Dex":243,"./components/Matchup":248,"./components/PowerUp":250,"./components/Rater":251,"./stores/InventoryStore":261,"./stores/MovesStore":262,"./styles":264,"./utils/Lotus.react":266,"./utils/calculateValues":268,"./utils/connect":269,"./utils/n":271,"./utils/scrollTop":272,"localforage":18,"react":218,"react-dom":19,"react-swipeable-views":44}],259:[function(require,module,exports){
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var alt = require('../alt');
+var appraisalActions = require('../actions/appraisalActions');
+var pokemonActions = require('../actions/pokemonActions');
+
+var AppraisalStore = function (_alt$Store) {
+  _inherits(AppraisalStore, _alt$Store);
+
+  function AppraisalStore() {
+    _classCallCheck(this, AppraisalStore);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AppraisalStore).call(this));
+
+    _this.bindActions(appraisalActions);
+    _this.bindActions(pokemonActions);
+    _this.state = {
+      attrs: {},
+      ivRange: null,
+      team: null
+    };
+    return _this;
+  }
+
+  _createClass(AppraisalStore, [{
+    key: 'teamSelected',
+    value: function () {
+      function teamSelected(team) {
+        this.setState({ team: team });
+      }
+
+      return teamSelected;
+    }()
+  }, {
+    key: 'ivRangeSet',
+    value: function () {
+      function ivRangeSet(ivRange) {
+        this.setState({ ivRange: ivRange });
+      }
+
+      return ivRangeSet;
+    }()
+  }, {
+    key: 'attrToggled',
+    value: function () {
+      function attrToggled(value) {
+        var attrs = this.state.attrs;
+
+        if (attrs[value]) {
+          delete attrs[value];
+        } else {
+          attrs[value] = 1;
+        }
+
+        this.setState({ attrs: attrs });
+      }
+
+      return attrToggled;
+    }()
+  }, {
+    key: 'resultsCalculated',
+    value: function () {
+      function resultsCalculated() {
+        this._reset();
+      }
+
+      return resultsCalculated;
+    }()
+  }, {
+    key: 'valuesReset',
+    value: function () {
+      function valuesReset() {
+        this._reset();
+      }
+
+      return valuesReset;
+    }()
+  }, {
+    key: '_reset',
+    value: function () {
+      function _reset() {
+        this.setState({ attrs: {}, ivRange: null, team: null });
+      }
+
+      return _reset;
+    }()
+  }]);
+
+  return AppraisalStore;
+}(alt.Store);
+
+module.exports = alt.createStore('AppraisalStore', new AppraisalStore());
+
+},{"../actions/appraisalActions":235,"../actions/pokemonActions":238,"../alt":239}],260:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42532,7 +42724,7 @@ var HistoryStore = function (_alt$Store) {
 
 module.exports = alt.createStore('HistoryStore', new HistoryStore());
 
-},{"../actions/historyActions":235,"../alt":238,"localforage":18}],257:[function(require,module,exports){
+},{"../actions/historyActions":236,"../alt":239,"localforage":18}],261:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42558,7 +42750,7 @@ var InventoryStore = function (_alt$Store) {
       cp: 2207,
       hp: 129,
       stardust: 4000,
-      trainerLevel: 28,
+      trainerLevel: '',
       level: 0,
       results: null,
       processingImage: false
@@ -42693,7 +42885,7 @@ var InventoryStore = function (_alt$Store) {
 
 module.exports = alt.createStore('InventoryStore', new InventoryStore());
 
-},{"../actions/pokemonActions":237,"../alt":238}],258:[function(require,module,exports){
+},{"../actions/pokemonActions":238,"../alt":239}],262:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42756,7 +42948,107 @@ var MovesStore = function (_alt$Store) {
 
 module.exports = alt.createStore('MovesStore', new MovesStore());
 
-},{"../actions/moveActions":236,"../alt":238}],259:[function(require,module,exports){
+},{"../actions/moveActions":237,"../alt":239}],263:[function(require,module,exports){
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var alt = require('../alt');
+var appraisalActions = require('../actions/appraisalActions');
+var pokemonActions = require('../actions/pokemonActions');
+
+var AppraisalStore = function (_alt$Store) {
+  _inherits(AppraisalStore, _alt$Store);
+
+  function AppraisalStore() {
+    _classCallCheck(this, AppraisalStore);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AppraisalStore).call(this));
+
+    _this.bindActions(appraisalActions);
+    _this.bindActions(pokemonActions);
+    _this.state = {
+      attrs: {},
+      ivRange: null,
+      team: null
+    };
+    return _this;
+  }
+
+  _createClass(AppraisalStore, [{
+    key: 'teamSelected',
+    value: function () {
+      function teamSelected(team) {
+        this.setState({ team: team });
+      }
+
+      return teamSelected;
+    }()
+  }, {
+    key: 'ivRangeSet',
+    value: function () {
+      function ivRangeSet(ivRange) {
+        this.setState({ ivRange: ivRange });
+      }
+
+      return ivRangeSet;
+    }()
+  }, {
+    key: 'attrToggled',
+    value: function () {
+      function attrToggled(value) {
+        var attrs = this.state.attrs;
+
+        if (attrs[value]) {
+          delete attrs[value];
+        } else {
+          attrs[value] = 1;
+        }
+
+        this.setState({ attrs: attrs });
+      }
+
+      return attrToggled;
+    }()
+  }, {
+    key: 'resultsCalculated',
+    value: function () {
+      function resultsCalculated() {
+        this._reset();
+      }
+
+      return resultsCalculated;
+    }()
+  }, {
+    key: 'valuesReset',
+    value: function () {
+      function valuesReset() {
+        this._reset();
+      }
+
+      return valuesReset;
+    }()
+  }, {
+    key: '_reset',
+    value: function () {
+      function _reset() {
+        this.setState({ attrs: {}, ivRange: null, team: null });
+      }
+
+      return _reset;
+    }()
+  }]);
+
+  return AppraisalStore;
+}(alt.Store);
+
+module.exports = alt.createStore('AppraisalStore', new AppraisalStore());
+
+},{"../actions/appraisalActions":235,"../actions/pokemonActions":238,"../alt":239}],264:[function(require,module,exports){
 module.exports = {
   main: {
     display: 'flex',
@@ -42781,6 +43073,16 @@ module.exports = {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center'
+  },
+
+  box: {
+    border: '1px solid #cacaca',
+    display: 'block',
+    fontSize: '0.8em',
+    lineHeight: '1.25em',
+    margin: '0.5em 0',
+    padding: '1em',
+    textAlign: 'center'
   },
 
   baseStats: {
@@ -42871,7 +43173,7 @@ module.exports = {
   }
 };
 
-},{}],260:[function(require,module,exports){
+},{}],265:[function(require,module,exports){
 var n = require('./n');
 //const RN = require('react-native-web')
 //const View = RN.View
@@ -42960,7 +43262,7 @@ module.exports = {
   View: View
 };
 
-},{"./n":264}],261:[function(require,module,exports){
+},{"./n":271}],266:[function(require,module,exports){
 var n = require('./n');
 //const RN = require('react-native-web')
 //const View = RN.View
@@ -43049,14 +43351,41 @@ module.exports = {
   View: View
 };
 
-},{"./n":264}],262:[function(require,module,exports){
+},{"./n":271}],267:[function(require,module,exports){
+var great = ['Overall, your Pokemon is a wonder! What a breathtaking Pokemon!', 'Overall, your Pokemon simply amazes me. It can accomplish anything!', 'Overall, your Pokemon looks like it can really battle with the best of them!'];
+
+var good = ['Overall, your Pokemon has certainly caught my attention.', 'Overall, your Pokemon is a strong Pokemon. You should be proud!', 'Overall, your Pokemon is really strong!'];
+
+var bad = ['Overall, your Pokemon is above average.', 'Overall, your Pokemon is a decent Pokemon', 'Overall, your Pokemon is pretty decent!'];
+
+var ugly = ['Overall, your Pokemon is not likely to make much headway in battle', 'Overall, your Pokemon may not be great in battle, but I still like it!', 'Overall, your Pokemon has room for improvement as far as battling goes.'];
+
+var MYSTIC = 0;
+var VALOR = 1;
+var INSTINCT = 2;
+
+module.exports = {
+  MYSTIC: MYSTIC, VALOR: VALOR, INSTINCT: INSTINCT,
+  great: great, good: good, bad: bad, ugly: ugly
+};
+
+},{}],268:[function(require,module,exports){
 var inventoryStore = require('../stores/InventoryStore');
+var appraisalStore = require('../stores/AppraisalStore');
 var historyActions = require('../actions/historyActions');
 var magic = require('../../src/magic');
 var pokemonActions = require('../actions/pokemonActions');
 
+var IV_RANGE = {
+  great: [82, 100],
+  good: [67, 81],
+  bad: [51, 66],
+  ugly: [0, 50]
+};
+
 function calculateValues(nextState) {
   var state = nextState || inventoryStore.getState();
+  var appraisal = appraisalStore.getState();
   try {
     var values = {
       name: state.name,
@@ -43064,7 +43393,9 @@ function calculateValues(nextState) {
       hp: Number(state.hp),
       stardust: Number(state.stardust),
       level: state.level ? Number(state.level) : null,
-      trainerLevel: Number(state.trainerLevel) || 27
+      trainerLevel: Number(state.trainerLevel) || 38.5, // XXX hack until we start doing Math.min(trainerLevel + 1.5, 40)
+      attrs: Object.keys(appraisal.attrs),
+      ivRange: IV_RANGE[appraisal.ivRange]
     };
     var results = magic(values);
     pokemonActions.resultsCalculated(results);
@@ -43077,7 +43408,7 @@ function calculateValues(nextState) {
 
 module.exports = calculateValues;
 
-},{"../../src/magic":232,"../actions/historyActions":235,"../actions/pokemonActions":237,"../stores/InventoryStore":257}],263:[function(require,module,exports){
+},{"../../src/magic":232,"../actions/historyActions":236,"../actions/pokemonActions":238,"../stores/AppraisalStore":259,"../stores/InventoryStore":261}],269:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -43165,7 +43496,58 @@ function connect(Component, o) {
 
 module.exports = connect;
 
-},{"./n":264,"react":218}],264:[function(require,module,exports){
+},{"./n":271,"react":218}],270:[function(require,module,exports){
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = require('react');
+
+function liftState(state, Component) {
+  return function (_React$Component) {
+    _inherits(_class, _React$Component);
+
+    function _class() {
+      _classCallCheck(this, _class);
+
+      var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(_class).call(this));
+
+      _this.state = state;
+      return _this;
+    }
+
+    _createClass(_class, [{
+      key: 'render',
+      value: function () {
+        function render() {
+          var _this2 = this;
+
+          return React.createElement(Component, Object.assign({
+            setState: function () {
+              function setState(nextState) {
+                return _this2.setState(nextState);
+              }
+
+              return setState;
+            }()
+          }, this.props, this.state));
+        }
+
+        return render;
+      }()
+    }]);
+
+    return _class;
+  }(React.Component);
+}
+
+module.exports = liftState;
+
+},{"react":218}],271:[function(require,module,exports){
 var React = require('react');
 
 module.exports = function () {
@@ -43195,7 +43577,7 @@ module.exports = function () {
   return n;
 }();
 
-},{"react":218}],265:[function(require,module,exports){
+},{"react":218}],272:[function(require,module,exports){
 function scrollTop() {
   if (typeof document !== 'undefined') {
     var node = document.querySelector('.pm');
@@ -43205,4 +43587,4 @@ function scrollTop() {
 
 module.exports = scrollTop;
 
-},{}]},{},[255]);
+},{}]},{},[258]);

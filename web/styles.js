@@ -24,6 +24,16 @@ module.exports = {
     alignItems: 'center',
   },
 
+  box: {
+    border: '1px solid #cacaca',
+    display: 'block',
+    fontSize: '0.8em',
+    lineHeight: '1.25em',
+    margin: '0.5em 0',
+    padding: '1em',
+    textAlign: 'center',
+  },
+
   baseStats: {
     alignItems: 'center',
     display: 'flex',
