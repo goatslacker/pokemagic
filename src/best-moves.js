@@ -13,9 +13,19 @@ function bestMovesFor(pokemonName, pokemonLevel, IndAtk, IndDef, IndSta) {
     IndSta: IndSta || 10,
   })
 
+  const best = analyzeBattleEffectiveness({
+    name: 'mewtwo',
+    level: pokemonLevel || 25,
+    IndAtk: IndAtk || 10,
+    IndDef: IndDef || 10,
+    IndSta: IndSta || 10,
+  })
+
+  const bestDPS = best.bestAvgDPS
+  const bestTTL = best.bestAvgTTL
+
   const mon = Pokemon.filter(x => x.name === pokemonName.toUpperCase())[0]
 
-  // include more detailed analysis
   return Object.keys(analysis.avgMoves).reduce((arr, move) => {
     const split = move.split('/')
 
@@ -34,6 +44,10 @@ function bestMovesFor(pokemonName, pokemonLevel, IndAtk, IndDef, IndSta) {
       },
       dps: analysis.avgMoves[move],
       ttl: analysis.avgTTL[move],
+      percent: {
+        dps: Math.floor(analysis.avgMoves[move] / bestDPS * 100),
+        ttl: Math.floor(analysis.avgTTL[move] / bestTTL * 100),
+      },
       retired: !moves.every(m => !m.retired)
     })
   }, [])
@@ -41,4 +55,4 @@ function bestMovesFor(pokemonName, pokemonLevel, IndAtk, IndDef, IndSta) {
 
 module.exports = bestMovesFor
 
-//console.log(bestMovesFor('arcanine', 26))
+//console.log(bestMovesFor('mewtwo', 26))

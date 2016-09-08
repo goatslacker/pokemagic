@@ -40004,11 +40004,21 @@ function bestMovesFor(pokemonName, pokemonLevel, IndAtk, IndDef, IndSta) {
     IndSta: IndSta || 10
   });
 
+  var best = analyzeBattleEffectiveness({
+    name: 'mewtwo',
+    level: pokemonLevel || 25,
+    IndAtk: IndAtk || 10,
+    IndDef: IndDef || 10,
+    IndSta: IndSta || 10
+  });
+
+  var bestDPS = best.bestAvgDPS;
+  var bestTTL = best.bestAvgTTL;
+
   var mon = Pokemon.filter(function (x) {
     return x.name === pokemonName.toUpperCase();
   })[0];
 
-  // include more detailed analysis
   return Object.keys(analysis.avgMoves).reduce(function (arr, move) {
     var split = move.split('/');
 
@@ -40030,6 +40040,10 @@ function bestMovesFor(pokemonName, pokemonLevel, IndAtk, IndDef, IndSta) {
       },
       dps: analysis.avgMoves[move],
       ttl: analysis.avgTTL[move],
+      percent: {
+        dps: Math.floor(analysis.avgMoves[move] / bestDPS * 100),
+        ttl: Math.floor(analysis.avgTTL[move] / bestTTL * 100)
+      },
       retired: !moves.every(function (m) {
         return !m.retired;
       })
@@ -40039,7 +40053,7 @@ function bestMovesFor(pokemonName, pokemonLevel, IndAtk, IndDef, IndSta) {
 
 module.exports = bestMovesFor;
 
-//console.log(bestMovesFor('arcanine', 26))
+//console.log(bestMovesFor('mewtwo', 26))
 
 },{"../json/pokemon":8,"./analyzeBattleEffectiveness":220}],222:[function(require,module,exports){
 var Pokemon = require('../json/pokemon');
@@ -41954,7 +41968,11 @@ function MovesTable(props) {
 
         return onClick;
       }()
-    }, [n('td', [n(B.Text, move.quick.name), n(B.Text, move.charge.name)]), n('td', move.dps.toFixed(3))]);
+    }, [n('td', [n(B.Text, move.quick.name), n(B.Text, move.charge.name)]), n('td', {
+      style: {
+        color: move.percent.dps > 74 ? '#67ba72' : move.percent.dps > 50 ? '#ddbb45' : '#ff7772'
+      }
+    }, String(move.dps.toFixed(3)) + ' (' + String(move.percent.dps) + '%)')]);
   }))]);
 }
 

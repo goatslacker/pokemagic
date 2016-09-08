@@ -20,7 +20,15 @@ function MovesTable(props) {
             n(B.Text, move.quick.name),
             n(B.Text, move.charge.name),
           ]),
-          n('td', move.dps.toFixed(3)),
+          n('td', {
+            style: {
+              color: move.percent.dps > 74
+                ? '#67ba72'
+                : move.percent.dps > 50
+                ? '#ddbb45'
+                : '#ff7772'
+            },
+          }, `${move.dps.toFixed(3)} (${move.percent.dps}%)`),
         ])
       ))),
     ])
