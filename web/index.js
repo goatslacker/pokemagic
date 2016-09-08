@@ -15,6 +15,7 @@ const PowerUp = require('./components/PowerUp')
 const Rater = require('./components/Rater')
 
 const pokemonActions = require('./actions/pokemonActions')
+const moveActions = require('./actions/moveActions')
 
 const movesStore = require('./stores/MovesStore')
 const inventoryStore = require('./stores/InventoryStore')
@@ -40,21 +41,27 @@ const ConnectedMatchup = connect(Matchup, {
 const ConnectedRater = connect(Rater, {
   listenTo: () => ({ inventoryStore }),
   getProps: state => state.inventoryStore,
-  componentDidMount() {
-    const arr = window.location.hash.split('/')
-
-    function toEv(value) {
-      return { currentTarget: { value } }
-    }
-
-    if (arr[1]) pokemonActions.changedName(arr[1].toUpperCase())
-    if (arr[2]) pokemonActions.changedCP(toEv(Number(arr[2])))
-    if (arr[3]) pokemonActions.changedHP(toEv(Number(arr[3])))
-    if (arr[4]) pokemonActions.changedStardust(Number(arr[4]))
-
-    if (arr.length === 5) calculateValues()
-  },
 })
+
+function hashChanged(self) {
+  const arr = window.location.hash.split('/')
+
+  function toEv(value) {
+    return { currentTarget: { value } }
+  }
+
+  if (arr[1] === 'iv') {
+    self.setState({ selectedSlide: 0 })
+    if (arr[2]) pokemonActions.changedName(arr[2].toUpperCase())
+    if (arr[3]) pokemonActions.changedCP(toEv(Number(arr[3])))
+    if (arr[4]) pokemonActions.changedHP(toEv(Number(arr[4])))
+    if (arr[5]) pokemonActions.changedStardust(Number(arr[5]))
+    if (arr.length === 6) calculateValues()
+  } else if (arr[1] === 'dex') {
+    self.setState({ selectedSlide: 1 })
+    moveActions.textChanged(arr[2].toUpperCase())
+  }
+}
 
 class Main extends React.Component {
   constructor() {
@@ -69,6 +76,9 @@ class Main extends React.Component {
     if (window.innerWidth < 500) {
       this.setState({ small: true })
     }
+
+    hashChanged(this)
+    window.onhashchange = () => hashChanged(this)
   }
 
   renderNav() {

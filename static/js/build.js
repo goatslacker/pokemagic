@@ -40120,7 +40120,7 @@ function getCP(mon, ivs, ECpM) {
   var IndDef = ivs.def;
   var IndSta = ivs.sta;
 
-  return Math.floor((BaseAtk + IndAtk) * Math.pow(BaseDef + IndDef, 0.5) * Math.pow(BaseSta + IndSta, 0.5) * Math.pow(ECpM, 2) / 10);
+  return Math.max(10, Math.floor((BaseAtk + IndAtk) * Math.pow(BaseDef + IndDef, 0.5) * Math.pow(BaseSta + IndSta, 0.5) * Math.pow(ECpM, 2) / 10));
 }
 
 // The minimum CP for your Pokemon's level
@@ -40617,7 +40617,7 @@ module.exports = guessIVs;
 // Formula to calculate the HP given the IV stamina and ECpM
 function getHP(mon, IndSta, ECpM) {
   var BaseSta = mon.stats.stamina;
-  return Math.floor(ECpM * (BaseSta + IndSta));
+  return Math.max(10, Math.floor(ECpM * (BaseSta + IndSta)));
 }
 
 // The maximum HP for your Pokemon's current level
@@ -42331,6 +42331,7 @@ var PowerUp = require('./components/PowerUp');
 var Rater = require('./components/Rater');
 
 var pokemonActions = require('./actions/pokemonActions');
+var moveActions = require('./actions/moveActions');
 
 var movesStore = require('./stores/MovesStore');
 var inventoryStore = require('./stores/InventoryStore');
@@ -42403,26 +42404,28 @@ var ConnectedRater = connect(Rater, {
     }
 
     return getProps;
-  }(),
-  componentDidMount: function () {
-    function componentDidMount() {
-      var arr = window.location.hash.split('/');
-
-      function toEv(value) {
-        return { currentTarget: { value: value } };
-      }
-
-      if (arr[1]) pokemonActions.changedName(arr[1].toUpperCase());
-      if (arr[2]) pokemonActions.changedCP(toEv(Number(arr[2])));
-      if (arr[3]) pokemonActions.changedHP(toEv(Number(arr[3])));
-      if (arr[4]) pokemonActions.changedStardust(Number(arr[4]));
-
-      if (arr.length === 5) calculateValues();
-    }
-
-    return componentDidMount;
   }()
 });
+
+function hashChanged(self) {
+  var arr = window.location.hash.split('/');
+
+  function toEv(value) {
+    return { currentTarget: { value: value } };
+  }
+
+  if (arr[1] === 'iv') {
+    self.setState({ selectedSlide: 0 });
+    if (arr[2]) pokemonActions.changedName(arr[2].toUpperCase());
+    if (arr[3]) pokemonActions.changedCP(toEv(Number(arr[3])));
+    if (arr[4]) pokemonActions.changedHP(toEv(Number(arr[4])));
+    if (arr[5]) pokemonActions.changedStardust(Number(arr[5]));
+    if (arr.length === 6) calculateValues();
+  } else if (arr[1] === 'dex') {
+    self.setState({ selectedSlide: 1 });
+    moveActions.textChanged(arr[2].toUpperCase());
+  }
+}
 
 var Main = function (_React$Component) {
   _inherits(Main, _React$Component);
@@ -42443,9 +42446,16 @@ var Main = function (_React$Component) {
     key: 'componentDidMount',
     value: function () {
       function componentDidMount() {
+        var _this2 = this;
+
         if (window.innerWidth < 500) {
           this.setState({ small: true });
         }
+
+        hashChanged(this);
+        window.onhashchange = function () {
+          return hashChanged(_this2);
+        };
       }
 
       return componentDidMount;
@@ -42466,7 +42476,7 @@ var Main = function (_React$Component) {
     key: 'renderLink',
     value: function () {
       function renderLink(selectedSlide, text) {
-        var _this2 = this;
+        var _this3 = this;
 
         return n(B.View, {
           style: Styles.linkWrapper
@@ -42474,7 +42484,7 @@ var Main = function (_React$Component) {
           className: this.state.selectedSlide === selectedSlide ? 'active' : '',
           onClick: function () {
             function onClick() {
-              _this2.setState({ selectedSlide: selectedSlide });
+              _this3.setState({ selectedSlide: selectedSlide });
               scrollTop();
             }
 
@@ -42490,7 +42500,7 @@ var Main = function (_React$Component) {
     key: 'render',
     value: function () {
       function render() {
-        var _this3 = this;
+        var _this4 = this;
 
         var Slides = [n(ConnectedRater), n(ConnectedDex), n(ConnectedPowerUp), n(ConnectedMatchup)];
 
@@ -42502,7 +42512,7 @@ var Main = function (_React$Component) {
           index: this.state.selectedSlide,
           onChangeIndex: function () {
             function onChangeIndex(selectedSlide) {
-              _this3.setState({ selectedSlide: selectedSlide });
+              _this4.setState({ selectedSlide: selectedSlide });
               scrollTop();
             }
 
@@ -42546,7 +42556,7 @@ localforage.getItem('pogoivcalc.trainerLevel').then(function (trainerLevel) {
   ReactDOM.render(n(Main), document.querySelector('#app'));
 });
 
-},{"./actions/pokemonActions":238,"./alt":239,"./components/Dex":243,"./components/Matchup":248,"./components/PowerUp":250,"./components/Rater":251,"./stores/InventoryStore":261,"./stores/MovesStore":262,"./styles":264,"./utils/Lotus.react":266,"./utils/calculateValues":268,"./utils/connect":269,"./utils/n":271,"./utils/scrollTop":272,"localforage":18,"react":218,"react-dom":19,"react-swipeable-views":44}],259:[function(require,module,exports){
+},{"./actions/moveActions":237,"./actions/pokemonActions":238,"./alt":239,"./components/Dex":243,"./components/Matchup":248,"./components/PowerUp":250,"./components/Rater":251,"./stores/InventoryStore":261,"./stores/MovesStore":262,"./styles":264,"./utils/Lotus.react":266,"./utils/calculateValues":268,"./utils/connect":269,"./utils/n":271,"./utils/scrollTop":272,"localforage":18,"react":218,"react-dom":19,"react-swipeable-views":44}],259:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
