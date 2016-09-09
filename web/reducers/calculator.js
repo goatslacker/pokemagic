@@ -1,25 +1,8 @@
 const actions = require('../actions')
+const mergeState = require('../utils/mergeState')
+const validateActions = require('../utils/validateActions')
 
-// XXX how about some higher order functions for redux?!
-function mergeState(initialState, mergers) {
-  return (state, action) => {
-    if (state === undefined) return initialState
-    if (mergers[action.type]) {
-      return Object.assign(
-        {},
-        state,
-        mergers[action.type](action.payload, state, action)
-      )
-    }
-    return state
-  }
-}
-
-function validateActionNames(actions, mergers) {
-  const invalid = Object.keys(mergers).filter(x => !actions.hasOwnProperty(x))
-  if (invalid.length) throw new ReferenceError(invalid.join(' '))
-  return mergers
-}
+const set = value => payload => ({ [value]: payload })
 
 const getInitialState = () => ({
   name: 'ARCANINE',
@@ -40,13 +23,13 @@ const getEmptyState = () => ({
   results: null,
 })
 
-const calculator = mergeState(getInitialState(), validateActionNames(actions, {
-  CHANGED_NAME: name => ({ name }),
-  CHANGED_CP: cp => ({ cp }),
-  CHANGED_HP: hp => ({ hp }),
-  CHANGED_STARDUST: stardust => ({ stardust }),
-  CHANGED_LEVEL: level => ({ level }),
-  CHANGED_TRAINER_LEVEL: trainerLevel => ({ trainerLevel }),
+const calculator = mergeState(getInitialState(), validateActions(actions, {
+  CHANGED_NAME: set('name'),
+  CHANGED_CP: set('cp'),
+  CHANGED_HP: set('hp'),
+  CHANGED_STARDUST: set('stardust'),
+  CHANGED_LEVEL: set('level'),
+  CHANGED_TRAINER_LEVEL: set('trainerLevel'),
   RESULTS_CALCULATED: ivResults => ({ results: ivResults.asObject() }),
   RESULTS_RESET: () => ({ results: null }),
   VALUES_RESET: () => getEmptyState(),

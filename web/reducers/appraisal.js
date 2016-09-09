@@ -1,24 +1,6 @@
 const actions = require('../actions')
-
-function mergeState(initialState, mergers) {
-  return (state, action) => {
-    if (state === undefined) return initialState
-    if (mergers[action.type]) {
-      return Object.assign(
-        {},
-        state,
-        mergers[action.type](action.payload, state, action)
-      )
-    }
-    return state
-  }
-}
-
-function validateActionNames(actions, mergers) {
-  const invalid = Object.keys(mergers).filter(x => !actions.hasOwnProperty(x))
-  if (invalid.length) throw new ReferenceError(invalid.join(' '))
-  return mergers
-}
+const mergeState = require('../utils/mergeState')
+const validateActions = require('../utils/validateActions')
 
 const getInitialState = () => ({
   attrs: {},
@@ -26,7 +8,7 @@ const getInitialState = () => ({
   team: null,
 })
 
-const appraisal = mergeState(getInitialState(), validateActionNames(actions, {
+const appraisal = mergeState(getInitialState(), validateActions(actions, {
   TEAM_SELECTED: team => ({ team }),
 
   APPRAISAL_IV_RANGE_SET: ivRange => ({ ivRange }),
