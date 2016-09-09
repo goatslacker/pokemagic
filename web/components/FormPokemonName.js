@@ -2,10 +2,10 @@ const B = require('../utils/Lotus.react')
 const Pokemon = require('../../json/pokemon.json')
 const Select = require('react-select')
 const n = require('../utils/n')
-const pokemonActions = require('../actions/pokemonActions')
+const dispatchableActions = require('../dispatchableActions')
 
 const options = Pokemon.map(x => ({ label: x.name.replace(/_/g, ' '), value: x.name }))
-const logName = x => pokemonActions.changedName(x && x.value)
+const changeName = x => dispatchableActions.changedName(x && x.value)
 
 function FormPokemonName(props) {
   return (
@@ -19,7 +19,7 @@ function FormPokemonName(props) {
         name: 'pokemon-selector',
         value: props.name,
         options,
-        onChange: logName,
+        onChange: changeName,
       }),
     ])
   )

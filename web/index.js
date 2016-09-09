@@ -15,12 +15,11 @@ const Matchup = require('./components/Matchup')
 const PowerUp = require('./components/PowerUp')
 const Rater = require('./components/Rater')
 
-const pokemonActions = require('./actions/pokemonActions')
+const dispatchableActions = require('./dispatchableActions')
 const moveActions = require('./actions/moveActions')
 
 const reduxStore = require('./store')
 const movesStore = require('./stores/MovesStore')
-const inventoryStore = require('./stores/InventoryStore')
 
 const calculateValues = require('./utils/calculateValues')
 
@@ -29,32 +28,20 @@ const ConnectedDex = connect(Dex, {
   getProps: state => state.movesStore,
 })
 
-const ConnectedPowerUp = connect(PowerUp, {
-  // TODO split inventoryStore and use pokemonStore or playerStore
-  listenTo: () => ({ inventoryStore }),
-  getProps: state => state.inventoryStore,
-})
-
-const ConnectedMatchup = connect(Matchup, {
-  listenTo: () => ({ inventoryStore }),
-  getProps: state => state.inventoryStore,
-})
-
+// TODO make powerup and matchup use different reducers
+const PowerUpContainer = reactRedux.connect(state => state.calculator)(PowerUp)
+const MatchupContainer = reactRedux.connect(state => state.calculator)(Matchup)
 const RaterContainer = reactRedux.connect(state => state.calculator)(Rater)
 
 function hashChanged(self) {
   const arr = window.location.hash.split('/')
 
-  function toEv(value) {
-    return { currentTarget: { value } }
-  }
-
   if (arr[1] === 'iv') {
     self.setState({ selectedSlide: 0 })
-    if (arr[2]) pokemonActions.changedName(arr[2].toUpperCase())
-    if (arr[3]) pokemonActions.changedCP(toEv(Number(arr[3])))
-    if (arr[4]) pokemonActions.changedHP(toEv(Number(arr[4])))
-    if (arr[5]) pokemonActions.changedStardust(Number(arr[5]))
+    if (arr[2]) dispatchableActions.changedName(arr[2].toUpperCase())
+    if (arr[3]) dispatchableActions.changedCP(Number(arr[3]))
+    if (arr[4]) dispatchableActions.changedHP(Number(arr[4]))
+    if (arr[5]) dispatchableActions.changedStardust(Number(arr[5]))
     if (arr.length === 6) calculateValues()
   } else if (arr[1] === 'dex') {
     self.setState({ selectedSlide: 1 })
@@ -113,8 +100,8 @@ class Main extends React.Component {
     const Slides = [
       n(RaterContainer),
       n(ConnectedDex),
-      n(ConnectedPowerUp),
-      n(ConnectedMatchup),
+      n(PowerUpContainer),
+      n(MatchupContainer),
     ]
 
     const Nav = this.renderNav()

@@ -6,7 +6,7 @@ const Styles = require('../styles')
 const bestMovesFor = require('../../src/best-moves')
 const finalEvolutions = require('../../json/finalEvolutions')
 const n = require('../utils/n')
-const pokemonActions = require('../actions/pokemonActions')
+const dispatchableActions = require('../dispatchableActions')
 
 function Results(props) {
   var bestMoves = null
@@ -19,7 +19,7 @@ function Results(props) {
   return (
     n(B.View, [
       n(B.View, [
-        n(B.Button, { size: 'sm', onClick: pokemonActions.resultsReset }, 'Check Another'),
+        n(B.Button, { size: 'sm', onClick: dispatchableActions.resultsReset }, 'Check Another'),
       ]),
 
       n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [

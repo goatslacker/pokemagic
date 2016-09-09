@@ -1,13 +1,13 @@
 const B = require('../utils/Lotus.react')
 const n = require('../utils/n')
-const pokemonActions = require('../actions/pokemonActions')
+const dispatchableActions = require('../dispatchableActions')
 
 function FormTrainerLevel(props) {
   return (
     n(B.FormControl, { label: 'Trainer Level' }, [
       n(B.Input, {
         type: 'number',
-        onChange: pokemonActions.changedTrainerLevel,
+        onChange: ev => dispatchableActions.changedTrainerLevel(ev.currentTarget.value),
         value: props.trainerLevel,
       }),
     ])

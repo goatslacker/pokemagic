@@ -8,7 +8,7 @@ const SearchHistoryContainer = require('../containers/SearchHistoryContainer')
 const Appraisal = require('./Appraisal')
 const calculateValues = require('../utils/calculateValues')
 const n = require('../utils/n')
-const pokemonActions = require('../actions/pokemonActions')
+const dispatchableActions = require('../dispatchableActions')
 
 function Rater(props) {
   if (props.results) return n(Results, props.results)
@@ -20,16 +20,16 @@ function Rater(props) {
     n(B.FormControl, { label: 'CP' }, [
       n(B.Input, {
         type: 'number',
-        onChange: pokemonActions.changedCP,
-        onClick: () => pokemonActions.changedCP({ currentTarget: { value: '' }}),
+        onChange: ev => dispatchableActions.changedCp(ev.currentTarget.value),
+        onClick: () => dispatchableActions.changedCp(''),
         value: props.cp,
       }),
     ]),
     n(B.FormControl, { label: 'HP' }, [
       n(B.Input, {
         type: 'number',
-        onChange: pokemonActions.changedHP,
-        onClick: () => pokemonActions.changedHP({ currentTarget: { value: '' }}),
+        onChange: ev => dispatchableActions.changedHp(ev.currentTarget.value),
+        onClick: () => dispatchableActions.changedHp(''),
         value: props.hp,
       }),
     ]),
@@ -43,7 +43,7 @@ function Rater(props) {
       },
     }, 'Calculate'),
     ' ',
-    n(B.Button, { size: 'sm', onClick: pokemonActions.valuesReset }, 'Clear'),
+    n(B.Button, { size: 'sm', onClick: dispatchableActions.valuesReset }, 'Clear'),
     n('hr'),
     n(SearchHistoryContainer),
   ])

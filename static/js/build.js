@@ -42757,19 +42757,14 @@ var historyActions = alt.generateActions('', ['pokemonChecked']);
 
 module.exports = historyActions;
 
-},{"../alt":268}],266:[function(require,module,exports){
+},{"../alt":267}],266:[function(require,module,exports){
 var alt = require('../alt');
 
 var moveActions = alt.generateActions('', ['movesChanged', 'pokemonChanged', 'textChanged']);
 
 module.exports = moveActions;
 
-},{"../alt":268}],267:[function(require,module,exports){
-var alt = require('../alt');
-
-module.exports = alt.generateActions('', ['changedName', 'changedCP', 'changedHP', 'changedStardust', 'changedLevel', 'changedTrainerLevel', 'imageProcessing', 'resultsCalculated', 'resultsReset', 'trainerLevelChanged', 'valuesReset']);
-
-},{"../alt":268}],268:[function(require,module,exports){
+},{"../alt":267}],267:[function(require,module,exports){
 var Alt = require('./assets/alt.min');
 var alt = new Alt();
 var store = require('./store');
@@ -42787,7 +42782,7 @@ alt.subscribe(function (action) {
 
 module.exports = alt;
 
-},{"./assets/alt.min":269,"./store":289}],269:[function(require,module,exports){
+},{"./assets/alt.min":268,"./store":289}],268:[function(require,module,exports){
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 !function (t, n) {
@@ -43047,7 +43042,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   }]);
 });
 
-},{}],270:[function(require,module,exports){
+},{}],269:[function(require,module,exports){
 var B = require('../utils/Lotus.React');
 var React = require('react');
 var Styles = require('../styles');
@@ -43222,7 +43217,7 @@ module.exports = reactRedux.connect(function (state) {
   return state.appraisal;
 })(Appraisal);
 
-},{"../actions":264,"../styles":293,"../utils/Lotus.React":294,"../utils/appraisal":296,"../utils/n":300,"react":232,"react-redux":36}],271:[function(require,module,exports){
+},{"../actions":264,"../styles":292,"../utils/Lotus.React":293,"../utils/appraisal":295,"../utils/n":300,"react":232,"react-redux":36}],270:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -43333,7 +43328,7 @@ var DetailedAnalysis = function (_React$Component) {
 
 module.exports = DetailedAnalysis;
 
-},{"../../src/analyzeBattleEffectiveness":249,"../../src/best-moves":250,"../styles":293,"../utils/Lotus.react":295,"../utils/n":300,"./MoveCombos":278,"./ResultsTable":283,"react":232}],272:[function(require,module,exports){
+},{"../../src/analyzeBattleEffectiveness":249,"../../src/best-moves":250,"../styles":292,"../utils/Lotus.react":294,"../utils/n":300,"./MoveCombos":277,"./ResultsTable":282,"react":232}],271:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var MoveCombos = require('./MoveCombos');
 var MovesList = require('../../json/moves.json');
@@ -43447,33 +43442,39 @@ function Dex(props) {
 
 module.exports = Dex;
 
-},{"../../json/moves.json":7,"../../json/pokemon.json":8,"../../src/analyzeBattleEffectiveness":249,"../../src/best-moves":250,"../../src/getTypeEffectiveness":255,"../actions/moveActions":266,"../store":289,"../styles":293,"../utils/Lotus.react":295,"../utils/n":300,"./MoveCombos":278,"react-select":50}],273:[function(require,module,exports){
+},{"../../json/moves.json":7,"../../json/pokemon.json":8,"../../src/analyzeBattleEffectiveness":249,"../../src/best-moves":250,"../../src/getTypeEffectiveness":255,"../actions/moveActions":266,"../store":289,"../styles":292,"../utils/Lotus.react":294,"../utils/n":300,"./MoveCombos":277,"react-select":50}],272:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
-var pokemonActions = require('../actions/pokemonActions');
+var dispatchableActions = require('../dispatchableActions');
 
 function FormPokemonLevel(props) {
   return n(B.FormControl, { label: 'Pokemon Level (optional)' }, [n(B.Input, {
     type: 'number',
-    onChange: pokemonActions.changedLevel,
+    onChange: function () {
+      function onChange(ev) {
+        return dispatchableActions.changedLevel(ev.currentTarget.value);
+      }
+
+      return onChange;
+    }(),
     value: props.level
   })]);
 }
 
 module.exports = FormPokemonLevel;
 
-},{"../actions/pokemonActions":267,"../utils/Lotus.react":295,"../utils/n":300}],274:[function(require,module,exports){
+},{"../dispatchableActions":285,"../utils/Lotus.react":294,"../utils/n":300}],273:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var Pokemon = require('../../json/pokemon.json');
 var Select = require('react-select');
 var n = require('../utils/n');
-var pokemonActions = require('../actions/pokemonActions');
+var dispatchableActions = require('../dispatchableActions');
 
 var options = Pokemon.map(function (x) {
   return { label: x.name.replace(/_/g, ' '), value: x.name };
 });
-var logName = function logName(x) {
-  return pokemonActions.changedName(x && x.value);
+var changeName = function changeName(x) {
+  return dispatchableActions.changedName(x && x.value);
 };
 
 function FormPokemonName(props) {
@@ -43486,24 +43487,24 @@ function FormPokemonName(props) {
     name: 'pokemon-selector',
     value: props.name,
     options: options,
-    onChange: logName
+    onChange: changeName
   })]);
 }
 
 module.exports = FormPokemonName;
 
-},{"../../json/pokemon.json":8,"../actions/pokemonActions":267,"../utils/Lotus.react":295,"../utils/n":300,"react-select":50}],275:[function(require,module,exports){
+},{"../../json/pokemon.json":8,"../dispatchableActions":285,"../utils/Lotus.react":294,"../utils/n":300,"react-select":50}],274:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var DustToLevel = require('../../json/dust-to-level.json');
 var Select = require('react-select');
 var n = require('../utils/n');
-var pokemonActions = require('../actions/pokemonActions');
+var dispatchableActions = require('../dispatchableActions');
 
 var dustOptions = Object.keys(DustToLevel).map(function (x) {
   return { value: Number(x), label: Number(x) };
 });
 var logStardust = function logStardust(x) {
-  return pokemonActions.changedStardust(x && x.value);
+  return dispatchableActions.changedStardust(x && x.value);
 };
 
 function FormStardust(props) {
@@ -43520,22 +43521,28 @@ function FormStardust(props) {
 
 module.exports = FormStardust;
 
-},{"../../json/dust-to-level.json":2,"../actions/pokemonActions":267,"../utils/Lotus.react":295,"../utils/n":300,"react-select":50}],276:[function(require,module,exports){
+},{"../../json/dust-to-level.json":2,"../dispatchableActions":285,"../utils/Lotus.react":294,"../utils/n":300,"react-select":50}],275:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
-var pokemonActions = require('../actions/pokemonActions');
+var dispatchableActions = require('../dispatchableActions');
 
 function FormTrainerLevel(props) {
   return n(B.FormControl, { label: 'Trainer Level' }, [n(B.Input, {
     type: 'number',
-    onChange: pokemonActions.changedTrainerLevel,
+    onChange: function () {
+      function onChange(ev) {
+        return dispatchableActions.changedTrainerLevel(ev.currentTarget.value);
+      }
+
+      return onChange;
+    }(),
     value: props.trainerLevel
   })]);
 }
 
 module.exports = FormTrainerLevel;
 
-},{"../actions/pokemonActions":267,"../utils/Lotus.react":295,"../utils/n":300}],277:[function(require,module,exports){
+},{"../dispatchableActions":285,"../utils/Lotus.react":294,"../utils/n":300}],276:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var FormPokemonName = require('./FormPokemonName');
 var idealMatchup = require('../../src/idealMatchup');
@@ -43552,7 +43559,7 @@ function Matchup(props) {
 
 module.exports = Matchup;
 
-},{"../../src/idealMatchup":258,"../utils/Lotus.react":295,"../utils/n":300,"./FormPokemonName":274}],278:[function(require,module,exports){
+},{"../../src/idealMatchup":258,"../utils/Lotus.react":294,"../utils/n":300,"./FormPokemonName":273}],277:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
 
@@ -43588,7 +43595,7 @@ function MoveCombos(props) {
 
 module.exports = MoveCombos;
 
-},{"../utils/Lotus.react":295,"../utils/n":300}],279:[function(require,module,exports){
+},{"../utils/Lotus.react":294,"../utils/n":300}],278:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var DustToLevel = require('../../json/dust-to-level.json');
 var n = require('../utils/n');
@@ -43614,7 +43621,7 @@ function PowerUp(props) {
 
 module.exports = PowerUp;
 
-},{"../../json/dust-to-level.json":2,"../../src/powerup":262,"../utils/Lotus.react":295,"../utils/n":300,"./FormPokemonLevel":273,"./FormStardust":275,"./FormTrainerLevel":276}],280:[function(require,module,exports){
+},{"../../json/dust-to-level.json":2,"../../src/powerup":262,"../utils/Lotus.react":294,"../utils/n":300,"./FormPokemonLevel":272,"./FormStardust":274,"./FormTrainerLevel":275}],279:[function(require,module,exports){
 var B = require('../utils/Lotus.React');
 var FormPokemonLevel = require('./FormPokemonLevel');
 var FormPokemonName = require('./FormPokemonName');
@@ -43625,7 +43632,7 @@ var SearchHistoryContainer = require('../containers/SearchHistoryContainer');
 var Appraisal = require('./Appraisal');
 var calculateValues = require('../utils/calculateValues');
 var n = require('../utils/n');
-var pokemonActions = require('../actions/pokemonActions');
+var dispatchableActions = require('../dispatchableActions');
 
 function Rater(props) {
   if (props.results) return n(Results, props.results);
@@ -43635,10 +43642,16 @@ function Rater(props) {
   //    n(FormTrainerLevel, { trainerLevel: props.trainerLevel }),
   n(FormPokemonName, { name: props.name }), n(B.FormControl, { label: 'CP' }, [n(B.Input, {
     type: 'number',
-    onChange: pokemonActions.changedCP,
+    onChange: function () {
+      function onChange(ev) {
+        return dispatchableActions.changedCp(ev.currentTarget.value);
+      }
+
+      return onChange;
+    }(),
     onClick: function () {
       function onClick() {
-        return pokemonActions.changedCP({ currentTarget: { value: '' } });
+        return dispatchableActions.changedCp('');
       }
 
       return onClick;
@@ -43646,10 +43659,16 @@ function Rater(props) {
     value: props.cp
   })]), n(B.FormControl, { label: 'HP' }, [n(B.Input, {
     type: 'number',
-    onChange: pokemonActions.changedHP,
+    onChange: function () {
+      function onChange(ev) {
+        return dispatchableActions.changedHp(ev.currentTarget.value);
+      }
+
+      return onChange;
+    }(),
     onClick: function () {
       function onClick() {
-        return pokemonActions.changedHP({ currentTarget: { value: '' } });
+        return dispatchableActions.changedHp('');
       }
 
       return onClick;
@@ -43667,12 +43686,12 @@ function Rater(props) {
     style: {
       backgroundColor: '#6297de'
     }
-  }, 'Calculate'), ' ', n(B.Button, { size: 'sm', onClick: pokemonActions.valuesReset }, 'Clear'), n('hr'), n(SearchHistoryContainer)]);
+  }, 'Calculate'), ' ', n(B.Button, { size: 'sm', onClick: dispatchableActions.valuesReset }, 'Clear'), n('hr'), n(SearchHistoryContainer)]);
 }
 
 module.exports = Rater;
 
-},{"../actions/pokemonActions":267,"../containers/SearchHistoryContainer":285,"../utils/Lotus.React":294,"../utils/calculateValues":297,"../utils/n":300,"./Appraisal":270,"./FormPokemonLevel":273,"./FormPokemonName":274,"./FormStardust":275,"./FormTrainerLevel":276,"./Results":282}],281:[function(require,module,exports){
+},{"../containers/SearchHistoryContainer":284,"../dispatchableActions":285,"../utils/Lotus.React":293,"../utils/calculateValues":296,"../utils/n":300,"./Appraisal":269,"./FormPokemonLevel":272,"./FormPokemonName":273,"./FormStardust":274,"./FormTrainerLevel":275,"./Results":281}],280:[function(require,module,exports){
 var Appraisal = require('./Appraisal');
 var B = require('../utils/Lotus.react');
 var ResultsTable = require('./ResultsTable');
@@ -43742,7 +43761,7 @@ module.exports = reactRedux.connect(function (state) {
   return { appraisal: state.appraisal };
 })(RefineResultsStateful);
 
-},{"../store":289,"../styles":293,"../utils/Lotus.react":295,"../utils/liftState":299,"../utils/n":300,"./Appraisal":270,"./ResultsTable":283,"react-redux":36}],282:[function(require,module,exports){
+},{"../store":289,"../styles":292,"../utils/Lotus.react":294,"../utils/liftState":298,"../utils/n":300,"./Appraisal":269,"./ResultsTable":282,"react-redux":36}],281:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var DetailedAnalysis = require('./DetailedAnalysis');
 var MoveCombos = require('./MoveCombos');
@@ -43751,7 +43770,7 @@ var Styles = require('../styles');
 var bestMovesFor = require('../../src/best-moves');
 var finalEvolutions = require('../../json/finalEvolutions');
 var n = require('../utils/n');
-var pokemonActions = require('../actions/pokemonActions');
+var dispatchableActions = require('../dispatchableActions');
 
 function Results(props) {
   var bestMoves = null;
@@ -43761,7 +43780,7 @@ function Results(props) {
 
   console.log(props);
 
-  return n(B.View, [n(B.View, [n(B.Button, { size: 'sm', onClick: pokemonActions.resultsReset }, 'Check Another')]), n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n(B.Text, { style: Styles.bigText }, props.pokemon.name), n(B.Text, 'CP: ' + String(props.pokemon.cp) + ' | HP: ' + String(props.pokemon.hp)), n(B.View, { style: Styles.pokemonImage }, [n(B.Image, { src: 'images/' + String(props.pokemon.name) + '.png', height: 150, width: 150 })]), n(B.Text, { style: Styles.bigText }, props.range.iv[0] === props.range.iv[1] ? String(props.range.iv[0]) + '%' : String(props.range.iv[0]) + '% - ' + String(props.range.iv[1]) + '%'), n(B.Text, { style: Styles.resultsRow }, [props.chance === 100 ? 'Keep your ' + String(props.pokemon.cp) + 'CP ' + String(props.pokemon.name) : props.chance === 0 ? 'Send this Pokemon to the grinder for candy.' : 'Maybe you should keep this Pokemon around.'])]), n(RefineResults, { name: props.pokemon.name, results: props.values }),
+  return n(B.View, [n(B.View, [n(B.Button, { size: 'sm', onClick: dispatchableActions.resultsReset }, 'Check Another')]), n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n(B.Text, { style: Styles.bigText }, props.pokemon.name), n(B.Text, 'CP: ' + String(props.pokemon.cp) + ' | HP: ' + String(props.pokemon.hp)), n(B.View, { style: Styles.pokemonImage }, [n(B.Image, { src: 'images/' + String(props.pokemon.name) + '.png', height: 150, width: 150 })]), n(B.Text, { style: Styles.bigText }, props.range.iv[0] === props.range.iv[1] ? String(props.range.iv[0]) + '%' : String(props.range.iv[0]) + '% - ' + String(props.range.iv[1]) + '%'), n(B.Text, { style: Styles.resultsRow }, [props.chance === 100 ? 'Keep your ' + String(props.pokemon.cp) + 'CP ' + String(props.pokemon.name) : props.chance === 0 ? 'Send this Pokemon to the grinder for candy.' : 'Maybe you should keep this Pokemon around.'])]), n(RefineResults, { name: props.pokemon.name, results: props.values }),
 
   // We should only show best moveset if it is in its final evolved form...
   bestMoves && n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Best moveset combos for ' + String(props.pokemon.name)), n(MoveCombos, { moves: bestMoves })]), props.best.meta.EvolveCP && n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n('h3', 'Evolution'), n(B.Panel, [n(B.Text, 'If evolved it would have a CP of about ' + String(props.best.meta.EvolveCP))])]), props.best.meta.Stardust > 0 && n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n('h3', { style: Styles.resultsRow }, 'Maxing out to level ' + String(props.best.meta.MaxLevel)), props.pokemon.level === null && n(B.Text, 'Assuming that your Pokemon\'s current level is ' + String(props.best.Level) + '. The information below is just an estimate.'), n(B.View, [n(B.Panel, 'Current level: ' + String(props.best.Level)), n(B.Panel, 'Candy cost: ' + String(props.best.meta.Candy)), n(B.Panel, 'Stardust cost: ' + String(props.best.meta.Stardust)), n(B.Panel, 'CP: ' + String(props.best.meta.MaxCP)), n(B.Panel, 'HP: ' + String(props.best.meta.MaxHP))])]), n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Yours vs Perfect by level'), n(B.Table, [n('thead', [n('tr', [n('th', 'Level'), n('th', 'Your CP'), n('th', 'Best CP'), n('th', 'Your HP'), n('th', 'Best HP')])]), n('tbody', props.values.reduce(function (o, value) {
@@ -43791,7 +43810,7 @@ function Results(props) {
 
 module.exports = Results;
 
-},{"../../json/finalEvolutions":3,"../../src/best-moves":250,"../actions/pokemonActions":267,"../styles":293,"../utils/Lotus.react":295,"../utils/n":300,"./DetailedAnalysis":271,"./MoveCombos":278,"./RefineResults":281}],283:[function(require,module,exports){
+},{"../../json/finalEvolutions":3,"../../src/best-moves":250,"../dispatchableActions":285,"../styles":292,"../utils/Lotus.react":294,"../utils/n":300,"./DetailedAnalysis":270,"./MoveCombos":277,"./RefineResults":280}],282:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var Styles = require('../styles');
 var n = require('../utils/n');
@@ -43818,7 +43837,7 @@ function ResultsTable(props) {
 
 module.exports = ResultsTable;
 
-},{"../styles":293,"../utils/Lotus.react":295,"../utils/n":300}],284:[function(require,module,exports){
+},{"../styles":292,"../utils/Lotus.react":294,"../utils/n":300}],283:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var Select = require('react-select');
 var Styles = require('../styles');
@@ -43857,7 +43876,7 @@ function SearchHistory(props) {
 
 module.exports = SearchHistory;
 
-},{"../styles":293,"../utils/Lotus.react":295,"../utils/calculateValues":297,"../utils/n":300,"../utils/scrollTop":301,"react-select":50}],285:[function(require,module,exports){
+},{"../styles":292,"../utils/Lotus.react":294,"../utils/calculateValues":296,"../utils/n":300,"../utils/scrollTop":301,"react-select":50}],284:[function(require,module,exports){
 var SearchHistory = require('../components/SearchHistory');
 var connect = require('../utils/connect');
 var historyStore = require('../stores/HistoryStore');
@@ -43885,7 +43904,14 @@ var SearchHistoryContainer = connect(SearchHistory, {
 
 module.exports = SearchHistoryContainer;
 
-},{"../components/SearchHistory":284,"../stores/HistoryStore":290,"../utils/connect":298}],286:[function(require,module,exports){
+},{"../components/SearchHistory":283,"../stores/HistoryStore":290,"../utils/connect":297}],285:[function(require,module,exports){
+var actions = require('./actions');
+var redux = require('redux');
+var store = require('./store');
+
+module.exports = redux.bindActionCreators(actions, store.dispatch);
+
+},{"./actions":264,"./store":289,"redux":238}],286:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -43911,12 +43937,11 @@ var Matchup = require('./components/Matchup');
 var PowerUp = require('./components/PowerUp');
 var Rater = require('./components/Rater');
 
-var pokemonActions = require('./actions/pokemonActions');
+var dispatchableActions = require('./dispatchableActions');
 var moveActions = require('./actions/moveActions');
 
 var reduxStore = require('./store');
 var movesStore = require('./stores/MovesStore');
-var inventoryStore = require('./stores/InventoryStore');
 
 var calculateValues = require('./utils/calculateValues');
 
@@ -43937,41 +43962,13 @@ var ConnectedDex = connect(Dex, {
   }()
 });
 
-var ConnectedPowerUp = connect(PowerUp, {
-  // TODO split inventoryStore and use pokemonStore or playerStore
-  listenTo: function () {
-    function listenTo() {
-      return { inventoryStore: inventoryStore };
-    }
-
-    return listenTo;
-  }(),
-  getProps: function () {
-    function getProps(state) {
-      return state.inventoryStore;
-    }
-
-    return getProps;
-  }()
-});
-
-var ConnectedMatchup = connect(Matchup, {
-  listenTo: function () {
-    function listenTo() {
-      return { inventoryStore: inventoryStore };
-    }
-
-    return listenTo;
-  }(),
-  getProps: function () {
-    function getProps(state) {
-      return state.inventoryStore;
-    }
-
-    return getProps;
-  }()
-});
-
+// TODO make powerup and matchup use different reducers
+var PowerUpContainer = reactRedux.connect(function (state) {
+  return state.calculator;
+})(PowerUp);
+var MatchupContainer = reactRedux.connect(function (state) {
+  return state.calculator;
+})(Matchup);
 var RaterContainer = reactRedux.connect(function (state) {
   return state.calculator;
 })(Rater);
@@ -43979,16 +43976,12 @@ var RaterContainer = reactRedux.connect(function (state) {
 function hashChanged(self) {
   var arr = window.location.hash.split('/');
 
-  function toEv(value) {
-    return { currentTarget: { value: value } };
-  }
-
   if (arr[1] === 'iv') {
     self.setState({ selectedSlide: 0 });
-    if (arr[2]) pokemonActions.changedName(arr[2].toUpperCase());
-    if (arr[3]) pokemonActions.changedCP(toEv(Number(arr[3])));
-    if (arr[4]) pokemonActions.changedHP(toEv(Number(arr[4])));
-    if (arr[5]) pokemonActions.changedStardust(Number(arr[5]));
+    if (arr[2]) dispatchableActions.changedName(arr[2].toUpperCase());
+    if (arr[3]) dispatchableActions.changedCP(Number(arr[3]));
+    if (arr[4]) dispatchableActions.changedHP(Number(arr[4]));
+    if (arr[5]) dispatchableActions.changedStardust(Number(arr[5]));
     if (arr.length === 6) calculateValues();
   } else if (arr[1] === 'dex') {
     self.setState({ selectedSlide: 1 });
@@ -44071,7 +44064,7 @@ var Main = function (_React$Component) {
       function render() {
         var _this4 = this;
 
-        var Slides = [n(RaterContainer), n(ConnectedDex), n(ConnectedPowerUp), n(ConnectedMatchup)];
+        var Slides = [n(RaterContainer), n(ConnectedDex), n(PowerUpContainer), n(MatchupContainer)];
 
         var Nav = this.renderNav();
 
@@ -44125,26 +44118,10 @@ localforage.getItem('pogoivcalc.trainerLevel').then(function (trainerLevel) {
   ReactDOM.render(n(reactRedux.Provider, { store: reduxStore }, [n(Main)]), document.querySelector('#app'));
 });
 
-},{"./actions/moveActions":266,"./actions/pokemonActions":267,"./alt":268,"./components/Dex":272,"./components/Matchup":277,"./components/PowerUp":279,"./components/Rater":280,"./store":289,"./stores/InventoryStore":291,"./stores/MovesStore":292,"./styles":293,"./utils/Lotus.react":295,"./utils/calculateValues":297,"./utils/connect":298,"./utils/n":300,"./utils/scrollTop":301,"localforage":18,"react":232,"react-dom":19,"react-redux":36,"react-swipeable-views":58}],287:[function(require,module,exports){
+},{"./actions/moveActions":266,"./alt":267,"./components/Dex":271,"./components/Matchup":276,"./components/PowerUp":278,"./components/Rater":279,"./dispatchableActions":285,"./store":289,"./stores/MovesStore":291,"./styles":292,"./utils/Lotus.react":294,"./utils/calculateValues":296,"./utils/connect":297,"./utils/n":300,"./utils/scrollTop":301,"localforage":18,"react":232,"react-dom":19,"react-redux":36,"react-swipeable-views":58}],287:[function(require,module,exports){
 var actions = require('../actions');
-
-function mergeState(initialState, mergers) {
-  return function (state, action) {
-    if (state === undefined) return initialState;
-    if (mergers[action.type]) {
-      return Object.assign({}, state, mergers[action.type](action.payload, state, action));
-    }
-    return state;
-  };
-}
-
-function validateActionNames(actions, mergers) {
-  var invalid = Object.keys(mergers).filter(function (x) {
-    return !actions.hasOwnProperty(x);
-  });
-  if (invalid.length) throw new ReferenceError(invalid.join(' '));
-  return mergers;
-}
+var mergeState = require('../utils/mergeState');
+var validateActions = require('../utils/validateActions');
 
 var getInitialState = function getInitialState() {
   return {
@@ -44154,7 +44131,7 @@ var getInitialState = function getInitialState() {
   };
 };
 
-var appraisal = mergeState(getInitialState(), validateActionNames(actions, {
+var appraisal = mergeState(getInitialState(), validateActions(actions, {
   TEAM_SELECTED: function () {
     function TEAM_SELECTED(team) {
       return { team: team };
@@ -44207,27 +44184,18 @@ var appraisal = mergeState(getInitialState(), validateActionNames(actions, {
 
 module.exports = appraisal;
 
-},{"../actions":264}],288:[function(require,module,exports){
+},{"../actions":264,"../utils/mergeState":299,"../utils/validateActions":302}],288:[function(require,module,exports){
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var actions = require('../actions');
+var mergeState = require('../utils/mergeState');
+var validateActions = require('../utils/validateActions');
 
-// XXX how about some higher order functions for redux?!
-function mergeState(initialState, mergers) {
-  return function (state, action) {
-    if (state === undefined) return initialState;
-    if (mergers[action.type]) {
-      return Object.assign({}, state, mergers[action.type](action.payload, state, action));
-    }
-    return state;
+var set = function set(value) {
+  return function (payload) {
+    return _defineProperty({}, value, payload);
   };
-}
-
-function validateActionNames(actions, mergers) {
-  var invalid = Object.keys(mergers).filter(function (x) {
-    return !actions.hasOwnProperty(x);
-  });
-  if (invalid.length) throw new ReferenceError(invalid.join(' '));
-  return mergers;
-}
+};
 
 var getInitialState = function getInitialState() {
   return {
@@ -44252,49 +44220,13 @@ var getEmptyState = function getEmptyState() {
   };
 };
 
-var calculator = mergeState(getInitialState(), validateActionNames(actions, {
-  CHANGED_NAME: function () {
-    function CHANGED_NAME(name) {
-      return { name: name };
-    }
-
-    return CHANGED_NAME;
-  }(),
-  CHANGED_CP: function () {
-    function CHANGED_CP(cp) {
-      return { cp: cp };
-    }
-
-    return CHANGED_CP;
-  }(),
-  CHANGED_HP: function () {
-    function CHANGED_HP(hp) {
-      return { hp: hp };
-    }
-
-    return CHANGED_HP;
-  }(),
-  CHANGED_STARDUST: function () {
-    function CHANGED_STARDUST(stardust) {
-      return { stardust: stardust };
-    }
-
-    return CHANGED_STARDUST;
-  }(),
-  CHANGED_LEVEL: function () {
-    function CHANGED_LEVEL(level) {
-      return { level: level };
-    }
-
-    return CHANGED_LEVEL;
-  }(),
-  CHANGED_TRAINER_LEVEL: function () {
-    function CHANGED_TRAINER_LEVEL(trainerLevel) {
-      return { trainerLevel: trainerLevel };
-    }
-
-    return CHANGED_TRAINER_LEVEL;
-  }(),
+var calculator = mergeState(getInitialState(), validateActions(actions, {
+  CHANGED_NAME: set('name'),
+  CHANGED_CP: set('cp'),
+  CHANGED_HP: set('hp'),
+  CHANGED_STARDUST: set('stardust'),
+  CHANGED_LEVEL: set('level'),
+  CHANGED_TRAINER_LEVEL: set('trainerLevel'),
   RESULTS_CALCULATED: function () {
     function RESULTS_CALCULATED(ivResults) {
       return { results: ivResults.asObject() };
@@ -44320,7 +44252,7 @@ var calculator = mergeState(getInitialState(), validateActionNames(actions, {
 
 module.exports = calculator;
 
-},{"../actions":264}],289:[function(require,module,exports){
+},{"../actions":264,"../utils/mergeState":299,"../utils/validateActions":302}],289:[function(require,module,exports){
 var redux = require('redux');
 
 var appraisal = require('./reducers/appraisal');
@@ -44409,168 +44341,7 @@ var HistoryStore = function (_alt$Store) {
 
 module.exports = alt.createStore('HistoryStore', new HistoryStore());
 
-},{"../actions/historyActions":265,"../alt":268,"localforage":18}],291:[function(require,module,exports){
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var alt = require('../alt');
-var pokemonActions = require('../actions/pokemonActions');
-
-var InventoryStore = function (_alt$Store) {
-  _inherits(InventoryStore, _alt$Store);
-
-  function InventoryStore() {
-    _classCallCheck(this, InventoryStore);
-
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(InventoryStore).call(this));
-
-    _this.bindActions(pokemonActions);
-    _this.state = {
-      name: 'ARCANINE',
-      cp: 2207,
-      hp: 129,
-      stardust: 4000,
-      trainerLevel: '',
-      level: 0,
-      results: null,
-      processingImage: false
-    };
-    return _this;
-  }
-
-  _createClass(InventoryStore, [{
-    key: 'fromEvent',
-    value: function () {
-      function fromEvent(ev) {
-        return ev.currentTarget.value;
-      }
-
-      return fromEvent;
-    }()
-  }, {
-    key: 'changedName',
-    value: function () {
-      function changedName(name) {
-        this.setState({ name: name });
-      }
-
-      return changedName;
-    }()
-  }, {
-    key: 'imageProcessing',
-    value: function () {
-      function imageProcessing() {
-        this.setState({ processingImage: true });
-      }
-
-      return imageProcessing;
-    }()
-  }, {
-    key: 'changedCP',
-    value: function () {
-      function changedCP(ev) {
-        var cp = this.fromEvent(ev);
-        this.setState({ cp: cp });
-      }
-
-      return changedCP;
-    }()
-  }, {
-    key: 'changedHP',
-    value: function () {
-      function changedHP(ev) {
-        var hp = this.fromEvent(ev);
-        this.setState({ hp: hp });
-      }
-
-      return changedHP;
-    }()
-  }, {
-    key: 'changedStardust',
-    value: function () {
-      function changedStardust(stardust) {
-        this.setState({ stardust: stardust });
-      }
-
-      return changedStardust;
-    }()
-  }, {
-    key: 'changedTrainerLevel',
-    value: function () {
-      function changedTrainerLevel(ev) {
-        var trainerLevel = Number(this.fromEvent(ev));
-        this.setState({ trainerLevel: trainerLevel });
-      }
-
-      return changedTrainerLevel;
-    }()
-  }, {
-    key: 'changedLevel',
-    value: function () {
-      function changedLevel(ev) {
-        var level = this.fromEvent(ev);
-        this.setState({ level: level });
-      }
-
-      return changedLevel;
-    }()
-  }, {
-    key: 'resultsCalculated',
-    value: function () {
-      function resultsCalculated(results) {
-        this.setState({ results: results.asObject() });
-      }
-
-      return resultsCalculated;
-    }()
-  }, {
-    key: 'trainerLevelChanged',
-    value: function () {
-      function trainerLevelChanged(trainerLevel) {
-        this.setState({ trainerLevel: trainerLevel });
-      }
-
-      return trainerLevelChanged;
-    }()
-  }, {
-    key: 'valuesReset',
-    value: function () {
-      function valuesReset() {
-        this.setState({
-          name: '',
-          cp: 0,
-          hp: 0,
-          stardust: '',
-          level: 0,
-          results: null,
-          processingImage: false
-        });
-      }
-
-      return valuesReset;
-    }()
-  }, {
-    key: 'resultsReset',
-    value: function () {
-      function resultsReset() {
-        this.setState({ results: null });
-      }
-
-      return resultsReset;
-    }()
-  }]);
-
-  return InventoryStore;
-}(alt.Store);
-
-module.exports = alt.createStore('InventoryStore', new InventoryStore());
-
-},{"../actions/pokemonActions":267,"../alt":268}],292:[function(require,module,exports){
+},{"../actions/historyActions":265,"../alt":267,"localforage":18}],291:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -44633,7 +44404,7 @@ var MovesStore = function (_alt$Store) {
 
 module.exports = alt.createStore('MovesStore', new MovesStore());
 
-},{"../actions/moveActions":266,"../alt":268}],293:[function(require,module,exports){
+},{"../actions/moveActions":266,"../alt":267}],292:[function(require,module,exports){
 module.exports = {
   main: {
     display: 'flex',
@@ -44758,7 +44529,96 @@ module.exports = {
   }
 };
 
-},{}],294:[function(require,module,exports){
+},{}],293:[function(require,module,exports){
+var n = require('./n');
+//const RN = require('react-native-web')
+//const View = RN.View
+
+function Table(props) {
+  var classList = props.className ? props.className.split(' ') : [];
+  classList.push('table');
+
+  if (props.clean) classList.push('clean');
+  if (props.border) classList.push('border');
+
+  return n('table', {
+    className: classList.join(' ')
+  }, props.children);
+}
+
+function View(props) {
+  var classList = props.className ? props.className.split(' ') : [];
+
+  if (props.spacing) classList.push('sp-' + String(props.spacing));
+  if (props.spacingVertical) classList.push('sp-vert-' + String(props.spacingVertical));
+  if (props.spacingHorizontal) classList.push('sp-horiz-' + String(props.spacingHorizontal));
+
+  return n('div', {
+    className: classList.join(' '),
+    style: props.style
+  }, props.children);
+}
+
+var Header = function Header(props) {
+  return n('h1', { style: { textAlign: 'center' } }, props.children);
+};
+
+var Button = function Button(props) {
+  return n('button', {
+    className: 'btn btn-' + String(props.size),
+    onClick: props.onClick,
+    style: props.style
+  }, props.children);
+};
+
+var FormControl = function FormControl(props) {
+  return n('label', [n('strong', props.label)].concat(props.children));
+};
+
+function Text(props) {
+  var textProps = { style: {} };
+  if (props.className) textProps.className = props.className;
+  if (props.style) textProps.style = props.style;
+  if (props.strong) textProps.style.fontWeight = 'bold';
+
+  return n('div', textProps, props.children);
+}
+
+var Link = function Link(props) {
+  return n('a', props, props.children);
+};
+
+var Input = function Input(props) {
+  return n('input', props);
+};
+
+var Image = function Image(props) {
+  return n('img', props);
+};
+
+var Panel = function Panel(props) {
+  return n('div', {
+    style: {
+      border: '1px solid #b2b2b2',
+      padding: '0.5em'
+    }
+  }, props.children);
+};
+
+module.exports = {
+  Button: Button,
+  FormControl: FormControl,
+  Header: Header,
+  Image: Image,
+  Input: Input,
+  Link: Link,
+  Panel: Panel,
+  Table: Table,
+  Text: Text,
+  View: View
+};
+
+},{"./n":300}],294:[function(require,module,exports){
 var n = require('./n');
 //const RN = require('react-native-web')
 //const View = RN.View
@@ -44848,95 +44708,6 @@ module.exports = {
 };
 
 },{"./n":300}],295:[function(require,module,exports){
-var n = require('./n');
-//const RN = require('react-native-web')
-//const View = RN.View
-
-function Table(props) {
-  var classList = props.className ? props.className.split(' ') : [];
-  classList.push('table');
-
-  if (props.clean) classList.push('clean');
-  if (props.border) classList.push('border');
-
-  return n('table', {
-    className: classList.join(' ')
-  }, props.children);
-}
-
-function View(props) {
-  var classList = props.className ? props.className.split(' ') : [];
-
-  if (props.spacing) classList.push('sp-' + String(props.spacing));
-  if (props.spacingVertical) classList.push('sp-vert-' + String(props.spacingVertical));
-  if (props.spacingHorizontal) classList.push('sp-horiz-' + String(props.spacingHorizontal));
-
-  return n('div', {
-    className: classList.join(' '),
-    style: props.style
-  }, props.children);
-}
-
-var Header = function Header(props) {
-  return n('h1', { style: { textAlign: 'center' } }, props.children);
-};
-
-var Button = function Button(props) {
-  return n('button', {
-    className: 'btn btn-' + String(props.size),
-    onClick: props.onClick,
-    style: props.style
-  }, props.children);
-};
-
-var FormControl = function FormControl(props) {
-  return n('label', [n('strong', props.label)].concat(props.children));
-};
-
-function Text(props) {
-  var textProps = { style: {} };
-  if (props.className) textProps.className = props.className;
-  if (props.style) textProps.style = props.style;
-  if (props.strong) textProps.style.fontWeight = 'bold';
-
-  return n('div', textProps, props.children);
-}
-
-var Link = function Link(props) {
-  return n('a', props, props.children);
-};
-
-var Input = function Input(props) {
-  return n('input', props);
-};
-
-var Image = function Image(props) {
-  return n('img', props);
-};
-
-var Panel = function Panel(props) {
-  return n('div', {
-    style: {
-      border: '1px solid #b2b2b2',
-      padding: '0.5em'
-    }
-  }, props.children);
-};
-
-module.exports = {
-  Button: Button,
-  FormControl: FormControl,
-  Header: Header,
-  Image: Image,
-  Input: Input,
-  Link: Link,
-  Panel: Panel,
-  Table: Table,
-  Text: Text,
-  View: View
-};
-
-},{"./n":300}],296:[function(require,module,exports){
 var great = ['Overall, your Pokemon is a wonder! What a breathtaking Pokemon!', 'Overall, your Pokemon simply amazes me. It can accomplish anything!', 'Overall, your Pokemon looks like it can really battle with the best of them!'];
 
 var good = ['Overall, your Pokemon has certainly caught my attention.', 'Overall, your Pokemon is a strong Pokemon. You should be proud!', 'Overall, your Pokemon is really strong!'];
@@ -44954,10 +44725,10 @@ module.exports = {
   great: great, good: good, bad: bad, ugly: ugly
 };
 
-},{}],297:[function(require,module,exports){
+},{}],296:[function(require,module,exports){
 var historyActions = require('../actions/historyActions');
 var magic = require('../../src/magic');
-var pokemonActions = require('../actions/pokemonActions');
+var dispatchableActions = require('../dispatchableActions');
 var store = require('../store');
 
 var IV_RANGE = {
@@ -44985,7 +44756,7 @@ function calculateValues(nextState) {
       ivRange: IV_RANGE[appraisal.ivRange]
     };
     var results = magic(values);
-    pokemonActions.resultsCalculated(results);
+    dispatchableActions.resultsCalculated(results);
     historyActions.pokemonChecked(values);
   } catch (err) {
     console.error(err);
@@ -44995,7 +44766,7 @@ function calculateValues(nextState) {
 
 module.exports = calculateValues;
 
-},{"../../src/magic":261,"../actions/historyActions":265,"../actions/pokemonActions":267,"../store":289}],298:[function(require,module,exports){
+},{"../../src/magic":261,"../actions/historyActions":265,"../dispatchableActions":285,"../store":289}],297:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -45083,7 +44854,7 @@ function connect(Component, o) {
 
 module.exports = connect;
 
-},{"./n":300,"react":232}],299:[function(require,module,exports){
+},{"./n":300,"react":232}],298:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -45134,7 +44905,20 @@ function liftState(state, Component) {
 
 module.exports = liftState;
 
-},{"react":232}],300:[function(require,module,exports){
+},{"react":232}],299:[function(require,module,exports){
+function mergeState(initialState, mergers) {
+  return function (state, action) {
+    if (state === undefined) return initialState;
+    if (mergers[action.type]) {
+      return Object.assign({}, state, mergers[action.type](action.payload, state, action));
+    }
+    return state;
+  };
+}
+
+module.exports = mergeState;
+
+},{}],300:[function(require,module,exports){
 var React = require('react');
 
 module.exports = function () {
@@ -45173,5 +44957,16 @@ function scrollTop() {
 }
 
 module.exports = scrollTop;
+
+},{}],302:[function(require,module,exports){
+function validateActions(actions, mergers) {
+  var invalid = Object.keys(mergers).filter(function (x) {
+    return !actions.hasOwnProperty(x);
+  });
+  if (invalid.length) throw new ReferenceError(invalid.join(' '));
+  return mergers;
+}
+
+module.exports = validateActions;
 
 },{}]},{},[286]);
