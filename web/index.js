@@ -8,6 +8,7 @@ const n = require('./utils/n')
 const localforage = require('localforage')
 const scrollTop = require('./utils/scrollTop')
 const SwipeableViews = require('react-swipeable-views').default
+const reactRedux = require('react-redux')
 
 const Dex = require('./components/Dex')
 const Matchup = require('./components/Matchup')
@@ -17,6 +18,7 @@ const Rater = require('./components/Rater')
 const pokemonActions = require('./actions/pokemonActions')
 const moveActions = require('./actions/moveActions')
 
+const reduxStore = require('./store')
 const movesStore = require('./stores/MovesStore')
 const inventoryStore = require('./stores/InventoryStore')
 
@@ -38,10 +40,7 @@ const ConnectedMatchup = connect(Matchup, {
   getProps: state => state.inventoryStore,
 })
 
-const ConnectedRater = connect(Rater, {
-  listenTo: () => ({ inventoryStore }),
-  getProps: state => state.inventoryStore,
-})
+const RaterContainer = reactRedux.connect(state => state.calculator)(Rater)
 
 function hashChanged(self) {
   const arr = window.location.hash.split('/')
@@ -112,7 +111,7 @@ class Main extends React.Component {
 
   render() {
     const Slides = [
-      n(ConnectedRater),
+      n(RaterContainer),
       n(ConnectedDex),
       n(ConnectedPowerUp),
       n(ConnectedMatchup),
@@ -160,7 +159,7 @@ localforage.getItem('pogoivcalc.trainerLevel').then((trainerLevel) => {
 //  }
 
   ReactDOM.render(
-    n(Main),
+    n(reactRedux.Provider, { store: reduxStore }, [n(Main)]),
     document.querySelector('#app')
   )
 })

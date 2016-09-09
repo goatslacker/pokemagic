@@ -1,6 +1,6 @@
 const alt = require('../alt')
 
-const historyActions = alt.generateActions('HistoryActions', [
+const historyActions = alt.generateActions('', [
   'pokemonChecked',
 ])
 

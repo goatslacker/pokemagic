@@ -1,6 +1,6 @@
 const alt = require('../alt')
 
-module.exports = alt.generateActions('InventoryActions', [
+module.exports = alt.generateActions('', [
   'changedName',
   'changedCP',
   'changedHP',

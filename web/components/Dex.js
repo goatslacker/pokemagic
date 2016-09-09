@@ -9,7 +9,7 @@ const bestMovesFor = require('../../src/best-moves')
 const Styles = require('../styles')
 const getEffectiveness = require('../../src/getTypeEffectiveness').getEffectiveness
 const analyzeBattleEffectiveness = require('../../src/analyzeBattleEffectiveness')
-const InventoryStore = require('../stores/InventoryStore')
+const store = require('../store')
 
 const pokemonList = Pokemon.map(x => ({ label: x.name.replace(/_/g, ' '), value: x.name }))
 const movesList = pokemonList.slice()
@@ -89,7 +89,7 @@ function Pokedex(props) {
 }
 
 function Report(props) {
-  const level = InventoryStore.getState().trainerLevel || 20
+  const level = store.getState().calculator.trainerLevel || 20
   const report = analyzeBattleEffectiveness({
     name: props.pokemon.name,
     level,
