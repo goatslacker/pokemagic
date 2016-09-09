@@ -1,8 +1,8 @@
 function createActionCreators(arr) {
-  return arr.reduce((obj, name) => {
-    const type = name.toLowerCase().replace(/_(\w)/, (a, b) => b.toUpperCase())
-    obj[type] = payload => ({ type, payload })
-    obj[name] = name
+  return arr.reduce((obj, type) => {
+    const name = type.toLowerCase().replace(/_(\w)/g, (a, b) => b.toUpperCase())
+    obj[name] = payload => ({ type, payload })
+    obj[type] = type
     return obj
   }, {})
 }
@@ -17,4 +17,7 @@ module.exports = createActionCreators([
   'RESULTS_CALCULATED',
   'RESULTS_RESET',
   'VALUES_RESET',
+  'TEAM_SELECTED',
+  'APPRAISAL_IV_RANGE_SET',
+  'APPRAISAL_ATTR_TOGGLED',
 ])

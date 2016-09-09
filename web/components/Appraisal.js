@@ -1,9 +1,10 @@
 const B = require('../utils/Lotus.React')
 const React = require('react')
 const Styles = require('../styles')
-const n = require('../utils/n')
 const appraisal = require('../utils/appraisal')
-const appraisalActions = require('../actions/appraisalActions')
+const actions = require('../actions')
+const n = require('../utils/n')
+const reactRedux = require('react-redux')
 
 const COLORS = [
   '#0677ee', // Mystic
@@ -26,6 +27,8 @@ const Phrase = props => n(B.Link, {
 }, appraisal[props.value][props.team])
 
 function Appraisal(props) {
+  window.props = props
+  window.actions = actions
   return n(B.View, { spacingVertical: 'md' }, [
     n(B.View, {
       style: {
@@ -37,17 +40,17 @@ function Appraisal(props) {
     }, [
       n(Shield, {
         current: props.team,
-        onSelect: appraisalActions.teamSelected,
+        onSelect: team => props.dispatch(actions.teamSelected(team)),
         team: 'VALOR',
       }),
       n(Shield, {
         current: props.team,
-        onSelect: appraisalActions.teamSelected,
+        onSelect: team => props.dispatch(actions.teamSelected(team)),
         team: 'MYSTIC',
       }),
       n(Shield, {
         current: props.team,
-        onSelect: appraisalActions.teamSelected,
+        onSelect: team => props.dispatch(actions.teamSelected(team)),
         team: 'INSTINCT',
       }),
     ]),
@@ -56,25 +59,25 @@ function Appraisal(props) {
       n(B.View, [
         n(B.FormControl, { label: 'IV% Range' }, [
           n(Phrase, {
-            onSelect: appraisalActions.ivRangeSet,
+            onSelect: x => props.dispatch(actions.appraisalIvRangeSet(x)),
             range: props.ivRange,
             team: props.team,
             value: 'great',
           }),
           n(Phrase, {
-            onSelect: appraisalActions.ivRangeSet,
+            onSelect: x => props.dispatch(actions.appraisalIvRangeSet(x)),
             range: props.ivRange,
             team: props.team,
             value: 'good',
           }),
           n(Phrase, {
-            onSelect: appraisalActions.ivRangeSet,
+            onSelect: x => props.dispatch(actions.appraisalIvRangeSet(x)),
             range: props.ivRange,
             team: props.team,
             value: 'bad',
           }),
           n(Phrase, {
-            onSelect: appraisalActions.ivRangeSet,
+            onSelect: x => props.dispatch(actions.appraisalIvRangeSet(x)),
             range: props.ivRange,
             team: props.team,
             value: 'ugly',
@@ -90,16 +93,16 @@ function Appraisal(props) {
             },
           }, [
             n(B.Link, {
-              onClick: () => appraisalActions.attrToggled('IndAtk'),
-              onSelect: appraisalActions.ivRangeSet,
+              onClick: () => props.dispatch(actions.appraisalAttrToggled('IndAtk')),
+              onSelect: x => props.dispatch(actions.appraisalIvRangeSet(x)),
               style: { fontWeight: props.attrs.IndAtk ? 'bold': '' },
             }, 'Atk'),
             n(B.Link, {
-              onClick: () => appraisalActions.attrToggled('IndDef'),
+              onClick: () => props.dispatch(actions.appraisalAttrToggled('IndDef')),
               style: { fontWeight: props.attrs.IndDef ? 'bold': '' },
             }, 'Def'),
             n(B.Link, {
-              onClick: () => appraisalActions.attrToggled('IndSta'),
+              onClick: () => props.dispatch(actions.appraisalAttrToggled('IndSta')),
               style: { fontWeight: props.attrs.IndSta ? 'bold': '' },
             }, 'HP'),
           ]),
@@ -109,4 +112,4 @@ function Appraisal(props) {
   ])
 }
 
-module.exports = Appraisal
+module.exports = reactRedux.connect(state => state.appraisal)(Appraisal)

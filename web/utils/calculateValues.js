@@ -1,4 +1,3 @@
-const appraisalStore = require('../stores/AppraisalStore')
 const historyActions = require('../actions/historyActions')
 const magic = require('../../src/magic')
 const pokemonActions = require('../actions/pokemonActions')
@@ -12,8 +11,11 @@ const IV_RANGE = {
 }
 
 function calculateValues(nextState) {
-  const state = nextState || store.getState().calculator
-  const appraisal = appraisalStore.getState()
+  const storeState = store.getState()
+
+  const state = nextState || storeState.calculator
+  const appraisal = storeState.appraisal
+
   try {
     const values = {
       name: state.name,

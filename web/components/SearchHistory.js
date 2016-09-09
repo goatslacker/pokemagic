@@ -7,6 +7,7 @@ const scrollTop = require('../utils/scrollTop')
 
 function fromHistory(ev) {
   if (ev) {
+    // TODO reset the appraisal stuff
     calculateValues(ev.value)
     scrollTop()
   }

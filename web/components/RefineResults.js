@@ -1,11 +1,11 @@
-const AppraisalContainer = require('../containers/AppraisalContainer')
+const Appraisal = require('./Appraisal')
 const B = require('../utils/Lotus.react')
 const ResultsTable = require('./ResultsTable')
 const Styles = require('../styles')
-const connect = require('../utils/connect')
-const n = require('../utils/n')
 const liftState = require('../utils/liftState')
-const appraisalStore = require('../stores/appraisalStore')
+const n = require('../utils/n')
+const reactRedux = require('react-redux')
+const store = require('../store')
 
 const IV_RANGE = {
   great: [82, 100],
@@ -15,7 +15,7 @@ const IV_RANGE = {
 }
 
 function refine(results) {
-  const appraisal = appraisalStore.getState()
+  const appraisal = store.getState().appraisal
 
   const attrs = Object.keys(appraisal.attrs)
   const ivRange = IV_RANGE[appraisal.ivRange]
@@ -78,7 +78,7 @@ function RefineResults(props) {
       ])
     ),
 
-    props.show && n(AppraisalContainer),
+    props.show && n(Appraisal),
 
     n(ResultsTable, { results }),
   ])
@@ -88,8 +88,6 @@ const RefineResultsStateful = liftState({
   show: false,
 }, RefineResults)
 
-module.exports = connect(RefineResultsStateful, {
-  listenTo: () => ({ appraisalStore }),
-  getProps: (state, props) => props,
-})
-
+module.exports = reactRedux.connect(
+  state => ({ appraisal: state.appraisal })
+)(RefineResultsStateful)

@@ -21,7 +21,7 @@ function validateActionNames(actions, mergers) {
   return mergers
 }
 
-const initialState = {
+const getInitialState = () => ({
   name: 'ARCANINE',
   cp: 2207,
   hp: 129,
@@ -29,18 +29,18 @@ const initialState = {
   trainerLevel: '',
   level: 0,
   results: null,
-}
+})
 
-const emptyState = {
+const getEmptyState = () => ({
   name: '',
   cp: 0,
   hp: 0,
   stardust: '',
   level: 0,
   results: null,
-}
+})
 
-const calculator = mergeState(initialState, validateActionNames(actions, {
+const calculator = mergeState(getInitialState(), validateActionNames(actions, {
   CHANGED_NAME: name => ({ name }),
   CHANGED_CP: cp => ({ cp }),
   CHANGED_HP: hp => ({ hp }),
@@ -49,7 +49,7 @@ const calculator = mergeState(initialState, validateActionNames(actions, {
   CHANGED_TRAINER_LEVEL: trainerLevel => ({ trainerLevel }),
   RESULTS_CALCULATED: ivResults => ({ results: ivResults.asObject() }),
   RESULTS_RESET: () => ({ results: null }),
-  VALUES_RESET: () => emptyState,
+  VALUES_RESET: () => getEmptyState(),
 }))
 
 module.exports = calculator

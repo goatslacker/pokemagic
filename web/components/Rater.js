@@ -5,7 +5,7 @@ const FormStardust = require('./FormStardust')
 const FormTrainerLevel = require('./FormTrainerLevel')
 const Results = require('./Results')
 const SearchHistoryContainer = require('../containers/SearchHistoryContainer')
-const AppraisalContainer = require('../containers/AppraisalContainer')
+const Appraisal = require('./Appraisal')
 const calculateValues = require('../utils/calculateValues')
 const n = require('../utils/n')
 const pokemonActions = require('../actions/pokemonActions')
@@ -34,7 +34,7 @@ function Rater(props) {
       }),
     ]),
     n(FormStardust, { stardust: props.stardust }),
-    n(AppraisalContainer),
+    n(Appraisal),
     n(B.Button, {
       size: 'sm',
       onClick: () => calculateValues(),

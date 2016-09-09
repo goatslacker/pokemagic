@@ -5,7 +5,7 @@ const store = require('./store')
 alt.subscribe(action => {
   const type = action.type
     .replace('/', '')
-    .replace(/([a-z])([A-Z])/, (_, b, c) => b + '_' + c)
+    .replace(/([a-z])([A-Z])/g, (_, b, c) => b + '_' + c)
     .toUpperCase()
 
   const meta = action.meta
