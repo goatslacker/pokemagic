@@ -16,22 +16,16 @@ const PowerUp = require('./components/PowerUp')
 const Rater = require('./components/Rater')
 
 const dispatchableActions = require('./dispatchableActions')
-const moveActions = require('./actions/moveActions')
 
 const reduxStore = require('./store')
-const movesStore = require('./stores/MovesStore')
 
 const calculateValues = require('./utils/calculateValues')
-
-const ConnectedDex = connect(Dex, {
-  listenTo: () => ({ movesStore }),
-  getProps: state => state.movesStore,
-})
 
 // TODO make powerup and matchup use different reducers
 const PowerUpContainer = reactRedux.connect(state => state.calculator)(PowerUp)
 const MatchupContainer = reactRedux.connect(state => state.calculator)(Matchup)
 const RaterContainer = reactRedux.connect(state => state.calculator)(Rater)
+const DexContainer = reactRedux.connect(state => state.dex)(Dex)
 
 function hashChanged(self) {
   const arr = window.location.hash.split('/')
@@ -45,7 +39,7 @@ function hashChanged(self) {
     if (arr.length === 6) calculateValues()
   } else if (arr[1] === 'dex') {
     self.setState({ selectedSlide: 1 })
-    moveActions.textChanged(arr[2].toUpperCase())
+    dispatchableActions.dexTextChanged(arr[2].toUpperCase())
   }
 }
 
@@ -99,7 +93,7 @@ class Main extends React.Component {
   render() {
     const Slides = [
       n(RaterContainer),
-      n(ConnectedDex),
+      n(DexContainer),
       n(PowerUpContainer),
       n(MatchupContainer),
     ]

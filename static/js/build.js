@@ -42740,6 +42740,10 @@ function createActionCreators(arr) {
     var name = type.toLowerCase().replace(/_(\w)/g, function (a, b) {
       return b.toUpperCase();
     });
+
+    if (obj[name]) throw new ReferenceError(String(name) + ' already exists');
+    if (obj[type]) throw new ReferenceError(String(type) + ' already exists');
+
     obj[name] = function (payload) {
       return { type: type, payload: payload };
     };
@@ -42748,7 +42752,7 @@ function createActionCreators(arr) {
   }, {});
 }
 
-module.exports = createActionCreators(['CHANGED_NAME', 'CHANGED_CP', 'CHANGED_HP', 'CHANGED_STARDUST', 'CHANGED_LEVEL', 'CHANGED_TRAINER_LEVEL', 'RESULTS_CALCULATED', 'RESULTS_RESET', 'VALUES_RESET', 'TEAM_SELECTED', 'APPRAISAL_IV_RANGE_SET', 'APPRAISAL_ATTR_TOGGLED']);
+module.exports = createActionCreators(['CHANGED_NAME', 'CHANGED_CP', 'CHANGED_HP', 'CHANGED_STARDUST', 'CHANGED_LEVEL', 'CHANGED_TRAINER_LEVEL', 'RESULTS_CALCULATED', 'RESULTS_RESET', 'VALUES_RESET', 'TEAM_SELECTED', 'APPRAISAL_IV_RANGE_SET', 'APPRAISAL_ATTR_TOGGLED', 'MOVES_CHANGED', 'POKEMON_CHANGED', 'DEX_TEXT_CHANGED']);
 
 },{}],265:[function(require,module,exports){
 var alt = require('../alt');
@@ -42757,14 +42761,7 @@ var historyActions = alt.generateActions('', ['pokemonChecked']);
 
 module.exports = historyActions;
 
-},{"../alt":267}],266:[function(require,module,exports){
-var alt = require('../alt');
-
-var moveActions = alt.generateActions('', ['movesChanged', 'pokemonChanged', 'textChanged']);
-
-module.exports = moveActions;
-
-},{"../alt":267}],267:[function(require,module,exports){
+},{"../alt":266}],266:[function(require,module,exports){
 var Alt = require('./assets/alt.min');
 var alt = new Alt();
 var store = require('./store');
@@ -42782,7 +42779,7 @@ alt.subscribe(function (action) {
 
 module.exports = alt;
 
-},{"./assets/alt.min":268,"./store":289}],268:[function(require,module,exports){
+},{"./assets/alt.min":267,"./store":289}],267:[function(require,module,exports){
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 !function (t, n) {
@@ -43042,7 +43039,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   }]);
 });
 
-},{}],269:[function(require,module,exports){
+},{}],268:[function(require,module,exports){
 var B = require('../utils/Lotus.React');
 var React = require('react');
 var Styles = require('../styles');
@@ -43217,7 +43214,7 @@ module.exports = reactRedux.connect(function (state) {
   return state.appraisal;
 })(Appraisal);
 
-},{"../actions":264,"../styles":292,"../utils/Lotus.React":293,"../utils/appraisal":295,"../utils/n":300,"react":232,"react-redux":36}],270:[function(require,module,exports){
+},{"../actions":264,"../styles":291,"../utils/Lotus.React":292,"../utils/appraisal":294,"../utils/n":299,"react":232,"react-redux":36}],269:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -43328,14 +43325,14 @@ var DetailedAnalysis = function (_React$Component) {
 
 module.exports = DetailedAnalysis;
 
-},{"../../src/analyzeBattleEffectiveness":249,"../../src/best-moves":250,"../styles":292,"../utils/Lotus.react":294,"../utils/n":300,"./MoveCombos":277,"./ResultsTable":282,"react":232}],271:[function(require,module,exports){
+},{"../../src/analyzeBattleEffectiveness":249,"../../src/best-moves":250,"../styles":291,"../utils/Lotus.react":293,"../utils/n":299,"./MoveCombos":276,"./ResultsTable":281,"react":232}],270:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var MoveCombos = require('./MoveCombos');
 var MovesList = require('../../json/moves.json');
 var Pokemon = require('../../json/pokemon.json');
 var Select = require('react-select');
 var n = require('../utils/n');
-var moveActions = require('../actions/moveActions');
+var dispatchableActions = require('../dispatchableActions');
 var bestMovesFor = require('../../src/best-moves');
 var Styles = require('../styles');
 var getEffectiveness = require('../../src/getTypeEffectiveness').getEffectiveness;
@@ -43361,20 +43358,20 @@ var ObjMoves = MovesList.reduce(function (obj, move) {
 
 function sweetMoves(x) {
   if (!x) {
-    moveActions.pokemonChanged([]);
-    moveActions.movesChanged([]);
-    moveActions.textChanged('');
+    dispatchableActions.pokemonChanged([]);
+    dispatchableActions.movesChanged([]);
+    dispatchableActions.dexTextChanged('');
     return;
   }
 
   if (Mon.hasOwnProperty(x.value)) {
     var best = bestMovesFor(x.value);
     var mon = Pokemon[Mon[x.value].id - 1];
-    moveActions.pokemonChanged([]);
-    moveActions.movesChanged(best);
+    dispatchableActions.pokemonChanged([]);
+    dispatchableActions.movesChanged(best);
   } else if (ObjMoves.hasOwnProperty(x.value)) {
-    moveActions.movesChanged(ObjMoves[x.value]);
-    moveActions.pokemonChanged(Pokemon.filter(function (mon) {
+    dispatchableActions.movesChanged(ObjMoves[x.value]);
+    dispatchableActions.pokemonChanged(Pokemon.filter(function (mon) {
       return mon.moves1.some(function (m) {
         return m.Name === x.value;
       }) || mon.moves2.some(function (m) {
@@ -43384,7 +43381,7 @@ function sweetMoves(x) {
       return x.name;
     }));
   }
-  moveActions.textChanged(x.value);
+  dispatchableActions.dexTextChanged(x.value);
 }
 
 function Pokedex(props) {
@@ -43442,7 +43439,7 @@ function Dex(props) {
 
 module.exports = Dex;
 
-},{"../../json/moves.json":7,"../../json/pokemon.json":8,"../../src/analyzeBattleEffectiveness":249,"../../src/best-moves":250,"../../src/getTypeEffectiveness":255,"../actions/moveActions":266,"../store":289,"../styles":292,"../utils/Lotus.react":294,"../utils/n":300,"./MoveCombos":277,"react-select":50}],272:[function(require,module,exports){
+},{"../../json/moves.json":7,"../../json/pokemon.json":8,"../../src/analyzeBattleEffectiveness":249,"../../src/best-moves":250,"../../src/getTypeEffectiveness":255,"../dispatchableActions":284,"../store":289,"../styles":291,"../utils/Lotus.react":293,"../utils/n":299,"./MoveCombos":276,"react-select":50}],271:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
 var dispatchableActions = require('../dispatchableActions');
@@ -43463,7 +43460,7 @@ function FormPokemonLevel(props) {
 
 module.exports = FormPokemonLevel;
 
-},{"../dispatchableActions":285,"../utils/Lotus.react":294,"../utils/n":300}],273:[function(require,module,exports){
+},{"../dispatchableActions":284,"../utils/Lotus.react":293,"../utils/n":299}],272:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var Pokemon = require('../../json/pokemon.json');
 var Select = require('react-select');
@@ -43493,7 +43490,7 @@ function FormPokemonName(props) {
 
 module.exports = FormPokemonName;
 
-},{"../../json/pokemon.json":8,"../dispatchableActions":285,"../utils/Lotus.react":294,"../utils/n":300,"react-select":50}],274:[function(require,module,exports){
+},{"../../json/pokemon.json":8,"../dispatchableActions":284,"../utils/Lotus.react":293,"../utils/n":299,"react-select":50}],273:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var DustToLevel = require('../../json/dust-to-level.json');
 var Select = require('react-select');
@@ -43521,7 +43518,7 @@ function FormStardust(props) {
 
 module.exports = FormStardust;
 
-},{"../../json/dust-to-level.json":2,"../dispatchableActions":285,"../utils/Lotus.react":294,"../utils/n":300,"react-select":50}],275:[function(require,module,exports){
+},{"../../json/dust-to-level.json":2,"../dispatchableActions":284,"../utils/Lotus.react":293,"../utils/n":299,"react-select":50}],274:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
 var dispatchableActions = require('../dispatchableActions');
@@ -43542,7 +43539,7 @@ function FormTrainerLevel(props) {
 
 module.exports = FormTrainerLevel;
 
-},{"../dispatchableActions":285,"../utils/Lotus.react":294,"../utils/n":300}],276:[function(require,module,exports){
+},{"../dispatchableActions":284,"../utils/Lotus.react":293,"../utils/n":299}],275:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var FormPokemonName = require('./FormPokemonName');
 var idealMatchup = require('../../src/idealMatchup');
@@ -43559,7 +43556,7 @@ function Matchup(props) {
 
 module.exports = Matchup;
 
-},{"../../src/idealMatchup":258,"../utils/Lotus.react":294,"../utils/n":300,"./FormPokemonName":273}],277:[function(require,module,exports){
+},{"../../src/idealMatchup":258,"../utils/Lotus.react":293,"../utils/n":299,"./FormPokemonName":272}],276:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
 
@@ -43595,7 +43592,7 @@ function MoveCombos(props) {
 
 module.exports = MoveCombos;
 
-},{"../utils/Lotus.react":294,"../utils/n":300}],278:[function(require,module,exports){
+},{"../utils/Lotus.react":293,"../utils/n":299}],277:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var DustToLevel = require('../../json/dust-to-level.json');
 var n = require('../utils/n');
@@ -43621,7 +43618,7 @@ function PowerUp(props) {
 
 module.exports = PowerUp;
 
-},{"../../json/dust-to-level.json":2,"../../src/powerup":262,"../utils/Lotus.react":294,"../utils/n":300,"./FormPokemonLevel":272,"./FormStardust":274,"./FormTrainerLevel":275}],279:[function(require,module,exports){
+},{"../../json/dust-to-level.json":2,"../../src/powerup":262,"../utils/Lotus.react":293,"../utils/n":299,"./FormPokemonLevel":271,"./FormStardust":273,"./FormTrainerLevel":274}],278:[function(require,module,exports){
 var B = require('../utils/Lotus.React');
 var FormPokemonLevel = require('./FormPokemonLevel');
 var FormPokemonName = require('./FormPokemonName');
@@ -43691,7 +43688,7 @@ function Rater(props) {
 
 module.exports = Rater;
 
-},{"../containers/SearchHistoryContainer":284,"../dispatchableActions":285,"../utils/Lotus.React":293,"../utils/calculateValues":296,"../utils/n":300,"./Appraisal":269,"./FormPokemonLevel":272,"./FormPokemonName":273,"./FormStardust":274,"./FormTrainerLevel":275,"./Results":281}],280:[function(require,module,exports){
+},{"../containers/SearchHistoryContainer":283,"../dispatchableActions":284,"../utils/Lotus.React":292,"../utils/calculateValues":295,"../utils/n":299,"./Appraisal":268,"./FormPokemonLevel":271,"./FormPokemonName":272,"./FormStardust":273,"./FormTrainerLevel":274,"./Results":280}],279:[function(require,module,exports){
 var Appraisal = require('./Appraisal');
 var B = require('../utils/Lotus.react');
 var ResultsTable = require('./ResultsTable');
@@ -43761,7 +43758,7 @@ module.exports = reactRedux.connect(function (state) {
   return { appraisal: state.appraisal };
 })(RefineResultsStateful);
 
-},{"../store":289,"../styles":292,"../utils/Lotus.react":294,"../utils/liftState":298,"../utils/n":300,"./Appraisal":269,"./ResultsTable":282,"react-redux":36}],281:[function(require,module,exports){
+},{"../store":289,"../styles":291,"../utils/Lotus.react":293,"../utils/liftState":297,"../utils/n":299,"./Appraisal":268,"./ResultsTable":281,"react-redux":36}],280:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var DetailedAnalysis = require('./DetailedAnalysis');
 var MoveCombos = require('./MoveCombos');
@@ -43810,7 +43807,7 @@ function Results(props) {
 
 module.exports = Results;
 
-},{"../../json/finalEvolutions":3,"../../src/best-moves":250,"../dispatchableActions":285,"../styles":292,"../utils/Lotus.react":294,"../utils/n":300,"./DetailedAnalysis":270,"./MoveCombos":277,"./RefineResults":280}],282:[function(require,module,exports){
+},{"../../json/finalEvolutions":3,"../../src/best-moves":250,"../dispatchableActions":284,"../styles":291,"../utils/Lotus.react":293,"../utils/n":299,"./DetailedAnalysis":269,"./MoveCombos":276,"./RefineResults":279}],281:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var Styles = require('../styles');
 var n = require('../utils/n');
@@ -43837,7 +43834,7 @@ function ResultsTable(props) {
 
 module.exports = ResultsTable;
 
-},{"../styles":292,"../utils/Lotus.react":294,"../utils/n":300}],283:[function(require,module,exports){
+},{"../styles":291,"../utils/Lotus.react":293,"../utils/n":299}],282:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var Select = require('react-select');
 var Styles = require('../styles');
@@ -43876,7 +43873,7 @@ function SearchHistory(props) {
 
 module.exports = SearchHistory;
 
-},{"../styles":292,"../utils/Lotus.react":294,"../utils/calculateValues":296,"../utils/n":300,"../utils/scrollTop":301,"react-select":50}],284:[function(require,module,exports){
+},{"../styles":291,"../utils/Lotus.react":293,"../utils/calculateValues":295,"../utils/n":299,"../utils/scrollTop":300,"react-select":50}],283:[function(require,module,exports){
 var SearchHistory = require('../components/SearchHistory');
 var connect = require('../utils/connect');
 var historyStore = require('../stores/HistoryStore');
@@ -43904,14 +43901,14 @@ var SearchHistoryContainer = connect(SearchHistory, {
 
 module.exports = SearchHistoryContainer;
 
-},{"../components/SearchHistory":283,"../stores/HistoryStore":290,"../utils/connect":297}],285:[function(require,module,exports){
+},{"../components/SearchHistory":282,"../stores/HistoryStore":290,"../utils/connect":296}],284:[function(require,module,exports){
 var actions = require('./actions');
 var redux = require('redux');
 var store = require('./store');
 
 module.exports = redux.bindActionCreators(actions, store.dispatch);
 
-},{"./actions":264,"./store":289,"redux":238}],286:[function(require,module,exports){
+},{"./actions":264,"./store":289,"redux":238}],285:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -43938,29 +43935,10 @@ var PowerUp = require('./components/PowerUp');
 var Rater = require('./components/Rater');
 
 var dispatchableActions = require('./dispatchableActions');
-var moveActions = require('./actions/moveActions');
 
 var reduxStore = require('./store');
-var movesStore = require('./stores/MovesStore');
 
 var calculateValues = require('./utils/calculateValues');
-
-var ConnectedDex = connect(Dex, {
-  listenTo: function () {
-    function listenTo() {
-      return { movesStore: movesStore };
-    }
-
-    return listenTo;
-  }(),
-  getProps: function () {
-    function getProps(state) {
-      return state.movesStore;
-    }
-
-    return getProps;
-  }()
-});
 
 // TODO make powerup and matchup use different reducers
 var PowerUpContainer = reactRedux.connect(function (state) {
@@ -43972,6 +43950,9 @@ var MatchupContainer = reactRedux.connect(function (state) {
 var RaterContainer = reactRedux.connect(function (state) {
   return state.calculator;
 })(Rater);
+var DexContainer = reactRedux.connect(function (state) {
+  return state.dex;
+})(Dex);
 
 function hashChanged(self) {
   var arr = window.location.hash.split('/');
@@ -43985,7 +43966,7 @@ function hashChanged(self) {
     if (arr.length === 6) calculateValues();
   } else if (arr[1] === 'dex') {
     self.setState({ selectedSlide: 1 });
-    moveActions.textChanged(arr[2].toUpperCase());
+    dispatchableActions.dexTextChanged(arr[2].toUpperCase());
   }
 }
 
@@ -44064,7 +44045,7 @@ var Main = function (_React$Component) {
       function render() {
         var _this4 = this;
 
-        var Slides = [n(RaterContainer), n(ConnectedDex), n(PowerUpContainer), n(MatchupContainer)];
+        var Slides = [n(RaterContainer), n(DexContainer), n(PowerUpContainer), n(MatchupContainer)];
 
         var Nav = this.renderNav();
 
@@ -44118,7 +44099,7 @@ localforage.getItem('pogoivcalc.trainerLevel').then(function (trainerLevel) {
   ReactDOM.render(n(reactRedux.Provider, { store: reduxStore }, [n(Main)]), document.querySelector('#app'));
 });
 
-},{"./actions/moveActions":266,"./alt":267,"./components/Dex":271,"./components/Matchup":276,"./components/PowerUp":278,"./components/Rater":279,"./dispatchableActions":285,"./store":289,"./stores/MovesStore":291,"./styles":292,"./utils/Lotus.react":294,"./utils/calculateValues":296,"./utils/connect":297,"./utils/n":300,"./utils/scrollTop":301,"localforage":18,"react":232,"react-dom":19,"react-redux":36,"react-swipeable-views":58}],287:[function(require,module,exports){
+},{"./alt":266,"./components/Dex":270,"./components/Matchup":275,"./components/PowerUp":277,"./components/Rater":278,"./dispatchableActions":284,"./store":289,"./styles":291,"./utils/Lotus.react":293,"./utils/calculateValues":295,"./utils/connect":296,"./utils/n":299,"./utils/scrollTop":300,"localforage":18,"react":232,"react-dom":19,"react-redux":36,"react-swipeable-views":58}],286:[function(require,module,exports){
 var actions = require('../actions');
 var mergeState = require('../utils/mergeState');
 var validateActions = require('../utils/validateActions');
@@ -44184,7 +44165,7 @@ var appraisal = mergeState(getInitialState(), validateActions(actions, {
 
 module.exports = appraisal;
 
-},{"../actions":264,"../utils/mergeState":299,"../utils/validateActions":302}],288:[function(require,module,exports){
+},{"../actions":264,"../utils/mergeState":298,"../utils/validateActions":301}],287:[function(require,module,exports){
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var actions = require('../actions');
@@ -44252,18 +44233,49 @@ var calculator = mergeState(getInitialState(), validateActions(actions, {
 
 module.exports = calculator;
 
-},{"../actions":264,"../utils/mergeState":299,"../utils/validateActions":302}],289:[function(require,module,exports){
+},{"../actions":264,"../utils/mergeState":298,"../utils/validateActions":301}],288:[function(require,module,exports){
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var actions = require('../actions');
+var mergeState = require('../utils/mergeState');
+var validateActions = require('../utils/validateActions');
+
+var set = function set(value) {
+  return function (payload) {
+    return _defineProperty({}, value, payload);
+  };
+};
+
+var getInitialState = function getInitialState() {
+  return {
+    text: '',
+    moves: [],
+    pokemon: []
+  };
+};
+
+var dex = mergeState(getInitialState(), validateActions(actions, {
+  MOVES_CHANGED: set('moves'),
+  POKEMON_CHANGED: set('pokemon'),
+  DEX_TEXT_CHANGED: set('text')
+}));
+
+module.exports = dex;
+
+},{"../actions":264,"../utils/mergeState":298,"../utils/validateActions":301}],289:[function(require,module,exports){
 var redux = require('redux');
 
 var appraisal = require('./reducers/appraisal');
 var calculator = require('./reducers/calculator');
+var dex = require('./reducers/dex');
 
 module.exports = redux.createStore(redux.combineReducers({
   appraisal: appraisal,
-  calculator: calculator
+  calculator: calculator,
+  dex: dex
 }));
 
-},{"./reducers/appraisal":287,"./reducers/calculator":288,"redux":238}],290:[function(require,module,exports){
+},{"./reducers/appraisal":286,"./reducers/calculator":287,"./reducers/dex":288,"redux":238}],290:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -44341,70 +44353,7 @@ var HistoryStore = function (_alt$Store) {
 
 module.exports = alt.createStore('HistoryStore', new HistoryStore());
 
-},{"../actions/historyActions":265,"../alt":267,"localforage":18}],291:[function(require,module,exports){
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var alt = require('../alt');
-var moveActions = require('../actions/moveActions');
-
-var MovesStore = function (_alt$Store) {
-  _inherits(MovesStore, _alt$Store);
-
-  function MovesStore() {
-    _classCallCheck(this, MovesStore);
-
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(MovesStore).call(this));
-
-    _this.state = {
-      text: '',
-      moves: [],
-      pokemon: []
-    };
-    _this.bindActions(moveActions);
-    return _this;
-  }
-
-  _createClass(MovesStore, [{
-    key: 'textChanged',
-    value: function () {
-      function textChanged(text) {
-        this.setState({ text: text });
-      }
-
-      return textChanged;
-    }()
-  }, {
-    key: 'movesChanged',
-    value: function () {
-      function movesChanged(moves) {
-        this.setState({ moves: moves });
-      }
-
-      return movesChanged;
-    }()
-  }, {
-    key: 'pokemonChanged',
-    value: function () {
-      function pokemonChanged(pokemon) {
-        this.setState({ pokemon: pokemon });
-      }
-
-      return pokemonChanged;
-    }()
-  }]);
-
-  return MovesStore;
-}(alt.Store);
-
-module.exports = alt.createStore('MovesStore', new MovesStore());
-
-},{"../actions/moveActions":266,"../alt":267}],292:[function(require,module,exports){
+},{"../actions/historyActions":265,"../alt":266,"localforage":18}],291:[function(require,module,exports){
 module.exports = {
   main: {
     display: 'flex',
@@ -44529,7 +44478,7 @@ module.exports = {
   }
 };
 
-},{}],293:[function(require,module,exports){
+},{}],292:[function(require,module,exports){
 var n = require('./n');
 //const RN = require('react-native-web')
 //const View = RN.View
@@ -44618,7 +44567,7 @@ module.exports = {
   View: View
 };
 
-},{"./n":300}],294:[function(require,module,exports){
+},{"./n":299}],293:[function(require,module,exports){
 var n = require('./n');
 //const RN = require('react-native-web')
 //const View = RN.View
@@ -44707,7 +44656,7 @@ module.exports = {
   View: View
 };
 
-},{"./n":300}],295:[function(require,module,exports){
+},{"./n":299}],294:[function(require,module,exports){
 var great = ['Overall, your Pokemon is a wonder! What a breathtaking Pokemon!', 'Overall, your Pokemon simply amazes me. It can accomplish anything!', 'Overall, your Pokemon looks like it can really battle with the best of them!'];
 
 var good = ['Overall, your Pokemon has certainly caught my attention.', 'Overall, your Pokemon is a strong Pokemon. You should be proud!', 'Overall, your Pokemon is really strong!'];
@@ -44725,7 +44674,7 @@ module.exports = {
   great: great, good: good, bad: bad, ugly: ugly
 };
 
-},{}],296:[function(require,module,exports){
+},{}],295:[function(require,module,exports){
 var historyActions = require('../actions/historyActions');
 var magic = require('../../src/magic');
 var dispatchableActions = require('../dispatchableActions');
@@ -44766,7 +44715,7 @@ function calculateValues(nextState) {
 
 module.exports = calculateValues;
 
-},{"../../src/magic":261,"../actions/historyActions":265,"../dispatchableActions":285,"../store":289}],297:[function(require,module,exports){
+},{"../../src/magic":261,"../actions/historyActions":265,"../dispatchableActions":284,"../store":289}],296:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -44854,7 +44803,7 @@ function connect(Component, o) {
 
 module.exports = connect;
 
-},{"./n":300,"react":232}],298:[function(require,module,exports){
+},{"./n":299,"react":232}],297:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -44905,7 +44854,7 @@ function liftState(state, Component) {
 
 module.exports = liftState;
 
-},{"react":232}],299:[function(require,module,exports){
+},{"react":232}],298:[function(require,module,exports){
 function mergeState(initialState, mergers) {
   return function (state, action) {
     if (state === undefined) return initialState;
@@ -44918,7 +44867,7 @@ function mergeState(initialState, mergers) {
 
 module.exports = mergeState;
 
-},{}],300:[function(require,module,exports){
+},{}],299:[function(require,module,exports){
 var React = require('react');
 
 module.exports = function () {
@@ -44948,7 +44897,7 @@ module.exports = function () {
   return n;
 }();
 
-},{"react":232}],301:[function(require,module,exports){
+},{"react":232}],300:[function(require,module,exports){
 function scrollTop() {
   if (typeof document !== 'undefined') {
     var node = document.querySelector('.pm');
@@ -44958,7 +44907,7 @@ function scrollTop() {
 
 module.exports = scrollTop;
 
-},{}],302:[function(require,module,exports){
+},{}],301:[function(require,module,exports){
 function validateActions(actions, mergers) {
   var invalid = Object.keys(mergers).filter(function (x) {
     return !actions.hasOwnProperty(x);
@@ -44969,4 +44918,4 @@ function validateActions(actions, mergers) {
 
 module.exports = validateActions;
 
-},{}]},{},[286]);
+},{}]},{},[285]);

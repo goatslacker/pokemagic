@@ -4,7 +4,7 @@ const MovesList = require('../../json/moves.json')
 const Pokemon = require('../../json/pokemon.json')
 const Select = require('react-select')
 const n = require('../utils/n')
-const moveActions = require('../actions/moveActions')
+const dispatchableActions = require('../dispatchableActions')
 const bestMovesFor = require('../../src/best-moves')
 const Styles = require('../styles')
 const getEffectiveness = require('../../src/getTypeEffectiveness').getEffectiveness
@@ -29,27 +29,27 @@ const ObjMoves = MovesList.reduce((obj, move) => {
 
 function sweetMoves(x) {
   if (!x) {
-    moveActions.pokemonChanged([])
-    moveActions.movesChanged([])
-    moveActions.textChanged('')
+    dispatchableActions.pokemonChanged([])
+    dispatchableActions.movesChanged([])
+    dispatchableActions.dexTextChanged('')
     return
   }
 
   if (Mon.hasOwnProperty(x.value)) {
     const best = bestMovesFor(x.value)
     const mon = Pokemon[Mon[x.value].id - 1]
-    moveActions.pokemonChanged([])
-    moveActions.movesChanged(best)
+    dispatchableActions.pokemonChanged([])
+    dispatchableActions.movesChanged(best)
   } else if (ObjMoves.hasOwnProperty(x.value)) {
-    moveActions.movesChanged(ObjMoves[x.value])
-    moveActions.pokemonChanged(
+    dispatchableActions.movesChanged(ObjMoves[x.value])
+    dispatchableActions.pokemonChanged(
       Pokemon.filter(mon => (
         mon.moves1.some(m => m.Name === x.value) ||
         mon.moves2.some(m => m.Name === x.value)
       )).map(x => x.name)
     )
   }
-  moveActions.textChanged(x.value)
+  dispatchableActions.dexTextChanged(x.value)
 }
 
 function Pokedex(props) {
