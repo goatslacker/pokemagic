@@ -70,8 +70,8 @@ function RefineResults(props) {
 
     n(B.Text, { style: Styles.resultsRow }, [
       results.length === 1
-        ? n('span', 'Congrats, here are your Pokemon\'s values')
-        : n('span', [
+        ? n(B.Text, 'Congrats, here are your Pokemon\'s values')
+        : n(B.Text, [
           'There are ',
           n('strong', results.length),
           ' possibilities and a ',

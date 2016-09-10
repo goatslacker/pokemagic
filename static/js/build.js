@@ -43523,7 +43523,7 @@ function RefineResults(props) {
     return x.percent.PerfectIV > 66;
   }).length / results.length) || 0;
 
-  return n(B.View, { spacingVertical: 'md' }, [n(B.H3, { style: Styles.resultsRow }, 'Possible values (' + String(results.length) + ')'), n(B.Text, { style: Styles.resultsRow }, [results.length === 1 ? n('span', 'Congrats, here are your Pokemon\'s values') : n('span', ['There are ', n('strong', results.length), ' possibilities and a ', n('strong', String(chance) + '%'), ' chance you will have a good ' + String(props.name) + '. ', 'Highlighted rows show even levels since you can only catch even leveled Pokemon.'])]), !props.show && results.length > 1 && n(B.View, { style: Styles.resultsRow }, [n(B.View, { spacing: 'sm' }), n(B.Text, 'Refine results by selecting "Appraise" from the Pokemon screen.'), n(B.Button, {
+  return n(B.View, { spacingVertical: 'md' }, [n(B.H3, { style: Styles.resultsRow }, 'Possible values (' + String(results.length) + ')'), n(B.Text, { style: Styles.resultsRow }, [results.length === 1 ? n(B.Text, 'Congrats, here are your Pokemon\'s values') : n(B.Text, ['There are ', n('strong', results.length), ' possibilities and a ', n('strong', String(chance) + '%'), ' chance you will have a good ' + String(props.name) + '. ', 'Highlighted rows show even levels since you can only catch even leveled Pokemon.'])]), !props.show && results.length > 1 && n(B.View, { style: Styles.resultsRow }, [n(B.View, { spacing: 'sm' }), n(B.Text, 'Refine results by selecting "Appraise" from the Pokemon screen.'), n(B.Button, {
     onClick: function () {
       function onClick() {
         return props.setState({ show: true });
