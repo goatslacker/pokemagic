@@ -42929,7 +42929,7 @@ module.exports = reactRedux.connect(function (state) {
   return state.appraisal;
 })(Appraisal);
 
-},{"../actions":264,"../styles":288,"../utils/Lotus.React":289,"../utils/appraisal":291,"../utils/n":296,"react":232,"react-redux":36}],266:[function(require,module,exports){
+},{"../actions":264,"../styles":288,"../utils/Lotus.React":289,"../utils/appraisal":291,"../utils/n":295,"react":232,"react-redux":36}],266:[function(require,module,exports){
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -43040,7 +43040,7 @@ var DetailedAnalysis = function (_React$Component) {
 
 module.exports = DetailedAnalysis;
 
-},{"../../src/analyzeBattleEffectiveness":249,"../../src/best-moves":250,"../styles":288,"../utils/Lotus.react":290,"../utils/n":296,"./MoveCombos":273,"./ResultsTable":278,"react":232}],267:[function(require,module,exports){
+},{"../../src/analyzeBattleEffectiveness":249,"../../src/best-moves":250,"../styles":288,"../utils/Lotus.react":290,"../utils/n":295,"./MoveCombos":273,"./ResultsTable":278,"react":232}],267:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var MoveCombos = require('./MoveCombos');
 var MovesList = require('../../json/moves.json');
@@ -43154,7 +43154,7 @@ function Dex(props) {
 
 module.exports = Dex;
 
-},{"../../json/moves.json":7,"../../json/pokemon.json":8,"../../src/analyzeBattleEffectiveness":249,"../../src/best-moves":250,"../../src/getTypeEffectiveness":255,"../dispatchableActions":281,"../store":287,"../styles":288,"../utils/Lotus.react":290,"../utils/n":296,"./MoveCombos":273,"react-select":50}],268:[function(require,module,exports){
+},{"../../json/moves.json":7,"../../json/pokemon.json":8,"../../src/analyzeBattleEffectiveness":249,"../../src/best-moves":250,"../../src/getTypeEffectiveness":255,"../dispatchableActions":281,"../store":287,"../styles":288,"../utils/Lotus.react":290,"../utils/n":295,"./MoveCombos":273,"react-select":50}],268:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
 var dispatchableActions = require('../dispatchableActions');
@@ -43175,7 +43175,7 @@ function FormPokemonLevel(props) {
 
 module.exports = FormPokemonLevel;
 
-},{"../dispatchableActions":281,"../utils/Lotus.react":290,"../utils/n":296}],269:[function(require,module,exports){
+},{"../dispatchableActions":281,"../utils/Lotus.react":290,"../utils/n":295}],269:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var Pokemon = require('../../json/pokemon.json');
 var Select = require('react-select');
@@ -43205,7 +43205,7 @@ function FormPokemonName(props) {
 
 module.exports = FormPokemonName;
 
-},{"../../json/pokemon.json":8,"../dispatchableActions":281,"../utils/Lotus.react":290,"../utils/n":296,"react-select":50}],270:[function(require,module,exports){
+},{"../../json/pokemon.json":8,"../dispatchableActions":281,"../utils/Lotus.react":290,"../utils/n":295,"react-select":50}],270:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var DustToLevel = require('../../json/dust-to-level.json');
 var Select = require('react-select');
@@ -43233,7 +43233,7 @@ function FormStardust(props) {
 
 module.exports = FormStardust;
 
-},{"../../json/dust-to-level.json":2,"../dispatchableActions":281,"../utils/Lotus.react":290,"../utils/n":296,"react-select":50}],271:[function(require,module,exports){
+},{"../../json/dust-to-level.json":2,"../dispatchableActions":281,"../utils/Lotus.react":290,"../utils/n":295,"react-select":50}],271:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
 var dispatchableActions = require('../dispatchableActions');
@@ -43254,7 +43254,7 @@ function FormTrainerLevel(props) {
 
 module.exports = FormTrainerLevel;
 
-},{"../dispatchableActions":281,"../utils/Lotus.react":290,"../utils/n":296}],272:[function(require,module,exports){
+},{"../dispatchableActions":281,"../utils/Lotus.react":290,"../utils/n":295}],272:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var FormPokemonName = require('./FormPokemonName');
 var idealMatchup = require('../../src/idealMatchup');
@@ -43271,7 +43271,7 @@ function Matchup(props) {
 
 module.exports = Matchup;
 
-},{"../../src/idealMatchup":258,"../utils/Lotus.react":290,"../utils/n":296,"./FormPokemonName":269}],273:[function(require,module,exports){
+},{"../../src/idealMatchup":258,"../utils/Lotus.react":290,"../utils/n":295,"./FormPokemonName":269}],273:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
 
@@ -43307,7 +43307,7 @@ function MoveCombos(props) {
 
 module.exports = MoveCombos;
 
-},{"../utils/Lotus.react":290,"../utils/n":296}],274:[function(require,module,exports){
+},{"../utils/Lotus.react":290,"../utils/n":295}],274:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var DustToLevel = require('../../json/dust-to-level.json');
 var n = require('../utils/n');
@@ -43333,7 +43333,7 @@ function PowerUp(props) {
 
 module.exports = PowerUp;
 
-},{"../../json/dust-to-level.json":2,"../../src/powerup":262,"../utils/Lotus.react":290,"../utils/n":296,"./FormPokemonLevel":268,"./FormStardust":270,"./FormTrainerLevel":271}],275:[function(require,module,exports){
+},{"../../json/dust-to-level.json":2,"../../src/powerup":262,"../utils/Lotus.react":290,"../utils/n":295,"./FormPokemonLevel":268,"./FormStardust":270,"./FormTrainerLevel":271}],275:[function(require,module,exports){
 var B = require('../utils/Lotus.React');
 var FormPokemonLevel = require('./FormPokemonLevel');
 var FormPokemonName = require('./FormPokemonName');
@@ -43403,7 +43403,7 @@ function Rater(props) {
 
 module.exports = Rater;
 
-},{"../containers/SearchHistoryContainer":280,"../dispatchableActions":281,"../utils/Lotus.React":289,"../utils/calculateValues":292,"../utils/n":296,"./Appraisal":265,"./FormPokemonLevel":268,"./FormPokemonName":269,"./FormStardust":270,"./FormTrainerLevel":271,"./Results":277}],276:[function(require,module,exports){
+},{"../containers/SearchHistoryContainer":280,"../dispatchableActions":281,"../utils/Lotus.React":289,"../utils/calculateValues":292,"../utils/n":295,"./Appraisal":265,"./FormPokemonLevel":268,"./FormPokemonName":269,"./FormStardust":270,"./FormTrainerLevel":271,"./Results":277}],276:[function(require,module,exports){
 var Appraisal = require('./Appraisal');
 var B = require('../utils/Lotus.react');
 var ResultsTable = require('./ResultsTable');
@@ -43473,7 +43473,7 @@ module.exports = reactRedux.connect(function (state) {
   return { appraisal: state.appraisal };
 })(RefineResultsStateful);
 
-},{"../store":287,"../styles":288,"../utils/Lotus.react":290,"../utils/liftState":294,"../utils/n":296,"./Appraisal":265,"./ResultsTable":278,"react-redux":36}],277:[function(require,module,exports){
+},{"../store":287,"../styles":288,"../utils/Lotus.react":290,"../utils/liftState":293,"../utils/n":295,"./Appraisal":265,"./ResultsTable":278,"react-redux":36}],277:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var DetailedAnalysis = require('./DetailedAnalysis');
 var MoveCombos = require('./MoveCombos');
@@ -43522,7 +43522,7 @@ function Results(props) {
 
 module.exports = Results;
 
-},{"../../json/finalEvolutions":3,"../../src/best-moves":250,"../dispatchableActions":281,"../styles":288,"../utils/Lotus.react":290,"../utils/n":296,"./DetailedAnalysis":266,"./MoveCombos":273,"./RefineResults":276}],278:[function(require,module,exports){
+},{"../../json/finalEvolutions":3,"../../src/best-moves":250,"../dispatchableActions":281,"../styles":288,"../utils/Lotus.react":290,"../utils/n":295,"./DetailedAnalysis":266,"./MoveCombos":273,"./RefineResults":276}],278:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var Styles = require('../styles');
 var n = require('../utils/n');
@@ -43549,7 +43549,7 @@ function ResultsTable(props) {
 
 module.exports = ResultsTable;
 
-},{"../styles":288,"../utils/Lotus.react":290,"../utils/n":296}],279:[function(require,module,exports){
+},{"../styles":288,"../utils/Lotus.react":290,"../utils/n":295}],279:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var Select = require('react-select');
 var Styles = require('../styles');
@@ -43588,7 +43588,7 @@ function SearchHistory(props) {
 
 module.exports = SearchHistory;
 
-},{"../styles":288,"../utils/Lotus.react":290,"../utils/calculateValues":292,"../utils/n":296,"../utils/scrollTop":297,"react-select":50}],280:[function(require,module,exports){
+},{"../styles":288,"../utils/Lotus.react":290,"../utils/calculateValues":292,"../utils/n":295,"../utils/scrollTop":296,"react-select":50}],280:[function(require,module,exports){
 var SearchHistory = require('../components/SearchHistory');
 var reactRedux = require('react-redux');
 
@@ -43622,7 +43622,6 @@ var B = require('./utils/Lotus.react');
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Styles = require('./styles');
-var connect = require('./utils/connect');
 var n = require('./utils/n');
 var localforage = require('localforage');
 var scrollTop = require('./utils/scrollTop');
@@ -43799,7 +43798,7 @@ localforage.getItem('pogoivcalc.trainerLevel').then(function (trainerLevel) {
   ReactDOM.render(n(reactRedux.Provider, { store: reduxStore }, [n(Main)]), document.querySelector('#app'));
 });
 
-},{"./components/Dex":267,"./components/Matchup":272,"./components/PowerUp":274,"./components/Rater":275,"./dispatchableActions":281,"./store":287,"./styles":288,"./utils/Lotus.react":290,"./utils/calculateValues":292,"./utils/connect":293,"./utils/n":296,"./utils/scrollTop":297,"localforage":18,"react":232,"react-dom":19,"react-redux":36,"react-swipeable-views":58}],283:[function(require,module,exports){
+},{"./components/Dex":267,"./components/Matchup":272,"./components/PowerUp":274,"./components/Rater":275,"./dispatchableActions":281,"./store":287,"./styles":288,"./utils/Lotus.react":290,"./utils/calculateValues":292,"./utils/n":295,"./utils/scrollTop":296,"localforage":18,"react":232,"react-dom":19,"react-redux":36,"react-swipeable-views":58}],283:[function(require,module,exports){
 var actions = require('../actions');
 var mergeState = require('../utils/mergeState');
 var validateActions = require('../utils/validateActions');
@@ -43865,7 +43864,7 @@ var appraisal = mergeState(getInitialState(), validateActions(actions, {
 
 module.exports = appraisal;
 
-},{"../actions":264,"../utils/mergeState":295,"../utils/validateActions":298}],284:[function(require,module,exports){
+},{"../actions":264,"../utils/mergeState":294,"../utils/validateActions":297}],284:[function(require,module,exports){
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var actions = require('../actions');
@@ -43933,7 +43932,7 @@ var calculator = mergeState(getInitialState(), validateActions(actions, {
 
 module.exports = calculator;
 
-},{"../actions":264,"../utils/mergeState":295,"../utils/validateActions":298}],285:[function(require,module,exports){
+},{"../actions":264,"../utils/mergeState":294,"../utils/validateActions":297}],285:[function(require,module,exports){
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var actions = require('../actions');
@@ -43962,7 +43961,7 @@ var dex = mergeState(getInitialState(), validateActions(actions, {
 
 module.exports = dex;
 
-},{"../actions":264,"../utils/mergeState":295,"../utils/validateActions":298}],286:[function(require,module,exports){
+},{"../actions":264,"../utils/mergeState":294,"../utils/validateActions":297}],286:[function(require,module,exports){
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var actions = require('../actions');
@@ -44031,7 +44030,7 @@ var history = mergeState(getInitialState(), validateActions(actions, {
 
 module.exports = history;
 
-},{"../actions":264,"../utils/mergeState":295,"../utils/validateActions":298}],287:[function(require,module,exports){
+},{"../actions":264,"../utils/mergeState":294,"../utils/validateActions":297}],287:[function(require,module,exports){
 var redux = require('redux');
 
 var appraisal = require('./reducers/appraisal');
@@ -44260,7 +44259,7 @@ module.exports = {
   View: View
 };
 
-},{"./n":296}],290:[function(require,module,exports){
+},{"./n":295}],290:[function(require,module,exports){
 var n = require('./n');
 //const RN = require('react-native-web')
 //const View = RN.View
@@ -44349,7 +44348,7 @@ module.exports = {
   View: View
 };
 
-},{"./n":296}],291:[function(require,module,exports){
+},{"./n":295}],291:[function(require,module,exports){
 var great = ['Overall, your Pokemon is a wonder! What a breathtaking Pokemon!', 'Overall, your Pokemon simply amazes me. It can accomplish anything!', 'Overall, your Pokemon looks like it can really battle with the best of them!'];
 
 var good = ['Overall, your Pokemon has certainly caught my attention.', 'Overall, your Pokemon is a strong Pokemon. You should be proud!', 'Overall, your Pokemon is really strong!'];
@@ -44417,94 +44416,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var React = require('react');
-var n = require('./n');
-
-function connect(Component, o) {
-  return function (_React$Component) {
-    _inherits(ConnectedComponent, _React$Component);
-
-    function ConnectedComponent() {
-      _classCallCheck(this, ConnectedComponent);
-
-      var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ConnectedComponent).call(this));
-
-      _this.stores = o.listenTo();
-      _this.subscriptions = [];
-
-      _this.state = _this.computeState();
-      return _this;
-    }
-
-    _createClass(ConnectedComponent, [{
-      key: 'computeState',
-      value: function () {
-        function computeState() {
-          var _this2 = this;
-
-          return Object.keys(this.stores).reduce(function (obj, key) {
-            var store = _this2.stores[key];
-            obj[key] = store.getState();
-            return obj;
-          }, {});
-        }
-
-        return computeState;
-      }()
-    }, {
-      key: 'componentDidMount',
-      value: function () {
-        function componentDidMount() {
-          var _this3 = this;
-
-          this.subscriptions = Object.keys(this.stores).map(function (key) {
-            return _this3.stores[key].subscribe(function () {
-              return _this3.setState(_this3.computeState());
-            });
-          });
-          o.componentDidMount && o.componentDidMount();
-        }
-
-        return componentDidMount;
-      }()
-    }, {
-      key: 'componentWillUnmount',
-      value: function () {
-        function componentWillUnmount() {
-          this.subscriptions.forEach(function (sub) {
-            return sub.dispose();
-          });
-          this.subscriptions = [];
-        }
-
-        return componentWillUnmount;
-      }()
-    }, {
-      key: 'render',
-      value: function () {
-        function render() {
-          return n(Component, o.getProps(this.state, this.props), this.props.children);
-        }
-
-        return render;
-      }()
-    }]);
-
-    return ConnectedComponent;
-  }(React.Component);
-}
-
-module.exports = connect;
-
-},{"./n":296,"react":232}],294:[function(require,module,exports){
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var React = require('react');
 
 function liftState(state, Component) {
   return function (_React$Component) {
@@ -44546,7 +44457,7 @@ function liftState(state, Component) {
 
 module.exports = liftState;
 
-},{"react":232}],295:[function(require,module,exports){
+},{"react":232}],294:[function(require,module,exports){
 function mergeState(initialState, mergers) {
   return function (state, action) {
     if (state === undefined) return initialState;
@@ -44559,7 +44470,7 @@ function mergeState(initialState, mergers) {
 
 module.exports = mergeState;
 
-},{}],296:[function(require,module,exports){
+},{}],295:[function(require,module,exports){
 var React = require('react');
 
 module.exports = function () {
@@ -44589,7 +44500,7 @@ module.exports = function () {
   return n;
 }();
 
-},{"react":232}],297:[function(require,module,exports){
+},{"react":232}],296:[function(require,module,exports){
 function scrollTop() {
   if (typeof document !== 'undefined') {
     var node = document.querySelector('.pm');
@@ -44599,7 +44510,7 @@ function scrollTop() {
 
 module.exports = scrollTop;
 
-},{}],298:[function(require,module,exports){
+},{}],297:[function(require,module,exports){
 function validateActions(actions, mergers) {
   var invalid = Object.keys(mergers).filter(function (x) {
     return !actions.hasOwnProperty(x);
