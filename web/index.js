@@ -31,8 +31,8 @@ function hashChanged(self) {
   if (arr[1] === 'iv') {
     self.setState({ selectedSlide: 0 })
     if (arr[2]) dispatchableActions.changedName(arr[2].toUpperCase())
-    if (arr[3]) dispatchableActions.changedCP(Number(arr[3]))
-    if (arr[4]) dispatchableActions.changedHP(Number(arr[4]))
+    if (arr[3]) dispatchableActions.changedCp(Number(arr[3]))
+    if (arr[4]) dispatchableActions.changedHp(Number(arr[4]))
     if (arr[5]) dispatchableActions.changedStardust(Number(arr[5]))
     if (arr.length === 6) calculateValues()
   } else if (arr[1] === 'dex') {
