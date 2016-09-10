@@ -22,13 +22,11 @@ const Shield = props => n(B.Image, {
 const Phrase = props => n(B.Link, {
   onClick: () => props.onSelect(props.value),
   style: Object.assign({
-    backgroundColor: props.range === props.value ? COLORS[props.team] : '',
+    backgroundColor: props.selected === props.value ? COLORS[props.team] : '',
   }, Styles.box),
-}, appraisal[props.value][props.team])
+}, appraisal[props.analysis][props.value][props.team])
 
 function Appraisal(props) {
-  window.props = props
-  window.actions = actions
   return n(B.View, { spacingVertical: 'md' }, [
     n(B.View, {
       style: {
@@ -57,28 +55,32 @@ function Appraisal(props) {
 
     props.team !== null && (
       n(B.View, [
-        n(B.FormControl, { label: 'IV% Range' }, [
+        n(B.FormControl, { label: 'Overall' }, [
           n(Phrase, {
+            analysis: 'overall',
             onSelect: x => props.dispatch(actions.appraisalIvRangeSet(x)),
-            range: props.ivRange,
+            selected: props.ivRange,
             team: props.team,
             value: 'great',
           }),
           n(Phrase, {
+            analysis: 'overall',
             onSelect: x => props.dispatch(actions.appraisalIvRangeSet(x)),
-            range: props.ivRange,
+            selected: props.ivRange,
             team: props.team,
             value: 'good',
           }),
           n(Phrase, {
+            analysis: 'overall',
             onSelect: x => props.dispatch(actions.appraisalIvRangeSet(x)),
-            range: props.ivRange,
+            selected: props.ivRange,
             team: props.team,
             value: 'bad',
           }),
           n(Phrase, {
+            analysis: 'overall',
             onSelect: x => props.dispatch(actions.appraisalIvRangeSet(x)),
-            range: props.ivRange,
+            selected: props.ivRange,
             team: props.team,
             value: 'ugly',
           }),
@@ -106,6 +108,36 @@ function Appraisal(props) {
               style: { fontWeight: props.attrs.IndSta ? 'bold': '' },
             }, 'HP'),
           ]),
+        ]),
+        n(B.FormControl, { label: 'Stat Analysis' }, [
+          n(Phrase, {
+            analysis: 'stats',
+            onSelect: x => props.dispatch(actions.appraisalStatSet(x)),
+            selected: props.stat,
+            team: props.team,
+            value: 'great',
+          }),
+          n(Phrase, {
+            analysis: 'stats',
+            onSelect: x => props.dispatch(actions.appraisalStatSet(x)),
+            selected: props.stat,
+            team: props.team,
+            value: 'good',
+          }),
+          n(Phrase, {
+            analysis: 'stats',
+            onSelect: x => props.dispatch(actions.appraisalStatSet(x)),
+            selected: props.stat,
+            team: props.team,
+            value: 'bad',
+          }),
+          n(Phrase, {
+            analysis: 'stats',
+            onSelect: x => props.dispatch(actions.appraisalStatSet(x)),
+            selected: props.stat,
+            team: props.team,
+            value: 'ugly',
+          }),
         ]),
       ])
     ),

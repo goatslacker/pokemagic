@@ -42439,26 +42439,31 @@ var IvResults = function () {
     this.errors = [];
 
     // Filter by appraisal
-    if (pokemon.attrs || pokemon.ivRange) {
+    if (pokemon.attrs || pokemon.ivRange || pokemon.stat) {
       this.results = results.filter(function (result) {
         var rangeCheck = true;
+        var attrCheck = true;
         var statCheck = true;
 
         if (pokemon.ivRange != null) {
           rangeCheck = result.percent.PerfectIV >= pokemon.ivRange[0] && result.percent.PerfectIV <= pokemon.ivRange[1];
         }
 
-        if (pokemon.attrs.length) {
-          (function () {
-            var maxiv = Math.max(result.ivs.IndAtk, result.ivs.IndDef, result.ivs.IndSta);
+        var MAX_IV = Math.max(result.ivs.IndAtk, result.ivs.IndDef, result.ivs.IndSta);
 
-            statCheck = pokemon.attrs.every(function (attr) {
-              return result.ivs[attr] === maxiv;
-            });
-          })();
+        if (pokemon.attrs.length) {
+          attrCheck = pokemon.attrs.every(function (attr) {
+            return result.ivs[attr] === MAX_IV;
+          });
         }
 
-        return rangeCheck && statCheck;
+        if (Array.isArray(pokemon.stat)) {
+          statCheck = pokemon.stat.some(function (stat) {
+            return stat === MAX_IV;
+          });
+        }
+
+        return rangeCheck && attrCheck && statCheck;
       });
     } else {
       this.results = results;
@@ -42752,7 +42757,7 @@ function createActionCreators(arr) {
   }, {});
 }
 
-module.exports = createActionCreators(['CHANGED_NAME', 'CHANGED_CP', 'CHANGED_HP', 'CHANGED_STARDUST', 'CHANGED_LEVEL', 'CHANGED_TRAINER_LEVEL', 'RESULTS_CALCULATED', 'RESULTS_RESET', 'VALUES_RESET', 'TEAM_SELECTED', 'APPRAISAL_IV_RANGE_SET', 'APPRAISAL_ATTR_TOGGLED', 'MOVES_CHANGED', 'POKEMON_CHANGED', 'DEX_TEXT_CHANGED', 'POKEMON_CHECKED', 'SEARCHES_LOADED']);
+module.exports = createActionCreators(['CHANGED_NAME', 'CHANGED_CP', 'CHANGED_HP', 'CHANGED_STARDUST', 'CHANGED_LEVEL', 'CHANGED_TRAINER_LEVEL', 'RESULTS_CALCULATED', 'RESULTS_RESET', 'VALUES_RESET', 'TEAM_SELECTED', 'APPRAISAL_IV_RANGE_SET', 'APPRAISAL_ATTR_TOGGLED', 'APPRAISAL_STAT_SET', 'MOVES_CHANGED', 'POKEMON_CHANGED', 'DEX_TEXT_CHANGED', 'POKEMON_CHECKED', 'SEARCHES_LOADED']);
 
 },{}],265:[function(require,module,exports){
 var B = require('../utils/Lotus.React');
@@ -42792,14 +42797,12 @@ var Phrase = function Phrase(props) {
       return onClick;
     }(),
     style: Object.assign({
-      backgroundColor: props.range === props.value ? COLORS[props.team] : ''
+      backgroundColor: props.selected === props.value ? COLORS[props.team] : ''
     }, Styles.box)
-  }, appraisal[props.value][props.team]);
+  }, appraisal[props.analysis][props.value][props.team]);
 };
 
 function Appraisal(props) {
-  window.props = props;
-  window.actions = actions;
   return n(B.View, { spacingVertical: 'md' }, [n(B.View, {
     style: {
       display: 'flex',
@@ -42837,7 +42840,8 @@ function Appraisal(props) {
       return onSelect;
     }(),
     team: 'INSTINCT'
-  })]), props.team !== null && n(B.View, [n(B.FormControl, { label: 'IV% Range' }, [n(Phrase, {
+  })]), props.team !== null && n(B.View, [n(B.FormControl, { label: 'Overall' }, [n(Phrase, {
+    analysis: 'overall',
     onSelect: function () {
       function onSelect(x) {
         return props.dispatch(actions.appraisalIvRangeSet(x));
@@ -42845,10 +42849,11 @@ function Appraisal(props) {
 
       return onSelect;
     }(),
-    range: props.ivRange,
+    selected: props.ivRange,
     team: props.team,
     value: 'great'
   }), n(Phrase, {
+    analysis: 'overall',
     onSelect: function () {
       function onSelect(x) {
         return props.dispatch(actions.appraisalIvRangeSet(x));
@@ -42856,10 +42861,11 @@ function Appraisal(props) {
 
       return onSelect;
     }(),
-    range: props.ivRange,
+    selected: props.ivRange,
     team: props.team,
     value: 'good'
   }), n(Phrase, {
+    analysis: 'overall',
     onSelect: function () {
       function onSelect(x) {
         return props.dispatch(actions.appraisalIvRangeSet(x));
@@ -42867,10 +42873,11 @@ function Appraisal(props) {
 
       return onSelect;
     }(),
-    range: props.ivRange,
+    selected: props.ivRange,
     team: props.team,
     value: 'bad'
   }), n(Phrase, {
+    analysis: 'overall',
     onSelect: function () {
       function onSelect(x) {
         return props.dispatch(actions.appraisalIvRangeSet(x));
@@ -42878,7 +42885,7 @@ function Appraisal(props) {
 
       return onSelect;
     }(),
-    range: props.ivRange,
+    selected: props.ivRange,
     team: props.team,
     value: 'ugly'
   })]), n(B.FormControl, { label: 'Attributes' }, [n(B.View, {
@@ -42922,7 +42929,55 @@ function Appraisal(props) {
       return onClick;
     }(),
     style: { fontWeight: props.attrs.IndSta ? 'bold' : '' }
-  }, 'HP')])])])]);
+  }, 'HP')])]), n(B.FormControl, { label: 'Stat Analysis' }, [n(Phrase, {
+    analysis: 'stats',
+    onSelect: function () {
+      function onSelect(x) {
+        return props.dispatch(actions.appraisalStatSet(x));
+      }
+
+      return onSelect;
+    }(),
+    selected: props.stat,
+    team: props.team,
+    value: 'great'
+  }), n(Phrase, {
+    analysis: 'stats',
+    onSelect: function () {
+      function onSelect(x) {
+        return props.dispatch(actions.appraisalStatSet(x));
+      }
+
+      return onSelect;
+    }(),
+    selected: props.stat,
+    team: props.team,
+    value: 'good'
+  }), n(Phrase, {
+    analysis: 'stats',
+    onSelect: function () {
+      function onSelect(x) {
+        return props.dispatch(actions.appraisalStatSet(x));
+      }
+
+      return onSelect;
+    }(),
+    selected: props.stat,
+    team: props.team,
+    value: 'bad'
+  }), n(Phrase, {
+    analysis: 'stats',
+    onSelect: function () {
+      function onSelect(x) {
+        return props.dispatch(actions.appraisalStatSet(x));
+      }
+
+      return onSelect;
+    }(),
+    selected: props.stat,
+    team: props.team,
+    value: 'ugly'
+  })])])]);
 }
 
 module.exports = reactRedux.connect(function (state) {
@@ -43420,31 +43475,45 @@ var IV_RANGE = {
   ugly: [0, 50]
 };
 
+var STAT_VALUES = {
+  great: [15],
+  good: [13, 14],
+  bad: [8, 9, 10, 11, 12],
+  ugly: [0, 1, 2, 3, 4, 5, 6, 7]
+};
+
+// TODO this code exists in two places now
 function refine(results) {
   var appraisal = store.getState().appraisal;
 
   var attrs = Object.keys(appraisal.attrs);
   var ivRange = IV_RANGE[appraisal.ivRange];
+  var stats = STAT_VALUES[appraisal.stat];
 
   return results.filter(function (result) {
     var rangeCheck = true;
+    var attrCheck = true;
     var statCheck = true;
 
     if (ivRange != null) {
       rangeCheck = result.percent.PerfectIV >= ivRange[0] && result.percent.PerfectIV <= ivRange[1];
     }
 
-    if (attrs.length) {
-      (function () {
-        var maxiv = Math.max(result.ivs.IndAtk, result.ivs.IndDef, result.ivs.IndSta);
+    var MAX_IV = Math.max(result.ivs.IndAtk, result.ivs.IndDef, result.ivs.IndSta);
 
-        statCheck = attrs.every(function (attr) {
-          return result.ivs[attr] === maxiv;
-        });
-      })();
+    if (attrs.length) {
+      attrCheck = attrs.every(function (attr) {
+        return result.ivs[attr] === MAX_IV;
+      });
     }
 
-    return rangeCheck && statCheck;
+    if (Array.isArray(stats)) {
+      statCheck = stats.some(function (stat) {
+        return stat === MAX_IV;
+      });
+    }
+
+    return rangeCheck && attrCheck && statCheck;
   });
 }
 
@@ -43799,34 +43868,33 @@ localforage.getItem('pogoivcalc.trainerLevel').then(function (trainerLevel) {
 });
 
 },{"./components/Dex":267,"./components/Matchup":272,"./components/PowerUp":274,"./components/Rater":275,"./dispatchableActions":281,"./store":287,"./styles":288,"./utils/Lotus.react":290,"./utils/calculateValues":292,"./utils/n":295,"./utils/scrollTop":296,"localforage":18,"react":232,"react-dom":19,"react-redux":36,"react-swipeable-views":58}],283:[function(require,module,exports){
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var actions = require('../actions');
 var mergeState = require('../utils/mergeState');
 var validateActions = require('../utils/validateActions');
+
+var set = function set(value) {
+  return function (payload) {
+    return _defineProperty({}, value, payload);
+  };
+};
 
 var getInitialState = function getInitialState() {
   return {
     attrs: {},
     ivRange: null,
+    stat: null,
     team: null
   };
 };
 
 var appraisal = mergeState(getInitialState(), validateActions(actions, {
-  TEAM_SELECTED: function () {
-    function TEAM_SELECTED(team) {
-      return { team: team };
-    }
+  TEAM_SELECTED: set('team'),
 
-    return TEAM_SELECTED;
-  }(),
+  APPRAISAL_IV_RANGE_SET: set('ivRange'),
 
-  APPRAISAL_IV_RANGE_SET: function () {
-    function APPRAISAL_IV_RANGE_SET(ivRange) {
-      return { ivRange: ivRange };
-    }
-
-    return APPRAISAL_IV_RANGE_SET;
-  }(),
+  APPRAISAL_STAT_SET: set('stat'),
 
   APPRAISAL_ATTR_TOGGLED: function () {
     function APPRAISAL_ATTR_TOGGLED(value, state) {
@@ -44350,13 +44418,25 @@ module.exports = {
 };
 
 },{"./n":295}],291:[function(require,module,exports){
-var great = ['Overall, your Pokemon is a wonder! What a breathtaking Pokemon!', 'Overall, your Pokemon simply amazes me. It can accomplish anything!', 'Overall, your Pokemon looks like it can really battle with the best of them!'];
+var overall = {
+  great: ['Overall, your Pokemon is a wonder! What a breathtaking Pokemon!', 'Overall, your Pokemon simply amazes me. It can accomplish anything!', 'Overall, your Pokemon looks like it can really battle with the best of them!'],
 
-var good = ['Overall, your Pokemon has certainly caught my attention.', 'Overall, your Pokemon is a strong Pokemon. You should be proud!', 'Overall, your Pokemon is really strong!'];
+  good: ['Overall, your Pokemon has certainly caught my attention.', 'Overall, your Pokemon is a strong Pokemon. You should be proud!', 'Overall, your Pokemon is really strong!'],
 
-var bad = ['Overall, your Pokemon is above average.', 'Overall, your Pokemon is a decent Pokemon', 'Overall, your Pokemon is pretty decent!'];
+  bad: ['Overall, your Pokemon is above average.', 'Overall, your Pokemon is a decent Pokemon', 'Overall, your Pokemon is pretty decent!'],
 
-var ugly = ['Overall, your Pokemon is not likely to make much headway in battle', 'Overall, your Pokemon may not be great in battle, but I still like it!', 'Overall, your Pokemon has room for improvement as far as battling goes.'];
+  ugly: ['Overall, your Pokemon is not likely to make much headway in battle', 'Overall, your Pokemon may not be great in battle, but I still like it!', 'Overall, your Pokemon has room for improvement as far as battling goes.']
+};
+
+var stats = {
+  great: ['Its stats exceed my calculations. It\'s incredible!', 'I\'m blown away by its stats. WOW!', 'Its stats ar teh best I\'ve ever seen! No doubt about it!'],
+
+  good: ['I am certainly impressed by its stats. I must say.', 'It\'s got excellent stats! How exciting!', 'Its stats are really strong! Impressive.'],
+
+  bad: ['Its stats are noticeably trending to the positive.', 'Its stats indicate that in battle, it\'ll get the job done.', 'It\'s definitely got some good stats. Definitely!'],
+
+  ugly: ['Its stats are not out of the norm, in my estimation.', 'Its stats don\'t point to greatness in battle.', 'Its stats are all right, but kinda basic, as far as I can see.']
+};
 
 var MYSTIC = 0;
 var VALOR = 1;
@@ -44364,7 +44444,8 @@ var INSTINCT = 2;
 
 module.exports = {
   MYSTIC: MYSTIC, VALOR: VALOR, INSTINCT: INSTINCT,
-  great: great, good: good, bad: bad, ugly: ugly
+  overall: overall,
+  stats: stats
 };
 
 },{}],292:[function(require,module,exports){
@@ -44377,6 +44458,13 @@ var IV_RANGE = {
   good: [67, 81],
   bad: [51, 66],
   ugly: [0, 50]
+};
+
+var STAT_VALUES = {
+  great: [15],
+  good: [13, 14],
+  bad: [8, 9, 10, 11, 12],
+  ugly: [0, 1, 2, 3, 4, 5, 6, 7]
 };
 
 function calculateValues(nextState) {
@@ -44394,7 +44482,8 @@ function calculateValues(nextState) {
       level: state.level ? Number(state.level) : null,
       trainerLevel: Number(state.trainerLevel) || 38.5, // XXX hack until we start doing Math.min(trainerLevel + 1.5, 40)
       attrs: Object.keys(appraisal.attrs),
-      ivRange: IV_RANGE[appraisal.ivRange]
+      ivRange: IV_RANGE[appraisal.ivRange],
+      stat: STAT_VALUES[appraisal.stat]
     };
     var results = magic(values);
     dispatchableActions.resultsCalculated(results);

@@ -25,6 +25,7 @@ module.exports = createActionCreators([
   'TEAM_SELECTED',
   'APPRAISAL_IV_RANGE_SET',
   'APPRAISAL_ATTR_TOGGLED',
+  'APPRAISAL_STAT_SET',
 
   'MOVES_CHANGED',
   'POKEMON_CHANGED',

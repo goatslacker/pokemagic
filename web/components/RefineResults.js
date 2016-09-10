@@ -14,14 +14,24 @@ const IV_RANGE = {
   ugly: [0, 50],
 }
 
+const STAT_VALUES = {
+  great: [15],
+  good: [13, 14],
+  bad: [8, 9, 10, 11, 12],
+  ugly: [0, 1, 2, 3, 4, 5, 6, 7],
+}
+
+// TODO this code exists in two places now
 function refine(results) {
   const appraisal = store.getState().appraisal
 
   const attrs = Object.keys(appraisal.attrs)
   const ivRange = IV_RANGE[appraisal.ivRange]
+  const stats = STAT_VALUES[appraisal.stat]
 
   return results.filter((result) => {
     var rangeCheck = true
+    var attrCheck = true
     var statCheck = true
 
     if (ivRange != null) {
@@ -31,17 +41,21 @@ function refine(results) {
       )
     }
 
-    if (attrs.length) {
-      const maxiv = Math.max(
-        result.ivs.IndAtk,
-        result.ivs.IndDef,
-        result.ivs.IndSta
-      )
+    const MAX_IV = Math.max(
+      result.ivs.IndAtk,
+      result.ivs.IndDef,
+      result.ivs.IndSta
+    )
 
-      statCheck = attrs.every(attr => result.ivs[attr] === maxiv)
+    if (attrs.length) {
+      attrCheck = attrs.every(attr => result.ivs[attr] === MAX_IV)
     }
 
-    return rangeCheck && statCheck
+    if (Array.isArray(stats)) {
+      statCheck = stats.some(stat => stat === MAX_IV)
+    }
+
+    return rangeCheck && attrCheck && statCheck
   })
 }
 

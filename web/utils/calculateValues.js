@@ -9,6 +9,13 @@ const IV_RANGE = {
   ugly: [0, 50],
 }
 
+const STAT_VALUES = {
+  great: [15],
+  good: [13, 14],
+  bad: [8, 9, 10, 11, 12],
+  ugly: [0, 1, 2, 3, 4, 5, 6, 7],
+}
+
 function calculateValues(nextState) {
   const storeState = store.getState()
 
@@ -25,6 +32,7 @@ function calculateValues(nextState) {
       trainerLevel: Number(state.trainerLevel) || 38.5, // XXX hack until we start doing Math.min(trainerLevel + 1.5, 40)
       attrs: Object.keys(appraisal.attrs),
       ivRange: IV_RANGE[appraisal.ivRange],
+      stat: STAT_VALUES[appraisal.stat],
     }
     const results = magic(values)
     dispatchableActions.resultsCalculated(results)

@@ -42,9 +42,10 @@ class IvResults {
     this.errors = []
 
     // Filter by appraisal
-    if (pokemon.attrs || pokemon.ivRange) {
+    if (pokemon.attrs || pokemon.ivRange || pokemon.stat) {
       this.results = results.filter((result) => {
         var rangeCheck = true
+        var attrCheck = true
         var statCheck = true
 
         if (pokemon.ivRange != null) {
@@ -54,17 +55,21 @@ class IvResults {
           )
         }
 
-        if (pokemon.attrs.length) {
-          const maxiv = Math.max(
-            result.ivs.IndAtk,
-            result.ivs.IndDef,
-            result.ivs.IndSta
-          )
+        const MAX_IV = Math.max(
+          result.ivs.IndAtk,
+          result.ivs.IndDef,
+          result.ivs.IndSta
+        )
 
-          statCheck = pokemon.attrs.every(attr => result.ivs[attr] === maxiv)
+        if (pokemon.attrs.length) {
+          attrCheck = pokemon.attrs.every(attr => result.ivs[attr] === MAX_IV)
         }
 
-        return rangeCheck && statCheck
+        if (Array.isArray(pokemon.stat)) {
+          statCheck = pokemon.stat.some(stat => stat === MAX_IV)
+        }
+
+        return rangeCheck && attrCheck && statCheck
       })
     } else {
       this.results = results
