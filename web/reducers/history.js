@@ -1,6 +1,7 @@
 const actions = require('../actions')
 const mergeState = require('../utils/mergeState')
 const validateActions = require('../utils/validateActions')
+const localforage = require('localforage')
 
 const set = value => payload => ({ [value]: payload })
 

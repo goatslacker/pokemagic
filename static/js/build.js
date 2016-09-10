@@ -43967,6 +43967,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var actions = require('../actions');
 var mergeState = require('../utils/mergeState');
 var validateActions = require('../utils/validateActions');
+var localforage = require('localforage');
 
 var set = function set(value) {
   return function (payload) {
@@ -44030,7 +44031,7 @@ var history = mergeState(getInitialState(), validateActions(actions, {
 
 module.exports = history;
 
-},{"../actions":264,"../utils/mergeState":294,"../utils/validateActions":297}],287:[function(require,module,exports){
+},{"../actions":264,"../utils/mergeState":294,"../utils/validateActions":297,"localforage":18}],287:[function(require,module,exports){
 var redux = require('redux');
 
 var appraisal = require('./reducers/appraisal');
