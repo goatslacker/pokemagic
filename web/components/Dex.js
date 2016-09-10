@@ -1,14 +1,15 @@
 const B = require('../utils/Lotus.react')
+const Matchup = require('./Matchup')
 const MoveCombos = require('./MoveCombos')
 const MovesList = require('../../json/moves.json')
 const Pokemon = require('../../json/pokemon.json')
 const Select = require('react-select')
-const n = require('../utils/n')
-const dispatchableActions = require('../dispatchableActions')
-const bestMovesFor = require('../../src/best-moves')
 const Styles = require('../styles')
-const getEffectiveness = require('../../src/getTypeEffectiveness').getEffectiveness
 const analyzeBattleEffectiveness = require('../../src/analyzeBattleEffectiveness')
+const bestMovesFor = require('../../src/best-moves')
+const dispatchableActions = require('../dispatchableActions')
+const getEffectiveness = require('../../src/getTypeEffectiveness').getEffectiveness
+const n = require('../utils/n')
 const store = require('../store')
 
 const pokemonList = Pokemon.map(x => ({ label: x.name.replace(/_/g, ' '), value: x.name }))
@@ -131,7 +132,8 @@ function Report(props) {
 function Dex(props) {
   return (
     n(B.View, [
-      n(B.Header, 'Pokemon Data'),
+      n(B.Header, 'Pokemon Database'),
+      n(B.Text, 'Below you will find information on this Pokemon\'s movesets, how this Pokemon fares against others, and which Pokemon are most effective vs it.'),
       n(B.Divider),
       n(B.FormControl, { label: 'Pokemon Name or Move Name' }, [
         n(Select, {
@@ -184,6 +186,8 @@ function Dex(props) {
           n(B.Divider),
         ])
       ),
+      Mon.hasOwnProperty(props.text) && n(Matchup, { name: props.text }),
+      n(B.Divider),
       n(B.H3, 'More Info'),
       n(B.Text, 'The tables above feature a combined DPS score for each possible move combination. The DPS is calculated based on neutral damage for a level 25 Pokemon with 10/10/10 IVs assuming that the Pokemon will be using their quick move constantly and their charge move immediately when it becomes available. STAB damage is taken into account as well as each move\'s animation time. You can also use this search to look up which Pokemon can learn a particular move.'),
     ])

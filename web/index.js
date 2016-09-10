@@ -9,7 +9,6 @@ const SwipeableViews = require('react-swipeable-views').default
 const reactRedux = require('react-redux')
 
 const Dex = require('./components/Dex')
-const Matchup = require('./components/Matchup')
 const PowerUp = require('./components/PowerUp')
 const Rater = require('./components/Rater')
 
@@ -21,7 +20,6 @@ const calculateValues = require('./utils/calculateValues')
 
 // TODO make powerup and matchup use different reducers
 const PowerUpContainer = reactRedux.connect(state => state.calculator)(PowerUp)
-const MatchupContainer = reactRedux.connect(state => state.calculator)(Matchup)
 const RaterContainer = reactRedux.connect(state => state.calculator)(Rater)
 const DexContainer = reactRedux.connect(state => state.dex)(Dex)
 
@@ -68,7 +66,6 @@ class Main extends React.Component {
         this.renderLink(0, 'Rater'),
         this.renderLink(1, 'Dex'),
         this.renderLink(2, 'PowerUp'),
-        this.renderLink(3, 'Matchup'),
       ])
     )
   }
@@ -93,7 +90,6 @@ class Main extends React.Component {
       n(RaterContainer),
       n(DexContainer),
       n(PowerUpContainer),
-      n(MatchupContainer),
     ]
 
     const Nav = this.renderNav()

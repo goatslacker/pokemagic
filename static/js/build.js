@@ -43097,16 +43097,17 @@ module.exports = DetailedAnalysis;
 
 },{"../../src/analyzeBattleEffectiveness":249,"../../src/best-moves":250,"../styles":288,"../utils/Lotus.react":290,"../utils/n":295,"./MoveCombos":273,"./ResultsTable":278,"react":232}],267:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
+var Matchup = require('./Matchup');
 var MoveCombos = require('./MoveCombos');
 var MovesList = require('../../json/moves.json');
 var Pokemon = require('../../json/pokemon.json');
 var Select = require('react-select');
-var n = require('../utils/n');
-var dispatchableActions = require('../dispatchableActions');
-var bestMovesFor = require('../../src/best-moves');
 var Styles = require('../styles');
-var getEffectiveness = require('../../src/getTypeEffectiveness').getEffectiveness;
 var analyzeBattleEffectiveness = require('../../src/analyzeBattleEffectiveness');
+var bestMovesFor = require('../../src/best-moves');
+var dispatchableActions = require('../dispatchableActions');
+var getEffectiveness = require('../../src/getTypeEffectiveness').getEffectiveness;
+var n = require('../utils/n');
 var store = require('../store');
 
 var pokemonList = Pokemon.map(function (x) {
@@ -43181,7 +43182,7 @@ function Report(props) {
 }
 
 function Dex(props) {
-  return n(B.View, [n(B.Header, 'Pokemon Data'), n(B.Divider), n(B.FormControl, { label: 'Pokemon Name or Move Name' }, [n(Select, {
+  return n(B.View, [n(B.Header, 'Pokemon Database'), n(B.Text, 'Below you will find information on this Pokemon\'s movesets, how this Pokemon fares against others, and which Pokemon are most effective vs it.'), n(B.Divider), n(B.FormControl, { label: 'Pokemon Name or Move Name' }, [n(Select, {
     inputProps: {
       autoCorrect: 'off',
       autoCapitalize: 'off',
@@ -43204,12 +43205,12 @@ function Dex(props) {
       height: 60,
       width: 60
     });
-  })) || undefined, n(B.Divider), Mon.hasOwnProperty(props.text) && n(B.View, [n(Report, { pokemon: Mon[props.text] }), n(B.Divider)]), n(B.H3, 'More Info'), n(B.Text, 'The tables above feature a combined DPS score for each possible move combination. The DPS is calculated based on neutral damage for a level 25 Pokemon with 10/10/10 IVs assuming that the Pokemon will be using their quick move constantly and their charge move immediately when it becomes available. STAB damage is taken into account as well as each move\'s animation time. You can also use this search to look up which Pokemon can learn a particular move.')]);
+  })) || undefined, n(B.Divider), Mon.hasOwnProperty(props.text) && n(B.View, [n(Report, { pokemon: Mon[props.text] }), n(B.Divider)]), Mon.hasOwnProperty(props.text) && n(Matchup, { name: props.text }), n(B.Divider), n(B.H3, 'More Info'), n(B.Text, 'The tables above feature a combined DPS score for each possible move combination. The DPS is calculated based on neutral damage for a level 25 Pokemon with 10/10/10 IVs assuming that the Pokemon will be using their quick move constantly and their charge move immediately when it becomes available. STAB damage is taken into account as well as each move\'s animation time. You can also use this search to look up which Pokemon can learn a particular move.')]);
 }
 
 module.exports = Dex;
 
-},{"../../json/moves.json":7,"../../json/pokemon.json":8,"../../src/analyzeBattleEffectiveness":249,"../../src/best-moves":250,"../../src/getTypeEffectiveness":255,"../dispatchableActions":281,"../store":287,"../styles":288,"../utils/Lotus.react":290,"../utils/n":295,"./MoveCombos":273,"react-select":50}],268:[function(require,module,exports){
+},{"../../json/moves.json":7,"../../json/pokemon.json":8,"../../src/analyzeBattleEffectiveness":249,"../../src/best-moves":250,"../../src/getTypeEffectiveness":255,"../dispatchableActions":281,"../store":287,"../styles":288,"../utils/Lotus.react":290,"../utils/n":295,"./Matchup":272,"./MoveCombos":273,"react-select":50}],268:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
 var dispatchableActions = require('../dispatchableActions');
@@ -43311,13 +43312,12 @@ module.exports = FormTrainerLevel;
 
 },{"../dispatchableActions":281,"../utils/Lotus.react":290,"../utils/n":295}],272:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
-var FormPokemonName = require('./FormPokemonName');
 var idealMatchup = require('../../src/idealMatchup');
 var n = require('../utils/n');
 
 function Matchup(props) {
   var matchups = props.name ? idealMatchup.attacking(props.name) : [];
-  return n(B.View, [n(B.Header, 'Ideal Matchup'), n(B.Text, 'This is calculated based on the opposing Pokemon\'s type and assuming the opponent has the best possible moveset combination for their Pokemon. The results do not include legendaries. Pokemon type effectiveness and resistances are also taken into account.'), n(B.Divider), n(FormPokemonName, { name: props.name }), matchups.length ? n(B.Table, {
+  return n(B.View, [n(B.Header, 'Ideal Pokemon vs ' + String(props.name)), n(B.Text, 'This is calculated based on the opposing Pokemon\'s type and assuming the opponent has the best possible moveset combination for their Pokemon. The results do not include legendaries. Pokemon type effectiveness and resistances are also taken into account.'), n(B.View, { spacing: 'sm' }), matchups.length ? n(B.Table, {
     border: true
   }, [n('thead', [n('tr', [n('th', 'Name'), n('th', 'Moves')])]), n('tbody', matchups.map(function (value) {
     return n('tr', [n('td', [n(B.Text, { strong: true }, value.name), n(B.Text, String(value.score.toFixed(3)) + ' Opp TTL')]), n('td', [n(B.Text, value.quick), n(B.Text, value.charge)])]);
@@ -43326,7 +43326,7 @@ function Matchup(props) {
 
 module.exports = Matchup;
 
-},{"../../src/idealMatchup":258,"../utils/Lotus.react":290,"../utils/n":295,"./FormPokemonName":269}],273:[function(require,module,exports){
+},{"../../src/idealMatchup":258,"../utils/Lotus.react":290,"../utils/n":295}],273:[function(require,module,exports){
 var B = require('../utils/Lotus.react');
 var n = require('../utils/n');
 
@@ -43698,7 +43698,6 @@ var SwipeableViews = require('react-swipeable-views')['default'];
 var reactRedux = require('react-redux');
 
 var Dex = require('./components/Dex');
-var Matchup = require('./components/Matchup');
 var PowerUp = require('./components/PowerUp');
 var Rater = require('./components/Rater');
 
@@ -43712,9 +43711,6 @@ var calculateValues = require('./utils/calculateValues');
 var PowerUpContainer = reactRedux.connect(function (state) {
   return state.calculator;
 })(PowerUp);
-var MatchupContainer = reactRedux.connect(function (state) {
-  return state.calculator;
-})(Matchup);
 var RaterContainer = reactRedux.connect(function (state) {
   return state.calculator;
 })(Rater);
@@ -43778,7 +43774,7 @@ var Main = function (_React$Component) {
         return n(B.View, {
           className: 'nav',
           style: this.state.small ? Styles.menu : Styles.menuDesktop
-        }, [this.renderLink(0, 'Rater'), this.renderLink(1, 'Dex'), this.renderLink(2, 'PowerUp'), this.renderLink(3, 'Matchup')]);
+        }, [this.renderLink(0, 'Rater'), this.renderLink(1, 'Dex'), this.renderLink(2, 'PowerUp')]);
       }
 
       return renderNav;
@@ -43813,7 +43809,7 @@ var Main = function (_React$Component) {
       function render() {
         var _this4 = this;
 
-        var Slides = [n(RaterContainer), n(DexContainer), n(PowerUpContainer), n(MatchupContainer)];
+        var Slides = [n(RaterContainer), n(DexContainer), n(PowerUpContainer)];
 
         var Nav = this.renderNav();
 
@@ -43867,7 +43863,7 @@ localforage.getItem('pogoivcalc.trainerLevel').then(function (trainerLevel) {
   ReactDOM.render(n(reactRedux.Provider, { store: reduxStore }, [n(Main)]), document.querySelector('#app'));
 });
 
-},{"./components/Dex":267,"./components/Matchup":272,"./components/PowerUp":274,"./components/Rater":275,"./dispatchableActions":281,"./store":287,"./styles":288,"./utils/Lotus.react":290,"./utils/calculateValues":292,"./utils/n":295,"./utils/scrollTop":296,"localforage":18,"react":232,"react-dom":19,"react-redux":36,"react-swipeable-views":58}],283:[function(require,module,exports){
+},{"./components/Dex":267,"./components/PowerUp":274,"./components/Rater":275,"./dispatchableActions":281,"./store":287,"./styles":288,"./utils/Lotus.react":290,"./utils/calculateValues":292,"./utils/n":295,"./utils/scrollTop":296,"localforage":18,"react":232,"react-dom":19,"react-redux":36,"react-swipeable-views":58}],283:[function(require,module,exports){
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var actions = require('../actions');
