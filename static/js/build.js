@@ -41340,138 +41340,162 @@ module.exports = warning;
 
 }).call(this,require('_process'))
 },{"_process":9}],249:[function(require,module,exports){
-const Pokemon = require('../json/pokemon.json')
-const LevelToCPM = require('../json/level-to-cpm.json')
-const gymDefenders = require('../json/gym-defenders.json')
-const ttlvs = require('./ttlvs')
-const getTypeEffectiveness = require('./getTypeEffectiveness').getTypeEffectiveness
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
-const GymPokemon = gymDefenders.map(def => Pokemon.filter(x => x.name === def.name)[0])
+var Pokemon = require('../json/pokemon.json');
+var LevelToCPM = require('../json/level-to-cpm.json');
+var gymDefenders = require('../json/gym-defenders.json');
+var ttlvs = require('./ttlvs');
+var getTypeEffectiveness = require('./getTypeEffectiveness').getTypeEffectiveness;
+
+var GymPokemon = gymDefenders.map(function (def) {
+  return Pokemon.filter(function (x) {
+    return x.name === def.name;
+  })[0];
+});
 
 // A function that analyzes how effective a pokemon is in battle vs another pokemon
 // This uses a list of top pokemon to use at gyms and pits your pokemon vs them.
 function analyzeBattleEffectiveness(obj) {
-  const pokemonName = obj.name
-  const pokemonLevel = obj.level
+  var pokemonName = obj.name;
+  var pokemonLevel = obj.level;
 
-  const fmtName1 = pokemonName.toUpperCase().trim()
-  const player = Pokemon.filter(x => x.name === fmtName1)[0]
+  var fmtName1 = pokemonName.toUpperCase().trim();
+  var player = Pokemon.filter(function (x) {
+    return x.name === fmtName1;
+  })[0];
 
-  if (!player) throw new Error(`Cannot find ${fmtName1}`)
+  if (!player) throw new Error('Cannot find ' + String(fmtName1));
 
   // Pit the Pokemon vs the "Top Defenders" gym list and see how the Pokemon does.
   // but only for favorable matchups, because frankly why would you use an
   // arcanine to try and take down a vape?
-  const defenders = GymPokemon.map((opponent) => {
-    const moves = ttlvs(player, opponent, {
+  var defenders = GymPokemon.map(function (opponent) {
+    var moves = ttlvs(player, opponent, {
       IndAtk: obj.IndAtk,
       IndDef: obj.IndDef,
-      IndSta: obj.IndSta,
-    }, pokemonLevel || 25)
+      IndSta: obj.IndSta
+    }, pokemonLevel || 25);
 
     return {
       vs: opponent.name,
       best: {
-        moves: `${moves[0].quick}/${moves[0].charge}`,
+        moves: String(moves[0].quick) + '/' + String(moves[0].charge),
         dps: moves[0].dps.player,
-        ttl: moves[0].scores.netTTL,
+        ttl: moves[0].scores.netTTL
       },
-      moves: moves.reduce((moveSets, move) => {
-        const movesName = `${move.quick}/${move.charge}`
+      moves: moves.reduce(function (moveSets, move) {
+        var movesName = String(move.quick) + '/' + String(move.charge);
         moveSets[movesName] = {
           dps: move.dps.player,
-          ttl: move.scores.netTTL,
-        }
-        return moveSets
+          ttl: move.scores.netTTL
+        };
+        return moveSets;
       }, {}),
 
       type1: opponent.type1,
       type2: opponent.type2,
       moves1: opponent.moves1,
-      moves2: opponent.moves2,
-    }
-  }).sort((a, b) => a.best.ttl > b.best.ttl ? -1 : 1)
+      moves2: opponent.moves2
+    };
+  }).sort(function (a, b) {
+    return a.best.ttl > b.best.ttl ? -1 : 1;
+  });
 
-  const idealDefenders = defenders.filter((opponent) => {
-    const opponentOk1 = opponent.moves1.some(move => getTypeEffectiveness(player, move) <= 1)
-    const opponentOk2 = opponent.moves2.every(move => getTypeEffectiveness(player, move) <= 1)
-    const playerOk1 = player.moves1.some(move => getTypeEffectiveness(opponent, move) >= 1)
-    const playerOk2 = player.moves2.every(move => getTypeEffectiveness(opponent, move) >= 1)
+  var idealDefenders = defenders.filter(function (opponent) {
+    var opponentOk1 = opponent.moves1.some(function (move) {
+      return getTypeEffectiveness(player, move) <= 1;
+    });
+    var opponentOk2 = opponent.moves2.every(function (move) {
+      return getTypeEffectiveness(player, move) <= 1;
+    });
+    var playerOk1 = player.moves1.some(function (move) {
+      return getTypeEffectiveness(opponent, move) >= 1;
+    });
+    var playerOk2 = player.moves2.every(function (move) {
+      return getTypeEffectiveness(opponent, move) >= 1;
+    });
 
-    return opponentOk1 && opponentOk2 && playerOk1 && playerOk2
-  })
+    return opponentOk1 && opponentOk2 && playerOk1 && playerOk2;
+  });
 
   // Get the average DPS of each move
-  const movesTotal = idealDefenders.reduce((obj, x) => {
-    Object.keys(x.moves).forEach((moveName) => {
-      if (!obj[moveName]) obj[moveName] = 0
-      obj[moveName] = obj[moveName] + x.moves[moveName].dps
-    })
-    return obj
-  }, {})
-  const movesSorted = Object.keys(movesTotal).sort((a, b) => {
-    return movesTotal[a] > movesTotal[b] ? -1 : 1
-  })
-  const avgMoves = movesSorted.reduce((obj, moveName) => {
-    obj[moveName] = movesTotal[moveName] / idealDefenders.length
-    return obj
-  }, {})
+  var movesTotal = idealDefenders.reduce(function (obj, x) {
+    Object.keys(x.moves).forEach(function (moveName) {
+      if (!obj[moveName]) obj[moveName] = 0;
+      obj[moveName] = obj[moveName] + x.moves[moveName].dps;
+    });
+    return obj;
+  }, {});
+  var movesSorted = Object.keys(movesTotal).sort(function (a, b) {
+    return movesTotal[a] > movesTotal[b] ? -1 : 1;
+  });
+  var avgMoves = movesSorted.reduce(function (obj, moveName) {
+    obj[moveName] = movesTotal[moveName] / idealDefenders.length;
+    return obj;
+  }, {});
 
   // Get the average TTL of each move
-  const ttlTotal = idealDefenders.reduce((obj, x) => {
-    Object.keys(x.moves).forEach((moveName) => {
-      if (!obj[moveName]) obj[moveName] = 0
-      obj[moveName] = obj[moveName] + x.moves[moveName].ttl
-    })
-    return obj
-  }, {})
-  const ttlSorted = Object.keys(ttlTotal).sort((a, b) => {
-    return ttlTotal[a] > ttlTotal[b] ? -1 : 1
-  })
-  const avgTTL = ttlSorted.reduce((obj, moveName) => {
-    obj[moveName] = ttlTotal[moveName] / idealDefenders.length
-    return obj
-  }, {})
+  var ttlTotal = idealDefenders.reduce(function (obj, x) {
+    Object.keys(x.moves).forEach(function (moveName) {
+      if (!obj[moveName]) obj[moveName] = 0;
+      obj[moveName] = obj[moveName] + x.moves[moveName].ttl;
+    });
+    return obj;
+  }, {});
+  var ttlSorted = Object.keys(ttlTotal).sort(function (a, b) {
+    return ttlTotal[a] > ttlTotal[b] ? -1 : 1;
+  });
+  var avgTTL = ttlSorted.reduce(function (obj, moveName) {
+    obj[moveName] = ttlTotal[moveName] / idealDefenders.length;
+    return obj;
+  }, {});
 
   // Let's find out the "most useful" moveset. This is the one that is most general
-  const moveComboUsefulness = defenders.reduce((obj, k) => {
-    if (!obj[k.best.moves]) obj[k.best.moves] = 0
-    obj[k.best.moves] += 1
-    return obj
-  }, {})
+  var moveComboUsefulness = defenders.reduce(function (obj, k) {
+    if (!obj[k.best.moves]) obj[k.best.moves] = 0;
+    obj[k.best.moves] += 1;
+    return obj;
+  }, {});
 
   // we want our Pokemon to have a net TTL of at least 0
   // that is considered "good vs"
-  const GOOD_VS_THRESHOLD = 0
+  var GOOD_VS_THRESHOLD = 0;
 
   if (obj.moves) {
-    const moveComboName = `${obj.moves.quick}/${obj.moves.charge}`
-    return {
-      name: fmtName1,
-      dps: avgMoves[moveComboName],
-      ttl: avgTTL[moveComboName],
-      breakdown: defenders.reduce((obj, x) => {
-        obj[x.vs] = x.moves[moveComboName]
-        return obj
-      }, {}),
-    }
+    var _ret = function () {
+      var moveComboName = String(obj.moves.quick) + '/' + String(obj.moves.charge);
+      return {
+        v: {
+          name: fmtName1,
+          dps: avgMoves[moveComboName],
+          ttl: avgTTL[moveComboName],
+          breakdown: defenders.reduce(function (obj, x) {
+            obj[x.vs] = x.moves[moveComboName];
+            return obj;
+          }, {})
+        }
+      };
+    }();
+
+    if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
   }
 
   return {
     name: fmtName1,
     bestAvgDPS: avgMoves[movesSorted[0]],
     bestAvgTTL: avgTTL[ttlSorted[0]],
-    avgMoves,
-    avgTTL,
-    moveComboUsefulness,
-    breakdown: defenders.reduce((obj, x) => {
-      obj[x.vs] = x.best
-      return obj
-    }, {}),
-  }
+    avgMoves: avgMoves,
+    avgTTL: avgTTL,
+    moveComboUsefulness: moveComboUsefulness,
+    breakdown: defenders.reduce(function (obj, x) {
+      obj[x.vs] = x.best;
+      return obj;
+    }, {})
+  };
 }
 
-module.exports = analyzeBattleEffectiveness
+module.exports = analyzeBattleEffectiveness;
 
 //console.log(
 //  analyzeBattleEffectiveness({
@@ -41488,151 +41512,152 @@ module.exports = analyzeBattleEffectiveness
 //)
 
 },{"../json/gym-defenders.json":4,"../json/level-to-cpm.json":5,"../json/pokemon.json":8,"./getTypeEffectiveness":255,"./ttlvs":263}],250:[function(require,module,exports){
-const Pokemon = require('../json/pokemon')
-const analyzeBattleEffectiveness = require('./analyzeBattleEffectiveness')
+var Pokemon = require('../json/pokemon');
+var analyzeBattleEffectiveness = require('./analyzeBattleEffectiveness');
 
 // Figures out the best attacking combination of moves taking into account energy gain and STAB
 // It uses 'analyzeBattleEffectiveness' which takes the top 20 Pokemon and runs a battle sim
 // against them and sees how well ${pokemonName} scores vs them in terms of pure DPS
 function bestMovesFor(pokemonName, pokemonLevel, IndAtk, IndDef, IndSta) {
-  const analysis = analyzeBattleEffectiveness({
+  var analysis = analyzeBattleEffectiveness({
     name: pokemonName,
     level: pokemonLevel || 25,
     IndAtk: IndAtk || 10,
     IndDef: IndDef || 10,
-    IndSta: IndSta || 10,
-  })
+    IndSta: IndSta || 10
+  });
 
-  const best = analyzeBattleEffectiveness({
+  var best = analyzeBattleEffectiveness({
     name: 'mewtwo',
     level: pokemonLevel || 25,
     IndAtk: IndAtk || 10,
     IndDef: IndDef || 10,
-    IndSta: IndSta || 10,
-  })
+    IndSta: IndSta || 10
+  });
 
-  const bestDPS = best.bestAvgDPS
-  const bestTTL = best.bestAvgTTL
+  var bestDPS = best.bestAvgDPS;
+  var bestTTL = best.bestAvgTTL;
 
-  const mon = Pokemon.filter(x => x.name === pokemonName.toUpperCase())[0]
+  var mon = Pokemon.filter(function (x) {
+    return x.name === pokemonName.toUpperCase();
+  })[0];
 
-  return Object.keys(analysis.avgMoves).reduce((arr, move) => {
-    const split = move.split('/')
+  return Object.keys(analysis.avgMoves).reduce(function (arr, move) {
+    var split = move.split('/');
 
-    const moves = split.map(name => (
-      mon.moves1.filter(m => m.Name === name)[0] ||
-      mon.moves2.filter(m => m.Name === name)[0]
-    ))
+    var moves = split.map(function (name) {
+      return mon.moves1.filter(function (m) {
+        return m.Name === name;
+      })[0] || mon.moves2.filter(function (m) {
+        return m.Name === name;
+      })[0];
+    });
 
     return arr.concat({
       combo: move,
       quick: {
-        name: split[0],
+        name: split[0]
       },
       charge: {
-        name: split[1],
+        name: split[1]
       },
       dps: analysis.avgMoves[move],
       ttl: analysis.avgTTL[move],
       percent: {
         dps: Math.floor(analysis.avgMoves[move] / bestDPS * 100),
-        ttl: Math.floor(analysis.avgTTL[move] / bestTTL * 100),
+        ttl: Math.floor(analysis.avgTTL[move] / bestTTL * 100)
       },
-      retired: !moves.every(m => !m.retired)
-    })
-  }, [])
+      retired: !moves.every(function (m) {
+        return !m.retired;
+      })
+    });
+  }, []);
 }
 
-module.exports = bestMovesFor
+module.exports = bestMovesFor;
 
 //console.log(bestMovesFor('mewtwo', 26))
 
 },{"../json/pokemon":8,"./analyzeBattleEffectiveness":249}],251:[function(require,module,exports){
-const Pokemon = require('../json/pokemon')
-const LevelToCpM = require('../json/level-to-cpm')
-const cpTools = require('./cp')
+var Pokemon = require('../json/pokemon');
+var LevelToCpM = require('../json/level-to-cpm');
+var cpTools = require('./cp');
 
 function percentInRange(num, min, max) {
-  return ((num - min) * 100) / (max - min)
+  return (num - min) * 100 / (max - min);
 }
 
 function getCPRangeForPokemon(mon, level, cp) {
-  const ECpM = LevelToCpM[level]
-  const min = cpTools.getMinCPForLevel(mon, ECpM)
-  const max = cpTools.getMaxCPForLevel(mon, ECpM)
+  var ECpM = LevelToCpM[level];
+  var min = cpTools.getMinCPForLevel(mon, ECpM);
+  var max = cpTools.getMaxCPForLevel(mon, ECpM);
 
   return {
-    min,
-    max,
-    value: percentInRange(cp, min, max),
-  }
+    min: min,
+    max: max,
+    value: percentInRange(cp, min, max)
+  };
 }
 
 function getCPRangeOverall(level, cp) {
-  const ECpM = LevelToCpM[level]
-  const minmax = Pokemon.reduce((obj, mon) => {
-    const min = cpTools.getMinCPForLevel(mon, ECpM)
-    const max = cpTools.getMaxCPForLevel(mon, ECpM)
+  var ECpM = LevelToCpM[level];
+  var minmax = Pokemon.reduce(function (obj, mon) {
+    var min = cpTools.getMinCPForLevel(mon, ECpM);
+    var max = cpTools.getMaxCPForLevel(mon, ECpM);
 
     return {
       min: Math.min(obj.min, min),
-      max: Math.max(obj.max, max),
-    }
-  }, { min: Infinity, max: -Infinity })
+      max: Math.max(obj.max, max)
+    };
+  }, { min: Infinity, max: -Infinity });
 
   return {
     min: minmax.min,
     max: minmax.max,
-    value: percentInRange(cp, minmax.min, minmax.max),
-  }
+    value: percentInRange(cp, minmax.min, minmax.max)
+  };
 }
 
 function getCPRangeForType(type, level, cp) {
-  const ECpM = LevelToCpM[level]
-  const minmax = Pokemon.reduce((obj, mon) => {
+  var ECpM = LevelToCpM[level];
+  var minmax = Pokemon.reduce(function (obj, mon) {
     if (mon.type1 === type || mon.type2 === type) {
-      const min = cpTools.getMinCPForLevel(mon, ECpM)
-      const max = cpTools.getMaxCPForLevel(mon, ECpM)
+      var min = cpTools.getMinCPForLevel(mon, ECpM);
+      var max = cpTools.getMaxCPForLevel(mon, ECpM);
 
       return {
         min: Math.min(obj.min, min),
-        max: Math.max(obj.max, max),
-      }
+        max: Math.max(obj.max, max)
+      };
     }
 
-    return obj
-  }, { min: Infinity, max: -Infinity })
+    return obj;
+  }, { min: Infinity, max: -Infinity });
 
   return {
     min: minmax.min,
     max: minmax.max,
-    value: percentInRange(cp, minmax.min, minmax.max),
-  }
+    value: percentInRange(cp, minmax.min, minmax.max)
+  };
 }
 
 module.exports = {
-  getCPRangeForType,
-  getCPRangeOverall,
-  getCPRangeForPokemon,
-}
+  getCPRangeForType: getCPRangeForType,
+  getCPRangeOverall: getCPRangeOverall,
+  getCPRangeForPokemon: getCPRangeForPokemon
+};
 
 },{"../json/level-to-cpm":5,"../json/pokemon":8,"./cp":252}],252:[function(require,module,exports){
 // Formula to calculate the CP given the IVs and ECpM
 function getCP(mon, ivs, ECpM) {
-  const BaseAtk = mon.stats.attack
-  const BaseDef = mon.stats.defense
-  const BaseSta = mon.stats.stamina
-  const IndAtk = ivs.atk
-  const IndDef = ivs.def
-  const IndSta = ivs.sta
+  var BaseAtk = mon.stats.attack;
+  var BaseDef = mon.stats.defense;
+  var BaseSta = mon.stats.stamina;
+  var IndAtk = ivs.atk;
+  var IndDef = ivs.def;
+  var IndSta = ivs.sta;
 
-  return Math.max(10, Math.floor(
-    (BaseAtk + IndAtk) *
-    Math.pow(BaseDef + IndDef, 0.5) *
-    Math.pow(BaseSta + IndSta, 0.5) *
-    Math.pow(ECpM, 2) /
-    10
-  ))
+  return Math.max(10, Math.floor((BaseAtk + IndAtk) * Math.pow(BaseDef + IndDef, 0.5) * Math.pow(BaseSta + IndSta, 0.5) * Math.pow(ECpM, 2) / 10));
 }
 
 // The minimum CP for your Pokemon's level
@@ -41640,8 +41665,8 @@ function getMinCPForLevel(mon, ECpM) {
   return getCP(mon, {
     atk: 0,
     def: 0,
-    sta: 0,
-  }, ECpM)
+    sta: 0
+  }, ECpM);
 }
 
 // The maximum CP for your Pokemon's level
@@ -41649,112 +41674,113 @@ function getMaxCPForLevel(mon, ECpM) {
   return getCP(mon, {
     atk: 15,
     def: 15,
-    sta: 15,
-  }, ECpM)
+    sta: 15
+  }, ECpM);
 }
-
 
 module.exports = {
-  getCP,
-  getMaxCPForLevel,
-  getMinCPForLevel,
-}
+  getCP: getCP,
+  getMaxCPForLevel: getMaxCPForLevel,
+  getMinCPForLevel: getMinCPForLevel
+};
 
 },{}],253:[function(require,module,exports){
-const Pokemon = require('../json/pokemon.json')
-const LevelToCPM = require('../json/level-to-cpm.json')
-const hp = require('./hp')
-const getTypeEffectiveness = require('./getTypeEffectiveness').getTypeEffectiveness
+var Pokemon = require('../json/pokemon.json');
+var LevelToCPM = require('../json/level-to-cpm.json');
+var hp = require('./hp');
+var getTypeEffectiveness = require('./getTypeEffectiveness').getTypeEffectiveness;
 
 function getDmgVs(obj) {
-  const atk = obj.atk
-  const def = obj.def
-  const moves = obj.moves
-  const player = obj.player
-  const opponent = obj.opponent
-  const pokemonLevel = obj.pokemonLevel || 25
+  var atk = obj.atk;
+  var def = obj.def;
+  var moves = obj.moves;
+  var player = obj.player;
+  var opponent = obj.opponent;
+  var pokemonLevel = obj.pokemonLevel || 25;
 
   // We determine DPS combo vs a level 25 pokemon because that's what gyms on average will have.
   // There's no hard data for this claim btw, it's completely made up.
-  const opponentLevel = obj.opponentLevel || 25
+  var opponentLevel = obj.opponentLevel || 25;
 
-  const AtkECpM = LevelToCPM[pokemonLevel]
-  const DefECpM = LevelToCPM[opponentLevel]
+  var AtkECpM = LevelToCPM[pokemonLevel];
+  var DefECpM = LevelToCPM[opponentLevel];
 
-  return moves.map((move) => {
-    const stab = move.Type === player.type1 || move.Type === player.type2 ? 1.25 : 1
-    const power = move.Power
+  return moves.map(function (move) {
+    var stab = move.Type === player.type1 || move.Type === player.type2 ? 1.25 : 1;
+    var power = move.Power;
 
-    const fxMul = getTypeEffectiveness(opponent, move)
+    var fxMul = getTypeEffectiveness(opponent, move);
 
-    return (0.5 * atk * AtkECpM / (def * DefECpM) * power * stab * fxMul) + 1
-  })
+    return 0.5 * atk * AtkECpM / (def * DefECpM) * power * stab * fxMul + 1;
+  });
 }
 
 function getDPS(dmg, duration) {
-  return (dmg / (duration / 1000)) || 0
+  return dmg / (duration / 1000) || 0;
 }
 
 function battleDPS(obj) {
-  const atk = obj.atk
-  const def = obj.def
-  const level = obj.pokemonLevel
-  const moves = obj.moves
+  var atk = obj.atk;
+  var def = obj.def;
+  var level = obj.pokemonLevel;
+  var moves = obj.moves;
 
-  const quickHits = Math.ceil(100 / moves[0].Energy)
-  const chargeHits = Math.abs(Math.ceil(100 / moves[1].Energy))
+  var quickHits = Math.ceil(100 / moves[0].Energy);
+  var chargeHits = Math.abs(Math.ceil(100 / moves[1].Energy));
 
-  const timeToQuick = quickHits * moves[0].DurationMs
-  const timeToCharge = chargeHits * moves[1].DurationMs
+  var timeToQuick = quickHits * moves[0].DurationMs;
+  var timeToCharge = chargeHits * moves[1].DurationMs;
 
-  const dmg = getDmgVs(obj)
+  var dmg = getDmgVs(obj);
 
-  const quickDmg = dmg[0] * quickHits
-  const chargeDmg = dmg[1] * chargeHits
+  var quickDmg = dmg[0] * quickHits;
+  var chargeDmg = dmg[1] * chargeHits;
 
-  const dps = getDPS(chargeDmg + quickDmg, timeToQuick + timeToCharge)
+  var dps = getDPS(chargeDmg + quickDmg, timeToQuick + timeToCharge);
 
   return {
-    dps,
-    quickHits,
-    chargeHits,
-    quickDmg,
-    chargeDmg,
-  }
+    dps: dps,
+    quickHits: quickHits,
+    chargeHits: chargeHits,
+    quickDmg: quickDmg,
+    chargeDmg: chargeDmg
+  };
 }
 
 // IndAtk is the attacking pokemon's (mon) IV attack
 // IndDef is the defeneding pokemon's (opponent) IV defense
 function dpsvs(mon, opponent, IndAtk, IndDef, pokemonLevel, opponentLevel) {
-  const moves = []
-  const def = opponent.stats.defense + IndDef
+  var moves = [];
+  var def = opponent.stats.defense + IndDef;
 
-  mon.moves1.forEach((move1) => {
-    mon.moves2.forEach((move2) => {
-      const atk = mon.stats.attack + IndAtk
+  mon.moves1.forEach(function (move1) {
+    mon.moves2.forEach(function (move2) {
+      var atk = mon.stats.attack + IndAtk;
 
-      const total = battleDPS({
-        atk,
-        def,
+      var total = battleDPS({
+        atk: atk,
+        def: def,
         player: mon,
-        opponent,
-        pokemonLevel,
-        opponentLevel,
-        moves: [move1, move2],
-      })
+        opponent: opponent,
+        pokemonLevel: pokemonLevel,
+        opponentLevel: opponentLevel,
+        moves: [move1, move2]
+      });
 
       moves.push({
         quick: move1.Name,
         charge: move2.Name,
-        dps: total.dps,
-      })
-    })
-  })
+        dps: total.dps
+      });
+    });
+  });
 
-  return moves.sort((a, b) => a.dps > b.dps ? -1 : 1)
+  return moves.sort(function (a, b) {
+    return a.dps > b.dps ? -1 : 1;
+  });
 }
 
-module.exports = dpsvs
+module.exports = dpsvs;
 
 /*
 console.log(
@@ -41770,558 +41796,573 @@ console.log(
 */
 
 },{"../json/level-to-cpm.json":5,"../json/pokemon.json":8,"./getTypeEffectiveness":255,"./hp":257}],254:[function(require,module,exports){
-const Pokemon = require('../json/pokemon')
+var Pokemon = require('../json/pokemon');
 
 function findPokemon(name) {
-  const fmtName = name.toUpperCase()
+  var fmtName = name.toUpperCase();
 
-  return Object.keys(Pokemon).reduce((a, key) => {
-    if (a) return a
-    if (Pokemon[key].name === fmtName) return Pokemon[key]
-    return null
-  }, null)
+  return Object.keys(Pokemon).reduce(function (a, key) {
+    if (a) return a;
+    if (Pokemon[key].name === fmtName) return Pokemon[key];
+    return null;
+  }, null);
 }
 
-module.exports = findPokemon
+module.exports = findPokemon;
 
 },{"../json/pokemon":8}],255:[function(require,module,exports){
-const Pokemon = require('../json/pokemon.json')
-const LevelToCPM = require('../json/level-to-cpm.json')
-const hp = require('./hp')
+var Pokemon = require('../json/pokemon.json');
+var LevelToCPM = require('../json/level-to-cpm.json');
+var hp = require('./hp');
 
-const BUG = 'BUG'
-const DARK = 'DARK'
-const DRAGON = 'DRAGON'
-const ELECTRIC = 'ELECTRIC'
-const FAIRY = 'FAIRY'
-const FIGHTING = 'FIGHTING'
-const FIRE = 'FIRE'
-const FLYING = 'FLYING'
-const GHOST = 'GHOST'
-const GRASS = 'GRASS'
-const GROUND = ' GROUND'
-const ICE = 'ICE'
-const NORMAL = 'NORMAL'
-const POISON = 'POISON'
-const PSYCHIC = 'PSYCHIC'
-const ROCK = 'ROCK'
-const STEEL = 'STEEL'
-const WATER = 'WATER'
+var BUG = 'BUG';
+var DARK = 'DARK';
+var DRAGON = 'DRAGON';
+var ELECTRIC = 'ELECTRIC';
+var FAIRY = 'FAIRY';
+var FIGHTING = 'FIGHTING';
+var FIRE = 'FIRE';
+var FLYING = 'FLYING';
+var GHOST = 'GHOST';
+var GRASS = 'GRASS';
+var GROUND = ' GROUND';
+var ICE = 'ICE';
+var NORMAL = 'NORMAL';
+var POISON = 'POISON';
+var PSYCHIC = 'PSYCHIC';
+var ROCK = 'ROCK';
+var STEEL = 'STEEL';
+var WATER = 'WATER';
 
-const SuperEffectiveTypes = {
-  BUG: { FLYING, ROCK, FIRE },
-  DARK: { FIGHTING, BUG, FAIRY },
-  DRAGON: { ICE, DRAGON, FAIRY },
-  ELECTRIC: { GROUND },
-  FAIRY: { POISON, STEEL },
-  FIGHTING: { FLYING, PSYCHIC, FAIRY },
-  FIRE: { GROUND, ROCK, WATER },
-  FLYING: { ROCK, ELECTRIC, ICE },
-  GHOST: { GHOST, DARK },
-  GRASS: { FLYING, POISON, BUG, FIRE, ICE },
-  GROUND: { WATER, GRASS, ICE },
-  ICE: { FIGHTING, ROCK, STEEL, FIRE },
-  NORMAL: { FIGHTING },
-  POISON: { GROUND, PSYCHIC },
-  PSYCHIC: { BUG, GHOST, DARK },
-  ROCK: { FIGHTING, GROUND, STEEL, WATER, GRASS },
-  STEEL: { FIGHTING, GROUND, FIRE },
-  WATER: { GRASS, ELECTRIC },
-}
+var SuperEffectiveTypes = {
+  BUG: { FLYING: FLYING, ROCK: ROCK, FIRE: FIRE },
+  DARK: { FIGHTING: FIGHTING, BUG: BUG, FAIRY: FAIRY },
+  DRAGON: { ICE: ICE, DRAGON: DRAGON, FAIRY: FAIRY },
+  ELECTRIC: { GROUND: GROUND },
+  FAIRY: { POISON: POISON, STEEL: STEEL },
+  FIGHTING: { FLYING: FLYING, PSYCHIC: PSYCHIC, FAIRY: FAIRY },
+  FIRE: { GROUND: GROUND, ROCK: ROCK, WATER: WATER },
+  FLYING: { ROCK: ROCK, ELECTRIC: ELECTRIC, ICE: ICE },
+  GHOST: { GHOST: GHOST, DARK: DARK },
+  GRASS: { FLYING: FLYING, POISON: POISON, BUG: BUG, FIRE: FIRE, ICE: ICE },
+  GROUND: { WATER: WATER, GRASS: GRASS, ICE: ICE },
+  ICE: { FIGHTING: FIGHTING, ROCK: ROCK, STEEL: STEEL, FIRE: FIRE },
+  NORMAL: { FIGHTING: FIGHTING },
+  POISON: { GROUND: GROUND, PSYCHIC: PSYCHIC },
+  PSYCHIC: { BUG: BUG, GHOST: GHOST, DARK: DARK },
+  ROCK: { FIGHTING: FIGHTING, GROUND: GROUND, STEEL: STEEL, WATER: WATER, GRASS: GRASS },
+  STEEL: { FIGHTING: FIGHTING, GROUND: GROUND, FIRE: FIRE },
+  WATER: { GRASS: GRASS, ELECTRIC: ELECTRIC }
+};
 
-const ResistantTypes = {
-  BUG: { FIGHTING, GROUND, GRASS },
-  DARK: { GHOST, DARK },
-  DRAGON: { FIRE, WATER, GRASS, ELECTRIC },
-  ELECTRIC: { FLYING, STEEL, ELECTRIC },
-  FAIRY: { FIGHTING, BUG, DARK }, // TODO verify this
-  FIGHTING: { ROCK, BUG, DARK },
-  FIRE: { BUG, STEEL, FIRE, GRASS, ICE, FAIRY },
-  FLYING: { FIGHTING, BUG, GRASS },
-  GHOST: { POISON, BUG },
-  GRASS: { GROUND, WATER, GRASS, ELECTRIC },
-  GROUND: { POISON, ROCK },
-  ICE: { ICE },
+var ResistantTypes = {
+  BUG: { FIGHTING: FIGHTING, GROUND: GROUND, GRASS: GRASS },
+  DARK: { GHOST: GHOST, DARK: DARK },
+  DRAGON: { FIRE: FIRE, WATER: WATER, GRASS: GRASS, ELECTRIC: ELECTRIC },
+  ELECTRIC: { FLYING: FLYING, STEEL: STEEL, ELECTRIC: ELECTRIC },
+  FAIRY: { FIGHTING: FIGHTING, BUG: BUG, DARK: DARK }, // TODO verify this
+  FIGHTING: { ROCK: ROCK, BUG: BUG, DARK: DARK },
+  FIRE: { BUG: BUG, STEEL: STEEL, FIRE: FIRE, GRASS: GRASS, ICE: ICE, FAIRY: FAIRY },
+  FLYING: { FIGHTING: FIGHTING, BUG: BUG, GRASS: GRASS },
+  GHOST: { POISON: POISON, BUG: BUG },
+  GRASS: { GROUND: GROUND, WATER: WATER, GRASS: GRASS, ELECTRIC: ELECTRIC },
+  GROUND: { POISON: POISON, ROCK: ROCK },
+  ICE: { ICE: ICE },
   NORMAL: {},
-  POISON: { FIGHTING, POISON, BUG, GRASS, FAIRY },
-  PSYCHIC: { FIGHTING, PSYCHIC },
-  ROCK: { NORMAL, FLYING, POISON, FIRE },
-  STEEL: { NORMAL, FLYING, ROCK, BUG, STEEL, GRASS, PSYCHIC, ICE, DRAGON, FAIRY },
-  WATER: { STEEL, FIRE, WATER, ICE },
-}
+  POISON: { FIGHTING: FIGHTING, POISON: POISON, BUG: BUG, GRASS: GRASS, FAIRY: FAIRY },
+  PSYCHIC: { FIGHTING: FIGHTING, PSYCHIC: PSYCHIC },
+  ROCK: { NORMAL: NORMAL, FLYING: FLYING, POISON: POISON, FIRE: FIRE },
+  STEEL: { NORMAL: NORMAL, FLYING: FLYING, ROCK: ROCK, BUG: BUG, STEEL: STEEL, GRASS: GRASS, PSYCHIC: PSYCHIC, ICE: ICE, DRAGON: DRAGON, FAIRY: FAIRY },
+  WATER: { STEEL: STEEL, FIRE: FIRE, WATER: WATER, ICE: ICE }
+};
 
-const ImmuneTypes = {
+var ImmuneTypes = {
   BUG: {},
-  DARK: { PSYCHIC },
+  DARK: { PSYCHIC: PSYCHIC },
   DRAGON: {},
   ELECTRIC: {},
-  FAIRY: { DRAGON },
+  FAIRY: { DRAGON: DRAGON },
   FIGHTING: {},
   FIRE: {},
-  FLYING: { GROUND },
-  GHOST: { NORMAL, FIGHTING },
+  FLYING: { GROUND: GROUND },
+  GHOST: { NORMAL: NORMAL, FIGHTING: FIGHTING },
   GRASS: {},
-  GROUND: { ELECTRIC },
+  GROUND: { ELECTRIC: ELECTRIC },
   ICE: {},
-  NORMAL: { GHOST },
+  NORMAL: { GHOST: GHOST },
   POISON: {},
   PSYCHIC: {},
-  ROCK: { ELECTRIC },
-  STEEL: { POISON },
-  WATER: {},
-}
+  ROCK: { ELECTRIC: ELECTRIC },
+  STEEL: { POISON: POISON },
+  WATER: {}
+};
 
 function getTypeEffectiveness(pokemon, move) {
-  const s1 = SuperEffectiveTypes[pokemon.type1]
-  const s2 = SuperEffectiveTypes[pokemon.type2]
+  var s1 = SuperEffectiveTypes[pokemon.type1];
+  var s2 = SuperEffectiveTypes[pokemon.type2];
 
-  const r1 = ResistantTypes[pokemon.type1]
-  const r2 = ResistantTypes[pokemon.type2]
+  var r1 = ResistantTypes[pokemon.type1];
+  var r2 = ResistantTypes[pokemon.type2];
 
-  const i1 = ImmuneTypes[pokemon.type1]
-  const i2 = ImmuneTypes[pokemon.type2]
+  var i1 = ImmuneTypes[pokemon.type1];
+  var i2 = ImmuneTypes[pokemon.type2];
 
   if (s1.hasOwnProperty(move.Type) && s2 && s2.hasOwnProperty(move.Type)) {
-    return 1.56
+    return 1.56;
   }
 
-  if (s1.hasOwnProperty(move.Type) || (s2 && s2.hasOwnProperty(move.Type))) {
-    return 1.25
+  if (s1.hasOwnProperty(move.Type) || s2 && s2.hasOwnProperty(move.Type)) {
+    return 1.25;
   }
 
   if (r1.hasOwnProperty(move.Type) && r2 && r2.hasOwnProperty(move.Type)) {
-    return 0.64
+    return 0.64;
   }
 
   if (i1.hasOwnProperty(move.Type) && i2 && i2.hasOwnProperty(move.Type)) {
-    return 0.64
+    return 0.64;
   }
 
-  if (r1.hasOwnProperty(move.Type) || (r2 && r2.hasOwnProperty(move.Type))) {
-    return 0.8
+  if (r1.hasOwnProperty(move.Type) || r2 && r2.hasOwnProperty(move.Type)) {
+    return 0.8;
   }
 
-  if (i1.hasOwnProperty(move.Type) || (i2 && i2.hasOwnProperty(move.Type))) {
-    return 0.8
+  if (i1.hasOwnProperty(move.Type) || i2 && i2.hasOwnProperty(move.Type)) {
+    return 0.8;
   }
 
-  return 1
+  return 1;
 }
 
 function getEffectiveness(pokemon) {
-  const s1 = Object.keys(SuperEffectiveTypes[pokemon.type1])
-  const s2 = Object.keys(SuperEffectiveTypes[pokemon.type2] || {})
+  var s1 = Object.keys(SuperEffectiveTypes[pokemon.type1]);
+  var s2 = Object.keys(SuperEffectiveTypes[pokemon.type2] || {});
 
-  const r1 = Object.keys(ResistantTypes[pokemon.type1])
-  const r2 = Object.keys(ResistantTypes[pokemon.type2] || {})
+  var r1 = Object.keys(ResistantTypes[pokemon.type1]);
+  var r2 = Object.keys(ResistantTypes[pokemon.type2] || {});
 
-  const i1 = Object.keys(ImmuneTypes[pokemon.type1])
-  const i2 = Object.keys(ImmuneTypes[pokemon.type2] || {})
+  var i1 = Object.keys(ImmuneTypes[pokemon.type1]);
+  var i2 = Object.keys(ImmuneTypes[pokemon.type2] || {});
 
   return {
     superEffective: s1.concat(s2),
-    notEffective: r1.concat(r2, i1, i2),
-  }
+    notEffective: r1.concat(r2, i1, i2)
+  };
 }
 
 module.exports = {
-  getTypeEffectiveness,
-  getEffectiveness,
-}
+  getTypeEffectiveness: getTypeEffectiveness,
+  getEffectiveness: getEffectiveness
+};
 
 },{"../json/level-to-cpm.json":5,"../json/pokemon.json":8,"./hp":257}],256:[function(require,module,exports){
-'use strict'
+'use strict';
 
-const Pokemon = require('../json/pokemon.json')
-const LevelToCPM = require('../json/level-to-cpm.json')
-const CPM = require('../json/cpm.json')
-const DustToLevel = require('../json/dust-to-level')
+var Pokemon = require('../json/pokemon.json');
+var LevelToCPM = require('../json/level-to-cpm.json');
+var CPM = require('../json/cpm.json');
+var DustToLevel = require('../json/dust-to-level');
 
-const cpTools = require('./cp')
-const hpTools = require('./hp')
-const bestCP = require('./bestCP')
-const powerupTools = require('./powerup')
+var cpTools = require('./cp');
+var hpTools = require('./hp');
+var bestCP = require('./bestCP');
+var powerupTools = require('./powerup');
 
 function getMaxLevel(trainerLevel) {
-  return LevelToCPM[String((trainerLevel || 0) + 1.5)]
+  return LevelToCPM[String((trainerLevel || 0) + 1.5)];
 }
 
 function percentInRange(num, min, max) {
-  return ((num - min) * 100) / (max - min)
+  return (num - min) * 100 / (max - min);
 }
 
 function calcIndSta(hp, BaseSta, ECpM) {
-  return Array.from(Array(16))
-    .map((_, i) => i)
-    .filter(IndSta => hp === Math.floor(ECpM * (BaseSta + IndSta)))
+  return Array.from(Array(16)).map(function (_, i) {
+    return i;
+  }).filter(function (IndSta) {
+    return hp === Math.floor(ECpM * (BaseSta + IndSta));
+  });
 }
 
-const EEVEELUTIONS = {
+var EEVEELUTIONS = {
   JOLTEON: 1,
   FLAREON: 1,
-  VAPOREON: 1,
-}
+  VAPOREON: 1
+};
 
 // A formula that determines in which percentile you are for Atk + Def
 function getAttackPercentage(IndAtk, IndDef) {
-  return Math.round((IndAtk + IndDef) / 30 * 100)
+  return Math.round((IndAtk + IndDef) / 30 * 100);
 }
 
 function guessIVs(pokemon, mon, ECpM) {
-  const Name = pokemon.name.toUpperCase()
+  var Name = pokemon.name.toUpperCase();
 
-  const BaseSta = mon.stats.stamina
+  var BaseSta = mon.stats.stamina;
 
-  const Level = Object.keys(LevelToCPM).reduce((lvl, key) => {
+  var Level = Object.keys(LevelToCPM).reduce(function (lvl, key) {
     if (LevelToCPM[key] === ECpM) {
-      return key
+      return key;
     }
-    return lvl
-  }, null)
+    return lvl;
+  }, null);
 
-  const IndStaValues = calcIndSta(pokemon.hp, BaseSta, ECpM)
+  var IndStaValues = calcIndSta(pokemon.hp, BaseSta, ECpM);
 
-  const MaxLevel = Number(pokemon.trainerLevel) + 1.5
-  const MaxLevelCpM = getMaxLevel(pokemon.trainerLevel)
+  var MaxLevel = Number(pokemon.trainerLevel) + 1.5;
+  var MaxLevelCpM = getMaxLevel(pokemon.trainerLevel);
 
   // If you max this pokemon out, what CP/HP would it have given Perfect IVs
-  const MaxedPossibleCP = cpTools.getMaxCPForLevel(mon, MaxLevelCpM)
-  const MaxedPossibleHP = hpTools.getMaxHPForLevel(mon, MaxLevelCpM)
+  var MaxedPossibleCP = cpTools.getMaxCPForLevel(mon, MaxLevelCpM);
+  var MaxedPossibleHP = hpTools.getMaxHPForLevel(mon, MaxLevelCpM);
 
   // What is this Pokemon's Max/Min CP/HP for your current level given Perfect IVs
-  const MaxLevelCP = cpTools.getMaxCPForLevel(mon, ECpM)
-  const MinLevelCP = cpTools.getMinCPForLevel(mon, ECpM)
-  const MaxLevelHP = hpTools.getMaxHPForLevel(mon, ECpM)
-  const MinLevelHP = hpTools.getMinHPForLevel(mon, ECpM)
+  var MaxLevelCP = cpTools.getMaxCPForLevel(mon, ECpM);
+  var MinLevelCP = cpTools.getMinCPForLevel(mon, ECpM);
+  var MaxLevelHP = hpTools.getMaxHPForLevel(mon, ECpM);
+  var MinLevelHP = hpTools.getMinHPForLevel(mon, ECpM);
 
   // Where is your Pokemon in terms of the CP/HP scale
-  const PercentHP = Math.round(percentInRange(pokemon.hp, MinLevelHP, MaxLevelHP))
-  const PercentCP = Math.round(percentInRange(pokemon.cp, MinLevelCP, MaxLevelCP))
+  var PercentHP = Math.round(percentInRange(pokemon.hp, MinLevelHP, MaxLevelHP));
+  var PercentCP = Math.round(percentInRange(pokemon.cp, MinLevelCP, MaxLevelCP));
 
-  const maxLevel = pokemon.level || Math.max.apply(null, DustToLevel[pokemon.stardust])
+  var maxLevel = pokemon.level || Math.max.apply(null, DustToLevel[pokemon.stardust]);
 
   // How much powerup does it cost
-  const powerup = powerupTools.howMuchPowerUp(maxLevel, pokemon.trainerLevel)
-  const Stardust = powerup.stardust
-  const Candy = powerup.candy
+  var powerup = powerupTools.howMuchPowerUp(maxLevel, pokemon.trainerLevel);
+  var Stardust = powerup.stardust;
+  var Candy = powerup.candy;
 
   // Brute force find the IVs.
   // For every possible IndSta we'll loop through IndAtk and IndDef until we
   // find CPs that match your Pokemon's CP. Those are possible matches and are
   // returned by this function.
-  const possibleValues = []
-  IndStaValues.forEach((IndSta) => {
-    for (let IndAtk = 0; IndAtk <= 15; IndAtk += 1) {
-      for (let IndDef = 0; IndDef <= 15; IndDef += 1) {
-        const CP = cpTools.getCP(mon, {
+  var possibleValues = [];
+  IndStaValues.forEach(function (IndSta) {
+    for (var IndAtk = 0; IndAtk <= 15; IndAtk += 1) {
+      var _loop = function _loop(IndDef) {
+        var CP = cpTools.getCP(mon, {
           atk: IndAtk,
           def: IndDef,
-          sta: IndSta,
-        }, ECpM)
-        const HP = pokemon.hp
+          sta: IndSta
+        }, ECpM);
+        var HP = pokemon.hp;
 
-        const BaseAtk = mon.stats.attack
-        const Atk = (BaseAtk + IndAtk) * ECpM
+        var BaseAtk = mon.stats.attack;
+        var Atk = (BaseAtk + IndAtk) * ECpM;
 
-        const BaseDef = mon.stats.defense
-        const Def = (BaseDef + IndDef) * ECpM
+        var BaseDef = mon.stats.defense;
+        var Def = (BaseDef + IndDef) * ECpM;
 
-        const BaseSta = mon.stats.stamina
-        const Sta = (BaseSta + IndSta) * ECpM
+        var BaseSta = mon.stats.stamina;
+        var Sta = (BaseSta + IndSta) * ECpM;
 
         // The maximum CP and HP potential this Pokemon has
-        const MaxCP = cpTools.getCP(mon, {
+        var MaxCP = cpTools.getCP(mon, {
           atk: IndAtk,
           def: IndDef,
-          sta: IndSta,
-        }, MaxLevelCpM)
-        const MaxHP = hpTools.getHP(mon, IndSta, MaxLevelCpM)
+          sta: IndSta
+        }, MaxLevelCpM);
+        var MaxHP = hpTools.getHP(mon, IndSta, MaxLevelCpM);
 
-        const PerfectIV = Math.round((IndAtk + IndDef + IndSta) / 45 * 100)
-        const PercentBatt = getAttackPercentage(IndAtk, IndDef)
+        var PerfectIV = Math.round((IndAtk + IndDef + IndSta) / 45 * 100);
+        var PercentBatt = getAttackPercentage(IndAtk, IndDef);
 
-        var EvolveCP = null
-        var MaxEvolveCP = null
+        EvolveCP = null;
+        MaxEvolveCP = null;
 
         // If we can evolve it, what would it evolve to and what does it power up to?
+
         if (!EEVEELUTIONS.hasOwnProperty(pokemon.name.toUpperCase()) && CPM[pokemon.name.toUpperCase()]) {
-          EvolveCP = Math.floor(CPM[pokemon.name.toUpperCase()][1] * CP / 100) * 100
-          MaxEvolveCP = Math.floor(CPM[pokemon.name.toUpperCase()][1] * MaxCP / 100) * 100
+          EvolveCP = Math.floor(CPM[pokemon.name.toUpperCase()][1] * CP / 100) * 100;
+          MaxEvolveCP = Math.floor(CPM[pokemon.name.toUpperCase()][1] * MaxCP / 100) * 100;
         }
 
         if (pokemon.cp === CP) {
-          const typeRating = [
-            mon.type1,
-            mon.type2,
-          ].filter(Boolean).map(type => ({
-            type,
-            rating: bestCP.getCPRangeForType(type, Level, CP),
-          }))
+          var typeRating = [mon.type1, mon.type2].filter(Boolean).map(function (type) {
+            return {
+              type: type,
+              rating: bestCP.getCPRangeForType(type, Level, CP)
+            };
+          });
 
           possibleValues.push({
-            Name,
-            Level,
-            CP,
-            HP,
-            Atk,
-            Def,
-            Sta,
-            ECpM,
+            Name: Name,
+            Level: Level,
+            CP: CP,
+            HP: HP,
+            Atk: Atk,
+            Def: Def,
+            Sta: Sta,
+            ECpM: ECpM,
             ivs: {
-              IndAtk,
-              IndDef,
-              IndSta,
+              IndAtk: IndAtk,
+              IndDef: IndDef,
+              IndSta: IndSta
             },
             rating: {
               pokemon: bestCP.getCPRangeForPokemon(mon, Level, CP),
               overall: bestCP.getCPRangeOverall(Level, CP),
-              type: typeRating,
+              type: typeRating
             },
             strings: {
-              iv: `${IndAtk}/${IndDef}/${IndSta}`,
-              batt: `${IndAtk + IndDef}/30`,
-              maxcp: `${MaxCP}/${MaxedPossibleCP}`,
-              maxhp: `${MaxHP}/${MaxedPossibleHP}`,
+              iv: IndAtk + '/' + String(IndDef) + '/' + String(IndSta),
+              batt: String(IndAtk + IndDef) + '/30',
+              maxcp: String(MaxCP) + '/' + String(MaxedPossibleCP),
+              maxhp: String(MaxHP) + '/' + String(MaxedPossibleHP)
             },
             percent: {
-              PercentBatt,
-              PercentCP,
-              PercentHP,
-              PerfectIV,
+              PercentBatt: PercentBatt,
+              PercentCP: PercentCP,
+              PercentHP: PercentHP,
+              PerfectIV: PerfectIV
             },
             meta: {
-              Stardust,
-              Candy,
-              EvolveCP,
-              MaxEvolveCP,
-              MinLevelCP,
-              MaxLevelCP,
-              MinLevelHP,
-              MaxLevelHP,
-              MaxCP,
-              MaxHP,
-              MaxLevel,
-              MaxedPossibleCP,
-              MaxedPossibleHP,
-            },
-          })
+              Stardust: Stardust,
+              Candy: Candy,
+              EvolveCP: EvolveCP,
+              MaxEvolveCP: MaxEvolveCP,
+              MinLevelCP: MinLevelCP,
+              MaxLevelCP: MaxLevelCP,
+              MinLevelHP: MinLevelHP,
+              MaxLevelHP: MaxLevelHP,
+              MaxCP: MaxCP,
+              MaxHP: MaxHP,
+              MaxLevel: MaxLevel,
+              MaxedPossibleCP: MaxedPossibleCP,
+              MaxedPossibleHP: MaxedPossibleHP
+            }
+          });
         }
+      };
+
+      for (var IndDef = 0; IndDef <= 15; IndDef += 1) {
+        var EvolveCP;
+        var MaxEvolveCP;
+
+        _loop(IndDef);
       }
     }
-  })
+  });
 
-  return possibleValues
+  return possibleValues;
 }
 
-module.exports = guessIVs
+module.exports = guessIVs;
 
 },{"../json/cpm.json":1,"../json/dust-to-level":2,"../json/level-to-cpm.json":5,"../json/pokemon.json":8,"./bestCP":251,"./cp":252,"./hp":257,"./powerup":262}],257:[function(require,module,exports){
 // Formula to calculate the HP given the IV stamina and ECpM
 function getHP(mon, IndSta, ECpM) {
-  const BaseSta = mon.stats.stamina
-  return Math.max(10, Math.floor(ECpM * (BaseSta + IndSta)))
+  var BaseSta = mon.stats.stamina;
+  return Math.max(10, Math.floor(ECpM * (BaseSta + IndSta)));
 }
 
 // The maximum HP for your Pokemon's current level
 function getMaxHPForLevel(mon, ECpM) {
-  return getHP(mon, 15, ECpM)
+  return getHP(mon, 15, ECpM);
 }
 
 // The minimum HP for your Pokemon's current level
 function getMinHPForLevel(mon, ECpM) {
-  return getHP(mon, 0, ECpM)
+  return getHP(mon, 0, ECpM);
 }
 
 module.exports = {
-  getHP,
-  getMaxHPForLevel,
-  getMinHPForLevel,
-}
+  getHP: getHP,
+  getMaxHPForLevel: getMaxHPForLevel,
+  getMinHPForLevel: getMinHPForLevel
+};
 
 },{}],258:[function(require,module,exports){
-const Pokemon = require('../json/pokemon.json')
-const ttlvs = require('./ttlvs')
+var Pokemon = require('../json/pokemon.json');
+var ttlvs = require('./ttlvs');
 
-const LegendaryPokemon = {
+var LegendaryPokemon = {
   ARTICUNO: 1,
   MEW: 1,
   MEWTWO: 1,
   MOLTRES: 1,
-  ZAPDOS: 1,
-}
+  ZAPDOS: 1
+};
 
 function isNotLegendary(pokemon) {
-  return !LegendaryPokemon.hasOwnProperty(pokemon.name || pokemon)
+  return !LegendaryPokemon.hasOwnProperty(pokemon.name || pokemon);
 }
 
 function lowerIsBetter(a, b) {
-  return a.score > b.score ? 1 : -1
+  return a.score > b.score ? 1 : -1;
 }
 
 function higherIsBetter(a, b) {
-  return a.score > b.score ? -1 : 1
+  return a.score > b.score ? -1 : 1;
 }
 
 // Answers the question of which is the best pokemon to go up against ${opponentName}
-const idealMatchup = {
+var idealMatchup = {
   // Gives you back a score in terms of how long (in sec) until you defeat the
   // opponent. Lower is better
-  attacking(opponentName) {
-    const opponent = Pokemon.filter(x => x.name === opponentName.toUpperCase())[0]
-    return (
-      Pokemon.reduce((arr, mon) => {
+  attacking: function () {
+    function attacking(opponentName) {
+      var opponent = Pokemon.filter(function (x) {
+        return x.name === opponentName.toUpperCase();
+      })[0];
+      return Pokemon.reduce(function (arr, mon) {
         // We can assume that your Pokemon will have an IndAtk of 10, because it's not shitty
         // and that your Pokemon's level is 20, because you just hatched it from an egg duh!
-        const moves = ttlvs(mon, opponent, { IndAtk: 10, IndDef: 10, IndSta: 10 }, 25)
+        var moves = ttlvs(mon, opponent, { IndAtk: 10, IndDef: 10, IndSta: 10 }, 25);
 
-        moves.forEach(move => arr.push({
-          name: mon.name,
-          score: move.ttl.opponent,
-          net: move.scores.netTTL,
-          ttl: move.ttl.opponent,
-          quick: move.quick,
-          charge: move.charge,
-        }))
-        return arr
-      }, [])
-      .filter(isNotLegendary)
-      .sort(lowerIsBetter)
-      .reduce((o, mon) => {
-        if (o._[mon.name]) return o
-        o.r.push(mon)
-        o._[mon.name] = 1
-        return o
-      }, { _: {}, r: [] }).r
-      .slice(0, 15)
-    )
-  },
+        moves.forEach(function (move) {
+          return arr.push({
+            name: mon.name,
+            score: move.ttl.opponent,
+            net: move.scores.netTTL,
+            ttl: move.ttl.opponent,
+            quick: move.quick,
+            charge: move.charge
+          });
+        });
+        return arr;
+      }, []).filter(isNotLegendary).sort(lowerIsBetter).reduce(function (o, mon) {
+        if (o._[mon.name]) return o;
+        o.r.push(mon);
+        o._[mon.name] = 1;
+        return o;
+      }, { _: {}, r: [] }).r.slice(0, 15);
+    }
+
+    return attacking;
+  }(),
+
 
   // Gives you back a score in terms of TTL (time left to live for your Pokemon) higher TTL is better
-  overall(opponentName) {
-    const opponent = Pokemon.filter(x => x.name === opponentName.toUpperCase())[0]
-    return (
-      Pokemon.reduce((arr, mon) => {
+  overall: function () {
+    function overall(opponentName) {
+      var opponent = Pokemon.filter(function (x) {
+        return x.name === opponentName.toUpperCase();
+      })[0];
+      return Pokemon.reduce(function (arr, mon) {
         // We can assume that your Pokemon will have an IndAtk of 10, because it's not shitty
         // and that your Pokemon's level is 20, because you just hatched it from an egg duh!
-        const moves = ttlvs(mon, opponent, { IndAtk: 10, IndDef: 10, IndSta: 10 }, 25)
+        var moves = ttlvs(mon, opponent, { IndAtk: 10, IndDef: 10, IndSta: 10 }, 25);
 
-        moves.forEach(move => arr.push({
-          name: mon.name,
-          score: move.scores.netTTL,
-          net: move.scores.netTTL,
-          ttl: move.ttl.opponent,
-          quick: move.quick,
-          charge: move.charge,
-        }))
-        return arr
+        moves.forEach(function (move) {
+          return arr.push({
+            name: mon.name,
+            score: move.scores.netTTL,
+            net: move.scores.netTTL,
+            ttl: move.ttl.opponent,
+            quick: move.quick,
+            charge: move.charge
+          });
+        });
+        return arr;
       }, [])
       // no legendaries (yet)
       .filter(isNotLegendary)
       // best net TTL
       .sort(higherIsBetter)
       // remove dupes...
-      .reduce((o, mon) => {
-        if (o._[mon.name]) return o
-        o.r.push(mon)
-        o._[mon.name] = 1
-        return o
-      }, { _: {}, r: [] }).r
-      .slice(0, 20)
-    )
-  },
-}
+      .reduce(function (o, mon) {
+        if (o._[mon.name]) return o;
+        o.r.push(mon);
+        o._[mon.name] = 1;
+        return o;
+      }, { _: {}, r: [] }).r.slice(0, 20);
+    }
 
-module.exports = idealMatchup
+    return overall;
+  }()
+};
+
+module.exports = idealMatchup;
 
 //console.log(idealMatchup.overall(process.argv[2] || 'dragonite'))
 
 },{"../json/pokemon.json":8,"./ttlvs":263}],259:[function(require,module,exports){
 // 66 because that's what Candela says makes a strong Pokemon.
 // I'm going to believe her. It's all about movesets anyway
-const DECENT_POKEMON_RATING = 66
+var DECENT_POKEMON_RATING = 66;
 
-const getOverallRating = v => (
-  v.ivs.IndAtk +
-  v.ivs.IndDef +
-  v.ivs.IndSta
-) / 45 * 100
+var getOverallRating = function getOverallRating(v) {
+  return (v.ivs.IndAtk + v.ivs.IndDef + v.ivs.IndSta) / 45 * 100;
+};
 
-const isGoodPokemonForItsClass = v => getOverallRating(v) > DECENT_POKEMON_RATING
+var isGoodPokemonForItsClass = function isGoodPokemonForItsClass(v) {
+  return getOverallRating(v) > DECENT_POKEMON_RATING;
+};
 
-module.exports = isGoodPokemonForItsClass
+module.exports = isGoodPokemonForItsClass;
 
 },{}],260:[function(require,module,exports){
-const chalk = require('chalk')
+var chalk = require('chalk');
 
-const LevelToCPM = require('../json/level-to-cpm.json')
-const Levels = require('../json/levels')
-const cpTools = require('./cp')
-const hpTools = require('./hp')
+var LevelToCPM = require('../json/level-to-cpm.json');
+var Levels = require('../json/levels');
+var cpTools = require('./cp');
+var hpTools = require('./hp');
 
-const TRAINER_LEVEL = 26
+var TRAINER_LEVEL = 26;
 
-const getOverallRating = v => (
-  (v.ivs.IndAtk * 1.10) +
-  (v.ivs.IndDef * 1.05) +
-  (v.ivs.IndSta * 0.85)
-) / 45 * 100
+var getOverallRating = function getOverallRating(v) {
+  return (v.ivs.IndAtk * 1.10 + v.ivs.IndDef * 1.05 + v.ivs.IndSta * 0.85) / 45 * 100;
+};
 
 function colorPercent(num, mod) {
-  const mul = num * (mod || 1)
+  var mul = num * (mod || 1);
   if (mul < 70) {
-    return chalk.red(num + '%')
+    return chalk.red(num + '%');
   } else if (mul < 90) {
-    return chalk.yellow(num + '%')
+    return chalk.yellow(num + '%');
   }
-  return chalk.green.bold(num + '%')
+  return chalk.green.bold(num + '%');
 }
 
 function logPokemon(pokemon) {
-  const response = []
+  var response = [];
 
-  response.push(`Level: ${pokemon.Level}`)
-  response.push(`IVs: ${pokemon.ivs.IndAtk}/${pokemon.ivs.IndDef}/${pokemon.ivs.IndSta} (${colorPercent(pokemon.percent.PerfectIV)})`)
-  response.push(`Atk+Def: ${pokemon.ivs.IndAtk + pokemon.ivs.IndDef}/30 (${colorPercent(pokemon.percent.PercentBatt)})`)
-  response.push(`CP: ${pokemon.CP} (${colorPercent(pokemon.percent.PercentCP, 1.05)})`)
-  response.push(`HP: ${pokemon.HP} (${colorPercent(pokemon.percent.PercentHP, 1.5)})`)
+  response.push('Level: ' + String(pokemon.Level));
+  response.push('IVs: ' + String(pokemon.ivs.IndAtk) + '/' + String(pokemon.ivs.IndDef) + '/' + String(pokemon.ivs.IndSta) + ' (' + String(colorPercent(pokemon.percent.PerfectIV)) + ')');
+  response.push('Atk+Def: ' + String(pokemon.ivs.IndAtk + pokemon.ivs.IndDef) + '/30 (' + String(colorPercent(pokemon.percent.PercentBatt)) + ')');
+  response.push('CP: ' + String(pokemon.CP) + ' (' + String(colorPercent(pokemon.percent.PercentCP, 1.05)) + ')');
+  response.push('HP: ' + String(pokemon.HP) + ' (' + String(colorPercent(pokemon.percent.PercentHP, 1.5)) + ')');
 
-  response.push(`Atk: ${pokemon.Atk.toFixed(2)}`)
-  response.push(`Def: ${pokemon.Def.toFixed(2)}`)
-  response.push(`Sta: ${pokemon.Sta.toFixed(2)}`)
+  response.push('Atk: ' + String(pokemon.Atk.toFixed(2)));
+  response.push('Def: ' + String(pokemon.Def.toFixed(2)));
+  response.push('Sta: ' + String(pokemon.Sta.toFixed(2)));
 
-  response.push('')
+  response.push('');
 
-  response.push(`At level ${TRAINER_LEVEL + 1.5}, this pokemon would have:`)
-  response.push(`Maximum CP: ${pokemon.meta.MaxCP}/${pokemon.meta.MaxedPossibleCP}`)
-  response.push(`Maximum HP: ${pokemon.meta.MaxHP}/${pokemon.meta.MaxedPossibleHP}`)
+  response.push('At level ' + (TRAINER_LEVEL + 1.5) + ', this pokemon would have:');
+  response.push('Maximum CP: ' + String(pokemon.meta.MaxCP) + '/' + String(pokemon.meta.MaxedPossibleCP));
+  response.push('Maximum HP: ' + String(pokemon.meta.MaxHP) + '/' + String(pokemon.meta.MaxedPossibleHP));
 
   if (pokemon.meta.EvolveCP || pokemon.meta.Stardust) {
-    response.push('')
+    response.push('');
   }
 
   if (pokemon.meta.EvolveCP) {
-    response.push(`If evolved, it would have ~${pokemon.meta.EvolveCP}CP with a max of ~${pokemon.meta.MaxEvolveCP}CP`)
+    response.push('If evolved, it would have ~' + String(pokemon.meta.EvolveCP) + 'CP with a max of ~' + String(pokemon.meta.MaxEvolveCP) + 'CP');
   }
 
   if (pokemon.meta.Stardust) {
-    response.push(`It would take ${chalk.bold(pokemon.meta.Stardust)} stardust and ${chalk.bold(pokemon.meta.Candy)} candy to max this pokemon out`)
+    response.push('It would take ' + String(chalk.bold(pokemon.meta.Stardust)) + ' stardust and ' + String(chalk.bold(pokemon.meta.Candy)) + ' candy to max this pokemon out');
   }
 
-  const ovRating = getOverallRating(pokemon)
-  const ovRatingPercent = Math.round(ovRating)
+  var ovRating = getOverallRating(pokemon);
+  var ovRatingPercent = Math.round(ovRating);
 
-  response.push('')
+  response.push('');
 
-  response.push(`${pokemon.Name} Rating: ${ovRatingPercent}%`)
+  response.push(String(pokemon.Name) + ' Rating: ' + String(ovRatingPercent) + '%');
 
-  return response
+  return response;
 
   return {
     level: pokemon.Level,
     name: pokemon.Name,
-    iv: `${pokemon.ivs.IndAtk}/${pokemon.ivs.IndDef}/${pokemon.ivs.IndSta}`,
+    iv: String(pokemon.ivs.IndAtk) + '/' + String(pokemon.ivs.IndDef) + '/' + String(pokemon.ivs.IndSta),
     ivp: pokemon.percent.PerfectIV,
-    atkdef: `${pokemon.ivs.IndAtk + pokemon.ivs.IndDef}/30`,
+    atkdef: String(pokemon.ivs.IndAtk + pokemon.ivs.IndDef) + '/30',
     atkdefp: pokemon.percent.PercentBatt,
     cp: pokemon.CP,
     cpp: pokemon.percent.PercentCP,
@@ -42331,344 +42372,357 @@ function logPokemon(pokemon) {
     def: pokemon.Def.toFixed(2),
     sta: pokemon.Sta.toFixed(2),
     maxlevel: TRAINER_LEVEL + 1.5,
-    maxcp: `${pokemon.meta.MaxCP}/${pokemon.meta.MaxLeveledCP}`,
+    maxcp: String(pokemon.meta.MaxCP) + '/' + String(pokemon.meta.MaxLeveledCP),
     maxcpcur: pokemon.meta.MaxCP,
     maxcpperfect: pokemon.meta.MaxLeveledCP,
     maxhpcur: pokemon.meta.MaxHP,
     maxhpperfect: pokemon.meta.MaxLeveledHP,
-    maxhp: `${pokemon.meta.MaxHP}/${pokemon.meta.MaxLeveledHP}`,
+    maxhp: String(pokemon.meta.MaxHP) + '/' + String(pokemon.meta.MaxLeveledHP),
     rating: Math.round(getOverallRating(pokemon)),
     evolvecp: pokemon.meta.EvolveCP,
     stardust: pokemon.meta.Stardust,
     candy: pokemon.meta.Candy,
-    value: pokemon,
-  }
+    value: pokemon
+  };
 }
 
-module.exports = logPokemon
+module.exports = logPokemon;
 
 },{"../json/level-to-cpm.json":5,"../json/levels":6,"./cp":252,"./hp":257,"chalk":10}],261:[function(require,module,exports){
-'use strict'
+'use strict';
 
-const chalk = require('chalk')
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-const LevelToCPM = require('../json/level-to-cpm.json')
-const DustToLevel = require('../json/dust-to-level')
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-const findPokemon = require('./findPokemon')
-const logPokemon = require('./logPokemon')
-const isGoodPokemonForItsClass = require('./isGoodPokemon')
-const guessIVs = require('./guessIVs')
+var chalk = require('chalk');
 
-const init = {
+var LevelToCPM = require('../json/level-to-cpm.json');
+var DustToLevel = require('../json/dust-to-level');
+
+var findPokemon = require('./findPokemon');
+var logPokemon = require('./logPokemon');
+var isGoodPokemonForItsClass = require('./isGoodPokemon');
+var guessIVs = require('./guessIVs');
+
+var init = {
   atk: [Infinity, -Infinity],
   cp: [Infinity, -Infinity],
   hp: [Infinity, -Infinity],
   iv: [Infinity, -Infinity],
   iva: [Infinity, -Infinity],
   ivd: [Infinity, -Infinity],
-  ivs: [Infinity, -Infinity],
-}
+  ivs: [Infinity, -Infinity]
+};
 
 function magic(pokemon) {
-  const results = (new IvCalculator(pokemon)).results
+  var results = new IvCalculator(pokemon).results;
 
   if (!results.isValid()) {
-    throw new Error(results.errors.join('. '))
+    throw new Error(results.errors.join('. '));
   }
 
-  return results
+  return results;
 }
 
 function sortByBest(values) {
-  return values.sort((a, b) => {
-    return a.percent.PerfectIV > b.percent.PerfectIV ? -1 : 1
-  })
+  return values.sort(function (a, b) {
+    return a.percent.PerfectIV > b.percent.PerfectIV ? -1 : 1;
+  });
 }
 
-class IvResults {
-  constructor(pokemon, results) {
-    this.pokemon = pokemon
-    this.errors = []
+var IvResults = function () {
+  function IvResults(pokemon, results) {
+    _classCallCheck(this, IvResults);
+
+    this.pokemon = pokemon;
+    this.errors = [];
 
     // Filter by appraisal
     if (pokemon.attrs || pokemon.ivRange) {
-      this.results = results.filter((result) => {
-        var rangeCheck = true
-        var statCheck = true
+      this.results = results.filter(function (result) {
+        var rangeCheck = true;
+        var statCheck = true;
 
         if (pokemon.ivRange != null) {
-          rangeCheck = (
-            result.percent.PerfectIV >= pokemon.ivRange[0] &&
-            result.percent.PerfectIV <= pokemon.ivRange[1]
-          )
+          rangeCheck = result.percent.PerfectIV >= pokemon.ivRange[0] && result.percent.PerfectIV <= pokemon.ivRange[1];
         }
 
         if (pokemon.attrs.length) {
-          const maxiv = Math.max(
-            result.ivs.IndAtk,
-            result.ivs.IndDef,
-            result.ivs.IndSta
-          )
+          (function () {
+            var maxiv = Math.max(result.ivs.IndAtk, result.ivs.IndDef, result.ivs.IndSta);
 
-          statCheck = pokemon.attrs.every(attr => result.ivs[attr] === maxiv)
+            statCheck = pokemon.attrs.every(function (attr) {
+              return result.ivs[attr] === maxiv;
+            });
+          })();
         }
 
-        return rangeCheck && statCheck
-      })
+        return rangeCheck && statCheck;
+      });
     } else {
-      this.results = results
+      this.results = results;
     }
 
     if (!this.results.length) {
-      this.errors.push('I have no idea. You might have entered the wrong values.')
+      this.errors.push('I have no idea. You might have entered the wrong values.');
     }
 
-    this.bestPossible = this.results.reduce((best, mon) => {
-      if (!best) return mon
-      return mon.percent.PerfectIV > best.percent.PerfectIV ? mon : best
-    }, null)
+    this.bestPossible = this.results.reduce(function (best, mon) {
+      if (!best) return mon;
+      return mon.percent.PerfectIV > best.percent.PerfectIV ? mon : best;
+    }, null);
 
-    this.yes = this.results.every(isGoodPokemonForItsClass)
-    this.maybeValues = this.results.filter(isGoodPokemonForItsClass)
-    this.maybe = this.maybeValues.length > 0
-    this.valuesRange = this.findValuesRange(this.results)
+    this.yes = this.results.every(isGoodPokemonForItsClass);
+    this.maybeValues = this.results.filter(isGoodPokemonForItsClass);
+    this.maybe = this.maybeValues.length > 0;
+    this.valuesRange = this.findValuesRange(this.results);
   }
 
-  isValid() {
-    return !this.errors.length
-  }
-
-  toString() {
-    const response = []
-
-    if (this.results.length === 1) {
-      response.push('Congrats! Here are your Pokemon\'s stats')
-      response.push('')
-
-      response.push.apply(response, logPokemon(this.results[0]))
-    } else {
-      response.push('Your possible Pokemon\'s values')
-
-      response.push('')
-
-      response.push('Range in values')
-      response.push(`IV: ${this.valuesRange.iv[0]} -- ${this.valuesRange.iv[1]}%`)
-      response.push(`Atk+Def: ${this.valuesRange.atk[0]} -- ${this.valuesRange.atk[1]}%`)
-      response.push(`CP: ${this.valuesRange.cp[0]} -- ${this.valuesRange.cp[1]}%`)
-      response.push(`HP: ${this.valuesRange.hp[0]} -- ${this.valuesRange.hp[1]}%`)
-
-      response.push('')
-
-      response.push(`There are ${this.results.length} possibilities.`)
-      if (this.results.length < 7) {
-        this.results.forEach((value) => {
-          const ivPercent = Math.round((value.ivs.IndAtk + value.ivs.IndDef + value.ivs.IndSta) / 45 * 100)
-          response.push(`${value.ivs.IndAtk}/${value.ivs.IndDef}/${value.ivs.IndSta} (${ivPercent}%)`)
-        })
-      }
-      response.push(`There is a ${chalk.bold(Math.round(1 / this.results.length * 100))}% chance you'll get the one below.`)
-
-      response.push('')
-
-      response.push('Best possible Pokemon\'s values')
-      response.push.apply(response, logPokemon(this.bestPossible))
-    }
-
-    response.push('')
-
-    const pokemonId = chalk.blue.bold(`${this.pokemon.name.toUpperCase()} ${this.pokemon.cp}`)
-
-    if (this.yes) {
-      response.push(`>> Yes, keep your ${pokemonId}.`)
-    } else if (this.maybe) {
-      response.push(
-        `>> Maybe you should keep ${pokemonId} around.`,
-        '\n  ',
-        `There is a ${chalk.bold(Math.round(this.maybeValues.length / this.results.length * 100))}% chance you've got a winner.`
-      )
-    } else {
-      response.push(`>> Send ${pokemonId} to Willow's grinder.`)
-    }
-
-    return response
-  }
-
-  asObject() {
-    return {
-      chance: Math.round(this.maybeValues.length / this.results.length * 100),
-      best: this.bestPossible,
-      pokemon: this.pokemon,
-      range: this.valuesRange,
-      values: sortByBest(this.results),
-    }
-  }
-
-  findValuesRange(results) {
-    return results.reduce((obj, v) => {
-      return {
-        atk: [
-          Math.min(v.percent.PercentBatt, obj.atk[0]),
-          Math.max(v.percent.PercentBatt, obj.atk[1]),
-        ],
-        cp: [
-          Math.min(v.percent.PercentCP, obj.cp[0]),
-          Math.max(v.percent.PercentCP, obj.cp[1]),
-        ],
-        hp: [
-          Math.min(v.percent.PercentHP, obj.hp[0]),
-          Math.max(v.percent.PercentHP, obj.hp[1]),
-        ],
-        iv: [
-          Math.min(v.percent.PerfectIV, obj.iv[0]),
-          Math.max(v.percent.PerfectIV, obj.iv[1]),
-        ],
-        iva: [
-          Math.min(v.ivs.IndAtk, obj.iva[0]),
-          Math.max(v.ivs.IndAtk, obj.iva[1]),
-        ],
-        ivd: [
-          Math.min(v.ivs.IndDef, obj.ivd[0]),
-          Math.max(v.ivs.IndDef, obj.ivd[1]),
-        ],
-        ivs: [
-          Math.min(v.ivs.IndSta, obj.ivs[0]),
-          Math.max(v.ivs.IndSta, obj.ivs[1]),
-        ],
-      }
-    }, init)
-  }
-}
-
-class IvCalculator {
-  constructor(pokemon) {
-    this.pokemon = pokemon || {}
-    this.results = new IvResults(pokemon, this.calculateIvResults())
-  }
-
-  calculateIvResults() {
-    const mon = findPokemon(this.pokemon.name)
-
-    // If the level has been provided then we can get a better accurate reading
-    // since we'll be able to determine the exact ECpM.
-    if (this.pokemon.level) {
-      if (DustToLevel[this.pokemon.stardust].indexOf(this.pokemon.level) === -1) {
-        throw new Error('Stardust does not match level')
+  _createClass(IvResults, [{
+    key: 'isValid',
+    value: function () {
+      function isValid() {
+        return !this.errors.length;
       }
 
-      const ECpM = LevelToCPM[String(this.pokemon.level)]
-      return guessIVs(this.pokemon, mon, ECpM)
-    }
+      return isValid;
+    }()
+  }, {
+    key: 'toString',
+    value: function () {
+      function toString() {
+        var response = [];
 
-    // If we're just going on stardust then we'll have to iterate through
-    // each level and concatenate all possible values
-    return DustToLevel[this.pokemon.stardust].reduce((arr, level) => {
-      const ECpM = LevelToCPM[String(level)]
-      return arr.concat(guessIVs(this.pokemon, mon, ECpM))
-    }, [])
+        if (this.results.length === 1) {
+          response.push('Congrats! Here are your Pokemon\'s stats');
+          response.push('');
+
+          response.push.apply(response, logPokemon(this.results[0]));
+        } else {
+          response.push('Your possible Pokemon\'s values');
+
+          response.push('');
+
+          response.push('Range in values');
+          response.push('IV: ' + String(this.valuesRange.iv[0]) + ' -- ' + String(this.valuesRange.iv[1]) + '%');
+          response.push('Atk+Def: ' + String(this.valuesRange.atk[0]) + ' -- ' + String(this.valuesRange.atk[1]) + '%');
+          response.push('CP: ' + String(this.valuesRange.cp[0]) + ' -- ' + String(this.valuesRange.cp[1]) + '%');
+          response.push('HP: ' + String(this.valuesRange.hp[0]) + ' -- ' + String(this.valuesRange.hp[1]) + '%');
+
+          response.push('');
+
+          response.push('There are ' + String(this.results.length) + ' possibilities.');
+          if (this.results.length < 7) {
+            this.results.forEach(function (value) {
+              var ivPercent = Math.round((value.ivs.IndAtk + value.ivs.IndDef + value.ivs.IndSta) / 45 * 100);
+              response.push(String(value.ivs.IndAtk) + '/' + String(value.ivs.IndDef) + '/' + String(value.ivs.IndSta) + ' (' + String(ivPercent) + '%)');
+            });
+          }
+          response.push('There is a ' + String(chalk.bold(Math.round(1 / this.results.length * 100))) + '% chance you\'ll get the one below.');
+
+          response.push('');
+
+          response.push('Best possible Pokemon\'s values');
+          response.push.apply(response, logPokemon(this.bestPossible));
+        }
+
+        response.push('');
+
+        var pokemonId = chalk.blue.bold(String(this.pokemon.name.toUpperCase()) + ' ' + String(this.pokemon.cp));
+
+        if (this.yes) {
+          response.push('>> Yes, keep your ' + String(pokemonId) + '.');
+        } else if (this.maybe) {
+          response.push('>> Maybe you should keep ' + String(pokemonId) + ' around.', '\n  ', 'There is a ' + String(chalk.bold(Math.round(this.maybeValues.length / this.results.length * 100))) + '% chance you\'ve got a winner.');
+        } else {
+          response.push('>> Send ' + String(pokemonId) + ' to Willow\'s grinder.');
+        }
+
+        return response;
+      }
+
+      return toString;
+    }()
+  }, {
+    key: 'asObject',
+    value: function () {
+      function asObject() {
+        return {
+          chance: Math.round(this.maybeValues.length / this.results.length * 100),
+          best: this.bestPossible,
+          pokemon: this.pokemon,
+          range: this.valuesRange,
+          values: sortByBest(this.results)
+        };
+      }
+
+      return asObject;
+    }()
+  }, {
+    key: 'findValuesRange',
+    value: function () {
+      function findValuesRange(results) {
+        return results.reduce(function (obj, v) {
+          return {
+            atk: [Math.min(v.percent.PercentBatt, obj.atk[0]), Math.max(v.percent.PercentBatt, obj.atk[1])],
+            cp: [Math.min(v.percent.PercentCP, obj.cp[0]), Math.max(v.percent.PercentCP, obj.cp[1])],
+            hp: [Math.min(v.percent.PercentHP, obj.hp[0]), Math.max(v.percent.PercentHP, obj.hp[1])],
+            iv: [Math.min(v.percent.PerfectIV, obj.iv[0]), Math.max(v.percent.PerfectIV, obj.iv[1])],
+            iva: [Math.min(v.ivs.IndAtk, obj.iva[0]), Math.max(v.ivs.IndAtk, obj.iva[1])],
+            ivd: [Math.min(v.ivs.IndDef, obj.ivd[0]), Math.max(v.ivs.IndDef, obj.ivd[1])],
+            ivs: [Math.min(v.ivs.IndSta, obj.ivs[0]), Math.max(v.ivs.IndSta, obj.ivs[1])]
+          };
+        }, init);
+      }
+
+      return findValuesRange;
+    }()
+  }]);
+
+  return IvResults;
+}();
+
+var IvCalculator = function () {
+  function IvCalculator(pokemon) {
+    _classCallCheck(this, IvCalculator);
+
+    this.pokemon = pokemon || {};
+    this.results = new IvResults(pokemon, this.calculateIvResults());
   }
-}
 
-module.exports = magic
+  _createClass(IvCalculator, [{
+    key: 'calculateIvResults',
+    value: function () {
+      function calculateIvResults() {
+        var _this = this;
+
+        var mon = findPokemon(this.pokemon.name);
+
+        // If the level has been provided then we can get a better accurate reading
+        // since we'll be able to determine the exact ECpM.
+        if (this.pokemon.level) {
+          if (DustToLevel[this.pokemon.stardust].indexOf(this.pokemon.level) === -1) {
+            throw new Error('Stardust does not match level');
+          }
+
+          var ECpM = LevelToCPM[String(this.pokemon.level)];
+          return guessIVs(this.pokemon, mon, ECpM);
+        }
+
+        // If we're just going on stardust then we'll have to iterate through
+        // each level and concatenate all possible values
+        return DustToLevel[this.pokemon.stardust].reduce(function (arr, level) {
+          var ECpM = LevelToCPM[String(level)];
+          return arr.concat(guessIVs(_this.pokemon, mon, ECpM));
+        }, []);
+      }
+
+      return calculateIvResults;
+    }()
+  }]);
+
+  return IvCalculator;
+}();
+
+module.exports = magic;
 
 },{"../json/dust-to-level":2,"../json/level-to-cpm.json":5,"./findPokemon":254,"./guessIVs":256,"./isGoodPokemon":259,"./logPokemon":260,"chalk":10}],262:[function(require,module,exports){
-const DustToLevel = require('../json/dust-to-level')
-const Levels = require('../json/levels')
+var DustToLevel = require('../json/dust-to-level');
+var Levels = require('../json/levels');
 
 function howMuchCandy(currentLevel, trainerLevel) {
-  const maxLevel = (trainerLevel + 1.5) * 2
-  const minLevel = currentLevel * 2
-  return Levels.reduce((sum, level) => {
-    if (level.level < maxLevel && level.level >= minLevel) return sum + level.candy
-    return sum
-  }, 0)
+  var maxLevel = (trainerLevel + 1.5) * 2;
+  var minLevel = currentLevel * 2;
+  return Levels.reduce(function (sum, level) {
+    if (level.level < maxLevel && level.level >= minLevel) return sum + level.candy;
+    return sum;
+  }, 0);
 }
 
 function howMuchStardust(currentLevel, trainerLevel) {
-  const maxPokemonLevel = trainerLevel + 1.5
+  var maxPokemonLevel = trainerLevel + 1.5;
 
   // Returns the candy cost of upgrading to the current maximum Pokemon level
   // cap based on the trainer's level
-  return Object.keys(DustToLevel).reduce((sum, dust) => {
-    const levels = DustToLevel[dust]
-    const stardustIncrease = levels.reduce((num, level) => {
-      return level >= currentLevel && level < maxPokemonLevel
-        ? num + Number(dust)
-        : num
-    }, 0)
+  return Object.keys(DustToLevel).reduce(function (sum, dust) {
+    var levels = DustToLevel[dust];
+    var stardustIncrease = levels.reduce(function (num, level) {
+      return level >= currentLevel && level < maxPokemonLevel ? num + Number(dust) : num;
+    }, 0);
 
-    return sum + stardustIncrease
-  }, 0)
+    return sum + stardustIncrease;
+  }, 0);
 }
 
 function howMuchPowerUp(currentLevel, trainerLevel) {
-  const candy = howMuchCandy(currentLevel, trainerLevel)
-  const stardust = howMuchStardust(currentLevel, trainerLevel)
-  return { candy, stardust }
+  var candy = howMuchCandy(currentLevel, trainerLevel);
+  var stardust = howMuchStardust(currentLevel, trainerLevel);
+  return { candy: candy, stardust: stardust };
 }
 
 module.exports = {
-  howMuchCandy,
-  howMuchPowerUp,
-  howMuchStardust,
-}
+  howMuchCandy: howMuchCandy,
+  howMuchPowerUp: howMuchPowerUp,
+  howMuchStardust: howMuchStardust
+};
 
 },{"../json/dust-to-level":2,"../json/levels":6}],263:[function(require,module,exports){
-const dpsvs = require('./dpsvs')
-const hp = require('./hp')
-const LevelToCPM = require('../json/level-to-cpm')
+var dpsvs = require('./dpsvs');
+var hp = require('./hp');
+var LevelToCPM = require('../json/level-to-cpm');
 
 // Find a Pokemon's TTL vs an opponent. This is how much damage they'll do and how long they'll
 // take to wipe out an enemy vs how long they can stand against said opponent.
 function ttlvs(player, opponent, ivs, pokemonLevel) {
-  const IndAtk = ivs.IndAtk || 10
-  const IndDef = ivs.IndDef || 10
-  const IndSta = ivs.IndSta || 10
+  var IndAtk = ivs.IndAtk || 10;
+  var IndDef = ivs.IndDef || 10;
+  var IndSta = ivs.IndSta || 10;
 
   // In order to do a diff we'll take the opponent's best move vs you
   // assuming they have an attack IV of 10 and they're level 25.
-  const opponentLevel = 25
-  const opponentsBestMove = dpsvs(opponent, player, 10, IndDef, opponentLevel, pokemonLevel)[0]
+  var opponentLevel = 25;
+  var opponentsBestMove = dpsvs(opponent, player, 10, IndDef, opponentLevel, pokemonLevel)[0];
   // Then we multiply by 0.75 because gym opponents only attack every 1.5 seconds
-  const opponentDPS = opponentsBestMove.dps * 0.75
+  var opponentDPS = opponentsBestMove.dps * 0.75;
 
   // the opponent's HP
-  const playerHP = hp.getHP(player, IndSta, LevelToCPM[pokemonLevel])
-  const opponentHP = hp.getHP(opponent, 10, LevelToCPM['25'])
+  var playerHP = hp.getHP(player, IndSta, LevelToCPM[pokemonLevel]);
+  var opponentHP = hp.getHP(opponent, 10, LevelToCPM['25']);
 
-  const playerTTL = playerHP / opponentDPS
+  var playerTTL = playerHP / opponentDPS;
 
   // 10 is the opponent's IV for defense. We're just guesstimating that they're a pretty good pokemon
-  return dpsvs(player, opponent, IndAtk, 10, pokemonLevel, opponentLevel).map((x) => {
-    const opponentTTL = opponentHP / x.dps
-    const hpRemaining = playerHP - (opponentDPS * opponentTTL)
-    const hpLoss = playerHP - hpRemaining
+  return dpsvs(player, opponent, IndAtk, 10, pokemonLevel, opponentLevel).map(function (x) {
+    var opponentTTL = opponentHP / x.dps;
+    var hpRemaining = playerHP - opponentDPS * opponentTTL;
+    var hpLoss = playerHP - hpRemaining;
 
     return {
       quick: x.quick,
       charge: x.charge,
       scores: {
         netTTL: playerTTL - opponentTTL,
-        hpRemaining,
-        hpLoss,
+        hpRemaining: hpRemaining,
+        hpLoss: hpLoss
       },
       dps: {
         player: x.dps,
-        opponent: opponentDPS,
+        opponent: opponentDPS
       },
       hp: {
         player: playerHP,
-        opponent: opponentHP,
+        opponent: opponentHP
       },
       ttl: {
         player: playerTTL,
-        opponent: opponentTTL,
-      },
-    }
-  })
+        opponent: opponentTTL
+      }
+    };
+  });
 }
 
-module.exports = ttlvs
+module.exports = ttlvs;
 
 // const Pokemon = require('../json/pokemon')
 // console.log(
@@ -42682,1476 +42736,1341 @@ module.exports = ttlvs
 
 },{"../json/level-to-cpm":5,"./dpsvs":253,"./hp":257}],264:[function(require,module,exports){
 function createActionCreators(arr) {
-  return arr.reduce((obj, type) => {
-    const name = type.toLowerCase().replace(/_(\w)/g, (a, b) => b.toUpperCase())
+  return arr.reduce(function (obj, type) {
+    var name = type.toLowerCase().replace(/_(\w)/g, function (a, b) {
+      return b.toUpperCase();
+    });
 
-    if (obj[name]) throw new ReferenceError(`${name} already exists`)
-    if (obj[type]) throw new ReferenceError(`${type} already exists`)
+    if (obj[name]) throw new ReferenceError(String(name) + ' already exists');
+    if (obj[type]) throw new ReferenceError(String(type) + ' already exists');
 
-    obj[name] = payload => ({ type, payload })
-    obj[type] = type
-    return obj
-  }, {})
+    obj[name] = function (payload) {
+      return { type: type, payload: payload };
+    };
+    obj[type] = type;
+    return obj;
+  }, {});
 }
 
-module.exports = createActionCreators([
-  'CHANGED_NAME',
-  'CHANGED_CP',
-  'CHANGED_HP',
-  'CHANGED_STARDUST',
-  'CHANGED_LEVEL',
-  'CHANGED_TRAINER_LEVEL',
-  'RESULTS_CALCULATED',
-  'RESULTS_RESET',
-  'VALUES_RESET',
-
-  'TEAM_SELECTED',
-  'APPRAISAL_IV_RANGE_SET',
-  'APPRAISAL_ATTR_TOGGLED',
-
-  'MOVES_CHANGED',
-  'POKEMON_CHANGED',
-  'DEX_TEXT_CHANGED',
-
-  'POKEMON_CHECKED',
-  'SEARCHES_LOADED',
-])
+module.exports = createActionCreators(['CHANGED_NAME', 'CHANGED_CP', 'CHANGED_HP', 'CHANGED_STARDUST', 'CHANGED_LEVEL', 'CHANGED_TRAINER_LEVEL', 'RESULTS_CALCULATED', 'RESULTS_RESET', 'VALUES_RESET', 'TEAM_SELECTED', 'APPRAISAL_IV_RANGE_SET', 'APPRAISAL_ATTR_TOGGLED', 'MOVES_CHANGED', 'POKEMON_CHANGED', 'DEX_TEXT_CHANGED', 'POKEMON_CHECKED', 'SEARCHES_LOADED']);
 
 },{}],265:[function(require,module,exports){
-const Alt = require('./assets/alt.min')
-const alt = new Alt()
-const store = require('./store')
+var B = require('../utils/Lotus.React');
+var React = require('react');
+var Styles = require('../styles');
+var appraisal = require('../utils/appraisal');
+var actions = require('../actions');
+var n = require('../utils/n');
+var reactRedux = require('react-redux');
 
-alt.subscribe(action => {
-  const type = action.type
-    .replace('/', '')
-    .replace(/([a-z])([A-Z])/g, (_, b, c) => b + '_' + c)
-    .toUpperCase()
+var COLORS = ['#0677ee', // Mystic
+'#f3150a', // Valor
+'#ffea00'];
 
-  const meta = action.meta
-  const payload = action.payload
+var Shield = function Shield(props) {
+  return n(B.Image, {
+    height: 80,
+    onClick: function () {
+      function onClick() {
+        return props.onSelect(appraisal[props.team]);
+      }
 
-  store.dispatch({ type, payload, meta })
-})
+      return onClick;
+    }(),
+    src: 'images/' + String(props.team.toLowerCase()) + '.png',
+    style: { opacity: props.current === appraisal[props.team] ? 1 : 0.4 }
+  });
+};
 
-module.exports = alt
+var Phrase = function Phrase(props) {
+  return n(B.Link, {
+    onClick: function () {
+      function onClick() {
+        return props.onSelect(props.value);
+      }
 
-},{"./assets/alt.min":266,"./store":289}],266:[function(require,module,exports){
-!function(t,n){"object"==typeof exports&&"object"==typeof module?module.exports=n():"function"==typeof define&&define.amd?define([],n):"object"==typeof exports?exports.Alt=n():t.Alt=n()}(this,function(){return function(t){function n(r){if(e[r])return e[r].exports;var i=e[r]={exports:{},id:r,loaded:!1};return t[r].call(i.exports,i,i.exports,n),i.loaded=!0,i.exports}var e={};return n.m=t,n.c=e,n.p="",n(0)}([function(t,n,e){t.exports=e(3)},function(t,n){function e(t){return"f"===("undefined"==typeof t?"undefined":u(t))[0]}function r(t){var n=t.constructor;return!!t&&"[object Object]"===Object.prototype.toString.call(t)&&e(n)&&!Object.isFrozen(t)&&n instanceof n}function i(t){return arguments.length>1?Array.from(arguments):void 0===t?null:t}function o(){return Math.random().toString(18).substr(2,16)}Object.defineProperty(n,"__esModule",{value:!0});var u="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol?"symbol":typeof t};n.isFunction=e,n.isMutableObject=r,n.dispatchIdentity=i,n.id=o},function(t,n){"use strict";function e(){var t=[],n=!1,e={},r=function(r){var i=t.indexOf(r);if(!(0>i))return n?void(e[i]=r):void t.splice(i,1)},i=function(n){var e=(t.push(n),function(){return r(n)});return{dispose:e}},o=function(){for(var i=arguments.length,o=Array(i),u=0;i>u;u++)o[u]=arguments[u];n=!0;try{t.forEach(function(t,n){return e[n]||t.apply(void 0,o)})}finally{n=!1,Object.keys(e).forEach(function(t){return r(e[t])}),e={}}};return{publish:o,subscribe:i,$subscriptions:t}}t.exports=e},function(t,n,e){function r(t){return t&&t.__esModule?t:{"default":t}}function i(t,n){if(!(t instanceof n))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(n,"__esModule",{value:!0});var o=e(2),u=r(o),s=e(4),c=r(s),a=e(1),f=a.id(),l=function(){function t(n){var e=this;i(this,t);var r=u["default"]();Object.assign(this,{publish:function(){function t(t){t.meta||(t.meta={}),t.meta.id=a.id(),r.publish(t)}return t}(),subscribe:r.subscribe,serialize:JSON.stringify,deserialize:JSON.parse},n),this[f]=[],this.Store=c["default"],this.actions={},this.stores={},this.subscribe(function(t){e[f].forEach(function(n){return n.dispatch(t)}),e[f].forEach(function(t){return t.emitChange()})})}return t.prototype.createActions=function(){function t(t,n){var e=this,r=Object.keys(n).reduce(function(r,i){var o=String(t)+"/"+String(i),u=function(){function t(t){return e.publish({type:o,payload:t})}return t}();return r[i]=function(){var t=n[i].apply(n,arguments);return a.isFunction(t)?t(u,e):(void 0!==t&&u(t),t)},Object.assign(r[i],{type:o,actionName:i}),r},{});return this.actions[t]=r}return t}(),t.prototype.createAsyncActions=function(){function t(t,n){var e=this;return Object.keys(n).reduce(function(r,i){var o=String(t)+"/"+String(i),u=function(){function t(t,n){var r={};n.loading&&(r.loading=!0);var i=n.loading?i:String(i)+"/loading",o={type:i,payload:t,meta:r};return n.error&&(o.error=!0),e.publish(o),o}return t}();return r[i]=function(){var t=n[i].apply(n,arguments);return u(null,{loading:!0}),Promise.resolve(t).then(function(t){return u(t,{})},function(t){return u(t,{error:!0})})},Object.assign(r[i],{type:o,actionName:i}),r},{})}return t}(),t.prototype.generateActions=function(){function t(t,n){var e=Array.isArray(n)?n:[n];return this.createActions(t,e.reduce(function(t,n){return t[n]=a.dispatchIdentity,t},{}))}return t}(),t.prototype.createStore=function(){function t(t,n){var e=this,r=u["default"](),i=function(){function t(t,e){n.lifecycle[t]&&n.lifecycle[t].publish({state:n.state,action:e})}return t}(),o=function(){function t(t){n._noChange=!1;try{return t()}catch(e){if(!n.lifecycle.error)throw e;i("error",e)}}return t}(),s=function(){function t(t){return n._noChange=!0,i("beforeEach",t),n.dispatchHandlers[t.type]?o(function(){n.dispatchHandlers[t.type].publish(t.payload,t)}):n.otherwise&&o(function(){n.otherwise(t.payload,t)}),n.reduce&&o(function(){var e=n.reduce(n.state,t);void 0!==e&&(n.state=e)}),i("afterEach",t),n.state}return t}(),c=function(){function t(){return n._noChange||r.publish(n.state)}return t}();return this[f].push({displayName:t,setState:function(){function t(t){return n.state=t}return t}(),getState:function(){function t(){return{state:n.state}}return t}(),runLifecycle:i,initialState:this.serialize({state:n.state}),dispatch:s,emitChange:c}),this.stores[t]={displayName:t,dispatch:s,getState:function(){function t(){return n.state}return t}(),subscribe:function(){function t(t){var n=r.subscribe(t);return{dispose:function(){function t(){i("unlisten"),n.dispose()}return t}()}}return t}(),destroy:function(){function n(){e[f]=e[f].filter(function(n){return n.displayName!==t}),delete e.stores[t]}return n}()}}return t}(),t.prototype.load=function(){function t(t){var n="string"==typeof t?this.deserialize(t):t;this[f].forEach(function(t){n.hasOwnProperty(t.displayName)&&(t.setState(n[t.displayName]),t.runLifecycle("load"))})}return t}(),t.prototype.save=function(){function t(t){return this.serialize(this[f].reduce(function(n,e){return(!t||t.hasOwnProperty(e.displayName))&&(n[e.displayName]=e.getState().state,e.runLifecycle("save")),n},{}))}return t}(),t.prototype.flush=function(){function t(t){var n=this,e=this.save(t);return this[f].forEach(function(e){(!t||t.hasOwnProperty(e.displayName))&&e.setState(n.deserialize(e.initialState).state)}),e}return t}(),t.debug=function(){function t(t,n){var e="alt.js.org";return"undefined"!=typeof window&&(window[e]||(window[e]=[]),window[e].push({name:t,alt:n})),n}return t}(),t}();l.Store=c["default"],n["default"]=l,t.exports=n["default"]},function(t,n,e){function r(t){return t&&t.__esModule?t:{"default":t}}function i(t,n){if(!(t instanceof n))throw new TypeError("Cannot call a class as a function")}function o(t,n,e){var r=/./,i=e.replace(r,function(t){return"on"+String(t[0].toUpperCase())});if(t[e]&&t[i])throw new ReferenceError("You have multiple handlers bound to an action: "+(String(e)+" and "+String(i)));var o=t[e]||t[i];o&&t.bindAction(n,function(n,r){t[e]?t[e](n,r):t[i]&&t[i](n,r)})}Object.defineProperty(n,"__esModule",{value:!0});var u=e(2),s=r(u),c=e(1),a=function(){function t(){i(this,t),this.dispatchHandlers={},this.boundListeners=[],this.lifecycle={},this._noChange=!1}return t.prototype.bindActions=function(){function t(t){var n=this;Object.keys(t).forEach(function(e){return o(n,t[e].type,e)})}return t}(),t.prototype.bindAction=function(){function t(t,n){var e=t.type?t.type:t;this.dispatchHandlers[e]||(this.dispatchHandlers[e]=s["default"]()),this.dispatchHandlers[e].subscribe(n),this.boundListeners.push(e)}return t}(),t.prototype.bindListeners=function(){function t(t){var n=this;Object.keys(t).forEach(function(e){if(!n[e])throw new ReferenceError(String(e)+" defined but does not exist in self");var r=t[e],i=function(){function t(t){return n[e](t)}return t}();Array.isArray(r)?r.forEach(function(t){return n.bindAction(t,i)}):n.bindAction(r,i)})}return t}(),t.prototype.on=function(){function t(t,n){this.lifecycle[t]||(this.lifecycle[t]=s["default"]()),this.lifecycle[t].subscribe(n)}return t}(),t.prototype.setState=function(){function t(t){c.isMutableObject(this.state)?this.state=Object.assign({},this.state,t):this.state=t}return t}(),t.prototype.preventDefault=function(){function t(){this._noChange=!0}return t}(),t}();n["default"]=a,t.exports=n["default"]}])});
-},{}],267:[function(require,module,exports){
-const B = require('../utils/Lotus.React')
-const React = require('react')
-const Styles = require('../styles')
-const appraisal = require('../utils/appraisal')
-const actions = require('../actions')
-const n = require('../utils/n')
-const reactRedux = require('react-redux')
-
-const COLORS = [
-  '#0677ee', // Mystic
-  '#f3150a', // Valor
-  '#ffea00', // Instinct
-]
-
-const Shield = props => n(B.Image, {
-  height: 80,
-  onClick: () => props.onSelect(appraisal[props.team]),
-  src: `images/${props.team.toLowerCase()}.png`,
-  style: { opacity: props.current === appraisal[props.team] ? 1 : 0.4 },
-})
-
-const Phrase = props => n(B.Link, {
-  onClick: () => props.onSelect(props.value),
-  style: Object.assign({
-    backgroundColor: props.range === props.value ? COLORS[props.team] : '',
-  }, Styles.box),
-}, appraisal[props.value][props.team])
+      return onClick;
+    }(),
+    style: Object.assign({
+      backgroundColor: props.range === props.value ? COLORS[props.team] : ''
+    }, Styles.box)
+  }, appraisal[props.value][props.team]);
+};
 
 function Appraisal(props) {
-  window.props = props
-  window.actions = actions
-  return n(B.View, { spacingVertical: 'md' }, [
-    n(B.View, {
-      style: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-      },
-    }, [
-      n(Shield, {
-        current: props.team,
-        onSelect: team => props.dispatch(actions.teamSelected(team)),
-        team: 'VALOR',
-      }),
-      n(Shield, {
-        current: props.team,
-        onSelect: team => props.dispatch(actions.teamSelected(team)),
-        team: 'MYSTIC',
-      }),
-      n(Shield, {
-        current: props.team,
-        onSelect: team => props.dispatch(actions.teamSelected(team)),
-        team: 'INSTINCT',
-      }),
-    ]),
+  window.props = props;
+  window.actions = actions;
+  return n(B.View, { spacingVertical: 'md' }, [n(B.View, {
+    style: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      alignItems: 'center'
+    }
+  }, [n(Shield, {
+    current: props.team,
+    onSelect: function () {
+      function onSelect(team) {
+        return props.dispatch(actions.teamSelected(team));
+      }
 
-    props.team !== null && (
-      n(B.View, [
-        n(B.FormControl, { label: 'IV% Range' }, [
-          n(Phrase, {
-            onSelect: x => props.dispatch(actions.appraisalIvRangeSet(x)),
-            range: props.ivRange,
-            team: props.team,
-            value: 'great',
-          }),
-          n(Phrase, {
-            onSelect: x => props.dispatch(actions.appraisalIvRangeSet(x)),
-            range: props.ivRange,
-            team: props.team,
-            value: 'good',
-          }),
-          n(Phrase, {
-            onSelect: x => props.dispatch(actions.appraisalIvRangeSet(x)),
-            range: props.ivRange,
-            team: props.team,
-            value: 'bad',
-          }),
-          n(Phrase, {
-            onSelect: x => props.dispatch(actions.appraisalIvRangeSet(x)),
-            range: props.ivRange,
-            team: props.team,
-            value: 'ugly',
-          }),
-        ]),
-        n(B.FormControl, { label: 'Attributes' }, [
-          n(B.View, {
-            style: {
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              alignItems: 'center',
-            },
-          }, [
-            n(B.Link, {
-              onClick: () => props.dispatch(actions.appraisalAttrToggled('IndAtk')),
-              onSelect: x => props.dispatch(actions.appraisalIvRangeSet(x)),
-              style: { fontWeight: props.attrs.IndAtk ? 'bold': '' },
-            }, 'Atk'),
-            n(B.Link, {
-              onClick: () => props.dispatch(actions.appraisalAttrToggled('IndDef')),
-              style: { fontWeight: props.attrs.IndDef ? 'bold': '' },
-            }, 'Def'),
-            n(B.Link, {
-              onClick: () => props.dispatch(actions.appraisalAttrToggled('IndSta')),
-              style: { fontWeight: props.attrs.IndSta ? 'bold': '' },
-            }, 'HP'),
-          ]),
-        ]),
-      ])
-    ),
-  ])
+      return onSelect;
+    }(),
+    team: 'VALOR'
+  }), n(Shield, {
+    current: props.team,
+    onSelect: function () {
+      function onSelect(team) {
+        return props.dispatch(actions.teamSelected(team));
+      }
+
+      return onSelect;
+    }(),
+    team: 'MYSTIC'
+  }), n(Shield, {
+    current: props.team,
+    onSelect: function () {
+      function onSelect(team) {
+        return props.dispatch(actions.teamSelected(team));
+      }
+
+      return onSelect;
+    }(),
+    team: 'INSTINCT'
+  })]), props.team !== null && n(B.View, [n(B.FormControl, { label: 'IV% Range' }, [n(Phrase, {
+    onSelect: function () {
+      function onSelect(x) {
+        return props.dispatch(actions.appraisalIvRangeSet(x));
+      }
+
+      return onSelect;
+    }(),
+    range: props.ivRange,
+    team: props.team,
+    value: 'great'
+  }), n(Phrase, {
+    onSelect: function () {
+      function onSelect(x) {
+        return props.dispatch(actions.appraisalIvRangeSet(x));
+      }
+
+      return onSelect;
+    }(),
+    range: props.ivRange,
+    team: props.team,
+    value: 'good'
+  }), n(Phrase, {
+    onSelect: function () {
+      function onSelect(x) {
+        return props.dispatch(actions.appraisalIvRangeSet(x));
+      }
+
+      return onSelect;
+    }(),
+    range: props.ivRange,
+    team: props.team,
+    value: 'bad'
+  }), n(Phrase, {
+    onSelect: function () {
+      function onSelect(x) {
+        return props.dispatch(actions.appraisalIvRangeSet(x));
+      }
+
+      return onSelect;
+    }(),
+    range: props.ivRange,
+    team: props.team,
+    value: 'ugly'
+  })]), n(B.FormControl, { label: 'Attributes' }, [n(B.View, {
+    style: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      alignItems: 'center'
+    }
+  }, [n(B.Link, {
+    onClick: function () {
+      function onClick() {
+        return props.dispatch(actions.appraisalAttrToggled('IndAtk'));
+      }
+
+      return onClick;
+    }(),
+    onSelect: function () {
+      function onSelect(x) {
+        return props.dispatch(actions.appraisalIvRangeSet(x));
+      }
+
+      return onSelect;
+    }(),
+    style: { fontWeight: props.attrs.IndAtk ? 'bold' : '' }
+  }, 'Atk'), n(B.Link, {
+    onClick: function () {
+      function onClick() {
+        return props.dispatch(actions.appraisalAttrToggled('IndDef'));
+      }
+
+      return onClick;
+    }(),
+    style: { fontWeight: props.attrs.IndDef ? 'bold' : '' }
+  }, 'Def'), n(B.Link, {
+    onClick: function () {
+      function onClick() {
+        return props.dispatch(actions.appraisalAttrToggled('IndSta'));
+      }
+
+      return onClick;
+    }(),
+    style: { fontWeight: props.attrs.IndSta ? 'bold' : '' }
+  }, 'HP')])])])]);
 }
 
-module.exports = reactRedux.connect(state => state.appraisal)(Appraisal)
+module.exports = reactRedux.connect(function (state) {
+  return state.appraisal;
+})(Appraisal);
 
-},{"../actions":264,"../styles":290,"../utils/Lotus.React":291,"../utils/appraisal":293,"../utils/n":298,"react":232,"react-redux":36}],268:[function(require,module,exports){
-const B = require('../utils/Lotus.react')
-const MoveCombos = require('./MoveCombos')
-const ResultsTable = require('./ResultsTable')
-const Styles = require('../styles')
-const analyzeBattleEffectiveness = require('../../src/analyzeBattleEffectiveness')
-const bestMovesFor = require('../../src/best-moves')
-const n = require('../utils/n')
-const React = require('react')
+},{"../actions":264,"../styles":288,"../utils/Lotus.React":289,"../utils/appraisal":291,"../utils/n":296,"react":232,"react-redux":36}],266:[function(require,module,exports){
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-class DetailedAnalysis extends React.Component {
-  constructor(props) {
-    super()
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-    this.state = {
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var B = require('../utils/Lotus.react');
+var MoveCombos = require('./MoveCombos');
+var ResultsTable = require('./ResultsTable');
+var Styles = require('../styles');
+var analyzeBattleEffectiveness = require('../../src/analyzeBattleEffectiveness');
+var bestMovesFor = require('../../src/best-moves');
+var n = require('../utils/n');
+var React = require('react');
+
+var DetailedAnalysis = function (_React$Component) {
+  _inherits(DetailedAnalysis, _React$Component);
+
+  function DetailedAnalysis(props) {
+    _classCallCheck(this, DetailedAnalysis);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(DetailedAnalysis).call(this));
+
+    _this.state = {
       show: false,
       ivs: props.results.length === 1 ? props.results[0] : null,
-      moveset: null,
-    }
+      moveset: null
+    };
+    return _this;
   }
 
   // TODO this should be its own page
-  render() {
-    if (this.state.show === false) {
-      return n(B.Button, {
-        onClick: () => this.setState({ show: true })
-      }, 'Detailed Analysis')
-    }
 
-    if (this.state.ivs === null) {
-      return n(B.View, [
-        n('h3', 'Pick your IVs'),
-        n(ResultsTable, {
-          results: this.props.results,
-          onSelect: ivs => this.setState({ ivs }),
-        }),
-      ])
-    }
 
-    if (this.state.moveset === null) {
-      const moves = bestMovesFor(
-        this.state.ivs.Name,
-        Number(this.state.ivs.Level),
-        this.state.ivs.ivs.IndAtk,
-        this.state.ivs.ivs.IndDef,
-        this.state.ivs.ivs.IndSta
-      )
-      return n(B.View, [
-        n('h3', 'Pick your moveset'),
-        n(MoveCombos, {
-          moves,
-          onSelect: moveset => this.setState({ moveset }),
-        }),
-      ])
-    }
+  _createClass(DetailedAnalysis, [{
+    key: 'render',
+    value: function () {
+      function render() {
+        var _this2 = this;
 
-    const ivs = this.state.ivs
-    const moveset = this.state.moveset
+        if (this.state.show === false) {
+          return n(B.Button, {
+            onClick: function () {
+              function onClick() {
+                return _this2.setState({ show: true });
+              }
 
-    const report = analyzeBattleEffectiveness({
-      name: ivs.Name,
-      level: Number(ivs.Level),
-      IndAtk: ivs.ivs.IndAtk,
-      IndDef: ivs.ivs.IndDef,
-      IndSta: ivs.ivs.IndSta,
-      moves: {
-        quick: moveset.quick.name,
-        charge: moveset.charge.name,
-      },
-    })
+              return onClick;
+            }()
+          }, 'Detailed Analysis');
+        }
 
-    return n(B.View, [
-      n(B.Panel, [
-        n(B.Text, `${this.state.ivs.Name} ${this.state.ivs.CP}CP ${this.state.ivs.HP}HP`),
-        n(B.Text, `IV ${this.state.ivs.strings.iv} ${this.state.ivs.percent.PerfectIV}%`),
-        n(B.Text, `Level ${this.state.ivs.Level}`),
-        n(B.Text, `Average DPS: ${report.dps.toFixed(3)}`),
-        n(B.Text, `Average TTL: ${report.ttl.toFixed(3)}`),
-      ]),
-      n(B.Table, [
-        n('thead', [
-          n('tr', [
-            n('th', 'Pokemon'),
-            n('th', 'DPS'),
-            n('th', 'TTL'),
-          ]),
-        ]),
-        n('tbody', Object.keys(report.breakdown).map(pokemonName => (
-          n('tr', [
-            n('td', pokemonName),
-            n('td', report.breakdown[pokemonName].dps.toFixed(3)),
-            n('td', report.breakdown[pokemonName].ttl.toFixed(3)),
-          ])
-        ))),
-      ]),
-//      n(B.Button, 'Save to My Pokemon'),
-    ])
-  }
-}
+        if (this.state.ivs === null) {
+          return n(B.View, [n('h3', 'Pick your IVs'), n(ResultsTable, {
+            results: this.props.results,
+            onSelect: function () {
+              function onSelect(ivs) {
+                return _this2.setState({ ivs: ivs });
+              }
 
-module.exports = DetailedAnalysis
+              return onSelect;
+            }()
+          })]);
+        }
 
-},{"../../src/analyzeBattleEffectiveness":249,"../../src/best-moves":250,"../styles":290,"../utils/Lotus.react":292,"../utils/n":298,"./MoveCombos":275,"./ResultsTable":280,"react":232}],269:[function(require,module,exports){
-const B = require('../utils/Lotus.react')
-const MoveCombos = require('./MoveCombos')
-const MovesList = require('../../json/moves.json')
-const Pokemon = require('../../json/pokemon.json')
-const Select = require('react-select')
-const n = require('../utils/n')
-const dispatchableActions = require('../dispatchableActions')
-const bestMovesFor = require('../../src/best-moves')
-const Styles = require('../styles')
-const getEffectiveness = require('../../src/getTypeEffectiveness').getEffectiveness
-const analyzeBattleEffectiveness = require('../../src/analyzeBattleEffectiveness')
-const store = require('../store')
+        if (this.state.moveset === null) {
+          var moves = bestMovesFor(this.state.ivs.Name, Number(this.state.ivs.Level), this.state.ivs.ivs.IndAtk, this.state.ivs.ivs.IndDef, this.state.ivs.ivs.IndSta);
+          return n(B.View, [n('h3', 'Pick your moveset'), n(MoveCombos, {
+            moves: moves,
+            onSelect: function () {
+              function onSelect(moveset) {
+                return _this2.setState({ moveset: moveset });
+              }
 
-const pokemonList = Pokemon.map(x => ({ label: x.name.replace(/_/g, ' '), value: x.name }))
-const movesList = pokemonList.slice()
-movesList.push.apply(
-  movesList,
-  MovesList.map(x => ({ label: x.Name.replace(/_/g, ' '), value: x.Name }))
-)
+              return onSelect;
+            }()
+          })]);
+        }
 
-const Mon = Pokemon.reduce((obj, mon) => {
-  obj[mon.name] = mon
-  return obj
-}, {})
-const ObjMoves = MovesList.reduce((obj, move) => {
-  obj[move.Name] = move
-  return obj
-}, {})
+        var ivs = this.state.ivs;
+        var moveset = this.state.moveset;
+
+        var report = analyzeBattleEffectiveness({
+          name: ivs.Name,
+          level: Number(ivs.Level),
+          IndAtk: ivs.ivs.IndAtk,
+          IndDef: ivs.ivs.IndDef,
+          IndSta: ivs.ivs.IndSta,
+          moves: {
+            quick: moveset.quick.name,
+            charge: moveset.charge.name
+          }
+        });
+
+        return n(B.View, [n(B.Panel, [n(B.Text, String(this.state.ivs.Name) + ' ' + String(this.state.ivs.CP) + 'CP ' + String(this.state.ivs.HP) + 'HP'), n(B.Text, 'IV ' + String(this.state.ivs.strings.iv) + ' ' + String(this.state.ivs.percent.PerfectIV) + '%'), n(B.Text, 'Level ' + String(this.state.ivs.Level)), n(B.Text, 'Average DPS: ' + String(report.dps.toFixed(3))), n(B.Text, 'Average TTL: ' + String(report.ttl.toFixed(3)))]), n(B.Table, [n('thead', [n('tr', [n('th', 'Pokemon'), n('th', 'DPS'), n('th', 'TTL')])]), n('tbody', Object.keys(report.breakdown).map(function (pokemonName) {
+          return n('tr', [n('td', pokemonName), n('td', report.breakdown[pokemonName].dps.toFixed(3)), n('td', report.breakdown[pokemonName].ttl.toFixed(3))]);
+        }))])]);
+      }
+
+      return render;
+    }()
+  }]);
+
+  return DetailedAnalysis;
+}(React.Component);
+
+module.exports = DetailedAnalysis;
+
+},{"../../src/analyzeBattleEffectiveness":249,"../../src/best-moves":250,"../styles":288,"../utils/Lotus.react":290,"../utils/n":296,"./MoveCombos":273,"./ResultsTable":278,"react":232}],267:[function(require,module,exports){
+var B = require('../utils/Lotus.react');
+var MoveCombos = require('./MoveCombos');
+var MovesList = require('../../json/moves.json');
+var Pokemon = require('../../json/pokemon.json');
+var Select = require('react-select');
+var n = require('../utils/n');
+var dispatchableActions = require('../dispatchableActions');
+var bestMovesFor = require('../../src/best-moves');
+var Styles = require('../styles');
+var getEffectiveness = require('../../src/getTypeEffectiveness').getEffectiveness;
+var analyzeBattleEffectiveness = require('../../src/analyzeBattleEffectiveness');
+var store = require('../store');
+
+var pokemonList = Pokemon.map(function (x) {
+  return { label: x.name.replace(/_/g, ' '), value: x.name };
+});
+var movesList = pokemonList.slice();
+movesList.push.apply(movesList, MovesList.map(function (x) {
+  return { label: x.Name.replace(/_/g, ' '), value: x.Name };
+}));
+
+var Mon = Pokemon.reduce(function (obj, mon) {
+  obj[mon.name] = mon;
+  return obj;
+}, {});
+var ObjMoves = MovesList.reduce(function (obj, move) {
+  obj[move.Name] = move;
+  return obj;
+}, {});
 
 function sweetMoves(x) {
   if (!x) {
-    dispatchableActions.pokemonChanged([])
-    dispatchableActions.movesChanged([])
-    dispatchableActions.dexTextChanged('')
-    return
+    dispatchableActions.pokemonChanged([]);
+    dispatchableActions.movesChanged([]);
+    dispatchableActions.dexTextChanged('');
+    return;
   }
 
   if (Mon.hasOwnProperty(x.value)) {
-    const best = bestMovesFor(x.value)
-    const mon = Pokemon[Mon[x.value].id - 1]
-    dispatchableActions.pokemonChanged([])
-    dispatchableActions.movesChanged(best)
+    var best = bestMovesFor(x.value);
+    var mon = Pokemon[Mon[x.value].id - 1];
+    dispatchableActions.pokemonChanged([]);
+    dispatchableActions.movesChanged(best);
   } else if (ObjMoves.hasOwnProperty(x.value)) {
-    dispatchableActions.movesChanged(ObjMoves[x.value])
-    dispatchableActions.pokemonChanged(
-      Pokemon.filter(mon => (
-        mon.moves1.some(m => m.Name === x.value) ||
-        mon.moves2.some(m => m.Name === x.value)
-      )).map(x => x.name)
-    )
+    dispatchableActions.movesChanged(ObjMoves[x.value]);
+    dispatchableActions.pokemonChanged(Pokemon.filter(function (mon) {
+      return mon.moves1.some(function (m) {
+        return m.Name === x.value;
+      }) || mon.moves2.some(function (m) {
+        return m.Name === x.value;
+      });
+    }).map(function (x) {
+      return x.name;
+    }));
   }
-  dispatchableActions.dexTextChanged(x.value)
+  dispatchableActions.dexTextChanged(x.value);
 }
 
 function Pokedex(props) {
-  const types = [props.pokemon.type1, props.pokemon.type2]
-    .filter(Boolean).join('/')
-  const fx = getEffectiveness(props.pokemon)
+  var types = [props.pokemon.type1, props.pokemon.type2].filter(Boolean).join('/');
+  var fx = getEffectiveness(props.pokemon);
 
-  return n(B.View, [
-    n(B.View, {
-      style: Styles.dex,
-    }, [
-      n(B.View, [
-        n(B.Image, { src: `images/${props.pokemon.name.toUpperCase()}.png`, height: 150, width: 150 }),
-        n(B.Text, { strong: true, style: Styles.resultsRow }, types),
-      ]),
-      n(B.View, {
-        style: Styles.baseStats,
-      }, [
-        n(B.View, { style: Styles.stat }, [
-          n(B.Text, 'Attack'),
-          n(B.Text, { strong: true }, props.pokemon.stats.attack),
-        ]),
-        n(B.View, { style: Styles.stat }, [
-          n(B.Text, 'Defense'),
-          n(B.Text, { strong: true }, props.pokemon.stats.defense),
-        ]),
-        n(B.View, { style: Styles.stat }, [
-          n(B.Text, 'Stamina'),
-          n(B.Text, { strong: true }, props.pokemon.stats.stamina),
-        ]),
-      ]),
-    ]),
-    n(B.View, { spacing: 'sm' }),
-    n(B.Text, `Super Effective: ${fx.superEffective.join(', ')}`),
-    n(B.Text, `Not Very Effective: ${fx.notEffective.join(', ')}`),
-  ])
+  return n(B.View, [n(B.View, {
+    style: Styles.dex
+  }, [n(B.View, [n(B.Image, { src: 'images/' + String(props.pokemon.name.toUpperCase()) + '.png', height: 150, width: 150 }), n(B.Text, { strong: true, style: Styles.resultsRow }, types)]), n(B.View, {
+    style: Styles.baseStats
+  }, [n(B.View, { style: Styles.stat }, [n(B.Text, 'Attack'), n(B.Text, { strong: true }, props.pokemon.stats.attack)]), n(B.View, { style: Styles.stat }, [n(B.Text, 'Defense'), n(B.Text, { strong: true }, props.pokemon.stats.defense)]), n(B.View, { style: Styles.stat }, [n(B.Text, 'Stamina'), n(B.Text, { strong: true }, props.pokemon.stats.stamina)])])]), n(B.View, { spacing: 'sm' }), n(B.Text, 'Super Effective: ' + String(fx.superEffective.join(', '))), n(B.Text, 'Not Very Effective: ' + String(fx.notEffective.join(', ')))]);
 }
 
 function Report(props) {
-  const level = store.getState().calculator.trainerLevel || 20
-  const report = analyzeBattleEffectiveness({
+  var level = store.getState().calculator.trainerLevel || 20;
+  var report = analyzeBattleEffectiveness({
     name: props.pokemon.name,
-    level,
+    level: level,
     IndAtk: 15,
     IndDef: 15,
-    IndSta: 15,
-  })
+    IndSta: 15
+  });
 
-  return n(B.View, [
-    n(B.Text, { strong: true }, 'Avg DPS'),
-    n(B.Text, { small: true }, `Level ${level} perfect IV ${props.pokemon.name}`),
-    n(B.Panel, [
-      n(B.Text, `Average DPS: ${report.bestAvgDPS.toFixed(3)}`),
-      n(B.Text, `Average TTL: ${report.bestAvgTTL.toFixed(3)}`),
-    ]),
-
-    n(B.View, { spacing: 'sm' }),
-
-    n(B.Text, { strong: true }, 'vs Table'),
-    n(B.Table, [
-      n('thead', [
-        n('tr', [
-          n('th', 'Pokemon'),
-          n('th', 'DPS'),
-          n('th', 'TTL'),
-        ]),
-      ]),
-      n('tbody', Object.keys(report.breakdown).map(pokemonName => (
-        n('tr', [
-          n('td', pokemonName),
-          n('td', report.breakdown[pokemonName].dps.toFixed(3)),
-          n('td', report.breakdown[pokemonName].ttl.toFixed(3)),
-        ])
-      ))),
-    ]),
-  ])
+  return n(B.View, [n(B.Text, { strong: true }, 'Avg DPS'), n(B.Text, { small: true }, 'Level ' + String(level) + ' perfect IV ' + String(props.pokemon.name)), n(B.Panel, [n(B.Text, 'Average DPS: ' + String(report.bestAvgDPS.toFixed(3))), n(B.Text, 'Average TTL: ' + String(report.bestAvgTTL.toFixed(3)))]), n(B.View, { spacing: 'sm' }), n(B.Text, { strong: true }, 'vs Table'), n(B.Table, [n('thead', [n('tr', [n('th', 'Pokemon'), n('th', 'DPS'), n('th', 'TTL')])]), n('tbody', Object.keys(report.breakdown).map(function (pokemonName) {
+    return n('tr', [n('td', pokemonName), n('td', report.breakdown[pokemonName].dps.toFixed(3)), n('td', report.breakdown[pokemonName].ttl.toFixed(3))]);
+  }))])]);
 }
 
 function Dex(props) {
-  return (
-    n(B.View, [
-      n(B.Header, 'Pokemon Data'),
-      n('hr'),
-      n(B.FormControl, { label: 'Pokemon Name or Move Name' }, [
-        n(Select, {
-          inputProps: {
-            autoCorrect: 'off',
-            autoCapitalize: 'off',
-            spellCheck: 'off',
-          },
-          name: 'move-selector',
-          value: props.text,
-          options: movesList,
-          onChange: sweetMoves,
-        }),
-      ]),
-      Mon.hasOwnProperty(props.text) && (
-        n(B.View, [
-          n(Pokedex, { pokemon: Mon[props.text] }),
-          n('hr'),
-        ])
-      ),
-      props.moves.length && (
-        n(B.View, [
-          n(B.Text, { strong: true }, 'Possible Movesets'),
-          n(MoveCombos, { moves: props.moves })
-        ])
-      ) || undefined,
-      props.moves.Name && (
-        n(B.Panel, [
-          n(B.Text, `Name: ${props.moves.Name}`),
-          n(B.Text, `Power: ${props.moves.Power}`),
-          n(B.Text, `Duration: ${(props.moves.DurationMs / 1000).toFixed(1)} seconds`),
-          n(B.Text, `PPS: ${(props.moves.Power / (props.moves.DurationMs / 1000)).toFixed(3)}`),
-          n(B.Text, `Energy: ${props.moves.EnergyDelta}`),
-        ])
-      ) || undefined,
-      props.pokemon.length && (
-        n(B.Panel, props.pokemon.map(mon => (
-          n(B.Image, {
-            onClick: () => sweetMoves({ value: mon }),
-            src: `images/${mon}.png`,
-            height: 60,
-            width: 60,
-          })
-        )))
-      ) || undefined,
-      n('hr'),
-      Mon.hasOwnProperty(props.text) && (
-        n(B.View, [
-          n(Report, { pokemon: Mon[props.text] }),
-          n('hr'),
-        ])
-      ),
-      n('h3', 'More Info'),
-      n(B.Text, 'The tables above feature a combined DPS score for each possible move combination. The DPS is calculated based on neutral damage for a level 25 Pokemon with 10/10/10 IVs assuming that the Pokemon will be using their quick move constantly and their charge move immediately when it becomes available. STAB damage is taken into account as well as each move\'s animation time. You can also use this search to look up which Pokemon can learn a particular move.'),
-    ])
-  )
+  return n(B.View, [n(B.Header, 'Pokemon Data'), n('hr'), n(B.FormControl, { label: 'Pokemon Name or Move Name' }, [n(Select, {
+    inputProps: {
+      autoCorrect: 'off',
+      autoCapitalize: 'off',
+      spellCheck: 'off'
+    },
+    name: 'move-selector',
+    value: props.text,
+    options: movesList,
+    onChange: sweetMoves
+  })]), Mon.hasOwnProperty(props.text) && n(B.View, [n(Pokedex, { pokemon: Mon[props.text] }), n('hr')]), props.moves.length && n(B.View, [n(B.Text, { strong: true }, 'Possible Movesets'), n(MoveCombos, { moves: props.moves })]) || undefined, props.moves.Name && n(B.Panel, [n(B.Text, 'Name: ' + String(props.moves.Name)), n(B.Text, 'Power: ' + String(props.moves.Power)), n(B.Text, 'Duration: ' + String((props.moves.DurationMs / 1000).toFixed(1)) + ' seconds'), n(B.Text, 'PPS: ' + String((props.moves.Power / (props.moves.DurationMs / 1000)).toFixed(3))), n(B.Text, 'Energy: ' + String(props.moves.EnergyDelta))]) || undefined, props.pokemon.length && n(B.Panel, props.pokemon.map(function (mon) {
+    return n(B.Image, {
+      onClick: function () {
+        function onClick() {
+          return sweetMoves({ value: mon });
+        }
+
+        return onClick;
+      }(),
+      src: 'images/' + String(mon) + '.png',
+      height: 60,
+      width: 60
+    });
+  })) || undefined, n('hr'), Mon.hasOwnProperty(props.text) && n(B.View, [n(Report, { pokemon: Mon[props.text] }), n('hr')]), n('h3', 'More Info'), n(B.Text, 'The tables above feature a combined DPS score for each possible move combination. The DPS is calculated based on neutral damage for a level 25 Pokemon with 10/10/10 IVs assuming that the Pokemon will be using their quick move constantly and their charge move immediately when it becomes available. STAB damage is taken into account as well as each move\'s animation time. You can also use this search to look up which Pokemon can learn a particular move.')]);
 }
 
-module.exports = Dex
+module.exports = Dex;
 
-},{"../../json/moves.json":7,"../../json/pokemon.json":8,"../../src/analyzeBattleEffectiveness":249,"../../src/best-moves":250,"../../src/getTypeEffectiveness":255,"../dispatchableActions":283,"../store":289,"../styles":290,"../utils/Lotus.react":292,"../utils/n":298,"./MoveCombos":275,"react-select":50}],270:[function(require,module,exports){
-const B = require('../utils/Lotus.react')
-const n = require('../utils/n')
-const dispatchableActions = require('../dispatchableActions')
+},{"../../json/moves.json":7,"../../json/pokemon.json":8,"../../src/analyzeBattleEffectiveness":249,"../../src/best-moves":250,"../../src/getTypeEffectiveness":255,"../dispatchableActions":281,"../store":287,"../styles":288,"../utils/Lotus.react":290,"../utils/n":296,"./MoveCombos":273,"react-select":50}],268:[function(require,module,exports){
+var B = require('../utils/Lotus.react');
+var n = require('../utils/n');
+var dispatchableActions = require('../dispatchableActions');
 
 function FormPokemonLevel(props) {
-  return (
-    n(B.FormControl, { label: 'Pokemon Level (optional)' }, [
-      n(B.Input, {
-        type: 'number',
-        onChange: ev => dispatchableActions.changedLevel(ev.currentTarget.value),
-        value: props.level,
-      }),
-    ])
-  )
+  return n(B.FormControl, { label: 'Pokemon Level (optional)' }, [n(B.Input, {
+    type: 'number',
+    onChange: function () {
+      function onChange(ev) {
+        return dispatchableActions.changedLevel(ev.currentTarget.value);
+      }
+
+      return onChange;
+    }(),
+    value: props.level
+  })]);
 }
 
-module.exports = FormPokemonLevel
+module.exports = FormPokemonLevel;
 
-},{"../dispatchableActions":283,"../utils/Lotus.react":292,"../utils/n":298}],271:[function(require,module,exports){
-const B = require('../utils/Lotus.react')
-const Pokemon = require('../../json/pokemon.json')
-const Select = require('react-select')
-const n = require('../utils/n')
-const dispatchableActions = require('../dispatchableActions')
+},{"../dispatchableActions":281,"../utils/Lotus.react":290,"../utils/n":296}],269:[function(require,module,exports){
+var B = require('../utils/Lotus.react');
+var Pokemon = require('../../json/pokemon.json');
+var Select = require('react-select');
+var n = require('../utils/n');
+var dispatchableActions = require('../dispatchableActions');
 
-const options = Pokemon.map(x => ({ label: x.name.replace(/_/g, ' '), value: x.name }))
-const changeName = x => dispatchableActions.changedName(x && x.value)
+var options = Pokemon.map(function (x) {
+  return { label: x.name.replace(/_/g, ' '), value: x.name };
+});
+var changeName = function changeName(x) {
+  return dispatchableActions.changedName(x && x.value);
+};
 
 function FormPokemonName(props) {
-  return (
-    n(B.FormControl, { label: 'Name' }, [
-      n(Select, {
-        inputProps: {
-          autoCorrect: 'off',
-          autoCapitalize: 'off',
-          spellCheck: 'off',
-        },
-        name: 'pokemon-selector',
-        value: props.name,
-        options,
-        onChange: changeName,
-      }),
-    ])
-  )
+  return n(B.FormControl, { label: 'Name' }, [n(Select, {
+    inputProps: {
+      autoCorrect: 'off',
+      autoCapitalize: 'off',
+      spellCheck: 'off'
+    },
+    name: 'pokemon-selector',
+    value: props.name,
+    options: options,
+    onChange: changeName
+  })]);
 }
 
-module.exports = FormPokemonName
+module.exports = FormPokemonName;
 
-},{"../../json/pokemon.json":8,"../dispatchableActions":283,"../utils/Lotus.react":292,"../utils/n":298,"react-select":50}],272:[function(require,module,exports){
-const B = require('../utils/Lotus.react')
-const DustToLevel = require('../../json/dust-to-level.json')
-const Select = require('react-select')
-const n = require('../utils/n')
-const dispatchableActions = require('../dispatchableActions')
+},{"../../json/pokemon.json":8,"../dispatchableActions":281,"../utils/Lotus.react":290,"../utils/n":296,"react-select":50}],270:[function(require,module,exports){
+var B = require('../utils/Lotus.react');
+var DustToLevel = require('../../json/dust-to-level.json');
+var Select = require('react-select');
+var n = require('../utils/n');
+var dispatchableActions = require('../dispatchableActions');
 
-const dustOptions = Object.keys(DustToLevel)
-  .map(x => ({ value: Number(x), label: Number(x) }))
-const logStardust = x => dispatchableActions.changedStardust(x && x.value)
+var dustOptions = Object.keys(DustToLevel).map(function (x) {
+  return { value: Number(x), label: Number(x) };
+});
+var logStardust = function logStardust(x) {
+  return dispatchableActions.changedStardust(x && x.value);
+};
 
 function FormStardust(props) {
-  return (
-    n(B.FormControl, { label: 'Stardust' }, [
-      n(Select, {
-        name: 'stardust-selector',
-        value: props.stardust,
-        options: dustOptions,
-        inputProps: {
-          type: 'number',
-        },
-        onChange: logStardust,
-      }),
-    ])
-  )
+  return n(B.FormControl, { label: 'Stardust' }, [n(Select, {
+    name: 'stardust-selector',
+    value: props.stardust,
+    options: dustOptions,
+    inputProps: {
+      type: 'number'
+    },
+    onChange: logStardust
+  })]);
 }
 
-module.exports = FormStardust
+module.exports = FormStardust;
 
-},{"../../json/dust-to-level.json":2,"../dispatchableActions":283,"../utils/Lotus.react":292,"../utils/n":298,"react-select":50}],273:[function(require,module,exports){
-const B = require('../utils/Lotus.react')
-const n = require('../utils/n')
-const dispatchableActions = require('../dispatchableActions')
+},{"../../json/dust-to-level.json":2,"../dispatchableActions":281,"../utils/Lotus.react":290,"../utils/n":296,"react-select":50}],271:[function(require,module,exports){
+var B = require('../utils/Lotus.react');
+var n = require('../utils/n');
+var dispatchableActions = require('../dispatchableActions');
 
 function FormTrainerLevel(props) {
-  return (
-    n(B.FormControl, { label: 'Trainer Level' }, [
-      n(B.Input, {
-        type: 'number',
-        onChange: ev => dispatchableActions.changedTrainerLevel(ev.currentTarget.value),
-        value: props.trainerLevel,
-      }),
-    ])
-  )
+  return n(B.FormControl, { label: 'Trainer Level' }, [n(B.Input, {
+    type: 'number',
+    onChange: function () {
+      function onChange(ev) {
+        return dispatchableActions.changedTrainerLevel(ev.currentTarget.value);
+      }
+
+      return onChange;
+    }(),
+    value: props.trainerLevel
+  })]);
 }
 
-module.exports = FormTrainerLevel
+module.exports = FormTrainerLevel;
 
-},{"../dispatchableActions":283,"../utils/Lotus.react":292,"../utils/n":298}],274:[function(require,module,exports){
-const B = require('../utils/Lotus.react')
-const FormPokemonName = require('./FormPokemonName')
-const idealMatchup = require('../../src/idealMatchup')
-const n = require('../utils/n')
+},{"../dispatchableActions":281,"../utils/Lotus.react":290,"../utils/n":296}],272:[function(require,module,exports){
+var B = require('../utils/Lotus.react');
+var FormPokemonName = require('./FormPokemonName');
+var idealMatchup = require('../../src/idealMatchup');
+var n = require('../utils/n');
 
 function Matchup(props) {
-  const matchups = props.name ? idealMatchup.attacking(props.name) : []
-  return (
-    n(B.View, [
-      n(B.Header, 'Ideal Matchup'),
-      n(B.Text, 'This is calculated based on the opposing Pokemon\'s type and assuming the opponent has the best possible moveset combination for their Pokemon. The results do not include legendaries. Pokemon type effectiveness and resistances are also taken into account.'),
-      n('hr'),
-      n(FormPokemonName, { name: props.name }),
-      matchups.length ? (
-        n(B.Table, {
-          border: true,
-        }, [
-          n('thead', [
-            n('tr', [
-              n('th', 'Name'),
-              n('th', 'Moves'),
-            ]),
-          ]),
-          n('tbody', matchups.map((value) => (
-            n('tr', [
-              n('td', [
-                n(B.Text, { strong: true }, value.name),
-                n(B.Text, `${value.score.toFixed(3)} Opp TTL`),
-              ]),
-              n('td', [
-                n(B.Text, value.quick),
-                n(B.Text, value.charge),
-              ]),
-            ])
-          ))),
-        ])
-      ) : undefined,
-    ])
-  )
+  var matchups = props.name ? idealMatchup.attacking(props.name) : [];
+  return n(B.View, [n(B.Header, 'Ideal Matchup'), n(B.Text, 'This is calculated based on the opposing Pokemon\'s type and assuming the opponent has the best possible moveset combination for their Pokemon. The results do not include legendaries. Pokemon type effectiveness and resistances are also taken into account.'), n('hr'), n(FormPokemonName, { name: props.name }), matchups.length ? n(B.Table, {
+    border: true
+  }, [n('thead', [n('tr', [n('th', 'Name'), n('th', 'Moves')])]), n('tbody', matchups.map(function (value) {
+    return n('tr', [n('td', [n(B.Text, { strong: true }, value.name), n(B.Text, String(value.score.toFixed(3)) + ' Opp TTL')]), n('td', [n(B.Text, value.quick), n(B.Text, value.charge)])]);
+  }))]) : undefined]);
 }
 
-module.exports = Matchup
+module.exports = Matchup;
 
-},{"../../src/idealMatchup":258,"../utils/Lotus.react":292,"../utils/n":298,"./FormPokemonName":271}],275:[function(require,module,exports){
-const B = require('../utils/Lotus.react')
-const n = require('../utils/n')
+},{"../../src/idealMatchup":258,"../utils/Lotus.react":290,"../utils/n":296,"./FormPokemonName":269}],273:[function(require,module,exports){
+var B = require('../utils/Lotus.react');
+var n = require('../utils/n');
 
 function MovesTable(props) {
-  return (
-    n(B.Table, [
-      n('thead', [
-        n('tr', [
-          n('th', 'Moves'),
-          n('th', 'Combo DPS'),
-        ]),
-      ]),
-      n('tbody', props.moves.map((move) => (
-        n('tr', {
-          onClick: () => {
-            if (props.onSelect) props.onSelect(move)
-          },
-        }, [
-          n('td', [
-            n(B.Text, move.quick.name),
-            n(B.Text, move.charge.name),
-          ]),
-          n('td', {
-            style: {
-              color: move.percent.dps > 74
-                ? '#67ba72'
-                : move.percent.dps > 50
-                ? '#ddbb45'
-                : '#ff7772'
-            },
-          }, `${move.dps.toFixed(3)} (${move.percent.dps}%)`),
-        ])
-      ))),
-    ])
-  )
+  return n(B.Table, [n('thead', [n('tr', [n('th', 'Moves'), n('th', 'Combo DPS')])]), n('tbody', props.moves.map(function (move) {
+    return n('tr', {
+      onClick: function () {
+        function onClick() {
+          if (props.onSelect) props.onSelect(move);
+        }
+
+        return onClick;
+      }()
+    }, [n('td', [n(B.Text, move.quick.name), n(B.Text, move.charge.name)]), n('td', {
+      style: {
+        color: move.percent.dps > 74 ? '#67ba72' : move.percent.dps > 50 ? '#ddbb45' : '#ff7772'
+      }
+    }, String(move.dps.toFixed(3)) + ' (' + String(move.percent.dps) + '%)')]);
+  }))]);
 }
 
 function MoveCombos(props) {
-  const possible = props.moves.filter(move => !move.retired)
-  const retired = props.moves.filter(move => move.retired)
-  const onSelect = props.onSelect
+  var possible = props.moves.filter(function (move) {
+    return !move.retired;
+  });
+  var retired = props.moves.filter(function (move) {
+    return move.retired;
+  });
+  var onSelect = props.onSelect;
 
-  return (
-    n(B.View, [
-      MovesTable({ moves: possible, onSelect }),
-      retired.length && (
-        n(B.View, [
-          n(B.View, { spacing: 'sm' }),
-          n(B.Text, { strong: true }, 'Retired'),
-          MovesTable({ moves: retired, onSelect }),
-        ])
-      ) || undefined,
-    ])
-  )
+  return n(B.View, [MovesTable({ moves: possible, onSelect: onSelect }), retired.length && n(B.View, [n(B.View, { spacing: 'sm' }), n(B.Text, { strong: true }, 'Retired'), MovesTable({ moves: retired, onSelect: onSelect })]) || undefined]);
 }
 
-module.exports = MoveCombos
+module.exports = MoveCombos;
 
-},{"../utils/Lotus.react":292,"../utils/n":298}],276:[function(require,module,exports){
-const B = require('../utils/Lotus.react')
-const DustToLevel = require('../../json/dust-to-level.json')
-const n = require('../utils/n')
-const powerupTools = require('../../src/powerup')
-const FormTrainerLevel = require('./FormTrainerLevel')
-const FormStardust = require('./FormStardust')
-const FormPokemonLevel = require('./FormPokemonLevel')
+},{"../utils/Lotus.react":290,"../utils/n":296}],274:[function(require,module,exports){
+var B = require('../utils/Lotus.react');
+var DustToLevel = require('../../json/dust-to-level.json');
+var n = require('../utils/n');
+var powerupTools = require('../../src/powerup');
+var FormTrainerLevel = require('./FormTrainerLevel');
+var FormStardust = require('./FormStardust');
+var FormPokemonLevel = require('./FormPokemonLevel');
 
 function PowerUp(props) {
-  const dust = DustToLevel[props.stardust] || []
-  const minPokemonLevel = Math.min.apply(null, dust)
+  var dust = DustToLevel[props.stardust] || [];
+  var minPokemonLevel = Math.min.apply(null, dust);
 
-  const power = powerupTools.howMuchPowerUp(
-    Number(props.level || minPokemonLevel),
-    Number(props.trainerLevel)
-  )
+  var power = powerupTools.howMuchPowerUp(Number(props.level || minPokemonLevel), Number(props.trainerLevel));
 
-  return (
-    n(B.View, [
-      n(B.Header, 'Power Up costs'),
-      n(B.Text, 'Find out how much stardust and candy it will cost to max your Pokemon out.'),
-      n('hr'),
-      n(FormTrainerLevel, {
-        trainerLevel: props.trainerLevel,
-      }),
-      n(FormStardust, {
-        stardust: props.stardust,
-      }),
-      n(FormPokemonLevel, {
-        level: props.level,
-      }),
-      power && (
-        n(B.View, { spacingVertical: 'md' }, [
-          n('h3', 'Results'),
-          n(B.Panel, `Candy cost: ${power.candy}`),
-          n(B.Panel, `Stardust cost: ${power.stardust}`),
-        ])
-      ),
-    ])
-  )
+  return n(B.View, [n(B.Header, 'Power Up costs'), n(B.Text, 'Find out how much stardust and candy it will cost to max your Pokemon out.'), n('hr'), n(FormTrainerLevel, {
+    trainerLevel: props.trainerLevel
+  }), n(FormStardust, {
+    stardust: props.stardust
+  }), n(FormPokemonLevel, {
+    level: props.level
+  }), power && n(B.View, { spacingVertical: 'md' }, [n('h3', 'Results'), n(B.Panel, 'Candy cost: ' + String(power.candy)), n(B.Panel, 'Stardust cost: ' + String(power.stardust))])]);
 }
 
-module.exports = PowerUp
+module.exports = PowerUp;
 
-},{"../../json/dust-to-level.json":2,"../../src/powerup":262,"../utils/Lotus.react":292,"../utils/n":298,"./FormPokemonLevel":270,"./FormStardust":272,"./FormTrainerLevel":273}],277:[function(require,module,exports){
-const B = require('../utils/Lotus.React')
-const FormPokemonLevel = require('./FormPokemonLevel')
-const FormPokemonName = require('./FormPokemonName')
-const FormStardust = require('./FormStardust')
-const FormTrainerLevel = require('./FormTrainerLevel')
-const Results = require('./Results')
-const SearchHistoryContainer = require('../containers/SearchHistoryContainer')
-const Appraisal = require('./Appraisal')
-const calculateValues = require('../utils/calculateValues')
-const n = require('../utils/n')
-const dispatchableActions = require('../dispatchableActions')
+},{"../../json/dust-to-level.json":2,"../../src/powerup":262,"../utils/Lotus.react":290,"../utils/n":296,"./FormPokemonLevel":268,"./FormStardust":270,"./FormTrainerLevel":271}],275:[function(require,module,exports){
+var B = require('../utils/Lotus.React');
+var FormPokemonLevel = require('./FormPokemonLevel');
+var FormPokemonName = require('./FormPokemonName');
+var FormStardust = require('./FormStardust');
+var FormTrainerLevel = require('./FormTrainerLevel');
+var Results = require('./Results');
+var SearchHistoryContainer = require('../containers/SearchHistoryContainer');
+var Appraisal = require('./Appraisal');
+var calculateValues = require('../utils/calculateValues');
+var n = require('../utils/n');
+var dispatchableActions = require('../dispatchableActions');
 
 function Rater(props) {
-  if (props.results) return n(Results, props.results)
+  if (props.results) return n(Results, props.results);
 
   return n(B.View, [
-    // TODO we can just ask for trainerLevel later...
-//    n(FormTrainerLevel, { trainerLevel: props.trainerLevel }),
-    n(FormPokemonName, { name: props.name }),
-    n(B.FormControl, { label: 'CP' }, [
-      n(B.Input, {
-        type: 'number',
-        onChange: ev => dispatchableActions.changedCp(ev.currentTarget.value),
-        onClick: () => dispatchableActions.changedCp(''),
-        value: props.cp,
-      }),
-    ]),
-    n(B.FormControl, { label: 'HP' }, [
-      n(B.Input, {
-        type: 'number',
-        onChange: ev => dispatchableActions.changedHp(ev.currentTarget.value),
-        onClick: () => dispatchableActions.changedHp(''),
-        value: props.hp,
-      }),
-    ]),
-    n(FormStardust, { stardust: props.stardust }),
-    n(Appraisal),
-    n(B.Button, {
-      size: 'sm',
-      onClick: () => calculateValues(),
-      style: {
-        backgroundColor: '#6297de',
-      },
-    }, 'Calculate'),
-    ' ',
-    n(B.Button, { size: 'sm', onClick: dispatchableActions.valuesReset }, 'Clear'),
-    n('hr'),
-    n(SearchHistoryContainer),
-  ])
+  // TODO we can just ask for trainerLevel later...
+  //    n(FormTrainerLevel, { trainerLevel: props.trainerLevel }),
+  n(FormPokemonName, { name: props.name }), n(B.FormControl, { label: 'CP' }, [n(B.Input, {
+    type: 'number',
+    onChange: function () {
+      function onChange(ev) {
+        return dispatchableActions.changedCp(ev.currentTarget.value);
+      }
+
+      return onChange;
+    }(),
+    onClick: function () {
+      function onClick() {
+        return dispatchableActions.changedCp('');
+      }
+
+      return onClick;
+    }(),
+    value: props.cp
+  })]), n(B.FormControl, { label: 'HP' }, [n(B.Input, {
+    type: 'number',
+    onChange: function () {
+      function onChange(ev) {
+        return dispatchableActions.changedHp(ev.currentTarget.value);
+      }
+
+      return onChange;
+    }(),
+    onClick: function () {
+      function onClick() {
+        return dispatchableActions.changedHp('');
+      }
+
+      return onClick;
+    }(),
+    value: props.hp
+  })]), n(FormStardust, { stardust: props.stardust }), n(Appraisal), n(B.Button, {
+    size: 'sm',
+    onClick: function () {
+      function onClick() {
+        return calculateValues();
+      }
+
+      return onClick;
+    }(),
+    style: {
+      backgroundColor: '#6297de'
+    }
+  }, 'Calculate'), ' ', n(B.Button, { size: 'sm', onClick: dispatchableActions.valuesReset }, 'Clear'), n('hr'), n(SearchHistoryContainer)]);
 }
 
-module.exports = Rater
+module.exports = Rater;
 
-},{"../containers/SearchHistoryContainer":282,"../dispatchableActions":283,"../utils/Lotus.React":291,"../utils/calculateValues":294,"../utils/n":298,"./Appraisal":267,"./FormPokemonLevel":270,"./FormPokemonName":271,"./FormStardust":272,"./FormTrainerLevel":273,"./Results":279}],278:[function(require,module,exports){
-const Appraisal = require('./Appraisal')
-const B = require('../utils/Lotus.react')
-const ResultsTable = require('./ResultsTable')
-const Styles = require('../styles')
-const liftState = require('../utils/liftState')
-const n = require('../utils/n')
-const reactRedux = require('react-redux')
-const store = require('../store')
+},{"../containers/SearchHistoryContainer":280,"../dispatchableActions":281,"../utils/Lotus.React":289,"../utils/calculateValues":292,"../utils/n":296,"./Appraisal":265,"./FormPokemonLevel":268,"./FormPokemonName":269,"./FormStardust":270,"./FormTrainerLevel":271,"./Results":277}],276:[function(require,module,exports){
+var Appraisal = require('./Appraisal');
+var B = require('../utils/Lotus.react');
+var ResultsTable = require('./ResultsTable');
+var Styles = require('../styles');
+var liftState = require('../utils/liftState');
+var n = require('../utils/n');
+var reactRedux = require('react-redux');
+var store = require('../store');
 
-const IV_RANGE = {
+var IV_RANGE = {
   great: [82, 100],
   good: [67, 81],
   bad: [51, 66],
-  ugly: [0, 50],
-}
+  ugly: [0, 50]
+};
 
 function refine(results) {
-  const appraisal = store.getState().appraisal
+  var appraisal = store.getState().appraisal;
 
-  const attrs = Object.keys(appraisal.attrs)
-  const ivRange = IV_RANGE[appraisal.ivRange]
+  var attrs = Object.keys(appraisal.attrs);
+  var ivRange = IV_RANGE[appraisal.ivRange];
 
-  return results.filter((result) => {
-    var rangeCheck = true
-    var statCheck = true
+  return results.filter(function (result) {
+    var rangeCheck = true;
+    var statCheck = true;
 
     if (ivRange != null) {
-      rangeCheck = (
-        result.percent.PerfectIV >= ivRange[0] &&
-        result.percent.PerfectIV <= ivRange[1]
-      )
+      rangeCheck = result.percent.PerfectIV >= ivRange[0] && result.percent.PerfectIV <= ivRange[1];
     }
 
     if (attrs.length) {
-      const maxiv = Math.max(
-        result.ivs.IndAtk,
-        result.ivs.IndDef,
-        result.ivs.IndSta
-      )
+      (function () {
+        var maxiv = Math.max(result.ivs.IndAtk, result.ivs.IndDef, result.ivs.IndSta);
 
-      statCheck = attrs.every(attr => result.ivs[attr] === maxiv)
+        statCheck = attrs.every(function (attr) {
+          return result.ivs[attr] === maxiv;
+        });
+      })();
     }
 
-    return rangeCheck && statCheck
-  })
+    return rangeCheck && statCheck;
+  });
 }
 
 function RefineResults(props) {
-  const results = refine(props.results)
-  const chance = Math.floor(
-    results.filter(x => x.percent.PerfectIV > 66).length / results.length
-  ) || 0
+  var results = refine(props.results);
+  var chance = Math.floor(results.filter(function (x) {
+    return x.percent.PerfectIV > 66;
+  }).length / results.length) || 0;
 
-  return n(B.View, { spacingVertical: 'md' }, [
-    n('h3', { style: Styles.resultsRow }, `Possible values (${results.length})`),
+  return n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Possible values (' + String(results.length) + ')'), n(B.Text, { style: Styles.resultsRow }, [results.length === 1 ? n('span', 'Congrats, here are your Pokemon\'s values') : n('span', ['There are ', n('strong', results.length), ' possibilities and a ', n('strong', String(chance) + '%'), ' chance you will have a good ' + String(props.name) + '. ', 'Highlighted rows show even levels since you can only catch even leveled Pokemon.'])]), !props.show && results.length > 1 && n(B.View, { style: Styles.resultsRow }, [n(B.View, { spacing: 'sm' }), n(B.Text, 'Refine results by selecting "Appraise" from the Pokemon screen.'), n(B.Button, {
+    onClick: function () {
+      function onClick() {
+        return props.setState({ show: true });
+      }
 
-    n(B.Text, { style: Styles.resultsRow }, [
-      results.length === 1
-        ? n('span', 'Congrats, here are your Pokemon\'s values')
-        : n('span', [
-          'There are ',
-          n('strong', results.length),
-          ' possibilities and a ',
-          n('strong', `${chance}%`),
-          ` chance you will have a good ${props.name}. `,
-          'Highlighted rows show even levels since you can only catch even leveled Pokemon.',
-        ]),
-    ]),
-
-    !props.show && results.length > 1 && (
-      n(B.View, { style: Styles.resultsRow }, [
-        n(B.View, { spacing: 'sm' }),
-        n(B.Text, 'Refine results by selecting "Appraise" from the Pokemon screen.'),
-        n(B.Button, {
-          onClick: () => props.setState({ show: true }),
-        }, 'Refine Results'),
-        n(B.View, { spacing: 'sm' }),
-      ])
-    ),
-
-    props.show && n(Appraisal),
-
-    n(ResultsTable, { results }),
-  ])
+      return onClick;
+    }()
+  }, 'Refine Results'), n(B.View, { spacing: 'sm' })]), props.show && n(Appraisal), n(ResultsTable, { results: results })]);
 }
 
-const RefineResultsStateful = liftState({
-  show: false,
-}, RefineResults)
+var RefineResultsStateful = liftState({
+  show: false
+}, RefineResults);
 
-module.exports = reactRedux.connect(
-  state => ({ appraisal: state.appraisal })
-)(RefineResultsStateful)
+module.exports = reactRedux.connect(function (state) {
+  return { appraisal: state.appraisal };
+})(RefineResultsStateful);
 
-},{"../store":289,"../styles":290,"../utils/Lotus.react":292,"../utils/liftState":296,"../utils/n":298,"./Appraisal":267,"./ResultsTable":280,"react-redux":36}],279:[function(require,module,exports){
-const B = require('../utils/Lotus.react')
-const DetailedAnalysis = require('./DetailedAnalysis')
-const MoveCombos = require('./MoveCombos')
-const RefineResults = require('./RefineResults')
-const Styles = require('../styles')
-const bestMovesFor = require('../../src/best-moves')
-const finalEvolutions = require('../../json/finalEvolutions')
-const n = require('../utils/n')
-const dispatchableActions = require('../dispatchableActions')
+},{"../store":287,"../styles":288,"../utils/Lotus.react":290,"../utils/liftState":294,"../utils/n":296,"./Appraisal":265,"./ResultsTable":278,"react-redux":36}],277:[function(require,module,exports){
+var B = require('../utils/Lotus.react');
+var DetailedAnalysis = require('./DetailedAnalysis');
+var MoveCombos = require('./MoveCombos');
+var RefineResults = require('./RefineResults');
+var Styles = require('../styles');
+var bestMovesFor = require('../../src/best-moves');
+var finalEvolutions = require('../../json/finalEvolutions');
+var n = require('../utils/n');
+var dispatchableActions = require('../dispatchableActions');
 
 function Results(props) {
-  var bestMoves = null
+  var bestMoves = null;
   if (finalEvolutions[props.pokemon.name]) {
-    bestMoves = bestMovesFor(props.pokemon.name, props.best.Level, props.best.ivs.IndAtk)
+    bestMoves = bestMovesFor(props.pokemon.name, props.best.Level, props.best.ivs.IndAtk);
   }
 
-  console.log(props)
+  console.log(props);
 
-  return (
-    n(B.View, [
-      n(B.View, [
-        n(B.Button, { size: 'sm', onClick: dispatchableActions.resultsReset }, 'Check Another'),
-      ]),
+  return n(B.View, [n(B.View, [n(B.Button, { size: 'sm', onClick: dispatchableActions.resultsReset }, 'Check Another')]), n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n(B.Text, { style: Styles.bigText }, props.pokemon.name), n(B.Text, 'CP: ' + String(props.pokemon.cp) + ' | HP: ' + String(props.pokemon.hp)), n(B.View, { style: Styles.pokemonImage }, [n(B.Image, { src: 'images/' + String(props.pokemon.name) + '.png', height: 150, width: 150 })]), n(B.Text, { style: Styles.bigText }, props.range.iv[0] === props.range.iv[1] ? String(props.range.iv[0]) + '%' : String(props.range.iv[0]) + '% - ' + String(props.range.iv[1]) + '%'), n(B.Text, { style: Styles.resultsRow }, [props.chance === 100 ? 'Keep your ' + String(props.pokemon.cp) + 'CP ' + String(props.pokemon.name) : props.chance === 0 ? 'Send this Pokemon to the grinder for candy.' : 'Maybe you should keep this Pokemon around.'])]), n(RefineResults, { name: props.pokemon.name, results: props.values }),
 
-      n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [
-        n(B.Text, { style: Styles.bigText }, props.pokemon.name),
-        n(B.Text, `CP: ${props.pokemon.cp} | HP: ${props.pokemon.hp}`),
-        n(B.View, { style: Styles.pokemonImage }, [
-          n(B.Image, { src: `images/${props.pokemon.name}.png`, height: 150, width: 150 }),
-        ]),
-        n(
-          B.Text,
-          { style: Styles.bigText },
-          props.range.iv[0] === props.range.iv[1]
-            ? `${props.range.iv[0]}%`
-            : `${props.range.iv[0]}% - ${props.range.iv[1]}%`
-        ),
-        n(B.Text, { style: Styles.resultsRow }, [
-          props.chance === 100
-            ? `Keep your ${props.pokemon.cp}CP ${props.pokemon.name}`
-            : props.chance === 0
-              ? `Send this Pokemon to the grinder for candy.`
-              : `Maybe you should keep this Pokemon around.`
-        ]),
-      ]),
-
-      n(RefineResults, { name: props.pokemon.name, results: props.values }),
-
-      // We should only show best moveset if it is in its final evolved form...
-      bestMoves && (
-        n(B.View, { spacingVertical: 'md' }, [
-          n('h3', { style: Styles.resultsRow }, `Best moveset combos for ${props.pokemon.name}`),
-          n(MoveCombos, { moves: bestMoves }),
-        ])
-      ),
-
-      props.best.meta.EvolveCP && (
-        n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [
-          n('h3', 'Evolution'),
-          n(B.Panel, [
-            n(B.Text, `If evolved it would have a CP of about ${props.best.meta.EvolveCP}`),
-          ]),
-        ])
-      ),
-
-      props.best.meta.Stardust > 0 && (
-        n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [
-          n('h3', { style: Styles.resultsRow }, `Maxing out to level ${props.best.meta.MaxLevel}`),
-          props.pokemon.level === null && (
-            n(B.Text, `Assuming that your Pokemon's current level is ${props.best.Level}. The information below is just an estimate.`)
-          ),
-          n(B.View, [
-            n(B.Panel, `Current level: ${props.best.Level}`),
-            n(B.Panel, `Candy cost: ${props.best.meta.Candy}`),
-            n(B.Panel, `Stardust cost: ${props.best.meta.Stardust}`),
-            n(B.Panel, `CP: ${props.best.meta.MaxCP}`),
-            n(B.Panel, `HP: ${props.best.meta.MaxHP}`),
-          ]),
-        ])
-      ),
-
-      n(B.View, { spacingVertical: 'md' }, [
-        n('h3', { style: Styles.resultsRow }, 'Yours vs Perfect by level'),
-        n(B.Table, [
-          n('thead', [
-            n('tr', [
-              n('th', 'Level'),
-              n('th', 'Your CP'),
-              n('th', 'Best CP'),
-              n('th', 'Your HP'),
-              n('th', 'Best HP'),
-            ]),
-          ]),
-          n('tbody', props.values.reduce((o, value) => {
-            if (o._[value.Level]) return o
-            o._[value.Level] = 1
-            o.rows.push(value)
-            return o
-          }, { rows: [], _: {} }).rows
-          .sort((a, b) => a.Level > b.Level ? 1 : -1)
-          .map((value) => (
-            n('tr', [
-              n('td', value.Level),
-              n('td', value.CP),
-              n('td', value.meta.MaxLevelCP),
-              n('td', value.HP),
-              n('td', value.meta.MaxLevelHP),
-            ])
-          ))),
-        ]),
-      ]),
-
-      n(B.View, { spacingVertical: 'md' }, [
-        n('h3', { style: Styles.resultsRow }, 'Ratings'),
-        n(B.Table, [
-          n('thead', [
-            n('tr', [
-              n('th', 'Level'),
-              n('th', 'Overall'),
-              n('th', props.pokemon.name),
-            ].concat(props.best.rating.type.map(type => (
-              n('th', type.type)
-            )))),
-          ]),
-          n('tbody', props.values.reduce((o, value) => {
-            if (o._[value.Level]) return o
-            o._[value.Level] = 1
-            o.rows.push(value)
-            return o
-          }, { rows: [], _: {} }).rows
-          .sort((a, b) => a.Level > b.Level ? 1 : -1)
-          .map((value) => (
-            n('tr', [
-              n('td', value.Level),
-              n('td', Math.round(value.rating.overall.value)),
-              n('td', Math.round(value.rating.pokemon.value)),
-            ].concat(value.rating.type.map(type => (
-              n('td', Math.round(type.rating.value))
-            ))))
-          ))),
-        ]),
-      ]),
-
-      n(DetailedAnalysis, { results: props.values }),
-    ])
-  )
+  // We should only show best moveset if it is in its final evolved form...
+  bestMoves && n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Best moveset combos for ' + String(props.pokemon.name)), n(MoveCombos, { moves: bestMoves })]), props.best.meta.EvolveCP && n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n('h3', 'Evolution'), n(B.Panel, [n(B.Text, 'If evolved it would have a CP of about ' + String(props.best.meta.EvolveCP))])]), props.best.meta.Stardust > 0 && n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n('h3', { style: Styles.resultsRow }, 'Maxing out to level ' + String(props.best.meta.MaxLevel)), props.pokemon.level === null && n(B.Text, 'Assuming that your Pokemon\'s current level is ' + String(props.best.Level) + '. The information below is just an estimate.'), n(B.View, [n(B.Panel, 'Current level: ' + String(props.best.Level)), n(B.Panel, 'Candy cost: ' + String(props.best.meta.Candy)), n(B.Panel, 'Stardust cost: ' + String(props.best.meta.Stardust)), n(B.Panel, 'CP: ' + String(props.best.meta.MaxCP)), n(B.Panel, 'HP: ' + String(props.best.meta.MaxHP))])]), n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Yours vs Perfect by level'), n(B.Table, [n('thead', [n('tr', [n('th', 'Level'), n('th', 'Your CP'), n('th', 'Best CP'), n('th', 'Your HP'), n('th', 'Best HP')])]), n('tbody', props.values.reduce(function (o, value) {
+    if (o._[value.Level]) return o;
+    o._[value.Level] = 1;
+    o.rows.push(value);
+    return o;
+  }, { rows: [], _: {} }).rows.sort(function (a, b) {
+    return a.Level > b.Level ? 1 : -1;
+  }).map(function (value) {
+    return n('tr', [n('td', value.Level), n('td', value.CP), n('td', value.meta.MaxLevelCP), n('td', value.HP), n('td', value.meta.MaxLevelHP)]);
+  }))])]), n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Ratings'), n(B.Table, [n('thead', [n('tr', [n('th', 'Level'), n('th', 'Overall'), n('th', props.pokemon.name)].concat(props.best.rating.type.map(function (type) {
+    return n('th', type.type);
+  })))]), n('tbody', props.values.reduce(function (o, value) {
+    if (o._[value.Level]) return o;
+    o._[value.Level] = 1;
+    o.rows.push(value);
+    return o;
+  }, { rows: [], _: {} }).rows.sort(function (a, b) {
+    return a.Level > b.Level ? 1 : -1;
+  }).map(function (value) {
+    return n('tr', [n('td', value.Level), n('td', Math.round(value.rating.overall.value)), n('td', Math.round(value.rating.pokemon.value))].concat(value.rating.type.map(function (type) {
+      return n('td', Math.round(type.rating.value));
+    })));
+  }))])]), n(DetailedAnalysis, { results: props.values })]);
 }
 
-module.exports = Results
+module.exports = Results;
 
-},{"../../json/finalEvolutions":3,"../../src/best-moves":250,"../dispatchableActions":283,"../styles":290,"../utils/Lotus.react":292,"../utils/n":298,"./DetailedAnalysis":268,"./MoveCombos":275,"./RefineResults":278}],280:[function(require,module,exports){
-const B = require('../utils/Lotus.react')
-const Styles = require('../styles')
-const n = require('../utils/n')
+},{"../../json/finalEvolutions":3,"../../src/best-moves":250,"../dispatchableActions":281,"../styles":288,"../utils/Lotus.react":290,"../utils/n":296,"./DetailedAnalysis":266,"./MoveCombos":273,"./RefineResults":276}],278:[function(require,module,exports){
+var B = require('../utils/Lotus.react');
+var Styles = require('../styles');
+var n = require('../utils/n');
 
 function ResultsTable(props) {
-  return n(B.View, [
-    n(B.Table, { clean: true, border: true }, [
-      n('thead', [
-        n('tr', [
-          n('th', 'IV'),
-          n('th', 'Level'),
-          n('th', 'CP %'),
-          n('th', 'HP %'),
-          n('th', 'Battle %'),
-        ]),
-      ]),
-      n('tbody', props.results.map((value) => (
-        n('tr', {
-          onClick: () => {
-            if (props.onSelect) props.onSelect(value)
-          },
-          style: {
-            backgroundColor: Number(value.Level) % 1 === 0 ? '#ede0c6' : '',
-          },
-        }, [
-          n('td', [
-            n(B.Text, {
-              className: 'label',
-              style: value.percent.PerfectIV > 74
-                ? Styles.good
-                : value.percent.PerfectIV > 66
-                ? Styles.ok
-                : Styles.bad,
-            }, `${value.percent.PerfectIV}%`),
-            ' ',
-            n('strong', value.strings.iv),
-          ]),
-          n('td', value.Level),
-          n('td', value.percent.PercentCP),
-          n('td', value.percent.PercentHP),
-          n('td', value.percent.PercentBatt),
-        ])
-      ))),
-    ]),
-    props.results.length === 0 && (
-      n(B.Text, 'No results found')
-    ),
-  ])
+  return n(B.View, [n(B.Table, { clean: true, border: true }, [n('thead', [n('tr', [n('th', 'IV'), n('th', 'Level'), n('th', 'CP %'), n('th', 'HP %'), n('th', 'Battle %')])]), n('tbody', props.results.map(function (value) {
+    return n('tr', {
+      onClick: function () {
+        function onClick() {
+          if (props.onSelect) props.onSelect(value);
+        }
+
+        return onClick;
+      }(),
+      style: {
+        backgroundColor: Number(value.Level) % 1 === 0 ? '#ede0c6' : ''
+      }
+    }, [n('td', [n(B.Text, {
+      className: 'label',
+      style: value.percent.PerfectIV > 74 ? Styles.good : value.percent.PerfectIV > 66 ? Styles.ok : Styles.bad
+    }, String(value.percent.PerfectIV) + '%'), ' ', n('strong', value.strings.iv)]), n('td', value.Level), n('td', value.percent.PercentCP), n('td', value.percent.PercentHP), n('td', value.percent.PercentBatt)]);
+  }))]), props.results.length === 0 && n(B.Text, 'No results found')]);
 }
 
-module.exports = ResultsTable
+module.exports = ResultsTable;
 
-},{"../styles":290,"../utils/Lotus.react":292,"../utils/n":298}],281:[function(require,module,exports){
-const B = require('../utils/Lotus.react')
-const Select = require('react-select')
-const Styles = require('../styles')
-const calculateValues = require('../utils/calculateValues')
-const n = require('../utils/n')
-const scrollTop = require('../utils/scrollTop')
+},{"../styles":288,"../utils/Lotus.react":290,"../utils/n":296}],279:[function(require,module,exports){
+var B = require('../utils/Lotus.react');
+var Select = require('react-select');
+var Styles = require('../styles');
+var calculateValues = require('../utils/calculateValues');
+var n = require('../utils/n');
+var scrollTop = require('../utils/scrollTop');
 
 function fromHistory(ev) {
   if (ev) {
     // TODO reset the appraisal stuff
-    calculateValues(ev.value)
-    scrollTop()
+    calculateValues(ev.value);
+    scrollTop();
   }
 }
 
 function SearchHistory(props) {
-  const options = props.searches.reduceRight((arr, search) => {
+  var options = props.searches.reduceRight(function (arr, search) {
     return arr.concat({
-      label: `${search.name} ${search.cp}CP ${search.hp}HP`,
-      value: search,
-    })
-  }, [])
+      label: String(search.name) + ' ' + String(search.cp) + 'CP ' + String(search.hp) + 'HP',
+      value: search
+    });
+  }, []);
 
-  return (
-    n(B.View, [
-      n(B.FormControl, { label: 'Recent Searches' }, [
-        n(Select, {
-          inputProps: {
-            autoCorrect: 'off',
-            autoCapitalize: 'off',
-            spellCheck: 'off',
-          },
-          name: 'history',
-          value: '',
-          options,
-          onChange: fromHistory,
-        }),
-      ]),
-    ])
-  )
+  return n(B.View, [n(B.FormControl, { label: 'Recent Searches' }, [n(Select, {
+    inputProps: {
+      autoCorrect: 'off',
+      autoCapitalize: 'off',
+      spellCheck: 'off'
+    },
+    name: 'history',
+    value: '',
+    options: options,
+    onChange: fromHistory
+  })])]);
 }
 
-module.exports = SearchHistory
+module.exports = SearchHistory;
 
-},{"../styles":290,"../utils/Lotus.react":292,"../utils/calculateValues":294,"../utils/n":298,"../utils/scrollTop":299,"react-select":50}],282:[function(require,module,exports){
-const SearchHistory = require('../components/SearchHistory')
-const reactRedux = require('react-redux')
+},{"../styles":288,"../utils/Lotus.react":290,"../utils/calculateValues":292,"../utils/n":296,"../utils/scrollTop":297,"react-select":50}],280:[function(require,module,exports){
+var SearchHistory = require('../components/SearchHistory');
+var reactRedux = require('react-redux');
 
-const SearchHistoryContainer = reactRedux.connect(state => ({
-  searches: Object.keys(state.history.searches)
-    .map(k => state.history.searches[k]),
-}))(SearchHistory)
+var SearchHistoryContainer = reactRedux.connect(function (state) {
+  return {
+    searches: Object.keys(state.history.searches).map(function (k) {
+      return state.history.searches[k];
+    })
+  };
+})(SearchHistory);
 
-module.exports = SearchHistoryContainer
+module.exports = SearchHistoryContainer;
 
-},{"../components/SearchHistory":281,"react-redux":36}],283:[function(require,module,exports){
-const actions = require('./actions')
-const redux = require('redux')
-const store = require('./store')
+},{"../components/SearchHistory":279,"react-redux":36}],281:[function(require,module,exports){
+var actions = require('./actions');
+var redux = require('redux');
+var store = require('./store');
 
-module.exports = redux.bindActionCreators(actions, store.dispatch)
+module.exports = redux.bindActionCreators(actions, store.dispatch);
 
-},{"./actions":264,"./store":289,"redux":238}],284:[function(require,module,exports){
-const B = require('./utils/Lotus.react')
-const React = require('react')
-const ReactDOM = require('react-dom')
-const Styles = require('./styles')
-const alt = require('./alt')
-const connect = require('./utils/connect')
-const n = require('./utils/n')
-const localforage = require('localforage')
-const scrollTop = require('./utils/scrollTop')
-const SwipeableViews = require('react-swipeable-views').default
-const reactRedux = require('react-redux')
+},{"./actions":264,"./store":287,"redux":238}],282:[function(require,module,exports){
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-const Dex = require('./components/Dex')
-const Matchup = require('./components/Matchup')
-const PowerUp = require('./components/PowerUp')
-const Rater = require('./components/Rater')
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-const dispatchableActions = require('./dispatchableActions')
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-const reduxStore = require('./store')
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-const calculateValues = require('./utils/calculateValues')
+var B = require('./utils/Lotus.react');
+var React = require('react');
+var ReactDOM = require('react-dom');
+var Styles = require('./styles');
+var connect = require('./utils/connect');
+var n = require('./utils/n');
+var localforage = require('localforage');
+var scrollTop = require('./utils/scrollTop');
+var SwipeableViews = require('react-swipeable-views')['default'];
+var reactRedux = require('react-redux');
+
+var Dex = require('./components/Dex');
+var Matchup = require('./components/Matchup');
+var PowerUp = require('./components/PowerUp');
+var Rater = require('./components/Rater');
+
+var dispatchableActions = require('./dispatchableActions');
+
+var reduxStore = require('./store');
+
+var calculateValues = require('./utils/calculateValues');
 
 // TODO make powerup and matchup use different reducers
-const PowerUpContainer = reactRedux.connect(state => state.calculator)(PowerUp)
-const MatchupContainer = reactRedux.connect(state => state.calculator)(Matchup)
-const RaterContainer = reactRedux.connect(state => state.calculator)(Rater)
-const DexContainer = reactRedux.connect(state => state.dex)(Dex)
+var PowerUpContainer = reactRedux.connect(function (state) {
+  return state.calculator;
+})(PowerUp);
+var MatchupContainer = reactRedux.connect(function (state) {
+  return state.calculator;
+})(Matchup);
+var RaterContainer = reactRedux.connect(function (state) {
+  return state.calculator;
+})(Rater);
+var DexContainer = reactRedux.connect(function (state) {
+  return state.dex;
+})(Dex);
 
 function hashChanged(self) {
-  const arr = window.location.hash.split('/')
+  var arr = window.location.hash.split('/');
 
   if (arr[1] === 'iv') {
-    self.setState({ selectedSlide: 0 })
-    if (arr[2]) dispatchableActions.changedName(arr[2].toUpperCase())
-    if (arr[3]) dispatchableActions.changedCP(Number(arr[3]))
-    if (arr[4]) dispatchableActions.changedHP(Number(arr[4]))
-    if (arr[5]) dispatchableActions.changedStardust(Number(arr[5]))
-    if (arr.length === 6) calculateValues()
+    self.setState({ selectedSlide: 0 });
+    if (arr[2]) dispatchableActions.changedName(arr[2].toUpperCase());
+    if (arr[3]) dispatchableActions.changedCP(Number(arr[3]));
+    if (arr[4]) dispatchableActions.changedHP(Number(arr[4]));
+    if (arr[5]) dispatchableActions.changedStardust(Number(arr[5]));
+    if (arr.length === 6) calculateValues();
   } else if (arr[1] === 'dex') {
-    self.setState({ selectedSlide: 1 })
-    dispatchableActions.dexTextChanged(arr[2].toUpperCase())
+    self.setState({ selectedSlide: 1 });
+    dispatchableActions.dexTextChanged(arr[2].toUpperCase());
   }
 }
 
-class Main extends React.Component {
-  constructor() {
-    super()
-    this.state = {
+var Main = function (_React$Component) {
+  _inherits(Main, _React$Component);
+
+  function Main() {
+    _classCallCheck(this, Main);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Main).call(this));
+
+    _this.state = {
       small: false,
-      selectedSlide: 0,
-    }
+      selectedSlide: 0
+    };
+    return _this;
   }
 
-  componentDidMount() {
-    if (window.innerWidth < 500) {
-      this.setState({ small: true })
-    }
+  _createClass(Main, [{
+    key: 'componentDidMount',
+    value: function () {
+      function componentDidMount() {
+        var _this2 = this;
 
-    hashChanged(this)
-    window.onhashchange = () => hashChanged(this)
-  }
+        if (window.innerWidth < 500) {
+          this.setState({ small: true });
+        }
 
-  renderNav() {
-    return (
-      n(B.View, {
-        className: 'nav',
-        style: this.state.small ? Styles.menu : Styles.menuDesktop,
-      }, [
-        this.renderLink(0, 'Rater'),
-        this.renderLink(1, 'Dex'),
-        this.renderLink(2, 'PowerUp'),
-        this.renderLink(3, 'Matchup'),
-      ])
-    )
-  }
+        hashChanged(this);
+        window.onhashchange = function () {
+          return hashChanged(_this2);
+        };
+      }
 
-  renderLink(selectedSlide, text) {
-    return n(B.View, {
-      style: Styles.linkWrapper,
-    }, [
-      n(B.Link, {
-        className: this.state.selectedSlide === selectedSlide ? 'active' : '',
-        onClick: () => {
-          this.setState({ selectedSlide })
-          scrollTop()
-        },
-        style: Styles.link,
-      }, text),
-    ])
-  }
+      return componentDidMount;
+    }()
+  }, {
+    key: 'renderNav',
+    value: function () {
+      function renderNav() {
+        return n(B.View, {
+          className: 'nav',
+          style: this.state.small ? Styles.menu : Styles.menuDesktop
+        }, [this.renderLink(0, 'Rater'), this.renderLink(1, 'Dex'), this.renderLink(2, 'PowerUp'), this.renderLink(3, 'Matchup')]);
+      }
 
-  render() {
-    const Slides = [
-      n(RaterContainer),
-      n(DexContainer),
-      n(PowerUpContainer),
-      n(MatchupContainer),
-    ]
+      return renderNav;
+    }()
+  }, {
+    key: 'renderLink',
+    value: function () {
+      function renderLink(selectedSlide, text) {
+        var _this3 = this;
 
-    const Nav = this.renderNav()
+        return n(B.View, {
+          style: Styles.linkWrapper
+        }, [n(B.Link, {
+          className: this.state.selectedSlide === selectedSlide ? 'active' : '',
+          onClick: function () {
+            function onClick() {
+              _this3.setState({ selectedSlide: selectedSlide });
+              scrollTop();
+            }
 
-    const Container = (
-      n(SwipeableViews, {
-        animateTransitions: this.state.small,
-        className: 'pm',
-        index: this.state.selectedSlide,
-        onChangeIndex: (selectedSlide) => {
-          this.setState({ selectedSlide })
-          scrollTop()
-        },
-        resistance: true,
-        style: Styles.container,
-      }, Slides.map(slide => (
-        n(B.View, { spacing: 'lg' }, [slide])
-      )))
-    )
+            return onClick;
+          }(),
+          style: Styles.link
+        }, text)]);
+      }
 
-    if (this.state.small) {
-      return n(B.View, {
-        style: Styles.main,
-      }, [Container, Nav])
-    }
+      return renderLink;
+    }()
+  }, {
+    key: 'render',
+    value: function () {
+      function render() {
+        var _this4 = this;
 
-    return n(B.View, {
-      style: Styles.mainDesktop,
-    }, [Nav, Container])
-  }
-}
+        var Slides = [n(RaterContainer), n(DexContainer), n(PowerUpContainer), n(MatchupContainer)];
 
-localforage.getItem('pogoivcalc.searches').then((searches) => {
-  if (searches) dispatchableActions.searchesLoaded(searches)
-})
+        var Nav = this.renderNav();
 
-localforage.getItem('pogoivcalc.trainerLevel').then((trainerLevel) => {
+        var Container = n(SwipeableViews, {
+          animateTransitions: this.state.small,
+          className: 'pm',
+          index: this.state.selectedSlide,
+          onChangeIndex: function () {
+            function onChangeIndex(selectedSlide) {
+              _this4.setState({ selectedSlide: selectedSlide });
+              scrollTop();
+            }
+
+            return onChangeIndex;
+          }(),
+          resistance: true,
+          style: Styles.container
+        }, Slides.map(function (slide) {
+          return n(B.View, { spacing: 'lg' }, [slide]);
+        }));
+
+        if (this.state.small) {
+          return n(B.View, {
+            style: Styles.main
+          }, [Container, Nav]);
+        }
+
+        return n(B.View, {
+          style: Styles.mainDesktop
+        }, [Nav, Container]);
+      }
+
+      return render;
+    }()
+  }]);
+
+  return Main;
+}(React.Component);
+
+localforage.getItem('pogoivcalc.searches').then(function (searches) {
+  if (searches) dispatchableActions.searchesLoaded(searches);
+});
+
+localforage.getItem('pogoivcalc.trainerLevel').then(function (trainerLevel) {
   // TODO ask for trainerLevel later...
-//  if (trainerLevel) {
-//    localforage.setItem('pogoivcalc.trainerLevel', trainerLevel)
-//    pokemonActions.trainerLevelChanged(trainerLevel)
-//  }
+  //  if (trainerLevel) {
+  //    localforage.setItem('pogoivcalc.trainerLevel', trainerLevel)
+  //    pokemonActions.trainerLevelChanged(trainerLevel)
+  //  }
 
-  ReactDOM.render(
-    n(reactRedux.Provider, { store: reduxStore }, [n(Main)]),
-    document.querySelector('#app')
-  )
-})
+  ReactDOM.render(n(reactRedux.Provider, { store: reduxStore }, [n(Main)]), document.querySelector('#app'));
+});
 
-},{"./alt":265,"./components/Dex":269,"./components/Matchup":274,"./components/PowerUp":276,"./components/Rater":277,"./dispatchableActions":283,"./store":289,"./styles":290,"./utils/Lotus.react":292,"./utils/calculateValues":294,"./utils/connect":295,"./utils/n":298,"./utils/scrollTop":299,"localforage":18,"react":232,"react-dom":19,"react-redux":36,"react-swipeable-views":58}],285:[function(require,module,exports){
-const actions = require('../actions')
-const mergeState = require('../utils/mergeState')
-const validateActions = require('../utils/validateActions')
+},{"./components/Dex":267,"./components/Matchup":272,"./components/PowerUp":274,"./components/Rater":275,"./dispatchableActions":281,"./store":287,"./styles":288,"./utils/Lotus.react":290,"./utils/calculateValues":292,"./utils/connect":293,"./utils/n":296,"./utils/scrollTop":297,"localforage":18,"react":232,"react-dom":19,"react-redux":36,"react-swipeable-views":58}],283:[function(require,module,exports){
+var actions = require('../actions');
+var mergeState = require('../utils/mergeState');
+var validateActions = require('../utils/validateActions');
 
-const getInitialState = () => ({
-  attrs: {},
-  ivRange: null,
-  team: null,
-})
+var getInitialState = function getInitialState() {
+  return {
+    attrs: {},
+    ivRange: null,
+    team: null
+  };
+};
 
-const appraisal = mergeState(getInitialState(), validateActions(actions, {
-  TEAM_SELECTED: team => ({ team }),
-
-  APPRAISAL_IV_RANGE_SET: ivRange => ({ ivRange }),
-
-  APPRAISAL_ATTR_TOGGLED(value, state) {
-    const attrs = Object.assign({}, state.attrs)
-
-    if (attrs[value]) {
-      delete attrs[value]
-    } else {
-      attrs[value] = 1
+var appraisal = mergeState(getInitialState(), validateActions(actions, {
+  TEAM_SELECTED: function () {
+    function TEAM_SELECTED(team) {
+      return { team: team };
     }
 
-    return { attrs }
-  },
+    return TEAM_SELECTED;
+  }(),
 
-  RESULTS_CALCULATED: () => getInitialState(),
+  APPRAISAL_IV_RANGE_SET: function () {
+    function APPRAISAL_IV_RANGE_SET(ivRange) {
+      return { ivRange: ivRange };
+    }
 
-  VALUES_RESET: () => getInitialState(),
-}))
+    return APPRAISAL_IV_RANGE_SET;
+  }(),
 
-module.exports = appraisal
+  APPRAISAL_ATTR_TOGGLED: function () {
+    function APPRAISAL_ATTR_TOGGLED(value, state) {
+      var attrs = Object.assign({}, state.attrs);
 
-},{"../actions":264,"../utils/mergeState":297,"../utils/validateActions":300}],286:[function(require,module,exports){
-const actions = require('../actions')
-const mergeState = require('../utils/mergeState')
-const validateActions = require('../utils/validateActions')
+      if (attrs[value]) {
+        delete attrs[value];
+      } else {
+        attrs[value] = 1;
+      }
 
-const set = value => payload => ({ [value]: payload })
+      return { attrs: attrs };
+    }
 
-const getInitialState = () => ({
-  name: 'ARCANINE',
-  cp: 2207,
-  hp: 129,
-  stardust: 4000,
-  trainerLevel: '',
-  level: 0,
-  results: null,
-})
+    return APPRAISAL_ATTR_TOGGLED;
+  }(),
 
-const getEmptyState = () => ({
-  name: '',
-  cp: 0,
-  hp: 0,
-  stardust: '',
-  level: 0,
-  results: null,
-})
 
-const calculator = mergeState(getInitialState(), validateActions(actions, {
+  RESULTS_CALCULATED: function () {
+    function RESULTS_CALCULATED() {
+      return getInitialState();
+    }
+
+    return RESULTS_CALCULATED;
+  }(),
+
+  VALUES_RESET: function () {
+    function VALUES_RESET() {
+      return getInitialState();
+    }
+
+    return VALUES_RESET;
+  }()
+}));
+
+module.exports = appraisal;
+
+},{"../actions":264,"../utils/mergeState":295,"../utils/validateActions":298}],284:[function(require,module,exports){
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var actions = require('../actions');
+var mergeState = require('../utils/mergeState');
+var validateActions = require('../utils/validateActions');
+
+var set = function set(value) {
+  return function (payload) {
+    return _defineProperty({}, value, payload);
+  };
+};
+
+var getInitialState = function getInitialState() {
+  return {
+    name: 'ARCANINE',
+    cp: 2207,
+    hp: 129,
+    stardust: 4000,
+    trainerLevel: '',
+    level: 0,
+    results: null
+  };
+};
+
+var getEmptyState = function getEmptyState() {
+  return {
+    name: '',
+    cp: 0,
+    hp: 0,
+    stardust: '',
+    level: 0,
+    results: null
+  };
+};
+
+var calculator = mergeState(getInitialState(), validateActions(actions, {
   CHANGED_NAME: set('name'),
   CHANGED_CP: set('cp'),
   CHANGED_HP: set('hp'),
   CHANGED_STARDUST: set('stardust'),
   CHANGED_LEVEL: set('level'),
   CHANGED_TRAINER_LEVEL: set('trainerLevel'),
-  RESULTS_CALCULATED: ivResults => ({ results: ivResults.asObject() }),
-  RESULTS_RESET: () => ({ results: null }),
-  VALUES_RESET: () => getEmptyState(),
-}))
+  RESULTS_CALCULATED: function () {
+    function RESULTS_CALCULATED(ivResults) {
+      return { results: ivResults.asObject() };
+    }
 
-module.exports = calculator
+    return RESULTS_CALCULATED;
+  }(),
+  RESULTS_RESET: function () {
+    function RESULTS_RESET() {
+      return { results: null };
+    }
 
-},{"../actions":264,"../utils/mergeState":297,"../utils/validateActions":300}],287:[function(require,module,exports){
-const actions = require('../actions')
-const mergeState = require('../utils/mergeState')
-const validateActions = require('../utils/validateActions')
+    return RESULTS_RESET;
+  }(),
+  VALUES_RESET: function () {
+    function VALUES_RESET() {
+      return getEmptyState();
+    }
 
-const set = value => payload => ({ [value]: payload })
+    return VALUES_RESET;
+  }()
+}));
 
-const getInitialState = () => ({
-  text: '',
-  moves: [],
-  pokemon: [],
-})
+module.exports = calculator;
 
-const dex = mergeState(getInitialState(), validateActions(actions, {
+},{"../actions":264,"../utils/mergeState":295,"../utils/validateActions":298}],285:[function(require,module,exports){
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var actions = require('../actions');
+var mergeState = require('../utils/mergeState');
+var validateActions = require('../utils/validateActions');
+
+var set = function set(value) {
+  return function (payload) {
+    return _defineProperty({}, value, payload);
+  };
+};
+
+var getInitialState = function getInitialState() {
+  return {
+    text: '',
+    moves: [],
+    pokemon: []
+  };
+};
+
+var dex = mergeState(getInitialState(), validateActions(actions, {
   MOVES_CHANGED: set('moves'),
   POKEMON_CHANGED: set('pokemon'),
-  DEX_TEXT_CHANGED: set('text'),
-}))
+  DEX_TEXT_CHANGED: set('text')
+}));
 
-module.exports = dex
+module.exports = dex;
 
-},{"../actions":264,"../utils/mergeState":297,"../utils/validateActions":300}],288:[function(require,module,exports){
-const actions = require('../actions')
-const mergeState = require('../utils/mergeState')
-const validateActions = require('../utils/validateActions')
+},{"../actions":264,"../utils/mergeState":295,"../utils/validateActions":298}],286:[function(require,module,exports){
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-const set = value => payload => ({ [value]: payload })
+var actions = require('../actions');
+var mergeState = require('../utils/mergeState');
+var validateActions = require('../utils/validateActions');
 
-const getInitialState = () => ({
-  searches: {},
-})
+var set = function set(value) {
+  return function (payload) {
+    return _defineProperty({}, value, payload);
+  };
+};
 
-const history = mergeState(getInitialState(), validateActions(actions, {
+var getInitialState = function getInitialState() {
+  return {
+    searches: {}
+  };
+};
+
+var history = mergeState(getInitialState(), validateActions(actions, {
   // This method loads our searches from localstorage. If the searches were an
   // Array then they're converted into an Object.
-  SEARCHES_LOADED(prevSearches, state) {
-    if (!Array.isArray(prevSearches)) return { searches: prevSearches }
+  SEARCHES_LOADED: function () {
+    function SEARCHES_LOADED(prevSearches, state) {
+      if (!Array.isArray(prevSearches)) return { searches: prevSearches };
 
-    const searches = prevSearches.reduce((obj, v) => {
-      const key = JSON.stringify(v.values)
-      obj[key] = v.values
-      return obj
-    }, {})
+      var searches = prevSearches.reduce(function (obj, v) {
+        var key = JSON.stringify(v.values);
+        obj[key] = v.values;
+        return obj;
+      }, {});
 
-    // TODO this belongs elsewhere
-    localforage.setItem('pogoivcalc.searches', searches)
+      // TODO this belongs elsewhere
+      localforage.setItem('pogoivcalc.searches', searches);
 
-    return { searches }
-  },
+      return { searches: searches };
+    }
 
-  POKEMON_CHECKED(pokemon, state) {
-    const searches = Object.assign({}, state.searches)
+    return SEARCHES_LOADED;
+  }(),
+  POKEMON_CHECKED: function () {
+    function POKEMON_CHECKED(pokemon, state) {
+      var searches = Object.assign({}, state.searches);
 
-    const key = JSON.stringify(pokemon)
+      var key = JSON.stringify(pokemon);
 
-    // if the key already exists inside searches then we'll just return state
-    // this should be a noop and == Alt's preventDefault
-    if (searches.hasOwnProperty(key)) return state
+      // if the key already exists inside searches then we'll just return state
+      // this should be a noop and == Alt's preventDefault
+      if (searches.hasOwnProperty(key)) return state;
 
-    searches[key] = pokemon
+      searches[key] = pokemon;
 
-    // TODO this belongs elsewhere
-    localforage.setItem('pogoivcalc.searches', searches)
+      // TODO this belongs elsewhere
+      localforage.setItem('pogoivcalc.searches', searches);
 
-    return { searches }
-  },
+      return { searches: searches };
+    }
+
+    return POKEMON_CHECKED;
+  }(),
+
 
   MOVES_CHANGED: set('moves'),
   POKEMON_CHANGED: set('pokemon'),
-  DEX_TEXT_CHANGED: set('text'),
-}))
+  DEX_TEXT_CHANGED: set('text')
+}));
 
-module.exports = history
+module.exports = history;
 
-},{"../actions":264,"../utils/mergeState":297,"../utils/validateActions":300}],289:[function(require,module,exports){
-const redux = require('redux')
+},{"../actions":264,"../utils/mergeState":295,"../utils/validateActions":298}],287:[function(require,module,exports){
+var redux = require('redux');
 
-const appraisal = require('./reducers/appraisal')
-const calculator = require('./reducers/calculator')
-const dex = require('./reducers/dex')
-const history = require('./reducers/history')
+var appraisal = require('./reducers/appraisal');
+var calculator = require('./reducers/calculator');
+var dex = require('./reducers/dex');
+var history = require('./reducers/history');
 
-module.exports = redux.createStore(
-  redux.combineReducers({
-    appraisal,
-    calculator,
-    dex,
-    history,
-  })
-)
+module.exports = redux.createStore(redux.combineReducers({
+  appraisal: appraisal,
+  calculator: calculator,
+  dex: dex,
+  history: history
+}));
 
-},{"./reducers/appraisal":285,"./reducers/calculator":286,"./reducers/dex":287,"./reducers/history":288,"redux":238}],290:[function(require,module,exports){
+},{"./reducers/appraisal":283,"./reducers/calculator":284,"./reducers/dex":285,"./reducers/history":286,"redux":238}],288:[function(require,module,exports){
 module.exports = {
   main: {
     display: 'flex',
     height: '100%',
-    flexDirection: 'column',
+    flexDirection: 'column'
   },
 
   mainDesktop: {
     display: 'flex',
     height: '100%',
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
 
   container: {
     flex: 9,
     overflowY: 'scroll',
-    WebkitOverflowScrolling: 'touch',
+    WebkitOverflowScrolling: 'touch'
   },
 
   dex: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    alignItems: 'center',
+    alignItems: 'center'
   },
 
   box: {
@@ -44161,25 +44080,25 @@ module.exports = {
     lineHeight: '1.25em',
     margin: '0.5em 0',
     padding: '1em',
-    textAlign: 'center',
+    textAlign: 'center'
   },
 
   baseStats: {
     alignItems: 'center',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
   },
 
   stat: {
     border: '1px solid #808080',
     textAlign: 'center',
     margin: '0.25em 0',
-    width: '5em',
+    width: '5em'
   },
 
   resultsRow: {
-    textAlign: 'center',
+    textAlign: 'center'
   },
 
   pokemonImage: {
@@ -44188,12 +44107,12 @@ module.exports = {
     height: 150,
     margin: '-16px auto',
     justifyContent: 'center',
-    width: 150,
+    width: 150
   },
 
   bigText: {
     fontSize: '1.5em',
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
 
   menu: {
@@ -44204,7 +44123,7 @@ module.exports = {
     display: 'flex',
     flex: 1,
     justifyContent: 'space-around',
-    zIndex: 2,
+    zIndex: 2
   },
 
   menuDesktop: {
@@ -44216,7 +44135,7 @@ module.exports = {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-around',
-    zIndex: 2,
+    zIndex: 2
   },
 
   linkWrapper: {
@@ -44224,7 +44143,7 @@ module.exports = {
     flex: 1,
     flexDirection: 'column',
     alignItems: 'stretch',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
 
   link: {
@@ -44232,167 +44151,242 @@ module.exports = {
     color: '#fff',
     display: 'flex',
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
 
   activeLink: {
-    color: '#f0d827',
+    color: '#f0d827'
   },
 
   good: {
-    backgroundColor: '#67ba72',
+    backgroundColor: '#67ba72'
   },
 
   ok: {
-    backgroundColor: '#ffdd69',
+    backgroundColor: '#ffdd69'
   },
 
   bad: {
-    backgroundColor: '#ff7772',
-  },
-}
+    backgroundColor: '#ff7772'
+  }
+};
 
-},{}],291:[function(require,module,exports){
-const n = require('./n')
+},{}],289:[function(require,module,exports){
+var n = require('./n');
 //const RN = require('react-native-web')
 //const View = RN.View
 
 function Table(props) {
-  const classList = props.className ? props.className.split(' ') : []
-  classList.push('table')
+  var classList = props.className ? props.className.split(' ') : [];
+  classList.push('table');
 
-  if (props.clean) classList.push('clean')
-  if (props.border) classList.push('border')
+  if (props.clean) classList.push('clean');
+  if (props.border) classList.push('border');
 
   return n('table', {
-    className: classList.join(' '),
-  }, props.children)
+    className: classList.join(' ')
+  }, props.children);
 }
 
 function View(props) {
-  const classList = props.className ? props.className.split(' ') : []
+  var classList = props.className ? props.className.split(' ') : [];
 
-  if (props.spacing) classList.push(`sp-${props.spacing}`)
-  if (props.spacingVertical) classList.push(`sp-vert-${props.spacingVertical}`)
-  if (props.spacingHorizontal) classList.push(`sp-horiz-${props.spacingHorizontal}`)
+  if (props.spacing) classList.push('sp-' + String(props.spacing));
+  if (props.spacingVertical) classList.push('sp-vert-' + String(props.spacingVertical));
+  if (props.spacingHorizontal) classList.push('sp-horiz-' + String(props.spacingHorizontal));
 
   return n('div', {
     className: classList.join(' '),
-    style: props.style,
-  }, props.children)
+    style: props.style
+  }, props.children);
 }
 
-const Header = props => (
-  n('h1', { style: { textAlign: 'center' } }, props.children)
-)
+var Header = function Header(props) {
+  return n('h1', { style: { textAlign: 'center' } }, props.children);
+};
 
-const Button = props => (
-  n('button', {
-    className: `btn btn-${props.size}`,
+var Button = function Button(props) {
+  return n('button', {
+    className: 'btn btn-' + String(props.size),
     onClick: props.onClick,
-    style: props.style,
-  }, props.children)
-)
+    style: props.style
+  }, props.children);
+};
 
-const FormControl = props => (
-  n('label', [
-    n('strong', props.label),
-  ].concat(props.children))
-)
+var FormControl = function FormControl(props) {
+  return n('label', [n('strong', props.label)].concat(props.children));
+};
 
 function Text(props) {
-  const textProps = { style: {} }
-  if (props.className) textProps.className = props.className
-  if (props.style) textProps.style = props.style
-  if (props.strong) textProps.style.fontWeight = 'bold'
+  var textProps = { style: {} };
+  if (props.className) textProps.className = props.className;
+  if (props.style) textProps.style = props.style;
+  if (props.strong) textProps.style.fontWeight = 'bold';
 
-  return n('div', textProps, props.children)
+  return n('div', textProps, props.children);
 }
 
-const Link = props => n('a', props, props.children)
+var Link = function Link(props) {
+  return n('a', props, props.children);
+};
 
-const Input = props => n('input', props)
+var Input = function Input(props) {
+  return n('input', props);
+};
 
-const Image = props => n('img', props)
+var Image = function Image(props) {
+  return n('img', props);
+};
 
-const Panel = props => (
-  n('div', {
+var Panel = function Panel(props) {
+  return n('div', {
     style: {
       border: '1px solid #b2b2b2',
-      padding: '0.5em',
-    },
-  }, props.children)
-)
+      padding: '0.5em'
+    }
+  }, props.children);
+};
 
 module.exports = {
-  Button,
-  FormControl,
-  Header,
-  Image,
-  Input,
-  Link,
-  Panel,
-  Table,
-  Text,
-  View,
+  Button: Button,
+  FormControl: FormControl,
+  Header: Header,
+  Image: Image,
+  Input: Input,
+  Link: Link,
+  Panel: Panel,
+  Table: Table,
+  Text: Text,
+  View: View
+};
+
+},{"./n":296}],290:[function(require,module,exports){
+var n = require('./n');
+//const RN = require('react-native-web')
+//const View = RN.View
+
+function Table(props) {
+  var classList = props.className ? props.className.split(' ') : [];
+  classList.push('table');
+
+  if (props.clean) classList.push('clean');
+  if (props.border) classList.push('border');
+
+  return n('table', {
+    className: classList.join(' ')
+  }, props.children);
 }
 
-},{"./n":298}],292:[function(require,module,exports){
-arguments[4][291][0].apply(exports,arguments)
-},{"./n":298,"dup":291}],293:[function(require,module,exports){
-const great = [
-  'Overall, your Pokemon is a wonder! What a breathtaking Pokemon!',
-  'Overall, your Pokemon simply amazes me. It can accomplish anything!',
-  'Overall, your Pokemon looks like it can really battle with the best of them!',
-]
+function View(props) {
+  var classList = props.className ? props.className.split(' ') : [];
 
-const good = [
-  'Overall, your Pokemon has certainly caught my attention.',
-  'Overall, your Pokemon is a strong Pokemon. You should be proud!',
-  'Overall, your Pokemon is really strong!',
-]
+  if (props.spacing) classList.push('sp-' + String(props.spacing));
+  if (props.spacingVertical) classList.push('sp-vert-' + String(props.spacingVertical));
+  if (props.spacingHorizontal) classList.push('sp-horiz-' + String(props.spacingHorizontal));
 
-const bad = [
-  'Overall, your Pokemon is above average.',
-  'Overall, your Pokemon is a decent Pokemon',
-  'Overall, your Pokemon is pretty decent!',
-]
+  return n('div', {
+    className: classList.join(' '),
+    style: props.style
+  }, props.children);
+}
 
-const ugly = [
-  'Overall, your Pokemon is not likely to make much headway in battle',
-  'Overall, your Pokemon may not be great in battle, but I still like it!',
-  'Overall, your Pokemon has room for improvement as far as battling goes.',
-]
+var Header = function Header(props) {
+  return n('h1', { style: { textAlign: 'center' } }, props.children);
+};
 
-const MYSTIC = 0
-const VALOR = 1
-const INSTINCT = 2
+var Button = function Button(props) {
+  return n('button', {
+    className: 'btn btn-' + String(props.size),
+    onClick: props.onClick,
+    style: props.style
+  }, props.children);
+};
+
+var FormControl = function FormControl(props) {
+  return n('label', [n('strong', props.label)].concat(props.children));
+};
+
+function Text(props) {
+  var textProps = { style: {} };
+  if (props.className) textProps.className = props.className;
+  if (props.style) textProps.style = props.style;
+  if (props.strong) textProps.style.fontWeight = 'bold';
+
+  return n('div', textProps, props.children);
+}
+
+var Link = function Link(props) {
+  return n('a', props, props.children);
+};
+
+var Input = function Input(props) {
+  return n('input', props);
+};
+
+var Image = function Image(props) {
+  return n('img', props);
+};
+
+var Panel = function Panel(props) {
+  return n('div', {
+    style: {
+      border: '1px solid #b2b2b2',
+      padding: '0.5em'
+    }
+  }, props.children);
+};
 
 module.exports = {
-  MYSTIC, VALOR, INSTINCT,
-  great, good, bad, ugly,
-}
+  Button: Button,
+  FormControl: FormControl,
+  Header: Header,
+  Image: Image,
+  Input: Input,
+  Link: Link,
+  Panel: Panel,
+  Table: Table,
+  Text: Text,
+  View: View
+};
 
-},{}],294:[function(require,module,exports){
-const dispatchableActions = require('../dispatchableActions')
-const magic = require('../../src/magic')
-const store = require('../store');
+},{"./n":296}],291:[function(require,module,exports){
+var great = ['Overall, your Pokemon is a wonder! What a breathtaking Pokemon!', 'Overall, your Pokemon simply amazes me. It can accomplish anything!', 'Overall, your Pokemon looks like it can really battle with the best of them!'];
 
-const IV_RANGE = {
+var good = ['Overall, your Pokemon has certainly caught my attention.', 'Overall, your Pokemon is a strong Pokemon. You should be proud!', 'Overall, your Pokemon is really strong!'];
+
+var bad = ['Overall, your Pokemon is above average.', 'Overall, your Pokemon is a decent Pokemon', 'Overall, your Pokemon is pretty decent!'];
+
+var ugly = ['Overall, your Pokemon is not likely to make much headway in battle', 'Overall, your Pokemon may not be great in battle, but I still like it!', 'Overall, your Pokemon has room for improvement as far as battling goes.'];
+
+var MYSTIC = 0;
+var VALOR = 1;
+var INSTINCT = 2;
+
+module.exports = {
+  MYSTIC: MYSTIC, VALOR: VALOR, INSTINCT: INSTINCT,
+  great: great, good: good, bad: bad, ugly: ugly
+};
+
+},{}],292:[function(require,module,exports){
+var dispatchableActions = require('../dispatchableActions');
+var magic = require('../../src/magic');
+var store = require('../store');
+
+var IV_RANGE = {
   great: [82, 100],
   good: [67, 81],
   bad: [51, 66],
-  ugly: [0, 50],
-}
+  ugly: [0, 50]
+};
 
 function calculateValues(nextState) {
-  const storeState = store.getState()
+  var storeState = store.getState();
 
-  const state = nextState || storeState.calculator
-  const appraisal = storeState.appraisal
+  var state = nextState || storeState.calculator;
+  var appraisal = storeState.appraisal;
 
   try {
-    const values = {
+    var values = {
       name: state.name,
       cp: Number(state.cp),
       hp: Number(state.hp),
@@ -44400,144 +44394,220 @@ function calculateValues(nextState) {
       level: state.level ? Number(state.level) : null,
       trainerLevel: Number(state.trainerLevel) || 38.5, // XXX hack until we start doing Math.min(trainerLevel + 1.5, 40)
       attrs: Object.keys(appraisal.attrs),
-      ivRange: IV_RANGE[appraisal.ivRange],
-    }
-    const results = magic(values)
-    dispatchableActions.resultsCalculated(results)
-    dispatchableActions.pokemonChecked(values)
+      ivRange: IV_RANGE[appraisal.ivRange]
+    };
+    var results = magic(values);
+    dispatchableActions.resultsCalculated(results);
+    dispatchableActions.pokemonChecked(values);
   } catch (err) {
-    console.error(err)
-    alert('Looks like there is a problem with the values you entered.')
+    console.error(err);
+    alert('Looks like there is a problem with the values you entered.');
   }
 }
 
-module.exports = calculateValues
+module.exports = calculateValues;
 
-},{"../../src/magic":261,"../dispatchableActions":283,"../store":289}],295:[function(require,module,exports){
-const React = require('react')
-const n = require('./n')
+},{"../../src/magic":261,"../dispatchableActions":281,"../store":287}],293:[function(require,module,exports){
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = require('react');
+var n = require('./n');
 
 function connect(Component, o) {
-  return class ConnectedComponent extends React.Component {
-    constructor() {
-      super()
+  return function (_React$Component) {
+    _inherits(ConnectedComponent, _React$Component);
 
-      this.stores = o.listenTo()
-      this.subscriptions = []
+    function ConnectedComponent() {
+      _classCallCheck(this, ConnectedComponent);
 
-      this.state = this.computeState()
+      var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ConnectedComponent).call(this));
+
+      _this.stores = o.listenTo();
+      _this.subscriptions = [];
+
+      _this.state = _this.computeState();
+      return _this;
     }
 
-    computeState() {
-      return Object.keys(this.stores).reduce((obj, key) => {
-        const store = this.stores[key]
-        obj[key] = store.getState()
-        return obj
-      }, {})
-    }
+    _createClass(ConnectedComponent, [{
+      key: 'computeState',
+      value: function () {
+        function computeState() {
+          var _this2 = this;
 
-    componentDidMount() {
-      this.subscriptions = Object.keys(this.stores).map((key) => {
-        return this.stores[key].subscribe(
-          () => this.setState(this.computeState())
-        )
-      })
-      o.componentDidMount && o.componentDidMount()
-    }
+          return Object.keys(this.stores).reduce(function (obj, key) {
+            var store = _this2.stores[key];
+            obj[key] = store.getState();
+            return obj;
+          }, {});
+        }
 
-    componentWillUnmount() {
-      this.subscriptions.forEach(sub => sub.dispose())
-      this.subscriptions = []
-    }
+        return computeState;
+      }()
+    }, {
+      key: 'componentDidMount',
+      value: function () {
+        function componentDidMount() {
+          var _this3 = this;
 
-    render() {
-      return n(Component, o.getProps(this.state, this.props), this.props.children)
-    }
-  }
+          this.subscriptions = Object.keys(this.stores).map(function (key) {
+            return _this3.stores[key].subscribe(function () {
+              return _this3.setState(_this3.computeState());
+            });
+          });
+          o.componentDidMount && o.componentDidMount();
+        }
+
+        return componentDidMount;
+      }()
+    }, {
+      key: 'componentWillUnmount',
+      value: function () {
+        function componentWillUnmount() {
+          this.subscriptions.forEach(function (sub) {
+            return sub.dispose();
+          });
+          this.subscriptions = [];
+        }
+
+        return componentWillUnmount;
+      }()
+    }, {
+      key: 'render',
+      value: function () {
+        function render() {
+          return n(Component, o.getProps(this.state, this.props), this.props.children);
+        }
+
+        return render;
+      }()
+    }]);
+
+    return ConnectedComponent;
+  }(React.Component);
 }
 
-module.exports = connect
+module.exports = connect;
 
-},{"./n":298,"react":232}],296:[function(require,module,exports){
-const React = require('react')
+},{"./n":296,"react":232}],294:[function(require,module,exports){
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = require('react');
 
 function liftState(state, Component) {
-  return class extends React.Component {
-    constructor() {
-      super()
-      this.state = state
+  return function (_React$Component) {
+    _inherits(_class, _React$Component);
+
+    function _class() {
+      _classCallCheck(this, _class);
+
+      var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(_class).call(this));
+
+      _this.state = state;
+      return _this;
     }
 
-    render() {
-      return React.createElement(Component, Object.assign({
-        setState: nextState => this.setState(nextState),
-      }, this.props, this.state))
-    }
-  }
+    _createClass(_class, [{
+      key: 'render',
+      value: function () {
+        function render() {
+          var _this2 = this;
+
+          return React.createElement(Component, Object.assign({
+            setState: function () {
+              function setState(nextState) {
+                return _this2.setState(nextState);
+              }
+
+              return setState;
+            }()
+          }, this.props, this.state));
+        }
+
+        return render;
+      }()
+    }]);
+
+    return _class;
+  }(React.Component);
 }
 
-module.exports = liftState
+module.exports = liftState;
+
+},{"react":232}],295:[function(require,module,exports){
+function mergeState(initialState, mergers) {
+  return function (state, action) {
+    if (state === undefined) return initialState;
+    if (mergers[action.type]) {
+      return Object.assign({}, state, mergers[action.type](action.payload, state, action));
+    }
+    return state;
+  };
+}
+
+module.exports = mergeState;
+
+},{}],296:[function(require,module,exports){
+var React = require('react');
+
+module.exports = function () {
+  function n(a, b, c) {
+    var component = a;
+    var props = null;
+    var children = undefined;
+
+    var len = arguments.length;
+
+    if (len === 2) {
+      component = a;
+      if (Array.isArray(b) || typeof b === 'string' || typeof b === 'number') {
+        children = b;
+      } else {
+        props = b;
+      }
+    } else if (len === 3) {
+      props = b;
+      children = c;
+    }
+
+    var args = [component, props].concat(children);
+    return React.createElement.apply(React, args);
+  }
+
+  return n;
+}();
 
 },{"react":232}],297:[function(require,module,exports){
-function mergeState(initialState, mergers) {
-  return (state, action) => {
-    if (state === undefined) return initialState
-    if (mergers[action.type]) {
-      return Object.assign(
-        {},
-        state,
-        mergers[action.type](action.payload, state, action)
-      )
-    }
-    return state
-  }
-}
-
-module.exports = mergeState
-
-},{}],298:[function(require,module,exports){
-const React = require('react')
-
-module.exports = function n(a, b, c) {
-  var component = a
-  var props = null
-  var children = undefined
-
-  var len = arguments.length
-
-  if (len === 2) {
-    component = a
-    if (Array.isArray(b) || typeof b === 'string' || typeof b === 'number') {
-      children = b
-    } else {
-      props = b
-    }
-  } else if (len === 3) {
-    props = b
-    children = c
-  }
-
-  const args = [component, props].concat(children)
-  return React.createElement.apply(React, args)
-}
-
-},{"react":232}],299:[function(require,module,exports){
 function scrollTop() {
   if (typeof document !== 'undefined') {
-    const node = document.querySelector('.pm')
-    if (node) node.scrollTop = 0
+    var node = document.querySelector('.pm');
+    if (node) node.scrollTop = 0;
   }
 }
 
-module.exports = scrollTop
+module.exports = scrollTop;
 
-},{}],300:[function(require,module,exports){
+},{}],298:[function(require,module,exports){
 function validateActions(actions, mergers) {
-  const invalid = Object.keys(mergers).filter(x => !actions.hasOwnProperty(x))
-  if (invalid.length) throw new ReferenceError(invalid.join(' '))
-  return mergers
+  var invalid = Object.keys(mergers).filter(function (x) {
+    return !actions.hasOwnProperty(x);
+  });
+  if (invalid.length) throw new ReferenceError(invalid.join(' '));
+  return mergers;
 }
 
-module.exports = validateActions
+module.exports = validateActions;
 
-},{}]},{},[284]);
+},{}]},{},[282]);
