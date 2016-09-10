@@ -129,7 +129,7 @@ class Main extends React.Component {
 }
 
 localforage.getItem('pogoivcalc.searches').then((searches) => {
-  if (searches) alt.load({ HistoryStore: { searches } })
+  if (searches) dispatchableActions.searchesLoaded(searches)
 })
 
 localforage.getItem('pogoivcalc.trainerLevel').then((trainerLevel) => {

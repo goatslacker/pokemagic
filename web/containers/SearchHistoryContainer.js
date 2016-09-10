@@ -1,13 +1,9 @@
 const SearchHistory = require('../components/SearchHistory')
-const connect = require('../utils/connect')
-const historyStore = require('../stores/HistoryStore')
+const reactRedux = require('react-redux')
 
-const SearchHistoryContainer = connect(SearchHistory, {
-  listenTo: () => ({ historyStore }),
-  getProps: state => ({
-    searches: Object.keys(state.historyStore.searches)
-      .map(k => state.historyStore.searches[k]),
-  }),
-})
+const SearchHistoryContainer = reactRedux.connect(state => ({
+  searches: Object.keys(state.history.searches)
+    .map(k => state.history.searches[k]),
+}))(SearchHistory)
 
 module.exports = SearchHistoryContainer

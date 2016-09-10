@@ -29,4 +29,7 @@ module.exports = createActionCreators([
   'MOVES_CHANGED',
   'POKEMON_CHANGED',
   'DEX_TEXT_CHANGED',
+
+  'POKEMON_CHECKED',
+  'SEARCHES_LOADED',
 ])

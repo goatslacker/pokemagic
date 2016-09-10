@@ -1,6 +1,5 @@
-const historyActions = require('../actions/historyActions')
-const magic = require('../../src/magic')
 const dispatchableActions = require('../dispatchableActions')
+const magic = require('../../src/magic')
 const store = require('../store');
 
 const IV_RANGE = {
@@ -29,7 +28,7 @@ function calculateValues(nextState) {
     }
     const results = magic(values)
     dispatchableActions.resultsCalculated(results)
-    historyActions.pokemonChecked(values)
+    dispatchableActions.pokemonChecked(values)
   } catch (err) {
     console.error(err)
     alert('Looks like there is a problem with the values you entered.')
