@@ -44,7 +44,7 @@ function Rater(props) {
     }, 'Calculate'),
     ' ',
     n(B.Button, { size: 'sm', onClick: dispatchableActions.valuesReset }, 'Clear'),
-    n('hr'),
+    n(B.Divider),
     n(SearchHistoryContainer),
   ])
 }

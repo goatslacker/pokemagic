@@ -9,7 +9,7 @@ function Matchup(props) {
     n(B.View, [
       n(B.Header, 'Ideal Matchup'),
       n(B.Text, 'This is calculated based on the opposing Pokemon\'s type and assuming the opponent has the best possible moveset combination for their Pokemon. The results do not include legendaries. Pokemon type effectiveness and resistances are also taken into account.'),
-      n('hr'),
+      n(B.Divider),
       n(FormPokemonName, { name: props.name }),
       matchups.length ? (
         n(B.Table, {

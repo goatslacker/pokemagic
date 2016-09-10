@@ -66,7 +66,7 @@ function RefineResults(props) {
   ) || 0
 
   return n(B.View, { spacingVertical: 'md' }, [
-    n('h3', { style: Styles.resultsRow }, `Possible values (${results.length})`),
+    n(B.H3, { style: Styles.resultsRow }, `Possible values (${results.length})`),
 
     n(B.Text, { style: Styles.resultsRow }, [
       results.length === 1

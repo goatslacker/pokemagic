@@ -49,14 +49,14 @@ function Results(props) {
       // We should only show best moveset if it is in its final evolved form...
       bestMoves && (
         n(B.View, { spacingVertical: 'md' }, [
-          n('h3', { style: Styles.resultsRow }, `Best moveset combos for ${props.pokemon.name}`),
+          n(B.H3, { style: Styles.resultsRow }, `Best moveset combos for ${props.pokemon.name}`),
           n(MoveCombos, { moves: bestMoves }),
         ])
       ),
 
       props.best.meta.EvolveCP && (
         n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [
-          n('h3', 'Evolution'),
+          n(B.H3, 'Evolution'),
           n(B.Panel, [
             n(B.Text, `If evolved it would have a CP of about ${props.best.meta.EvolveCP}`),
           ]),
@@ -65,7 +65,7 @@ function Results(props) {
 
       props.best.meta.Stardust > 0 && (
         n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [
-          n('h3', { style: Styles.resultsRow }, `Maxing out to level ${props.best.meta.MaxLevel}`),
+          n(B.H3, { style: Styles.resultsRow }, `Maxing out to level ${props.best.meta.MaxLevel}`),
           props.pokemon.level === null && (
             n(B.Text, `Assuming that your Pokemon's current level is ${props.best.Level}. The information below is just an estimate.`)
           ),
@@ -80,7 +80,7 @@ function Results(props) {
       ),
 
       n(B.View, { spacingVertical: 'md' }, [
-        n('h3', { style: Styles.resultsRow }, 'Yours vs Perfect by level'),
+        n(B.H3, { style: Styles.resultsRow }, 'Yours vs Perfect by level'),
         n(B.Table, [
           n('thead', [
             n('tr', [
@@ -111,7 +111,7 @@ function Results(props) {
       ]),
 
       n(B.View, { spacingVertical: 'md' }, [
-        n('h3', { style: Styles.resultsRow }, 'Ratings'),
+        n(B.H3, { style: Styles.resultsRow }, 'Ratings'),
         n(B.Table, [
           n('thead', [
             n('tr', [

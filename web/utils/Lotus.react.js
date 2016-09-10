@@ -31,6 +31,10 @@ const Header = props => (
   n('h1', { style: { textAlign: 'center' } }, props.children)
 )
 
+const H3 = props => n('h3', props, props.children)
+
+const Divider = () => n('hr')
+
 const Button = props => (
   n('button', {
     className: `btn btn-${props.size}`,
@@ -71,7 +75,9 @@ const Panel = props => (
 
 module.exports = {
   Button,
+  Divider,
   FormControl,
+  H3,
   Header,
   Image,
   Input,

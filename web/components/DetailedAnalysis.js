@@ -28,7 +28,7 @@ class DetailedAnalysis extends React.Component {
 
     if (this.state.ivs === null) {
       return n(B.View, [
-        n('h3', 'Pick your IVs'),
+        n(B.H3, 'Pick your IVs'),
         n(ResultsTable, {
           results: this.props.results,
           onSelect: ivs => this.setState({ ivs }),
@@ -45,7 +45,7 @@ class DetailedAnalysis extends React.Component {
         this.state.ivs.ivs.IndSta
       )
       return n(B.View, [
-        n('h3', 'Pick your moveset'),
+        n(B.H3, 'Pick your moveset'),
         n(MoveCombos, {
           moves,
           onSelect: moveset => this.setState({ moveset }),

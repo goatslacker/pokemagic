@@ -43040,7 +43040,7 @@ var DetailedAnalysis = function (_React$Component) {
         }
 
         if (this.state.ivs === null) {
-          return n(B.View, [n('h3', 'Pick your IVs'), n(ResultsTable, {
+          return n(B.View, [n(B.H3, 'Pick your IVs'), n(ResultsTable, {
             results: this.props.results,
             onSelect: function () {
               function onSelect(ivs) {
@@ -43054,7 +43054,7 @@ var DetailedAnalysis = function (_React$Component) {
 
         if (this.state.moveset === null) {
           var moves = bestMovesFor(this.state.ivs.Name, Number(this.state.ivs.Level), this.state.ivs.ivs.IndAtk, this.state.ivs.ivs.IndDef, this.state.ivs.ivs.IndSta);
-          return n(B.View, [n('h3', 'Pick your moveset'), n(MoveCombos, {
+          return n(B.View, [n(B.H3, 'Pick your moveset'), n(MoveCombos, {
             moves: moves,
             onSelect: function () {
               function onSelect(moveset) {
@@ -43181,7 +43181,7 @@ function Report(props) {
 }
 
 function Dex(props) {
-  return n(B.View, [n(B.Header, 'Pokemon Data'), n('hr'), n(B.FormControl, { label: 'Pokemon Name or Move Name' }, [n(Select, {
+  return n(B.View, [n(B.Header, 'Pokemon Data'), n(B.Divider), n(B.FormControl, { label: 'Pokemon Name or Move Name' }, [n(Select, {
     inputProps: {
       autoCorrect: 'off',
       autoCapitalize: 'off',
@@ -43191,7 +43191,7 @@ function Dex(props) {
     value: props.text,
     options: movesList,
     onChange: sweetMoves
-  })]), Mon.hasOwnProperty(props.text) && n(B.View, [n(Pokedex, { pokemon: Mon[props.text] }), n('hr')]), props.moves.length && n(B.View, [n(B.Text, { strong: true }, 'Possible Movesets'), n(MoveCombos, { moves: props.moves })]) || undefined, props.moves.Name && n(B.Panel, [n(B.Text, 'Name: ' + String(props.moves.Name)), n(B.Text, 'Power: ' + String(props.moves.Power)), n(B.Text, 'Duration: ' + String((props.moves.DurationMs / 1000).toFixed(1)) + ' seconds'), n(B.Text, 'PPS: ' + String((props.moves.Power / (props.moves.DurationMs / 1000)).toFixed(3))), n(B.Text, 'Energy: ' + String(props.moves.EnergyDelta))]) || undefined, props.pokemon.length && n(B.Panel, props.pokemon.map(function (mon) {
+  })]), Mon.hasOwnProperty(props.text) && n(B.View, [n(Pokedex, { pokemon: Mon[props.text] }), n(B.Divider)]), props.moves.length && n(B.View, [n(B.Text, { strong: true }, 'Possible Movesets'), n(MoveCombos, { moves: props.moves })]) || undefined, props.moves.Name && n(B.Panel, [n(B.Text, 'Name: ' + String(props.moves.Name)), n(B.Text, 'Power: ' + String(props.moves.Power)), n(B.Text, 'Duration: ' + String((props.moves.DurationMs / 1000).toFixed(1)) + ' seconds'), n(B.Text, 'PPS: ' + String((props.moves.Power / (props.moves.DurationMs / 1000)).toFixed(3))), n(B.Text, 'Energy: ' + String(props.moves.EnergyDelta))]) || undefined, props.pokemon.length && n(B.Panel, props.pokemon.map(function (mon) {
     return n(B.Image, {
       onClick: function () {
         function onClick() {
@@ -43204,7 +43204,7 @@ function Dex(props) {
       height: 60,
       width: 60
     });
-  })) || undefined, n('hr'), Mon.hasOwnProperty(props.text) && n(B.View, [n(Report, { pokemon: Mon[props.text] }), n('hr')]), n('h3', 'More Info'), n(B.Text, 'The tables above feature a combined DPS score for each possible move combination. The DPS is calculated based on neutral damage for a level 25 Pokemon with 10/10/10 IVs assuming that the Pokemon will be using their quick move constantly and their charge move immediately when it becomes available. STAB damage is taken into account as well as each move\'s animation time. You can also use this search to look up which Pokemon can learn a particular move.')]);
+  })) || undefined, n(B.Divider), Mon.hasOwnProperty(props.text) && n(B.View, [n(Report, { pokemon: Mon[props.text] }), n(B.Divider)]), n(B.H3, 'More Info'), n(B.Text, 'The tables above feature a combined DPS score for each possible move combination. The DPS is calculated based on neutral damage for a level 25 Pokemon with 10/10/10 IVs assuming that the Pokemon will be using their quick move constantly and their charge move immediately when it becomes available. STAB damage is taken into account as well as each move\'s animation time. You can also use this search to look up which Pokemon can learn a particular move.')]);
 }
 
 module.exports = Dex;
@@ -43317,7 +43317,7 @@ var n = require('../utils/n');
 
 function Matchup(props) {
   var matchups = props.name ? idealMatchup.attacking(props.name) : [];
-  return n(B.View, [n(B.Header, 'Ideal Matchup'), n(B.Text, 'This is calculated based on the opposing Pokemon\'s type and assuming the opponent has the best possible moveset combination for their Pokemon. The results do not include legendaries. Pokemon type effectiveness and resistances are also taken into account.'), n('hr'), n(FormPokemonName, { name: props.name }), matchups.length ? n(B.Table, {
+  return n(B.View, [n(B.Header, 'Ideal Matchup'), n(B.Text, 'This is calculated based on the opposing Pokemon\'s type and assuming the opponent has the best possible moveset combination for their Pokemon. The results do not include legendaries. Pokemon type effectiveness and resistances are also taken into account.'), n(B.Divider), n(FormPokemonName, { name: props.name }), matchups.length ? n(B.Table, {
     border: true
   }, [n('thead', [n('tr', [n('th', 'Name'), n('th', 'Moves')])]), n('tbody', matchups.map(function (value) {
     return n('tr', [n('td', [n(B.Text, { strong: true }, value.name), n(B.Text, String(value.score.toFixed(3)) + ' Opp TTL')]), n('td', [n(B.Text, value.quick), n(B.Text, value.charge)])]);
@@ -43377,13 +43377,13 @@ function PowerUp(props) {
 
   var power = powerupTools.howMuchPowerUp(Number(props.level || minPokemonLevel), Number(props.trainerLevel));
 
-  return n(B.View, [n(B.Header, 'Power Up costs'), n(B.Text, 'Find out how much stardust and candy it will cost to max your Pokemon out.'), n('hr'), n(FormTrainerLevel, {
+  return n(B.View, [n(B.Header, 'Power Up costs'), n(B.Text, 'Find out how much stardust and candy it will cost to max your Pokemon out.'), n(B.Divider), n(FormTrainerLevel, {
     trainerLevel: props.trainerLevel
   }), n(FormStardust, {
     stardust: props.stardust
   }), n(FormPokemonLevel, {
     level: props.level
-  }), power && n(B.View, { spacingVertical: 'md' }, [n('h3', 'Results'), n(B.Panel, 'Candy cost: ' + String(power.candy)), n(B.Panel, 'Stardust cost: ' + String(power.stardust))])]);
+  }), power && n(B.View, { spacingVertical: 'md' }, [n(B.H3, 'Results'), n(B.Panel, 'Candy cost: ' + String(power.candy)), n(B.Panel, 'Stardust cost: ' + String(power.stardust))])]);
 }
 
 module.exports = PowerUp;
@@ -43453,7 +43453,7 @@ function Rater(props) {
     style: {
       backgroundColor: '#6297de'
     }
-  }, 'Calculate'), ' ', n(B.Button, { size: 'sm', onClick: dispatchableActions.valuesReset }, 'Clear'), n('hr'), n(SearchHistoryContainer)]);
+  }, 'Calculate'), ' ', n(B.Button, { size: 'sm', onClick: dispatchableActions.valuesReset }, 'Clear'), n(B.Divider), n(SearchHistoryContainer)]);
 }
 
 module.exports = Rater;
@@ -43523,7 +43523,7 @@ function RefineResults(props) {
     return x.percent.PerfectIV > 66;
   }).length / results.length) || 0;
 
-  return n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Possible values (' + String(results.length) + ')'), n(B.Text, { style: Styles.resultsRow }, [results.length === 1 ? n('span', 'Congrats, here are your Pokemon\'s values') : n('span', ['There are ', n('strong', results.length), ' possibilities and a ', n('strong', String(chance) + '%'), ' chance you will have a good ' + String(props.name) + '. ', 'Highlighted rows show even levels since you can only catch even leveled Pokemon.'])]), !props.show && results.length > 1 && n(B.View, { style: Styles.resultsRow }, [n(B.View, { spacing: 'sm' }), n(B.Text, 'Refine results by selecting "Appraise" from the Pokemon screen.'), n(B.Button, {
+  return n(B.View, { spacingVertical: 'md' }, [n(B.H3, { style: Styles.resultsRow }, 'Possible values (' + String(results.length) + ')'), n(B.Text, { style: Styles.resultsRow }, [results.length === 1 ? n('span', 'Congrats, here are your Pokemon\'s values') : n('span', ['There are ', n('strong', results.length), ' possibilities and a ', n('strong', String(chance) + '%'), ' chance you will have a good ' + String(props.name) + '. ', 'Highlighted rows show even levels since you can only catch even leveled Pokemon.'])]), !props.show && results.length > 1 && n(B.View, { style: Styles.resultsRow }, [n(B.View, { spacing: 'sm' }), n(B.Text, 'Refine results by selecting "Appraise" from the Pokemon screen.'), n(B.Button, {
     onClick: function () {
       function onClick() {
         return props.setState({ show: true });
@@ -43564,7 +43564,7 @@ function Results(props) {
   return n(B.View, [n(B.View, [n(B.Button, { size: 'sm', onClick: dispatchableActions.resultsReset }, 'Check Another')]), n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n(B.Text, { style: Styles.bigText }, props.pokemon.name), n(B.Text, 'CP: ' + String(props.pokemon.cp) + ' | HP: ' + String(props.pokemon.hp)), n(B.View, { style: Styles.pokemonImage }, [n(B.Image, { src: 'images/' + String(props.pokemon.name) + '.png', height: 150, width: 150 })]), n(B.Text, { style: Styles.bigText }, props.range.iv[0] === props.range.iv[1] ? String(props.range.iv[0]) + '%' : String(props.range.iv[0]) + '% - ' + String(props.range.iv[1]) + '%'), n(B.Text, { style: Styles.resultsRow }, [props.chance === 100 ? 'Keep your ' + String(props.pokemon.cp) + 'CP ' + String(props.pokemon.name) : props.chance === 0 ? 'Send this Pokemon to the grinder for candy.' : 'Maybe you should keep this Pokemon around.'])]), n(RefineResults, { name: props.pokemon.name, results: props.values }),
 
   // We should only show best moveset if it is in its final evolved form...
-  bestMoves && n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Best moveset combos for ' + String(props.pokemon.name)), n(MoveCombos, { moves: bestMoves })]), props.best.meta.EvolveCP && n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n('h3', 'Evolution'), n(B.Panel, [n(B.Text, 'If evolved it would have a CP of about ' + String(props.best.meta.EvolveCP))])]), props.best.meta.Stardust > 0 && n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n('h3', { style: Styles.resultsRow }, 'Maxing out to level ' + String(props.best.meta.MaxLevel)), props.pokemon.level === null && n(B.Text, 'Assuming that your Pokemon\'s current level is ' + String(props.best.Level) + '. The information below is just an estimate.'), n(B.View, [n(B.Panel, 'Current level: ' + String(props.best.Level)), n(B.Panel, 'Candy cost: ' + String(props.best.meta.Candy)), n(B.Panel, 'Stardust cost: ' + String(props.best.meta.Stardust)), n(B.Panel, 'CP: ' + String(props.best.meta.MaxCP)), n(B.Panel, 'HP: ' + String(props.best.meta.MaxHP))])]), n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Yours vs Perfect by level'), n(B.Table, [n('thead', [n('tr', [n('th', 'Level'), n('th', 'Your CP'), n('th', 'Best CP'), n('th', 'Your HP'), n('th', 'Best HP')])]), n('tbody', props.values.reduce(function (o, value) {
+  bestMoves && n(B.View, { spacingVertical: 'md' }, [n(B.H3, { style: Styles.resultsRow }, 'Best moveset combos for ' + String(props.pokemon.name)), n(MoveCombos, { moves: bestMoves })]), props.best.meta.EvolveCP && n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n(B.H3, 'Evolution'), n(B.Panel, [n(B.Text, 'If evolved it would have a CP of about ' + String(props.best.meta.EvolveCP))])]), props.best.meta.Stardust > 0 && n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [n(B.H3, { style: Styles.resultsRow }, 'Maxing out to level ' + String(props.best.meta.MaxLevel)), props.pokemon.level === null && n(B.Text, 'Assuming that your Pokemon\'s current level is ' + String(props.best.Level) + '. The information below is just an estimate.'), n(B.View, [n(B.Panel, 'Current level: ' + String(props.best.Level)), n(B.Panel, 'Candy cost: ' + String(props.best.meta.Candy)), n(B.Panel, 'Stardust cost: ' + String(props.best.meta.Stardust)), n(B.Panel, 'CP: ' + String(props.best.meta.MaxCP)), n(B.Panel, 'HP: ' + String(props.best.meta.MaxHP))])]), n(B.View, { spacingVertical: 'md' }, [n(B.H3, { style: Styles.resultsRow }, 'Yours vs Perfect by level'), n(B.Table, [n('thead', [n('tr', [n('th', 'Level'), n('th', 'Your CP'), n('th', 'Best CP'), n('th', 'Your HP'), n('th', 'Best HP')])]), n('tbody', props.values.reduce(function (o, value) {
     if (o._[value.Level]) return o;
     o._[value.Level] = 1;
     o.rows.push(value);
@@ -43573,7 +43573,7 @@ function Results(props) {
     return a.Level > b.Level ? 1 : -1;
   }).map(function (value) {
     return n('tr', [n('td', value.Level), n('td', value.CP), n('td', value.meta.MaxLevelCP), n('td', value.HP), n('td', value.meta.MaxLevelHP)]);
-  }))])]), n(B.View, { spacingVertical: 'md' }, [n('h3', { style: Styles.resultsRow }, 'Ratings'), n(B.Table, [n('thead', [n('tr', [n('th', 'Level'), n('th', 'Overall'), n('th', props.pokemon.name)].concat(props.best.rating.type.map(function (type) {
+  }))])]), n(B.View, { spacingVertical: 'md' }, [n(B.H3, { style: Styles.resultsRow }, 'Ratings'), n(B.Table, [n('thead', [n('tr', [n('th', 'Level'), n('th', 'Overall'), n('th', props.pokemon.name)].concat(props.best.rating.type.map(function (type) {
     return n('th', type.type);
   })))]), n('tbody', props.values.reduce(function (o, value) {
     if (o._[value.Level]) return o;
@@ -44273,6 +44273,14 @@ var Header = function Header(props) {
   return n('h1', { style: { textAlign: 'center' } }, props.children);
 };
 
+var H3 = function H3(props) {
+  return n('h3', props, props.children);
+};
+
+var Divider = function Divider() {
+  return n('hr');
+};
+
 var Button = function Button(props) {
   return n('button', {
     className: 'btn btn-' + String(props.size),
@@ -44317,7 +44325,9 @@ var Panel = function Panel(props) {
 
 module.exports = {
   Button: Button,
+  Divider: Divider,
   FormControl: FormControl,
+  H3: H3,
   Header: Header,
   Image: Image,
   Input: Input,
@@ -44362,6 +44372,14 @@ var Header = function Header(props) {
   return n('h1', { style: { textAlign: 'center' } }, props.children);
 };
 
+var H3 = function H3(props) {
+  return n('h3', props, props.children);
+};
+
+var Divider = function Divider() {
+  return n('hr');
+};
+
 var Button = function Button(props) {
   return n('button', {
     className: 'btn btn-' + String(props.size),
@@ -44406,7 +44424,9 @@ var Panel = function Panel(props) {
 
 module.exports = {
   Button: Button,
+  Divider: Divider,
   FormControl: FormControl,
+  H3: H3,
   Header: Header,
   Image: Image,
   Input: Input,

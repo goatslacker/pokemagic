@@ -19,7 +19,7 @@ function PowerUp(props) {
     n(B.View, [
       n(B.Header, 'Power Up costs'),
       n(B.Text, 'Find out how much stardust and candy it will cost to max your Pokemon out.'),
-      n('hr'),
+      n(B.Divider),
       n(FormTrainerLevel, {
         trainerLevel: props.trainerLevel,
       }),
@@ -31,7 +31,7 @@ function PowerUp(props) {
       }),
       power && (
         n(B.View, { spacingVertical: 'md' }, [
-          n('h3', 'Results'),
+          n(B.H3, 'Results'),
           n(B.Panel, `Candy cost: ${power.candy}`),
           n(B.Panel, `Stardust cost: ${power.stardust}`),
         ])
