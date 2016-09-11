@@ -57,6 +57,9 @@ function Pokedex(props) {
   const types = [props.pokemon.type1, props.pokemon.type2]
     .filter(Boolean).join('/')
   const fx = getEffectiveness(props.pokemon)
+  const family = Pokemon
+    .filter(x => x.family === props.pokemon.family)
+    .filter(x => x.name !== props.pokemon.name)
 
   return n(B.View, [
     n(B.View, {
@@ -86,6 +89,20 @@ function Pokedex(props) {
     n(B.View, { spacing: 'sm' }),
     n(B.Text, `Super Effective: ${fx.superEffective.join(', ')}`),
     n(B.Text, `Not Very Effective: ${fx.notEffective.join(', ')}`),
+    family.length && (
+      n(B.View, {
+        style: Styles.resultsRow,
+      }, [
+        n(B.View, { spacing: 'sm' }),
+        n(B.Text, 'Family'),
+        n(B.Panel, family.map(fam => n(B.Image, {
+          onClick: () => sweetMoves({ value: fam.name }),
+          src: `images/${fam.name}.png`,
+          height: 50,
+          width: 50,
+        }))),
+      ])
+    ) || undefined,
   ])
 }
 

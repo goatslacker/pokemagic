@@ -43158,12 +43158,32 @@ function sweetMoves(x) {
 function Pokedex(props) {
   var types = [props.pokemon.type1, props.pokemon.type2].filter(Boolean).join('/');
   var fx = getEffectiveness(props.pokemon);
+  var family = Pokemon.filter(function (x) {
+    return x.family === props.pokemon.family;
+  }).filter(function (x) {
+    return x.name !== props.pokemon.name;
+  });
 
   return n(B.View, [n(B.View, {
     style: Styles.dex
   }, [n(B.View, [n(B.Image, { src: 'images/' + String(props.pokemon.name.toUpperCase()) + '.png', height: 150, width: 150 }), n(B.Text, { strong: true, style: Styles.resultsRow }, types)]), n(B.View, {
     style: Styles.baseStats
-  }, [n(B.View, { style: Styles.stat }, [n(B.Text, 'Attack'), n(B.Text, { strong: true }, props.pokemon.stats.attack)]), n(B.View, { style: Styles.stat }, [n(B.Text, 'Defense'), n(B.Text, { strong: true }, props.pokemon.stats.defense)]), n(B.View, { style: Styles.stat }, [n(B.Text, 'Stamina'), n(B.Text, { strong: true }, props.pokemon.stats.stamina)])])]), n(B.View, { spacing: 'sm' }), n(B.Text, 'Super Effective: ' + String(fx.superEffective.join(', '))), n(B.Text, 'Not Very Effective: ' + String(fx.notEffective.join(', ')))]);
+  }, [n(B.View, { style: Styles.stat }, [n(B.Text, 'Attack'), n(B.Text, { strong: true }, props.pokemon.stats.attack)]), n(B.View, { style: Styles.stat }, [n(B.Text, 'Defense'), n(B.Text, { strong: true }, props.pokemon.stats.defense)]), n(B.View, { style: Styles.stat }, [n(B.Text, 'Stamina'), n(B.Text, { strong: true }, props.pokemon.stats.stamina)])])]), n(B.View, { spacing: 'sm' }), n(B.Text, 'Super Effective: ' + String(fx.superEffective.join(', '))), n(B.Text, 'Not Very Effective: ' + String(fx.notEffective.join(', '))), family.length && n(B.View, {
+    style: Styles.resultsRow
+  }, [n(B.View, { spacing: 'sm' }), n(B.Text, 'Family'), n(B.Panel, family.map(function (fam) {
+    return n(B.Image, {
+      onClick: function () {
+        function onClick() {
+          return sweetMoves({ value: fam.name });
+        }
+
+        return onClick;
+      }(),
+      src: 'images/' + String(fam.name) + '.png',
+      height: 50,
+      width: 50
+    });
+  }))]) || undefined]);
 }
 
 function Report(props) {
