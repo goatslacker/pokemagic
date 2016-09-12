@@ -43110,15 +43110,14 @@ var getEffectiveness = require('../../src/getTypeEffectiveness').getEffectivenes
 var n = require('../utils/n');
 var store = require('../store');
 
-var pokemonList = Pokemon.map(function (x) {
-  return { label: x.name.replace(/_/g, ' '), value: x.name };
-});
-var movesList = pokemonList.slice();
-movesList.push.apply(movesList, MovesList.map(function (x) {
-  return { label: x.Name.replace(/_/g, ' '), value: x.Name };
-}));
-
+var Types = {};
 var Mon = Pokemon.reduce(function (obj, mon) {
+  var type1 = mon.type1;
+  var type2 = mon.type2;
+
+  Types[type1] = type1;
+  if (type2) Types[type2] = type2;
+
   obj[mon.name] = mon;
   return obj;
 }, {});
@@ -43126,6 +43125,17 @@ var ObjMoves = MovesList.reduce(function (obj, move) {
   obj[move.Name] = move;
   return obj;
 }, {});
+
+var pokemonList = Pokemon.map(function (x) {
+  return { label: x.name.replace(/_/g, ' '), value: x.name };
+});
+var movesList = pokemonList.slice();
+movesList.push.apply(movesList, MovesList.map(function (x) {
+  return { label: x.Name.replace(/_/g, ' '), value: x.Name };
+}));
+var dexList = Object.keys(Types).map(function (x) {
+  return { label: x, value: x };
+}).concat(movesList);
 
 function sweetMoves(x) {
   if (!x) {
@@ -43142,12 +43152,23 @@ function sweetMoves(x) {
     dispatchableActions.movesChanged(best);
   } else if (ObjMoves.hasOwnProperty(x.value)) {
     dispatchableActions.movesChanged(ObjMoves[x.value]);
+
+    // TODO sort by best pokemon with that move
     dispatchableActions.pokemonChanged(Pokemon.filter(function (mon) {
       return mon.moves1.some(function (m) {
         return m.Name === x.value;
       }) || mon.moves2.some(function (m) {
         return m.Name === x.value;
       });
+    }).map(function (x) {
+      return x.name;
+    }));
+  } else if (Types.hasOwnProperty(x.value)) {
+    // TODO get best moves for electric, etc...
+    dispatchableActions.movesChanged([]);
+    // TODO sort by best pokemon
+    dispatchableActions.pokemonChanged(Pokemon.filter(function (mon) {
+      return mon.type1 === x.value || mon.type2 === x.value;
     }).map(function (x) {
       return x.name;
     }));
@@ -43210,7 +43231,7 @@ function Dex(props) {
     },
     name: 'move-selector',
     value: props.text,
-    options: movesList,
+    options: dexList,
     onChange: sweetMoves
   })]), Mon.hasOwnProperty(props.text) && n(B.View, [n(Pokedex, { pokemon: Mon[props.text] }), n(B.Divider)]), props.moves.length && n(B.View, [n(B.Text, { strong: true }, 'Possible Movesets'), n(MoveCombos, { moves: props.moves })]) || undefined, props.moves.Name && n(B.Panel, [n(B.Text, 'Name: ' + String(props.moves.Name)), n(B.Text, 'Power: ' + String(props.moves.Power)), n(B.Text, 'Duration: ' + String((props.moves.DurationMs / 1000).toFixed(1)) + ' seconds'), n(B.Text, 'PPS: ' + String((props.moves.Power / (props.moves.DurationMs / 1000)).toFixed(3))), n(B.Text, 'Energy: ' + String(props.moves.EnergyDelta))]) || undefined, props.pokemon.length && n(B.Panel, props.pokemon.map(function (mon) {
     return n(B.Image, {

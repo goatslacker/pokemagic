@@ -12,14 +12,14 @@ const getEffectiveness = require('../../src/getTypeEffectiveness').getEffectiven
 const n = require('../utils/n')
 const store = require('../store')
 
-const pokemonList = Pokemon.map(x => ({ label: x.name.replace(/_/g, ' '), value: x.name }))
-const movesList = pokemonList.slice()
-movesList.push.apply(
-  movesList,
-  MovesList.map(x => ({ label: x.Name.replace(/_/g, ' '), value: x.Name }))
-)
-
+const Types = {}
 const Mon = Pokemon.reduce((obj, mon) => {
+  const type1 = mon.type1
+  const type2 = mon.type2
+
+  Types[type1] = type1
+  if (type2) Types[type2] = type2
+
   obj[mon.name] = mon
   return obj
 }, {})
@@ -27,6 +27,14 @@ const ObjMoves = MovesList.reduce((obj, move) => {
   obj[move.Name] = move
   return obj
 }, {})
+
+const pokemonList = Pokemon.map(x => ({ label: x.name.replace(/_/g, ' '), value: x.name }))
+const movesList = pokemonList.slice()
+movesList.push.apply(
+  movesList,
+  MovesList.map(x => ({ label: x.Name.replace(/_/g, ' '), value: x.Name }))
+)
+const dexList = Object.keys(Types).map(x => ({ label: x, value: x })).concat(movesList)
 
 function sweetMoves(x) {
   if (!x) {
@@ -43,10 +51,22 @@ function sweetMoves(x) {
     dispatchableActions.movesChanged(best)
   } else if (ObjMoves.hasOwnProperty(x.value)) {
     dispatchableActions.movesChanged(ObjMoves[x.value])
+
+    // TODO sort by best pokemon with that move
     dispatchableActions.pokemonChanged(
       Pokemon.filter(mon => (
         mon.moves1.some(m => m.Name === x.value) ||
         mon.moves2.some(m => m.Name === x.value)
+      )).map(x => x.name)
+    )
+  } else if (Types.hasOwnProperty(x.value)) {
+    // TODO get best moves for electric, etc...
+    dispatchableActions.movesChanged([])
+    // TODO sort by best pokemon
+    dispatchableActions.pokemonChanged(
+      Pokemon.filter(mon => (
+        mon.type1 === x.value ||
+        mon.type2 === x.value
       )).map(x => x.name)
     )
   }
@@ -161,7 +181,7 @@ function Dex(props) {
           },
           name: 'move-selector',
           value: props.text,
-          options: movesList,
+          options: dexList,
           onChange: sweetMoves,
         }),
       ]),
