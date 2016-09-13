@@ -42,10 +42,20 @@ const cpIsh = x => (
   Math.pow(x.stats.stamina, 0.5)
 )
 
+const percentInRange = (num, min, max) => ((num - min) * 100) / (max - min)
+
+const MEWTWO_OV = 58771
+const CATERPIE_OV = 4778
+
+const ovRating = mon => percentInRange(cpIsh(mon), CATERPIE_OV, MEWTWO_OV)
+
+const getType = mon => [mon.type1, mon.type2].filter(Boolean).join('/')
+
 const sortByBestBaseStats = (a, b) => cpIsh(a) > cpIsh(b) ? -1 : 1
 
-const ify = html => html || null
+const cond = html => html || null
 
+// TODO put this in an action?
 function sweetMoves(x) {
   if (!x) {
     dispatchableActions.pokemonChanged([])
@@ -65,7 +75,7 @@ function sweetMoves(x) {
       Pokemon.filter(mon => (
         mon.moves1.some(m => m.Name === x.value) ||
         mon.moves2.some(m => m.Name === x.value)
-      )).sort(sortByBestBaseStats).map(x => x.name)
+      )).sort(sortByBestBaseStats)
     )
   } else if (Types.hasOwnProperty(x.value)) {
     dispatchableActions.movesChanged(
@@ -77,12 +87,14 @@ function sweetMoves(x) {
       Pokemon.filter(mon => (
         mon.type1 === x.value ||
         mon.type2 === x.value
-      )).sort(sortByBestBaseStats).map(x => x.name)
+      )).sort(sortByBestBaseStats)
     )
   }
   dispatchableActions.dexTextChanged(x.value)
 }
 
+// TODO take some of this stuff
+// the type effectiveness stuff might be nice
 function Pokedex(props) {
   const types = [props.pokemon.type1, props.pokemon.type2]
     .filter(Boolean).join('/')
@@ -136,6 +148,29 @@ function Pokedex(props) {
   ])
 }
 
+function MovesInfo(props) {
+  return n(B.View, [
+    n(B.Text, { strong: true }, 'Moves'),
+    n(B.Table, [
+      n('thead', [
+        n('th', 'Name'),
+        n('th', 'Power'),
+        n('th', 'Energy'),
+        n('th', 'DPS'),
+      ]),
+      n('tbody', props.moves.map(move => (
+        n('tr', [
+          n('td', move.Name),
+          n('td', move.Power),
+          n('td', move.EnergyDelta),
+          n('td', (move.Power / (move.DurationMs / 1000)).toFixed(3)),
+        ])
+      ))),
+    ]),
+    n(B.Divider),
+  ])
+}
+
 function Report(props) {
   const level = store.getState().calculator.trainerLevel || 20
   const report = analyzeBattleEffectiveness({
@@ -173,6 +208,32 @@ function Report(props) {
         ])
       ))),
     ]),
+    n(B.Divider),
+  ])
+}
+
+function PokemonTable(props) {
+  return n(B.View, [
+    n(B.Table, [
+      n('thead', [
+        n('th', 'Pokemon'),
+        n('th', 'Overall'),
+        n('th', 'Type'),
+      ]),
+      n('tbody', props.pokemon.map(mon => (
+        n('tr', [
+          n('td', [n(B.Image, {
+            onClick: () => sweetMoves({ value: mon.name }),
+            src: `images/${mon.name}.png`,
+            height: 60,
+            width: 60,
+          })]),
+          n('td', Math.round(ovRating(mon))),
+          n('td', getType(mon)),
+        ])
+      ))),
+    ]),
+    n(B.Divider),
   ])
 }
 
@@ -196,66 +257,23 @@ function Dex(props) {
           onChange: sweetMoves,
         }),
       ]),
-      Mon.hasOwnProperty(props.text) && (
-        n(B.View, [
-          n(Pokedex, { pokemon: Mon[props.text] }),
-          n(B.Divider),
-        ])
-      ),
-      ify(props.moves.length && [
-        ify(props.moves[0].Name && [
-          n(B.View, [
-            n(B.Text, { strong: true }, 'Moves'),
-            n(B.Table, [
-              n('thead', [
-                n('th', 'Name'),
-                n('th', 'Power'),
-                n('th', 'Energy'),
-                n('th', 'DPS'),
-              ]),
-              n('tbody', props.moves.map(move => (
-                n('tr', [
-                  n('td', move.Name),
-                  n('td', move.Power),
-                  n('td', move.EnergyDelta),
-                  n('td', (move.Power / (move.DurationMs / 1000)).toFixed(3)),
-                ])
-              ))),
-            ]),
-          ])
-        ]),
-        ify(props.moves[0].quick && [
+      cond(Mon.hasOwnProperty(props.text) && (
+        n(PokemonTable, { pokemon: [Mon[props.text]] })
+      )),
+      cond(props.moves.length && [
+        cond(props.moves[0].Name && n(MovesInfo, { moves: props.moves })),
+        cond(props.moves[0].quick && [
           n(B.View, [
             n(B.Text, { strong: true }, 'Possible Movesets'),
-            n(MoveCombos, { moves: props.moves })
+            n(MoveCombos, { moves: props.moves }),
+            n(B.Divider),
           ])
         ]),
       ]),
-      props.moves.Name && (
-        n(B.Panel, [
-          n(B.Text, `Name: ${props.moves.Name}`),
-          n(B.Text, `Power: ${props.moves.Power}`),
-          n(B.Text, `Duration: ${(props.moves.DurationMs / 1000).toFixed(1)} seconds`),
-          n(B.Text, `PPS: ${(props.moves.Power / (props.moves.DurationMs / 1000)).toFixed(3)}`),
-          n(B.Text, `Energy: ${props.moves.EnergyDelta}`),
-        ])
-      ) || undefined,
-      props.pokemon.length && (
-        n(B.Panel, props.pokemon.map(mon => (
-          n(B.Image, {
-            onClick: () => sweetMoves({ value: mon }),
-            src: `images/${mon}.png`,
-            height: 60,
-            width: 60,
-          })
-        )))
-      ) || undefined,
-      n(B.Divider),
+      cond(props.moves.Name && n(MovesInfo, { moves: [props.moves] })),
+      cond(props.pokemon.length && n(PokemonTable, { pokemon: props.pokemon })),
       Mon.hasOwnProperty(props.text) && (
-        n(B.View, [
-          n(Report, { pokemon: Mon[props.text] }),
-          n(B.Divider),
-        ])
+        n(Report, { pokemon: Mon[props.text] })
       ),
       Mon.hasOwnProperty(props.text) && n(Matchup, { name: props.text }),
       n(B.Divider),
