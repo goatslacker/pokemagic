@@ -1,14 +1,15 @@
+const Appraisal = require('./Appraisal')
 const B = require('../utils/Lotus.React')
 const FormPokemonLevel = require('./FormPokemonLevel')
 const FormPokemonName = require('./FormPokemonName')
 const FormStardust = require('./FormStardust')
 const FormTrainerLevel = require('./FormTrainerLevel')
+const PictureUpload = require('./PictureUpload')
 const Results = require('./Results')
 const SearchHistoryContainer = require('../containers/SearchHistoryContainer')
-const Appraisal = require('./Appraisal')
 const calculateValues = require('../utils/calculateValues')
-const n = require('../utils/n')
 const dispatchableActions = require('../dispatchableActions')
+const n = require('../utils/n')
 
 function Rater(props) {
   if (props.results) return n(Results, props.results)
@@ -35,6 +36,7 @@ function Rater(props) {
     ]),
     n(FormStardust, { stardust: props.stardust }),
     n(Appraisal),
+    n(PictureUpload),
     n(B.Button, {
       size: 'sm',
       onClick: () => calculateValues(),

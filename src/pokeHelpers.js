@@ -6,8 +6,8 @@ const serializePokemon = {
       cp: array[startIndex + 1],
       hp: array[startIndex + 2],
       stardust: array[startIndex + 3],
-      level: array[startIndex + 4]
-    });
+      level: array[startIndex + 4],
+    })
   },
 
   fromObject(pokemon) {

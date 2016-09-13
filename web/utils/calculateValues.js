@@ -1,6 +1,6 @@
 const dispatchableActions = require('../dispatchableActions')
 const magic = require('../../src/magic')
-const store = require('../store');
+const store = require('../store')
 
 const IV_RANGE = {
   great: [82, 100],

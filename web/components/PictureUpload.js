@@ -1,48 +1,81 @@
 const B = require('../utils/Lotus.react')
+const DustToLevel = require('../../json/dust-to-level')
+const Pokemon = require('../../json/pokemon')
 const Spinner = require('react-spinkit')
+const dispatchableActions = require('../dispatchableActions')
+const liftState = require('../utils/liftState')
 const n = require('../utils/n')
+
+const Mon = Pokemon.reduce((obj, mon) => {
+  obj[mon.name] = mon.name
+  return obj
+}, {})
 
 function scanResults(data) {
   const obj = {}
   data.lines.forEach((line) => {
     console.log(line.text)
     if (/CP/.test(line.text)) {
-      const singledCp = line.text.split(' ').filter(x => /CP/.test(x))
-      if (singledCp.length) {
-        obj.cp = Number(singledCp[0].replace(/\D/g, ''))
-      }
+      const cp = line.text
+        .split(' ')
+        .filter(x => /CP/.test(x))
+        .map(x => x.replace('CP', ''))
+      if (cp.length) obj.cp = Number(cp[0])
     } else if (/HP/.test(line.text)) {
       obj.hp = Number(line.text.split('/')[1].trim())
-    } else if (Mon.hasOwnProperty(line.text.trim())) {
-      obj.name = line.text.trim()
+    } else {
+      const mon = line.text
+        .replace(/\W/g, ' ')
+        .split(' ')
+        .filter(x => Mon.hasOwnProperty(x.toUpperCase()))
+      if (mon.length) obj.name = mon[0].toUpperCase()
+
+      const mon2 = line.text.replace(/\W/g, '').toUpperCase()
+      if (Mon.hasOwnProperty(mon2)) obj.name = mon2
+
+      const dust = line.text
+        .replace(/\D/g, ' ')
+        .split(' ')
+        .filter(Number)
+        .filter(x => DustToLevel[x])
+      if (dust.length) obj.stardust = Number(dust[0])
     }
   })
   return obj
 }
 
-function pictureUploaded(ev) {
+function pictureUploaded(ev, setState) {
   const files = ev.target.files
   const url = window.URL.createObjectURL(files[0])
 
   const photoCanvas = document.getElementById('capturedPhoto')
   const ctx = photoCanvas.getContext('2d')
 
-  actions.imageProcessing()
-
   const img = new Image()
   img.onload = function () {
+    setState({
+      processingImage: true,
+      url,
+    })
+
     ctx.drawImage(img, 0, 0, 750, 1334)
 
     window.Tesseract.recognize(img, { lang: 'eng' }).then((data) => {
+      setState({ processingImage: false })
+
       window.URL.revokeObjectURL(url)
       const obj = scanResults(data)
 
-      console.log(obj)
+      console.log('Scan results', obj)
 
-      actions.valuesReset()
-      if (obj.cp) actions.changedCP({ currentTarget: { value: obj.cp }})
-      if (obj.hp) actions.changedHP({ currentTarget: { value: obj.hp }})
-      if (obj.name) actions.changedName(obj.name)
+      dispatchableActions.valuesReset()
+      if (obj.cp) dispatchableActions.changedCp(obj.cp)
+      if (obj.hp) dispatchableActions.changedHp(obj.hp)
+      if (obj.name) dispatchableActions.changedName(obj.name)
+      if (obj.stardust) dispatchableActions.changedStardust(obj.stardust)
+    }, (err) => {
+      setState({ processingImage: false })
+      alert(err.stack)
     })
   }
   img.src = url
@@ -50,19 +83,40 @@ function pictureUploaded(ev) {
 
 function PictureUpload(props) {
   if (props.processingImage) {
-    return n(Spinner, { spinnerName: 'three-bounce' })
+    return n(B.View, {
+      style: { margin: '1em 0', textAlign: 'center' },
+    }, [n(Spinner, { spinnerName: 'three-bounce' })])
   }
 
-  return n(B.View,[
-    n(B.FormControl, { label: 'Select Screenshot' }, [
+  const image = props.url && (
+    n(B.View, {
+      style: { textAlign: 'center' },
+    }, [
+      n(B.Image, {
+        height: 400,
+        src: props.url,
+      }),
+    ])
+  )
+
+  return n(B.View, {
+    style: { margin: '1em 0' },
+  }, [
+    image,
+    n(B.FormControl, { label: 'Read from screenshot' }, [
       n(B.Input, {
         type: 'file',
         accept: 'image/*',
         capture: 'camera',
-        onChange: pictureUploaded,
+        onChange: ev => pictureUploaded(ev, props.setState),
       }),
     ]),
   ])
 }
 
-module.exports = PictureUpload
+const PictureUploadStateful = liftState({
+  processingImage: false,
+  url: null,
+}, PictureUpload)
+
+module.exports = PictureUploadStateful
