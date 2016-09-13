@@ -36,6 +36,16 @@ movesList.push.apply(
 )
 const dexList = Object.keys(Types).map(x => ({ label: x, value: x })).concat(movesList)
 
+const cpIsh = x => (
+  x.stats.attack *
+  Math.pow(x.stats.defense, 0.5) *
+  Math.pow(x.stats.stamina, 0.5)
+)
+
+const sortByBestBaseStats = (a, b) => cpIsh(a) > cpIsh(b) ? -1 : 1
+
+const ify = html => html || null
+
 function sweetMoves(x) {
   if (!x) {
     dispatchableActions.pokemonChanged([])
@@ -51,23 +61,23 @@ function sweetMoves(x) {
     dispatchableActions.movesChanged(best)
   } else if (ObjMoves.hasOwnProperty(x.value)) {
     dispatchableActions.movesChanged(ObjMoves[x.value])
-
-    // TODO sort by best pokemon with that move
     dispatchableActions.pokemonChanged(
       Pokemon.filter(mon => (
         mon.moves1.some(m => m.Name === x.value) ||
         mon.moves2.some(m => m.Name === x.value)
-      )).map(x => x.name)
+      )).sort(sortByBestBaseStats).map(x => x.name)
     )
   } else if (Types.hasOwnProperty(x.value)) {
-    // TODO get best moves for electric, etc...
-    dispatchableActions.movesChanged([])
-    // TODO sort by best pokemon
+    dispatchableActions.movesChanged(
+      MovesList
+        .filter(y => y.Type === x.value)
+        .sort((a, b) => a.Power > b.Power ? -1 : 1)
+    )
     dispatchableActions.pokemonChanged(
       Pokemon.filter(mon => (
         mon.type1 === x.value ||
         mon.type2 === x.value
-      )).map(x => x.name)
+      )).sort(sortByBestBaseStats).map(x => x.name)
     )
   }
   dispatchableActions.dexTextChanged(x.value)
@@ -167,6 +177,7 @@ function Report(props) {
 }
 
 function Dex(props) {
+  console.log('@@@@@', props)
   return (
     n(B.View, [
       n(B.Header, 'Pokemon Database'),
@@ -191,12 +202,35 @@ function Dex(props) {
           n(B.Divider),
         ])
       ),
-      props.moves.length && (
-        n(B.View, [
-          n(B.Text, { strong: true }, 'Possible Movesets'),
-          n(MoveCombos, { moves: props.moves })
-        ])
-      ) || undefined,
+      ify(props.moves.length && [
+        ify(props.moves[0].Name && [
+          n(B.View, [
+            n(B.Text, { strong: true }, 'Moves'),
+            n(B.Table, [
+              n('thead', [
+                n('th', 'Name'),
+                n('th', 'Power'),
+                n('th', 'Energy'),
+                n('th', 'DPS'),
+              ]),
+              n('tbody', props.moves.map(move => (
+                n('tr', [
+                  n('td', move.Name),
+                  n('td', move.Power),
+                  n('td', move.EnergyDelta),
+                  n('td', (move.Power / (move.DurationMs / 1000)).toFixed(3)),
+                ])
+              ))),
+            ]),
+          ])
+        ]),
+        ify(props.moves[0].quick && [
+          n(B.View, [
+            n(B.Text, { strong: true }, 'Possible Movesets'),
+            n(MoveCombos, { moves: props.moves })
+          ])
+        ]),
+      ]),
       props.moves.Name && (
         n(B.Panel, [
           n(B.Text, `Name: ${props.moves.Name}`),
