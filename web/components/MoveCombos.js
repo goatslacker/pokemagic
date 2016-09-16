@@ -1,6 +1,15 @@
 const B = require('../utils/Lotus.react')
 const n = require('../utils/n')
 
+const fixMoveName = moveName => (
+  moveName
+    .replace('_FAST', '')
+    .toLowerCase()
+    .split('_')
+    .map(x => x[0].toUpperCase() + x.slice(1))
+    .join(' ')
+)
+
 function MovesTable(props) {
   return (
     n(B.Table, [
@@ -17,8 +26,8 @@ function MovesTable(props) {
           },
         }, [
           n('td', [
-            n(B.Text, move.quick.name),
-            n(B.Text, move.charge.name),
+            n(B.Text, fixMoveName(move.quick.name)),
+            n(B.Text, fixMoveName(move.charge.name)),
           ]),
           n('td', {
             style: {
