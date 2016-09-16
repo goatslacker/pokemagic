@@ -32,7 +32,7 @@ function TypeBadge(props) {
       borderRadius: 4,
       color: '#fff',
       display: 'inline-block',
-      fontSize: '0.75em',
+      fontSize: props.small ? '0.5em' : '0.75em',
       lineHeight: '1em',
       marginRight: '0.5em',
       padding: '0.25em',

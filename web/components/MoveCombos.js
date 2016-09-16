@@ -1,4 +1,5 @@
 const B = require('../utils/Lotus.react')
+const TypeBadge = require('./TypeBadge')
 const n = require('../utils/n')
 
 const fixMoveName = moveName => (
@@ -26,8 +27,16 @@ function MovesTable(props) {
           },
         }, [
           n('td', [
-            n(B.Text, fixMoveName(move.quick.name)),
-            n(B.Text, fixMoveName(move.charge.name)),
+            n(B.Text, [
+              fixMoveName(move.quick.name),
+              ' ',
+              move.quick.type && n(TypeBadge, { type: move.quick.type, small: true }),
+            ]),
+            n(B.Text, [
+              fixMoveName(move.charge.name),
+              ' ',
+              move.charge.type && n(TypeBadge, { type: move.charge.type, small: true }),
+            ]),
           ]),
           n('td', {
             style: {

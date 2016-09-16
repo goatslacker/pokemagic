@@ -38,9 +38,11 @@ function bestMovesFor(pokemonName, pokemonLevel, IndAtk, IndDef, IndSta) {
       combo: move,
       quick: {
         name: split[0],
+        type: moves[0].Type,
       },
       charge: {
         name: split[1],
+        type: moves[1].Type,
       },
       dps: analysis.avgMoves[move],
       ttl: analysis.avgTTL[move],
