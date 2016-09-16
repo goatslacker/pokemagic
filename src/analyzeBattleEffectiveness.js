@@ -52,9 +52,9 @@ function analyzeBattleEffectiveness(obj) {
 
   const idealDefenders = defenders.filter((opponent) => {
     const opponentOk1 = opponent.moves1.some(move => getTypeEffectiveness(player, move) <= 1)
-    const opponentOk2 = opponent.moves2.every(move => getTypeEffectiveness(player, move) <= 1)
+    const opponentOk2 = opponent.moves2.some(move => getTypeEffectiveness(player, move) <= 1)
     const playerOk1 = player.moves1.some(move => getTypeEffectiveness(opponent, move) >= 1)
-    const playerOk2 = player.moves2.every(move => getTypeEffectiveness(opponent, move) >= 1)
+    const playerOk2 = player.moves2.some(move => getTypeEffectiveness(opponent, move) >= 1)
 
     return opponentOk1 && opponentOk2 && playerOk1 && playerOk2
   })
