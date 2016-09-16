@@ -187,8 +187,8 @@ function Report(props) {
   })
 
   return n(B.View, [
+    n(B.Header, `${props.pokemon.name} vs Gym defenders`),
     n(B.Text, { strong: true }, 'Avg DPS'),
-    n(B.Text, { small: true }, `Level ${level} perfect IV ${props.pokemon.name}`),
     n(B.Panel, [
       n(B.Text, `Average DPS: ${report.bestAvgDPS.toFixed(3)}`),
       n(B.Text, `Average TTL: ${report.bestAvgTTL.toFixed(3)}`),
@@ -277,13 +277,13 @@ function Dex(props) {
       ]),
       cond(props.moves.Name && n(MovesInfo, { moves: [props.moves] })),
       cond(props.pokemon.length && n(PokemonTable, { pokemon: props.pokemon })),
-      Mon.hasOwnProperty(props.text) && (
-        n(Report, { pokemon: Mon[props.text] })
-      ),
       Mon.hasOwnProperty(props.text) && n(B.View, [
         n(Matchup, { name: props.text }),
         n(B.Divider),
       ]),
+      Mon.hasOwnProperty(props.text) && (
+        n(Report, { pokemon: Mon[props.text] })
+      ),
       n(B.H3, 'More Info'),
       n(B.Text, 'The tables above feature a combined DPS score for each possible move combination. The DPS is calculated based on neutral damage for a level 25 Pokemon with 10/10/10 IVs assuming that the Pokemon will be using their quick move constantly and their charge move immediately when it becomes available. STAB damage is taken into account as well as each move\'s animation time. You can also use this search to look up which Pokemon can learn a particular move.'),
     ])
