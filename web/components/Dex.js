@@ -5,6 +5,7 @@ const MovesList = require('../../json/moves.json')
 const Pokemon = require('../../json/pokemon.json')
 const Select = require('react-select')
 const Styles = require('../styles')
+const TypeBadge = require('./TypeBadge')
 const analyzeBattleEffectiveness = require('../../src/analyzeBattleEffectiveness')
 const bestMovesFor = require('../../src/best-moves')
 const dispatchableActions = require('../dispatchableActions')
@@ -49,7 +50,11 @@ const CATERPIE_OV = 4778
 
 const ovRating = mon => percentInRange(cpIsh(mon), CATERPIE_OV, MEWTWO_OV)
 
-const getType = mon => [mon.type1, mon.type2].filter(Boolean).join('/')
+const getType = mon => (
+  [mon.type1, mon.type2]
+    .filter(Boolean)
+    .map(type => n(TypeBadge, { type }))
+)
 
 const sortByBestBaseStats = (a, b) => cpIsh(a) > cpIsh(b) ? -1 : 1
 
