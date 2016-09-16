@@ -158,10 +158,12 @@ function MovesInfo(props) {
     n(B.Text, { strong: true }, 'Moves'),
     n(B.Table, [
       n('thead', [
-        n('th', 'Name'),
-        n('th', 'Power'),
-        n('th', 'Energy'),
-        n('th', 'DPS'),
+        n('tr', [
+          n('th', 'Name'),
+          n('th', 'Power'),
+          n('th', 'Energy'),
+          n('th', 'DPS'),
+        ]),
       ]),
       n('tbody', props.moves.map(move => (
         n('tr', [
@@ -221,9 +223,11 @@ function PokemonTable(props) {
   return n(B.View, [
     n(B.Table, [
       n('thead', [
-        n('th', 'Pokemon'),
-        n('th', 'Overall'),
-        n('th', 'Type'),
+        n('tr', [
+          n('th', 'Pokemon'),
+          n('th', 'Overall'),
+          n('th', 'Type'),
+        ]),
       ]),
       n('tbody', props.pokemon.map(mon => (
         n('tr', [
