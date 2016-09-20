@@ -1,16 +1,6 @@
 const B = require('../utils/Lotus.React')
-const MovesList = require('../../json/moves.json')
-const Pokemon = require('../../json/pokemon.json')
 const dispatchableActions = require('../dispatchableActions')
 const n = require('../utils/n')
-
-const cpIsh = x => (
-  x.stats.attack *
-  Math.pow(x.stats.defense, 0.5) *
-  Math.pow(x.stats.stamina, 0.5)
-)
-
-const sortByBestBaseStats = (a, b) => cpIsh(a) > cpIsh(b) ? -1 : 1
 
 const TypeColors = {
   BUG: 'chartreuse',
@@ -37,20 +27,7 @@ function TypeBadge(props) {
   const type = props.type.toUpperCase()
   const typeColor = TypeColors[type]
   return n(B.Link, {
-    onClick() {
-      dispatchableActions.movesChanged(
-        MovesList
-          .filter(y => y.Type === type)
-          .sort((a, b) => a.Power > b.Power ? -1 : 1)
-      )
-      dispatchableActions.pokemonChanged(
-        Pokemon.filter(mon => (
-          mon.type1 === type ||
-          mon.type2 === type
-        )).sort(sortByBestBaseStats)
-      )
-      dispatchableActions.dexTextChanged(type)
-    },
+    onClick: () => dispatchableActions.dexTextChanged(type),
     style: {
       backgroundColor: typeColor,
       border: '1px solid #888',
