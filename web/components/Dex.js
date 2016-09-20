@@ -247,7 +247,6 @@ function PokemonTable(props) {
 }
 
 function Dex(props) {
-  console.log('@@@@@', props)
   return (
     n(B.View, [
       n(B.Header, 'Pokemon Database'),

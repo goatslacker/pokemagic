@@ -1,8 +1,4 @@
-const actions = require('../actions')
-const mergeState = require('../utils/mergeState')
-const validateActions = require('../utils/validateActions')
-
-const set = value => payload => ({ [value]: payload })
+const set = require('../utils/set')
 
 const getInitialState = () => ({
   attrs: {},
@@ -11,14 +7,15 @@ const getInitialState = () => ({
   team: null,
 })
 
-const appraisal = mergeState(getInitialState(), validateActions(actions, {
+const reducers = {
   TEAM_SELECTED: set('team'),
 
   APPRAISAL_IV_RANGE_SET: set('ivRange'),
 
   APPRAISAL_STAT_SET: set('stat'),
 
-  APPRAISAL_ATTR_TOGGLED(value, state) {
+  APPRAISAL_ATTR_TOGGLED(state, action) {
+    const value = action.payload
     const attrs = Object.assign({}, state.attrs)
 
     if (attrs[value]) {
@@ -33,6 +30,7 @@ const appraisal = mergeState(getInitialState(), validateActions(actions, {
   RESULTS_CALCULATED: () => getInitialState(),
 
   VALUES_RESET: () => getInitialState(),
-}))
+}
 
-module.exports = appraisal
+exports.getInitialState = getInitialState
+exports.reducers = reducers

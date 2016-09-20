@@ -127,12 +127,6 @@ localforage.getItem('pogoivcalc.searches').then((searches) => {
 })
 
 localforage.getItem('pogoivcalc.trainerLevel').then((trainerLevel) => {
-  // TODO ask for trainerLevel later...
-//  if (trainerLevel) {
-//    localforage.setItem('pogoivcalc.trainerLevel', trainerLevel)
-//    pokemonActions.trainerLevelChanged(trainerLevel)
-//  }
-
   ReactDOM.render(
     n(reactRedux.Provider, { store: reduxStore }, [n(Main)]),
     document.querySelector('#app')

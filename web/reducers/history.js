@@ -1,18 +1,15 @@
-const actions = require('../actions')
-const mergeState = require('../utils/mergeState')
-const validateActions = require('../utils/validateActions')
 const localforage = require('localforage')
+const set = require('../utils/set')
 
-const set = value => payload => ({ [value]: payload })
-
-const getInitialState = () => ({
+exports.getInitialState = () => ({
   searches: {},
 })
 
-const history = mergeState(getInitialState(), validateActions(actions, {
+exports.reducers = {
   // This method loads our searches from localstorage. If the searches were an
   // Array then they're converted into an Object.
-  SEARCHES_LOADED(prevSearches, state) {
+  SEARCHES_LOADED(state, action) {
+    const prevSearches = action.payload
     if (!Array.isArray(prevSearches)) return { searches: prevSearches }
 
     const searches = prevSearches.reduce((obj, v) => {
@@ -47,6 +44,4 @@ const history = mergeState(getInitialState(), validateActions(actions, {
   MOVES_CHANGED: set('moves'),
   POKEMON_CHANGED: set('pokemon'),
   DEX_TEXT_CHANGED: set('text'),
-}))
-
-module.exports = history
+}

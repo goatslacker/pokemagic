@@ -1,17 +1,4 @@
-function createActionCreators(arr) {
-  return arr.reduce((obj, type) => {
-    const name = type.toLowerCase().replace(/_(\w)/g, (a, b) => b.toUpperCase())
-
-    if (obj[name]) throw new ReferenceError(`${name} already exists`)
-    if (obj[type]) throw new ReferenceError(`${type} already exists`)
-
-    obj[name] = payload => ({ type, payload })
-    obj[type] = type
-    return obj
-  }, {})
-}
-
-module.exports = createActionCreators([
+module.exports = [
   'CHANGED_NAME',
   'CHANGED_CP',
   'CHANGED_HP',
@@ -33,4 +20,4 @@ module.exports = createActionCreators([
 
   'POKEMON_CHECKED',
   'SEARCHES_LOADED',
-])
+]
