@@ -24,10 +24,6 @@ const Mon = Pokemon.reduce((obj, mon) => {
   obj[mon.name] = mon
   return obj
 }, {})
-const ObjMoves = MovesList.reduce((obj, move) => {
-  obj[move.Name] = move
-  return obj
-}, {})
 
 const pokemonList = Pokemon.map(x => ({ label: x.name.replace(/_/g, ' '), value: x.name }))
 const movesList = pokemonList.slice()
@@ -59,44 +55,6 @@ const getType = mon => (
 const sortByBestBaseStats = (a, b) => cpIsh(a) > cpIsh(b) ? -1 : 1
 
 const cond = html => html || null
-
-// TODO put this in an action?
-function sweetMoves(x) {
-  if (!x) {
-    dispatchableActions.pokemonChanged([])
-    dispatchableActions.movesChanged([])
-    dispatchableActions.dexTextChanged('')
-    return
-  }
-
-  if (Mon.hasOwnProperty(x.value)) {
-    const best = bestMovesFor(x.value)
-    const mon = Pokemon[Mon[x.value].id - 1]
-    dispatchableActions.pokemonChanged([])
-    dispatchableActions.movesChanged(best)
-  } else if (ObjMoves.hasOwnProperty(x.value)) {
-    dispatchableActions.movesChanged(ObjMoves[x.value])
-    dispatchableActions.pokemonChanged(
-      Pokemon.filter(mon => (
-        mon.moves1.some(m => m.Name === x.value) ||
-        mon.moves2.some(m => m.Name === x.value)
-      )).sort(sortByBestBaseStats)
-    )
-  } else if (Types.hasOwnProperty(x.value)) {
-    dispatchableActions.movesChanged(
-      MovesList
-        .filter(y => y.Type === x.value)
-        .sort((a, b) => a.Power > b.Power ? -1 : 1)
-    )
-    dispatchableActions.pokemonChanged(
-      Pokemon.filter(mon => (
-        mon.type1 === x.value ||
-        mon.type2 === x.value
-      )).sort(sortByBestBaseStats)
-    )
-  }
-  dispatchableActions.dexTextChanged(x.value)
-}
 
 // TODO take some of this stuff
 // the type effectiveness stuff might be nice
@@ -143,7 +101,7 @@ function Pokedex(props) {
         n(B.View, { spacing: 'sm' }),
         n(B.Text, 'Family'),
         n(B.Panel, family.map(fam => n(B.Image, {
-          onClick: () => sweetMoves({ value: fam.name }),
+          onClick: () => dispatchableActions.dexTextChanged(fam.name),
           src: `images/${fam.name}.png`,
           height: 50,
           width: 50,
@@ -232,7 +190,7 @@ function PokemonTable(props) {
       n('tbody', props.pokemon.map(mon => (
         n('tr', [
           n('td', [n(B.Image, {
-            onClick: () => sweetMoves({ value: mon.name }),
+            onClick: () => dispatchableActions.dexTextChanged(mon.name),
             src: `images/${mon.name}.png`,
             height: 60,
             width: 60,
@@ -262,7 +220,7 @@ function Dex(props) {
           name: 'move-selector',
           value: props.text,
           options: dexList,
-          onChange: sweetMoves,
+          onChange: ev => dispatchableActions.dexTextChanged(ev.value),
         }),
       ]),
       cond(Mon.hasOwnProperty(props.text) && (
