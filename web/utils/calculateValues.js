@@ -1,6 +1,5 @@
 const redux = require('../redux')
 const magic = require('../../src/magic')
-const store = require('../store')
 
 const IV_RANGE = {
   great: [82, 100],
@@ -17,7 +16,7 @@ const STAT_VALUES = {
 }
 
 function calculateValues(nextState) {
-  const storeState = store.getState()
+  const storeState = redux.store.getState()
 
   const state = nextState || storeState.calculator
   const appraisal = storeState.appraisal

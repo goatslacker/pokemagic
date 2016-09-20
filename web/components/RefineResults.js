@@ -5,7 +5,7 @@ const Styles = require('../styles')
 const liftState = require('../utils/liftState')
 const n = require('../utils/n')
 const reactRedux = require('react-redux')
-const store = require('../store')
+const redux = require('../redux')
 
 const IV_RANGE = {
   great: [82, 100],
@@ -23,7 +23,7 @@ const STAT_VALUES = {
 
 // TODO this code exists in two places now
 function refine(results) {
-  const appraisal = store.getState().appraisal
+  const appraisal = redux.store.getState().appraisal
 
   const attrs = Object.keys(appraisal.attrs)
   const ivRange = IV_RANGE[appraisal.ivRange]

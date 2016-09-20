@@ -14,8 +14,6 @@ const Rater = require('./components/Rater')
 
 const redux = require('./redux')
 
-const reduxStore = require('./store')
-
 const calculateValues = require('./utils/calculateValues')
 
 // TODO make powerup and matchup use different reducers
@@ -128,7 +126,7 @@ localforage.getItem('pogoivcalc.searches').then((searches) => {
 
 localforage.getItem('pogoivcalc.trainerLevel').then((trainerLevel) => {
   ReactDOM.render(
-    n(reactRedux.Provider, { store: reduxStore }, [n(Main)]),
+    n(reactRedux.Provider, { store: redux.store }, [n(Main)]),
     document.querySelector('#app')
   )
 })

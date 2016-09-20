@@ -11,7 +11,6 @@ const bestMovesFor = require('../../src/best-moves')
 const redux = require('../redux')
 const n = require('../utils/n')
 const ovRating = require('../utils/ovRating')
-const store = require('../store')
 
 const Types = {}
 const Mon = Pokemon.reduce((obj, mon) => {
@@ -95,7 +94,7 @@ function MovesInfo(props) {
 }
 
 function Report(props) {
-  const level = store.getState().calculator.trainerLevel || 20
+  const level = redux.store.getState().calculator.trainerLevel || 20
   const report = analyzeBattleEffectiveness({
     name: props.pokemon.name,
     level,
