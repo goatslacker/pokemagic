@@ -9,7 +9,6 @@ const TypeBadge = require('./TypeBadge')
 const analyzeBattleEffectiveness = require('../../src/analyzeBattleEffectiveness')
 const bestMovesFor = require('../../src/best-moves')
 const dispatchableActions = require('../dispatchableActions')
-const getEffectiveness = require('../../src/getTypeEffectiveness').getEffectiveness
 const n = require('../utils/n')
 const ovRating = require('../utils/ovRating')
 const store = require('../store')
@@ -42,58 +41,31 @@ const getType = mon => (
 
 const cond = html => html || null
 
-// TODO take some of this stuff
-// the type effectiveness stuff might be nice
 function Pokedex(props) {
-  const types = [props.pokemon.type1, props.pokemon.type2]
-    .filter(Boolean).join('/')
-  const fx = getEffectiveness(props.pokemon)
   const family = Pokemon
     .filter(x => x.family === props.pokemon.family)
     .filter(x => x.name !== props.pokemon.name)
 
-  return n(B.View, [
-    n(B.View, {
-      style: Styles.dex,
-    }, [
-      n(B.View, [
-        n(B.Image, { src: `images/${props.pokemon.name.toUpperCase()}.png`, height: 150, width: 150 }),
-        n(B.Text, { strong: true, style: Styles.resultsRow }, types),
-      ]),
-      n(B.View, {
-        style: Styles.baseStats,
-      }, [
-        n(B.View, { style: Styles.stat }, [
-          n(B.Text, 'Attack'),
-          n(B.Text, { strong: true }, props.pokemon.stats.attack),
-        ]),
-        n(B.View, { style: Styles.stat }, [
-          n(B.Text, 'Defense'),
-          n(B.Text, { strong: true }, props.pokemon.stats.defense),
-        ]),
-        n(B.View, { style: Styles.stat }, [
-          n(B.Text, 'Stamina'),
-          n(B.Text, { strong: true }, props.pokemon.stats.stamina),
-        ]),
-      ]),
-    ]),
-    n(B.View, { spacing: 'sm' }),
-    n(B.Text, `Super Effective: ${fx.superEffective.join(', ')}`),
-    n(B.Text, `Not Very Effective: ${fx.notEffective.join(', ')}`),
-    family.length && (
-      n(B.View, {
-        style: Styles.resultsRow,
-      }, [
-        n(B.View, { spacing: 'sm' }),
-        n(B.Text, 'Family'),
-        n(B.Panel, family.map(fam => n(B.Image, {
-          onClick: () => dispatchableActions.dexTextChanged(fam.name),
-          src: `images/${fam.name}.png`,
-          height: 50,
-          width: 50,
-        }))),
+
+  return n('tr', [
+    n('td', [
+      n(B.View, { style: Styles.resultsRow }, [
+        n(B.Image, {
+          onClick: () => dispatchableActions.dexTextChanged(props.pokemon.name),
+          src: `images/${props.pokemon.name}.png`,
+          height: 60,
+          width: 60,
+        }),
+        n(B.View, [getType(props.pokemon)]),
       ])
-    ) || undefined,
+    ]),
+    n('td', Math.round(ovRating(props.pokemon))),
+    n('td', family.map(fam => n(B.Image, {
+      onClick: () => dispatchableActions.dexTextChanged(fam.name),
+      src: `images/${fam.name}.png`,
+      height: 50,
+      width: 50,
+    }))),
   ])
 }
 
@@ -170,21 +142,10 @@ function PokemonTable(props) {
         n('tr', [
           n('th', 'Pokemon'),
           n('th', 'Overall'),
-          n('th', 'Type'),
+          n('th', 'Family'),
         ]),
       ]),
-      n('tbody', props.pokemon.map(mon => (
-        n('tr', [
-          n('td', [n(B.Image, {
-            onClick: () => dispatchableActions.dexTextChanged(mon.name),
-            src: `images/${mon.name}.png`,
-            height: 60,
-            width: 60,
-          })]),
-          n('td', Math.round(ovRating(mon))),
-          n('td', getType(mon)),
-        ])
-      ))),
+      n('tbody', props.pokemon.map(pokemon => n(Pokedex, { pokemon }))),
     ]),
     n(B.Divider),
   ])
