@@ -36,6 +36,7 @@ exports.reducers = {
     searches[key] = pokemon
 
     // TODO this belongs elsewhere
+    // maybe i should add a hook that listens to state changes and sets localstorage
     localforage.setItem('pogoivcalc.searches', searches)
 
     return { searches }

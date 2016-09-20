@@ -4,10 +4,11 @@ const Styles = require('../styles')
 const calculateValues = require('../utils/calculateValues')
 const n = require('../utils/n')
 const scrollTop = require('../utils/scrollTop')
+const dispatchableActions = require('../dispatchableActions')
 
 function fromHistory(ev) {
   if (ev) {
-    // TODO reset the appraisal stuff
+    dispatchableActions.valuesReset()
     calculateValues(ev.value)
     scrollTop()
   }
