@@ -27,21 +27,23 @@ const mergeState = (initialState, handlers) => {
   }
 }
 
-const validateActions = (actions, handlers) => {
+const validateActions = (key, actions, handlers) => {
   const invalid = Object.keys(handlers).filter(x => !actions.hasOwnProperty(x))
-  if (invalid.length) throw new ReferenceError(invalid.join(' '))
+  if (invalid.length) {
+    throw new ReferenceError(`The reducer '${key}' has undefined actions: ${invalid.join(', ')}.`)
+  }
   return handlers
 }
 
-const createReducer = (bundle, actionCreators) => mergeState(
+const createReducer = (key, bundle, actionCreators) => mergeState(
   bundle.getInitialState(),
-  validateActions(actionCreators, bundle.reducers)
+  validateActions(key, actionCreators, bundle.reducers)
 )
 
 const createStore = (reducers, actionCreators) => redux.createStore(
   redux.combineReducers(
     Object.keys(reducers).reduce((o, key) => {
-      o[key] = createReducer(reducers[key], actionCreators)
+      o[key] = createReducer(key, reducers[key], actionCreators)
       return o
     }, {})
   )

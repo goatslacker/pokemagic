@@ -11,6 +11,7 @@ const bestMovesFor = require('../../src/best-moves')
 const dispatchableActions = require('../dispatchableActions')
 const getEffectiveness = require('../../src/getTypeEffectiveness').getEffectiveness
 const n = require('../utils/n')
+const ovRating = require('../utils/ovRating')
 const store = require('../store')
 
 const Types = {}
@@ -33,26 +34,11 @@ movesList.push.apply(
 )
 const dexList = Object.keys(Types).map(x => ({ label: x, value: x })).concat(movesList)
 
-const cpIsh = x => (
-  x.stats.attack *
-  Math.pow(x.stats.defense, 0.5) *
-  Math.pow(x.stats.stamina, 0.5)
-)
-
-const percentInRange = (num, min, max) => ((num - min) * 100) / (max - min)
-
-const MEWTWO_OV = 58771
-const CATERPIE_OV = 4778
-
-const ovRating = mon => percentInRange(cpIsh(mon), CATERPIE_OV, MEWTWO_OV)
-
 const getType = mon => (
   [mon.type1, mon.type2]
     .filter(Boolean)
     .map(type => n(TypeBadge, { type }))
 )
-
-const sortByBestBaseStats = (a, b) => cpIsh(a) > cpIsh(b) ? -1 : 1
 
 const cond = html => html || null
 

@@ -40,8 +40,4 @@ exports.reducers = {
 
     return { searches }
   },
-
-  MOVES_CHANGED: set('moves'),
-  POKEMON_CHANGED: set('pokemon'),
-  DEX_TEXT_CHANGED: set('text'),
 }

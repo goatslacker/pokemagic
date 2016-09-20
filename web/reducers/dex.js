@@ -1,3 +1,4 @@
+const baseCP = require('../utils/baseCP')
 const set = require('../utils/set')
 const MovesList = require('../../json/moves.json')
 const Pokemon = require('../../json/pokemon.json')
@@ -20,12 +21,6 @@ const ObjMoves = MovesList.reduce((obj, move) => {
   obj[move.Name] = move
   return obj
 }, {})
-
-const baseCP = x => (
-  x.stats.attack *
-  Math.pow(x.stats.defense, 0.5) *
-  Math.pow(x.stats.stamina, 0.5)
-)
 
 const getType = mon => (
   [mon.type1, mon.type2]
