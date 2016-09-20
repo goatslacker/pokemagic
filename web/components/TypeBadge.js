@@ -1,5 +1,5 @@
 const B = require('../utils/Lotus.React')
-const dispatchableActions = require('../dispatchableActions')
+const redux = require('../redux')
 const n = require('../utils/n')
 
 const TypeColors = {
@@ -27,7 +27,7 @@ function TypeBadge(props) {
   const type = props.type.toUpperCase()
   const typeColor = TypeColors[type]
   return n(B.Link, {
-    onClick: () => dispatchableActions.dexTextChanged(type),
+    onClick: () => redux.dispatch.dexTextChanged(type),
     style: {
       backgroundColor: typeColor,
       border: '1px solid #888',

@@ -2,7 +2,7 @@ const B = require('../utils/Lotus.React')
 const React = require('react')
 const Styles = require('../styles')
 const appraisal = require('../utils/appraisal')
-const dispatchableActions = require('../dispatchableActions')
+const redux = require('../redux')
 const n = require('../utils/n')
 const reactRedux = require('react-redux')
 
@@ -38,17 +38,17 @@ function Appraisal(props) {
     }, [
       n(Shield, {
         current: props.team,
-        onSelect: team => dispatchableActions.teamSelected(team),
+        onSelect: team => redux.dispatch.teamSelected(team),
         team: 'VALOR',
       }),
       n(Shield, {
         current: props.team,
-        onSelect: team => dispatchableActions.teamSelected(team),
+        onSelect: team => redux.dispatch.teamSelected(team),
         team: 'MYSTIC',
       }),
       n(Shield, {
         current: props.team,
-        onSelect: team => dispatchableActions.teamSelected(team),
+        onSelect: team => redux.dispatch.teamSelected(team),
         team: 'INSTINCT',
       }),
     ]),
@@ -58,28 +58,28 @@ function Appraisal(props) {
         n(B.FormControl, { label: 'Overall' }, [
           n(Phrase, {
             analysis: 'overall',
-            onSelect: x => dispatchableActions.appraisalIvRangeSet(x),
+            onSelect: x => redux.dispatch.appraisalIvRangeSet(x),
             selected: props.ivRange,
             team: props.team,
             value: 'great',
           }),
           n(Phrase, {
             analysis: 'overall',
-            onSelect: x => dispatchableActions.appraisalIvRangeSet(x),
+            onSelect: x => redux.dispatch.appraisalIvRangeSet(x),
             selected: props.ivRange,
             team: props.team,
             value: 'good',
           }),
           n(Phrase, {
             analysis: 'overall',
-            onSelect: x => dispatchableActions.appraisalIvRangeSet(x),
+            onSelect: x => redux.dispatch.appraisalIvRangeSet(x),
             selected: props.ivRange,
             team: props.team,
             value: 'bad',
           }),
           n(Phrase, {
             analysis: 'overall',
-            onSelect: x => dispatchableActions.appraisalIvRangeSet(x),
+            onSelect: x => redux.dispatch.appraisalIvRangeSet(x),
             selected: props.ivRange,
             team: props.team,
             value: 'ugly',
@@ -95,16 +95,16 @@ function Appraisal(props) {
             },
           }, [
             n(B.Link, {
-              onClick: () => dispatchableActions.appraisalAttrToggled('IndAtk'),
-              onSelect: x => dispatchableActions.appraisalIvRangeSet(x),
+              onClick: () => redux.dispatch.appraisalAttrToggled('IndAtk'),
+              onSelect: x => redux.dispatch.appraisalIvRangeSet(x),
               style: { fontWeight: props.attrs.IndAtk ? 'bold': '' },
             }, 'Atk'),
             n(B.Link, {
-              onClick: () => dispatchableActions.appraisalAttrToggled('IndDef'),
+              onClick: () => redux.dispatch.appraisalAttrToggled('IndDef'),
               style: { fontWeight: props.attrs.IndDef ? 'bold': '' },
             }, 'Def'),
             n(B.Link, {
-              onClick: () => dispatchableActions.appraisalAttrToggled('IndSta'),
+              onClick: () => redux.dispatch.appraisalAttrToggled('IndSta'),
               style: { fontWeight: props.attrs.IndSta ? 'bold': '' },
             }, 'HP'),
           ]),
@@ -112,28 +112,28 @@ function Appraisal(props) {
         n(B.FormControl, { label: 'Stat Analysis' }, [
           n(Phrase, {
             analysis: 'stats',
-            onSelect: x => dispatchableActions.appraisalStatSet(x),
+            onSelect: x => redux.dispatch.appraisalStatSet(x),
             selected: props.stat,
             team: props.team,
             value: 'great',
           }),
           n(Phrase, {
             analysis: 'stats',
-            onSelect: x => dispatchableActions.appraisalStatSet(x),
+            onSelect: x => redux.dispatch.appraisalStatSet(x),
             selected: props.stat,
             team: props.team,
             value: 'good',
           }),
           n(Phrase, {
             analysis: 'stats',
-            onSelect: x => dispatchableActions.appraisalStatSet(x),
+            onSelect: x => redux.dispatch.appraisalStatSet(x),
             selected: props.stat,
             team: props.team,
             value: 'bad',
           }),
           n(Phrase, {
             analysis: 'stats',
-            onSelect: x => dispatchableActions.appraisalStatSet(x),
+            onSelect: x => redux.dispatch.appraisalStatSet(x),
             selected: props.stat,
             team: props.team,
             value: 'ugly',

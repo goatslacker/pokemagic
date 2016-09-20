@@ -8,7 +8,7 @@ const Styles = require('../styles')
 const TypeBadge = require('./TypeBadge')
 const analyzeBattleEffectiveness = require('../../src/analyzeBattleEffectiveness')
 const bestMovesFor = require('../../src/best-moves')
-const dispatchableActions = require('../dispatchableActions')
+const redux = require('../redux')
 const n = require('../utils/n')
 const ovRating = require('../utils/ovRating')
 const store = require('../store')
@@ -51,7 +51,7 @@ function Pokedex(props) {
     n('td', [
       n(B.View, { style: Styles.resultsRow }, [
         n(B.Image, {
-          onClick: () => dispatchableActions.dexTextChanged(props.pokemon.name),
+          onClick: () => redux.dispatch.dexTextChanged(props.pokemon.name),
           src: `images/${props.pokemon.name}.png`,
           height: 60,
           width: 60,
@@ -61,7 +61,7 @@ function Pokedex(props) {
     ]),
     n('td', Math.round(ovRating(props.pokemon))),
     n('td', family.map(fam => n(B.Image, {
-      onClick: () => dispatchableActions.dexTextChanged(fam.name),
+      onClick: () => redux.dispatch.dexTextChanged(fam.name),
       src: `images/${fam.name}.png`,
       height: 50,
       width: 50,
@@ -167,7 +167,7 @@ function Dex(props) {
           name: 'move-selector',
           value: props.text,
           options: dexList,
-          onChange: ev => dispatchableActions.dexTextChanged(ev.value),
+          onChange: ev => redux.dispatch.dexTextChanged(ev.value),
         }),
       ]),
       cond(Mon.hasOwnProperty(props.text) && (

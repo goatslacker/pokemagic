@@ -1,13 +1,13 @@
 const B = require('../utils/Lotus.react')
 const n = require('../utils/n')
-const dispatchableActions = require('../dispatchableActions')
+const redux = require('../redux')
 
 function FormTrainerLevel(props) {
   return (
     n(B.FormControl, { label: 'Trainer Level' }, [
       n(B.Input, {
         type: 'number',
-        onChange: ev => dispatchableActions.changedTrainerLevel(ev.currentTarget.value),
+        onChange: ev => redux.dispatch.changedTrainerLevel(ev.currentTarget.value),
         value: props.trainerLevel,
       }),
     ])

@@ -8,7 +8,7 @@ const PictureUpload = require('./PictureUpload')
 const Results = require('./Results')
 const SearchHistoryContainer = require('../containers/SearchHistoryContainer')
 const calculateValues = require('../utils/calculateValues')
-const dispatchableActions = require('../dispatchableActions')
+const redux = require('../redux')
 const n = require('../utils/n')
 
 function Rater(props) {
@@ -21,16 +21,16 @@ function Rater(props) {
     n(B.FormControl, { label: 'CP' }, [
       n(B.Input, {
         type: 'number',
-        onChange: ev => dispatchableActions.changedCp(ev.currentTarget.value),
-        onClick: () => dispatchableActions.changedCp(''),
+        onChange: ev => redux.dispatch.changedCp(ev.currentTarget.value),
+        onClick: () => redux.dispatch.changedCp(''),
         value: props.cp,
       }),
     ]),
     n(B.FormControl, { label: 'HP' }, [
       n(B.Input, {
         type: 'number',
-        onChange: ev => dispatchableActions.changedHp(ev.currentTarget.value),
-        onClick: () => dispatchableActions.changedHp(''),
+        onChange: ev => redux.dispatch.changedHp(ev.currentTarget.value),
+        onClick: () => redux.dispatch.changedHp(''),
         value: props.hp,
       }),
     ]),
@@ -45,7 +45,7 @@ function Rater(props) {
       },
     }, 'Calculate'),
     ' ',
-    n(B.Button, { size: 'sm', onClick: dispatchableActions.valuesReset }, 'Clear'),
+    n(B.Button, { size: 'sm', onClick: redux.dispatch.valuesReset }, 'Clear'),
     n(B.Divider),
     n(SearchHistoryContainer),
   ])

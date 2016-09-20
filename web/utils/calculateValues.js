@@ -1,4 +1,4 @@
-const dispatchableActions = require('../dispatchableActions')
+const redux = require('../redux')
 const magic = require('../../src/magic')
 const store = require('../store')
 
@@ -35,8 +35,8 @@ function calculateValues(nextState) {
       stat: STAT_VALUES[appraisal.stat],
     }
     const results = magic(values)
-    dispatchableActions.resultsCalculated(results)
-    dispatchableActions.pokemonChecked(values)
+    redux.dispatch.resultsCalculated(results)
+    redux.dispatch.pokemonChecked(values)
   } catch (err) {
     console.error(err)
     alert('Looks like there is a problem with the values you entered.')

@@ -2,10 +2,10 @@ const B = require('../utils/Lotus.react')
 const Pokemon = require('../../json/pokemon.json')
 const Select = require('react-select')
 const n = require('../utils/n')
-const dispatchableActions = require('../dispatchableActions')
+const redux = require('../redux')
 
 const options = Pokemon.map(x => ({ label: x.name.replace(/_/g, ' '), value: x.name }))
-const changeName = x => dispatchableActions.changedName(x && x.value)
+const changeName = x => redux.dispatch.changedName(x && x.value)
 
 function FormPokemonName(props) {
   return (

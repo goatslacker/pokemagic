@@ -2,7 +2,7 @@ const B = require('../utils/Lotus.react')
 const DustToLevel = require('../../json/dust-to-level')
 const Pokemon = require('../../json/pokemon')
 const Spinner = require('react-spinkit')
-const dispatchableActions = require('../dispatchableActions')
+const redux = require('../redux')
 const liftState = require('../utils/liftState')
 const n = require('../utils/n')
 
@@ -68,11 +68,11 @@ function pictureUploaded(ev, setState) {
 
       console.log('Scan results', obj)
 
-      dispatchableActions.valuesReset()
-      if (obj.cp) dispatchableActions.changedCp(obj.cp)
-      if (obj.hp) dispatchableActions.changedHp(obj.hp)
-      if (obj.name) dispatchableActions.changedName(obj.name)
-      if (obj.stardust) dispatchableActions.changedStardust(obj.stardust)
+      redux.dispatch.valuesReset()
+      if (obj.cp) redux.dispatch.changedCp(obj.cp)
+      if (obj.hp) redux.dispatch.changedHp(obj.hp)
+      if (obj.name) redux.dispatch.changedName(obj.name)
+      if (obj.stardust) redux.dispatch.changedStardust(obj.stardust)
     }, (err) => {
       setState({ processingImage: false })
       alert(err.stack)

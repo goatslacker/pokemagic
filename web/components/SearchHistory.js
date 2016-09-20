@@ -4,11 +4,11 @@ const Styles = require('../styles')
 const calculateValues = require('../utils/calculateValues')
 const n = require('../utils/n')
 const scrollTop = require('../utils/scrollTop')
-const dispatchableActions = require('../dispatchableActions')
+const redux = require('../redux')
 
 function fromHistory(ev) {
   if (ev) {
-    dispatchableActions.valuesReset()
+    redux.dispatch.valuesReset()
     calculateValues(ev.value)
     scrollTop()
   }
