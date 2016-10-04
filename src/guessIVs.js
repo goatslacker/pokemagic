@@ -121,7 +121,7 @@ function guessIVs(pokemon, mon, ECpM) {
             rating: bestCP.getCPRangeForType(type, Level, CP),
           }))
 
-          const levelTable = Array.from(Array(80 - Level * 2)).map((_, lvl) => {
+          const levelTable = Array.from(Array(81 - Level * 2)).map((_, lvl) => {
             const level = Number(Level) + (lvl / 2)
             const ECpM = LevelToCPM[String(level)]
 
