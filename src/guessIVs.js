@@ -68,11 +68,6 @@ function guessIVs(pokemon, mon, ECpM) {
 
   const maxLevel = pokemon.level || Math.max.apply(null, DustToLevel[pokemon.stardust])
 
-  // How much powerup does it cost
-  const powerup = powerupTools.howMuchPowerUp(maxLevel, pokemon.trainerLevel)
-  const Stardust = powerup.stardust
-  const Candy = powerup.candy
-
   // Brute force find the IVs.
   // For every possible IndSta we'll loop through IndAtk and IndDef until we
   // find CPs that match your Pokemon's CP. Those are possible matches and are
@@ -126,6 +121,25 @@ function guessIVs(pokemon, mon, ECpM) {
             rating: bestCP.getCPRangeForType(type, Level, CP),
           }))
 
+          const levelTable = Array.from(Array(80 - Level * 2)).map((_, lvl) => {
+            const level = Number(Level) + (lvl / 2)
+            const ECpM = LevelToCPM[String(level)]
+
+            const powerup = powerupTools.howMuchPowerUp(Level, level)
+            const stardust = powerup.stardust
+            const candy = powerup.candy
+
+            const cp = cpTools.getCP(mon, {
+              atk: IndAtk,
+              def: IndDef,
+              sta: IndSta,
+            }, ECpM)
+
+            const hp = hpTools.getHP(mon, IndSta, ECpM)
+
+            return { level, cp, hp, stardust, candy }
+          })
+
           possibleValues.push({
             Name,
             Level,
@@ -151,15 +165,16 @@ function guessIVs(pokemon, mon, ECpM) {
               maxcp: `${MaxCP}/${MaxedPossibleCP}`,
               maxhp: `${MaxHP}/${MaxedPossibleHP}`,
             },
+            levels: levelTable,
             percent: {
               PercentBatt,
               PercentCP,
               PercentHP,
               PerfectIV,
             },
+
+            // TODO remove meta
             meta: {
-              Stardust,
-              Candy,
               EvolveCP,
               MaxEvolveCP,
               MinLevelCP,

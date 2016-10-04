@@ -1,8 +1,8 @@
 const DustToLevel = require('../json/dust-to-level')
 const Levels = require('../json/levels')
 
-function howMuchCandy(currentLevel, trainerLevel) {
-  const maxLevel = (trainerLevel + 1.5) * 2
+function howMuchCandy(currentLevel, toLevel) {
+  const maxLevel = toLevel * 2
   const minLevel = currentLevel * 2
   return Levels.reduce((sum, level) => {
     if (level.level < maxLevel && level.level >= minLevel) return sum + level.candy
@@ -10,11 +10,7 @@ function howMuchCandy(currentLevel, trainerLevel) {
   }, 0)
 }
 
-function howMuchStardust(currentLevel, trainerLevel) {
-  const maxPokemonLevel = trainerLevel + 1.5
-
-  // Returns the candy cost of upgrading to the current maximum Pokemon level
-  // cap based on the trainer's level
+function howMuchStardust(currentLevel, maxPokemonLevel) {
   return Object.keys(DustToLevel).reduce((sum, dust) => {
     const levels = DustToLevel[dust]
     const stardustIncrease = levels.reduce((num, level) => {
@@ -27,9 +23,9 @@ function howMuchStardust(currentLevel, trainerLevel) {
   }, 0)
 }
 
-function howMuchPowerUp(currentLevel, trainerLevel) {
-  const candy = howMuchCandy(currentLevel, trainerLevel)
-  const stardust = howMuchStardust(currentLevel, trainerLevel)
+function howMuchPowerUp(currentLevel, toLevel) {
+  const candy = howMuchCandy(currentLevel, toLevel)
+  const stardust = howMuchStardust(currentLevel, toLevel)
   return { candy, stardust }
 }
 

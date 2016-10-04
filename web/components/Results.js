@@ -63,18 +63,26 @@ function Results(props) {
         ])
       ),
 
-      props.best.meta.Stardust > 0 && (
+      props.best.levels.length && (
         n(B.View, { spacingVertical: 'md', style: Styles.resultsRow }, [
-          n(B.H3, { style: Styles.resultsRow }, `Maxing out to level ${props.best.meta.MaxLevel}`),
-          props.pokemon.level === null && (
-            n(B.Text, `Assuming that your Pokemon's current level is ${props.best.Level}. The information below is just an estimate.`)
-          ),
-          n(B.View, [
-            n(B.Panel, `Current level: ${props.best.Level}`),
-            n(B.Panel, `Candy cost: ${props.best.meta.Candy}`),
-            n(B.Panel, `Stardust cost: ${props.best.meta.Stardust}`),
-            n(B.Panel, `CP: ${props.best.meta.MaxCP}`),
-            n(B.Panel, `HP: ${props.best.meta.MaxHP}`),
+          n(B.H3, { style: Styles.resultsRow }, 'Values per level'),
+          n(B.Table, [
+            n('thead', [
+              n('tr', [
+                n('th', 'Level'),
+                n('th', 'CP'),
+                n('th', 'HP'),
+                n('th', 'Candy'),
+                n('th', 'Stardust'),
+              ]),
+            ]),
+            n('tbody', props.best.levels.map(info => n('tr', [
+              n('td', info.level),
+              n('td', info.cp),
+              n('td', info.hp),
+              n('td', info.candy),
+              n('td', info.stardust),
+            ]))),
           ]),
         ])
       ),
