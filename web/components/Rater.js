@@ -3,11 +3,9 @@ const B = require('../utils/Lotus.React')
 const FormPokemonLevel = require('./FormPokemonLevel')
 const FormPokemonName = require('./FormPokemonName')
 const FormStardust = require('./FormStardust')
-const FormTrainerLevel = require('./FormTrainerLevel')
 const PictureUpload = require('./PictureUpload')
 const Results = require('./Results')
 const SearchHistoryContainer = require('../containers/SearchHistoryContainer')
-const calculateValues = require('../utils/calculateValues')
 const redux = require('../redux')
 const n = require('../utils/n')
 
@@ -15,8 +13,6 @@ function Rater(props) {
   if (props.results) return n(Results, props.results)
 
   return n(B.View, [
-    // TODO we can just ask for trainerLevel later...
-//    n(FormTrainerLevel, { trainerLevel: props.trainerLevel }),
     n(FormPokemonName, { name: props.name }),
     n(B.FormControl, { label: 'CP' }, [
       n(B.Input, {
@@ -39,7 +35,7 @@ function Rater(props) {
     n(PictureUpload),
     n(B.Button, {
       size: 'sm',
-      onClick: () => calculateValues(),
+      onClick: () => redux.dispatch.resultsCalculated(),
       style: {
         backgroundColor: '#6297de',
       },

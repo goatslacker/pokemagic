@@ -23,7 +23,7 @@ const STAT_VALUES = {
 
 // TODO this code exists in two places now
 function refine(results) {
-  const appraisal = redux.store.getState().appraisal
+  const appraisal = redux.store.getState().calculator
 
   const attrs = Object.keys(appraisal.attrs)
   const ivRange = IV_RANGE[appraisal.ivRange]

@@ -1,11 +1,11 @@
-const appraisal = require('./appraisal')
 const calculator = require('./calculator')
 const dex = require('./dex')
 const history = require('./history')
+const powerup = require('./powerup')
 
 module.exports = {
-  appraisal,
   calculator,
   dex,
   history,
+  powerup,
 }

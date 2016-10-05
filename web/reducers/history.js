@@ -18,16 +18,18 @@ exports.reducers = {
       return obj
     }, {})
 
-    // TODO this belongs elsewhere
     localforage.setItem('pogoivcalc.searches', searches)
 
     return { searches }
   },
 
-  POKEMON_CHECKED(pokemon, state) {
-    const searches = Object.assign({}, state.searches)
+  RESULTS_CALCULATED(state, action) {
+    if (!action.payload.results) return state
 
+    const pokemon = action.payload.pokemon
     const key = JSON.stringify(pokemon)
+
+    const searches = Object.assign({}, state.searches)
 
     // if the key already exists inside searches then we'll just return state
     // this should be a noop and == Alt's preventDefault

@@ -1,26 +1,68 @@
 const redux = require('redux')
 
-// TODO put all errors and validation behind a dev flag
+const ASYNC = '$$DEUX_ASYNC'
 
-const createActionCreators = (arr) => {
-  return arr.reduce((obj, type) => {
-    if (typeof type !== 'string') {
-      throw new TypeError('An unknown action type was passed in. Action types must be strings.')
+function createAsyncMiddleware() {
+  return ({ dispatch, getState }) => next => action => {
+    if (action.type === ASYNC) {
+      const type = action.meta.type
+      const dispatcher = payload => dispatch({ type, payload })
+
+      // If it's a Promise then auto-dispatch on resolve/reject
+      if (typeof action.payload.then === 'function') {
+        return action.payload.then(
+          dispatcher,
+          err => dispatch({ type, payload: err, error: true })
+        )
+      }
+
+      return action.payload(dispatcher, getState)
     }
 
-    const name = type.toLowerCase().replace(/_(\w)/g, (a, b) => b.toUpperCase())
+    return next(action)
+  }
+}
 
-    if (obj.creators[name]) throw new ReferenceError(`Action type "${name}" already exists.`)
-    if (obj.types[type]) throw new ReferenceError(`Action type "${type}" already exists.`)
+// TODO put all errors and validation behind a dev flag
 
-    obj.creators[name] = payload => ({ type, payload })
-    obj.types[type] = type
+const camelCase = type => type.toLowerCase().replace(/_(\w)/g, (a, b) => b.toUpperCase())
 
-    return obj
-  }, {
+const addAction = (action, type, f) => {
+  if (typeof type !== 'string') {
+    throw new TypeError('An unknown action type was passed in. Action types must be strings.')
+  }
+
+  const name = camelCase(type)
+
+  if (action.creators[name]) throw new ReferenceError(`Action type "${name}" already exists.`)
+  if (action.types[type]) throw new ReferenceError(`Action type "${type}" already exists.`)
+
+  const dispatch = payload => ({ type, payload })
+
+  action.creators[name] = f
+    ? arg => ({
+        type: ASYNC,
+        payload: f(arg),
+        meta: { type },
+      })
+    : dispatch
+  action.types[type] = type
+
+  return action
+}
+
+const createActionCreators = (actions) => {
+  const action = {
     creators: {},
     types: {},
-  })
+  }
+
+  Object.keys(actions.asyncTypes).forEach(
+    type => addAction(action, type, actions.asyncTypes[type])
+  )
+  actions.types.forEach(type => addAction(action, type))
+
+  return action
 }
 
 const mergeState = (initialState, handlers) => {
@@ -49,7 +91,8 @@ const createStore = reducers => redux.createStore(
       o[key] = createReducer(reducer.getInitialState(), reducer.reducers)
       return o
     }, {})
-  )
+  ),
+  redux.applyMiddleware(createAsyncMiddleware())
 )
 
 const validate = (action, reducers) => {
@@ -83,19 +126,23 @@ const validate = (action, reducers) => {
   }
 }
 
-module.exports = (actionTypes, reducers) => {
+// TODO middleware as an optional array
+module.exports = (actions, reducers) => {
   if (!reducers) throw new TypeError('"reducers" must be an Object.')
-  if (!Array.isArray(actionTypes)) throw new TypeError('"actionTypes" must be an Array.')
-  const action = createActionCreators(actionTypes)
+  if (!Array.isArray(actions.types)) throw new TypeError('"actions.types" must be an Array.')
+
+  const action = createActionCreators(actions)
 
   validate(action, reducers)
 
   const store = createStore(reducers)
   const dispatch = redux.bindActionCreators(action.creators, store.dispatch)
+
   return {
-    actionCreators: action.creators,
     dispatch,
     redux,
     store,
+    types: action.types,
+    creators: action.creators,
   }
 }

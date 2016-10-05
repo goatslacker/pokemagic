@@ -144,4 +144,4 @@ function Appraisal(props) {
   ])
 }
 
-module.exports = reactRedux.connect(state => state.appraisal)(Appraisal)
+module.exports = reactRedux.connect(state => state.calculator)(Appraisal)

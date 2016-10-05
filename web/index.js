@@ -14,10 +14,7 @@ const Rater = require('./components/Rater')
 
 const redux = require('./redux')
 
-const calculateValues = require('./utils/calculateValues')
-
-// TODO make powerup and matchup use different reducers
-const PowerUpContainer = reactRedux.connect(state => state.calculator)(PowerUp)
+const PowerUpContainer = reactRedux.connect(state => state.powerup)(PowerUp)
 const RaterContainer = reactRedux.connect(state => state.calculator)(Rater)
 const DexContainer = reactRedux.connect(state => state.dex)(Dex)
 
@@ -30,7 +27,7 @@ function hashChanged(self) {
     if (arr[3]) redux.dispatch.changedCp(Number(arr[3]))
     if (arr[4]) redux.dispatch.changedHp(Number(arr[4]))
     if (arr[5]) redux.dispatch.changedStardust(Number(arr[5]))
-    if (arr.length === 6) calculateValues()
+    if (arr.length === 6) redux.dispatch.resultsCalulated()
   } else if (arr[1] === 'dex') {
     self.setState({ selectedSlide: 1 })
     redux.dispatch.dexTextChanged(arr[2].toUpperCase())
@@ -124,9 +121,7 @@ localforage.getItem('pogoivcalc.searches').then((searches) => {
   if (searches) redux.dispatch.searchesLoaded(searches)
 })
 
-localforage.getItem('pogoivcalc.trainerLevel').then((trainerLevel) => {
-  ReactDOM.render(
-    n(reactRedux.Provider, { store: redux.store }, [n(Main)]),
-    document.querySelector('#app')
-  )
-})
+ReactDOM.render(
+  n(reactRedux.Provider, { store: redux.store }, [n(Main)]),
+  document.querySelector('#app')
+)

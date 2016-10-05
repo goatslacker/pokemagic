@@ -1,7 +1,6 @@
 const B = require('../utils/Lotus.react')
 const Select = require('react-select')
 const Styles = require('../styles')
-const calculateValues = require('../utils/calculateValues')
 const n = require('../utils/n')
 const scrollTop = require('../utils/scrollTop')
 const redux = require('../redux')
@@ -9,7 +8,7 @@ const redux = require('../redux')
 function fromHistory(ev) {
   if (ev) {
     redux.dispatch.valuesReset()
-    calculateValues(ev.value)
+    redux.dispatch.resultsCalculated(ev.value)
     scrollTop()
   }
 }
