@@ -99,14 +99,6 @@ function PictureUpload(props) {
       style: { margin: '1em 0', textAlign: 'center' },
     }, [
       n(Spinner, { spinnerName: 'three-bounce' }),
-      n(B.Input, {
-        onChange: (ev) => {
-          const value = ev.currentTarget.value
-          const args = value.split(',').map(x => x.trim().replace(')', '')).filter((_, i) => i > 0)
-          window.ctx.drawImage.apply(window.ctx, [window.img].concat(args))
-        },
-        defaultValue: 'ctx.drawImage(img, 50, 50, 200, 200, 0, 0, 200, 200)',
-      }),
     ])
   }
 
