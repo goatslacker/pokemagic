@@ -57,11 +57,10 @@ const mergeState = (initialState, handlers) => {
   return (state, action) => {
     if (state === undefined) return initialState
     if (handlers[action.type]) {
-      return Object.assign(
-        {},
-        state,
-        handlers[action.type](state, action)
-      )
+      const inclState = handlers[action.type](state, action)
+      // no-op if we return falsy or if we return state from reducer
+      if (!inclState || inclState === state) return state
+      return Object.assign({}, state, inclState)
     }
     return state
   }
