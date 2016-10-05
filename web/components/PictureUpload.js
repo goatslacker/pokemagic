@@ -2,54 +2,42 @@ const B = require('../utils/Lotus.react')
 const DustToLevel = require('../../json/dust-to-level')
 const Pokemon = require('../../json/pokemon')
 const Spinner = require('react-spinkit')
-const redux = require('../redux')
+const didMount = require('../utils/didMount')
 const liftState = require('../utils/liftState')
 const n = require('../utils/n')
+const ping = require('../utils/ping')
+const redux = require('../redux')
 
 const Mon = Pokemon.reduce((obj, mon) => {
   obj[mon.name] = mon.name
   return obj
 }, {})
 
-function scanResults(data) {
-  const obj = {}
-  data.lines.forEach((line) => {
-    console.log(line.text)
-    if (/CP/.test(line.text)) {
-      const cp = line.text
-        .split(' ')
-        .filter(x => /CP/.test(x))
-        .map(x => x.replace('CP', ''))
-      if (cp.length) obj.cp = Number(cp[0])
-    } else if (/HP/.test(line.text)) {
-      obj.hp = Number(line.text.split('/')[1].trim())
-    } else {
-      const mon = line.text
-        .replace(/\W/g, ' ')
-        .split(' ')
-        .filter(x => Mon.hasOwnProperty(x.toUpperCase()))
-      if (mon.length) obj.name = mon[0].toUpperCase()
+function drawImage(canvas, img, dim) {
+  const ctx = canvas.getContext('2d')
 
-      const mon2 = line.text.replace(/\W/g, '').toUpperCase()
-      if (Mon.hasOwnProperty(mon2)) obj.name = mon2
+  ctx.drawImage(
+    img,
+    dim.x,
+    dim.y,
+    dim.width,
+    dim.height,
+    0,
+    0,
+    dim.width,
+    dim.height
+  )
 
-      const dust = line.text
-        .replace(/\D/g, ' ')
-        .split(' ')
-        .filter(Number)
-        .filter(x => DustToLevel[x])
-      if (dust.length) obj.stardust = Number(dust[0])
-    }
-  })
-  return obj
+  return ctx
 }
 
 function pictureUploaded(ev, setState) {
   const files = ev.target.files
   const url = window.URL.createObjectURL(files[0])
 
-  const photoCanvas = document.getElementById('capturedPhoto')
-  const ctx = photoCanvas.getContext('2d')
+  const cCp = document.querySelector('#cp')
+  const cHp = document.querySelector('#hp')
+  const cDust = document.querySelector('#dust')
 
   const img = new Image()
   img.onload = function () {
@@ -58,25 +46,49 @@ function pictureUploaded(ev, setState) {
       url,
     })
 
-    ctx.drawImage(img, 0, 0, 750, 1334)
-
-    window.Tesseract.recognize(img, { lang: 'eng' }).then((data) => {
-      setState({ processingImage: false })
-
-      window.URL.revokeObjectURL(url)
-      const obj = scanResults(data)
-
-      console.log('Scan results', obj)
-
-      redux.dispatch.valuesReset()
-      if (obj.cp) redux.dispatch.changedCp(obj.cp)
-      if (obj.hp) redux.dispatch.changedHp(obj.hp)
-      if (obj.name) redux.dispatch.changedName(obj.name)
-      if (obj.stardust) redux.dispatch.changedStardust(obj.stardust)
-    }, (err) => {
-      setState({ processingImage: false })
-      alert(err.stack)
+    const ctxCp = drawImage(cCp, img, {
+      x: 230,
+      y: 50,
+      width: 260,
+      height: 140,
     })
+
+    const ctxHp = drawImage(cHp, img, {
+      x: 295,
+      y: 680,
+      width: 160,
+      height: 80,
+    })
+
+    const ctxDust = drawImage(cDust, img, {
+      x: 372,
+      y: 1035,
+      width: 140,
+      height: 80,
+    })
+
+    const obj = {}
+
+    window.Tesseract.recognize(ctxCp, { lang: 'eng' })
+      .then(data => obj.cp = Number(data.text.replace(/\D/g, '')))
+      .then(() => window.Tesseract.recognize(ctxHp, { lang: 'eng' }))
+      .then(data => obj.hp = Number(data.text.split('/')[1].trim()))
+      .then(() => window.Tesseract.recognize(ctxDust, { lang: 'eng' }))
+      .then(data => obj.dust = Number(data.text.replace(/\D/g, '')))
+      .then(() => {
+        setState({ processingImage: false })
+        window.URL.revokeObjectURL(url)
+
+        redux.dispatch.valuesReset()
+        if (obj.name) redux.dispatch.changedName(obj.name)
+        if (obj.cp) redux.dispatch.changedCp(obj.cp)
+        if (obj.hp) redux.dispatch.changedHp(obj.hp)
+        if (obj.dust) redux.dispatch.changedStardust(obj.dust)
+      })
+      .catch((err) => {
+        setState({ processingImage: false })
+        alert(err.stack)
+      })
   }
   img.src = url
 }
@@ -85,7 +97,17 @@ function PictureUpload(props) {
   if (props.processingImage) {
     return n(B.View, {
       style: { margin: '1em 0', textAlign: 'center' },
-    }, [n(Spinner, { spinnerName: 'three-bounce' })])
+    }, [
+      n(Spinner, { spinnerName: 'three-bounce' }),
+      n(B.Input, {
+        onChange: (ev) => {
+          const value = ev.currentTarget.value
+          const args = value.split(',').map(x => x.trim().replace(')', '')).filter((_, i) => i > 0)
+          window.ctx.drawImage.apply(window.ctx, [window.img].concat(args))
+        },
+        defaultValue: 'ctx.drawImage(img, 50, 50, 200, 200, 0, 0, 200, 200)',
+      }),
+    ])
   }
 
   const image = props.url && (
@@ -119,4 +141,10 @@ const PictureUploadStateful = liftState({
   url: null,
 }, PictureUpload)
 
-module.exports = PictureUploadStateful
+module.exports = didMount(() => {
+  // Warm up the Tesseract worker
+  ping(
+    () => window.Tesseract,
+    () => window.Tesseract.recognize(document.querySelector('img'), { lang: 'eng' })
+  )
+}, PictureUploadStateful)

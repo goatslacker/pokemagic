@@ -121,10 +121,6 @@ localforage.getItem('pogoivcalc.searches').then((searches) => {
   if (searches) redux.dispatch.searchesLoaded(searches)
 })
 
-localforage.getItem('pogoivcalc.team').then((team) => {
-  if (team) redux.dispatch.teamSelected(team)
-})
-
 ReactDOM.render(
   n(reactRedux.Provider, { store: redux.store }, [n(Main)]),
   document.querySelector('#app')
