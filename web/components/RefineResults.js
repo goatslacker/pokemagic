@@ -103,5 +103,5 @@ const RefineResultsStateful = liftState({
 }, RefineResults)
 
 module.exports = reactRedux.connect(
-  state => ({ appraisal: state.appraisal })
+  state => ({ calculator: state.calculator })
 )(RefineResultsStateful)
