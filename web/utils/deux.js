@@ -1,10 +1,10 @@
 const redux = require('redux')
 
-const ASYNC = '$$DEUX_ASYNC'
+const DEUX_ACTION_TYPE = `$$DEUX-${Math.random().toString(16).substr(2, 7)}`
 
 function createAsyncMiddleware() {
   return ({ dispatch, getState }) => next => action => {
-    if (action.type === ASYNC) {
+    if (action.type === DEUX_ACTION_TYPE) {
       const type = action.meta.type
       const dispatcher = payload => dispatch({ type, payload })
 
@@ -37,33 +37,21 @@ const addAction = (action, type, f) => {
   if (action.creators[name]) throw new ReferenceError(`Action type "${name}" already exists.`)
   if (action.types[type]) throw new ReferenceError(`Action type "${type}" already exists.`)
 
-  const dispatch = payload => ({ type, payload })
-
-  action.creators[name] = f
-    ? arg => ({
-        type: ASYNC,
-        payload: f(arg),
-        meta: { type },
-      })
-    : dispatch
+  action.creators[name] = arg => ({
+    type: DEUX_ACTION_TYPE,
+    payload: f(arg),
+    meta: { type },
+  })
   action.types[type] = type
 
   return action
 }
 
-const createActionCreators = (actions) => {
-  const action = {
+const createActionCreators = actions => Object.keys(actions)
+  .reduce((acc, type) => addAction(acc, type, actions[type]), {
     creators: {},
     types: {},
-  }
-
-  Object.keys(actions.asyncTypes).forEach(
-    type => addAction(action, type, actions.asyncTypes[type])
-  )
-  actions.types.forEach(type => addAction(action, type))
-
-  return action
-}
+  })
 
 const mergeState = (initialState, handlers) => {
   return (state, action) => {
@@ -129,7 +117,7 @@ const validate = (action, reducers) => {
 // TODO middleware as an optional array
 module.exports = (actions, reducers) => {
   if (!reducers) throw new TypeError('"reducers" must be an Object.')
-  if (!Array.isArray(actions.types)) throw new TypeError('"actions.types" must be an Array.')
+  if (!actions) throw new TypeError('"actions" must be an Object.')
 
   const action = createActionCreators(actions)
 

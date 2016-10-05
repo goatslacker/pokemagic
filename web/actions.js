@@ -1,4 +1,5 @@
 const magic = require('../src/magic')
+const id = require('./utils/id')
 
 const IV_RANGE = {
   great: [82, 100],
@@ -25,24 +26,17 @@ const calculateValues = state => ({
   stat: STAT_VALUES[state.stat],
 })
 
-exports.types = [
-  'APPRAISAL_ATTR_TOGGLED',
-  'APPRAISAL_IV_RANGE_SET',
-  'APPRAISAL_STAT_SET',
-  'CHANGED_CP',
-  'CHANGED_HP',
-  'CHANGED_LEVEL',
-  'CHANGED_NAME',
-  'CHANGED_STARDUST',
-  'CHANGED_TRAINER_LEVEL',
-  'DEX_TEXT_CHANGED',
-  'RESULTS_RESET',
-  'SEARCHES_LOADED',
-  'TEAM_SELECTED',
-  'VALUES_RESET',
-]
-
-exports.asyncTypes = {
+module.exports = {
+  APPRAISAL_ATTR_TOGGLED: id,
+  APPRAISAL_IV_RANGE_SET: id,
+  APPRAISAL_STAT_SET: id,
+  CHANGED_CP: id,
+  CHANGED_HP: id,
+  CHANGED_LEVEL: id,
+  CHANGED_NAME: id,
+  CHANGED_STARDUST: id,
+  CHANGED_TRAINER_LEVEL: id,
+  DEX_TEXT_CHANGED: id,
   RESULTS_CALCULATED: poke => (dispatch, getState) => {
     const payload = poke || getState().calculator
 
@@ -65,4 +59,8 @@ exports.asyncTypes = {
       dispatch({ results: null })
     }
   },
+  RESULTS_RESET: id,
+  SEARCHES_LOADED: id,
+  TEAM_SELECTED: id,
+  VALUES_RESET: id,
 }
