@@ -48,7 +48,7 @@ function analyzeBattleEffectiveness(obj) {
       moves1: opponent.moves1,
       moves2: opponent.moves2,
     }
-  }).sort((a, b) => a.best.ttl > b.best.ttl ? -1 : 1)
+  }).sort((a, b) => a.best.dps > b.best.dps ? -1 : 1)
 
   const idealDefenders = defenders.filter((opponent) => {
     const opponentOk1 = opponent.moves1.some(move => getTypeEffectiveness(player, move) <= 1)
