@@ -176,7 +176,7 @@ function Dex(props) {
         cond(props.moves[0].Name && n(MovesInfo, { moves: props.moves })),
         cond(props.moves[0].quick && [
           n(B.View, [
-            n(B.Text, { strong: true }, 'Possible Movesets'),
+            n(B.Text, { strong: true }, 'Attacking Movesets'),
             n(MoveCombos, { moves: props.moves }),
             n(B.Divider),
           ])
