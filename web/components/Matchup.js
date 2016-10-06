@@ -1,5 +1,6 @@
 const B = require('../utils/Lotus.react')
 const idealMatchup = require('../../src/idealMatchup')
+const liftState = require('../utils/liftState')
 const n = require('../utils/n')
 
 function Matchup(props) {
@@ -20,7 +21,14 @@ function Matchup(props) {
             ]),
           ]),
           n('tbody', matchups.map((value) => (
-            n('tr', [
+            props.removed[value.name] ? null : n('tr', {
+              // Remove all of said pokemon from list
+              onClick: () => {
+                const removed = props.removed
+                removed[value.name] = true
+                props.setState({ removed })
+              },
+            }, [
               n('td', [
                 n(B.Text, { strong: true }, value.name),
                 n(B.Text, `${value.score.toFixed(3)} Opp TTL`),
@@ -37,4 +45,6 @@ function Matchup(props) {
   )
 }
 
-module.exports = Matchup
+module.exports = liftState({
+  removed: {},
+}, Matchup)
