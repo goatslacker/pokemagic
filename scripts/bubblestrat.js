@@ -88,9 +88,9 @@ function createTrainer(pokemon) {
   return {
     pokemon,
     level: 1,
-    IndAtk: 15,
-    IndDef: 15,
-    IndSta: 15,
+    IndAtk: 10,
+    IndDef: 10,
+    IndSta: 10,
   }
 }
 
@@ -98,10 +98,10 @@ function createGym(pokemon) {
   return {
     pokemon,
     // XXX also do different levels...
-    level: 2,
-    IndAtk: 1,
-    IndDef: 1,
-    IndSta: 1,
+    level: 1.5,
+    IndAtk: 10,
+    IndDef: 10,
+    IndSta: 10,
   }
 }
 
@@ -129,4 +129,4 @@ const all = Pokemon.map(trainer => {
 //console.log(JSON.stringify(vs(TRAINER, GYM)))
 //console.log(JSON.stringify(all))
 
-console.log(JSON.stringify(vFor('rattata')))
+console.log(JSON.stringify(vFor('krabby')))
