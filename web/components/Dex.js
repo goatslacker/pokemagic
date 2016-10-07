@@ -135,6 +135,8 @@ function Report(props) {
 }
 
 function PokemonTable(props) {
+  const mon = props.pokemon.length === 1 ? props.pokemon[0] : null
+
   return n(B.View, [
     n(B.Table, [
       n('thead', [
@@ -147,6 +149,46 @@ function PokemonTable(props) {
       n('tbody', props.pokemon.map(pokemon => n(Pokedex, { pokemon }))),
     ]),
     n(B.Divider),
+    mon && (
+      n(B.View, [
+        n(B.Text, { strong: true }, 'Quick Moves'),
+        n(B.Table, [
+          n('thead', [
+            n('tr', [
+              n('th', 'Name'),
+              n('th', 'Power'),
+              n('th', 'ms'),
+              n('th', 'Energy'),
+            ]),
+          ]),
+          n('tbody', mon.moves1.map(move => n('tr', [
+            n('td', move.Name),
+            n('td', move.Power),
+            n('td', move.DurationMs),
+            n('td', move.Energy),
+          ]))),
+        ]),
+        n(B.Divider),
+        n(B.Text, { strong: true }, 'Charge Moves'),
+        n(B.Table, [
+          n('thead', [
+            n('tr', [
+              n('th', 'Name'),
+              n('th', 'Power'),
+              n('th', 'ms'),
+              n('th', 'Energy'),
+            ]),
+          ]),
+          n('tbody', mon.moves2.map(move => n('tr', [
+            n('td', move.Name),
+            n('td', move.Power),
+            n('td', move.DurationMs),
+            n('td', move.Energy),
+          ]))),
+        ]),
+        n(B.Divider),
+      ])
+    )
   ])
 }
 
@@ -179,7 +221,7 @@ function Dex(props) {
             n(B.Text, { strong: true }, 'Attacking Movesets'),
             n(MoveCombos, { moves: props.moves }),
             n(B.Divider),
-          ])
+          ]),
         ]),
       ]),
       cond(props.moves.Name && n(MovesInfo, { moves: [props.moves] })),
