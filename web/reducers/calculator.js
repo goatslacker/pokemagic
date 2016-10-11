@@ -1,4 +1,4 @@
-const set = require('../utils/set')
+const mergeState = require('../utils/mergeState')
 const localforage = require('localforage')
 
 const getInitialState = () => ({
@@ -28,7 +28,7 @@ const getEmptyState = () => ({
 })
 
 const reducers = {
-  APPRAISAL_ATTR_TOGGLED(state, action) {
+  APPRAISAL_ATTR_TOGGLED: mergeState((state, action) => {
     const value = action.payload
     const attrs = Object.assign({}, state.attrs)
 
@@ -39,26 +39,30 @@ const reducers = {
     }
 
     return { attrs }
-  },
+  }),
 
-  APPRAISAL_IV_RANGE_SET: set('ivRange'),
-  APPRAISAL_STAT_SET: set('stat'),
-  CHANGED_CP: set('cp'),
-  CHANGED_HP: set('hp'),
-  CHANGED_LEVEL: set('level'),
-  CHANGED_NAME: set('name'),
-  CHANGED_STARDUST: set('stardust'),
+  APPRAISAL_IV_RANGE_SET: mergeState('ivRange'),
+  APPRAISAL_STAT_SET: mergeState('stat'),
+  CHANGED_CP: mergeState('cp'),
+  CHANGED_HP: mergeState('hp'),
+  CHANGED_LEVEL: mergeState('level'),
+  CHANGED_NAME: mergeState('name'),
+  CHANGED_STARDUST: mergeState('stardust'),
 
-  RESULTS_CALCULATED: (state, action) => ({ results: action.payload.results }),
+  RESULTS_CALCULATED: mergeState(
+    (state, action) => ({ results: action.payload.results })
+  ),
 
-  RESULTS_RESET: () => ({ results: null, ivRange: null, attrs: {}, stat: null }),
+  RESULTS_RESET: mergeState(
+    () => ({ results: null, ivRange: null, attrs: {}, stat: null })
+  ),
 
-  TEAM_SELECTED(state, action) {
+  TEAM_SELECTED: mergeState((state, action) => {
     localforage.setItem('pogoivcalc.team', action.payload)
     return { team: action.payload }
-  },
+  }),
 
-  VALUES_RESET: () => getEmptyState(),
+  VALUES_RESET: mergeState(() => getEmptyState()),
 }
 
 exports.getInitialState = getInitialState

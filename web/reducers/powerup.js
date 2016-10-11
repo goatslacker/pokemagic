@@ -1,4 +1,4 @@
-const set = require('../utils/set')
+const mergeState = require('../utils/mergeState')
 
 const getInitialState = () => ({
   trainerLevel: 30,
@@ -7,9 +7,9 @@ const getInitialState = () => ({
 })
 
 const reducers = {
-  CHANGED_LEVEL: set('level'),
-  CHANGED_TRAINER_LEVEL: set('trainerLevel'),
-  CHANGED_STARDUST: set('stardust'),
+  CHANGED_LEVEL: mergeState('level'),
+  CHANGED_TRAINER_LEVEL: mergeState('trainerLevel'),
+  CHANGED_STARDUST: mergeState('stardust'),
 }
 
 exports.getInitialState = getInitialState

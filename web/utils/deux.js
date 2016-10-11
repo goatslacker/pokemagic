@@ -53,20 +53,17 @@ const createActionCreators = actions => Object.keys(actions)
     types: {},
   })
 
-const mergeState = (initialState, handlers) => {
+const setState = (initialState, handlers) => {
   return (state, action) => {
     if (state === undefined) return initialState
     if (handlers[action.type]) {
-      const inclState = handlers[action.type](state, action)
-      // no-op if we return falsy or if we return state from reducer
-      if (!inclState || inclState === state) return state
-      return Object.assign({}, state, inclState)
+      return handlers[action.type](state, action)
     }
     return state
   }
 }
 
-const createReducer = (initialState, reducers) => mergeState(
+const createReducer = (initialState, reducers) => setState(
   initialState,
   reducers
 )

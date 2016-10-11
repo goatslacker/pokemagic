@@ -1,5 +1,5 @@
 const localforage = require('localforage')
-const set = require('../utils/set')
+const mergeState = require('../utils/mergeState')
 
 exports.getInitialState = () => ({
   searches: {},
@@ -8,7 +8,7 @@ exports.getInitialState = () => ({
 exports.reducers = {
   // This method loads our searches from localstorage. If the searches were an
   // Array then they're converted into an Object.
-  SEARCHES_LOADED(state, action) {
+  SEARCHES_LOADED: mergeState((state, action) => {
     const prevSearches = action.payload
     if (!Array.isArray(prevSearches)) return { searches: prevSearches }
 
@@ -21,9 +21,9 @@ exports.reducers = {
     localforage.setItem('pogoivcalc.searches', searches)
 
     return { searches }
-  },
+  }),
 
-  RESULTS_CALCULATED(state, action) {
+  RESULTS_CALCULATED: mergeState((state, action) => {
     if (!action.payload.results) return state
 
     const pokemon = action.payload.pokemon
@@ -42,5 +42,5 @@ exports.reducers = {
     localforage.setItem('pogoivcalc.searches', searches)
 
     return { searches }
-  },
+  }),
 }

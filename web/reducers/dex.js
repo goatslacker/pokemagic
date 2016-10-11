@@ -1,5 +1,5 @@
 const baseCP = require('../utils/baseCP')
-const set = require('../utils/set')
+const mergeState = require('../utils/mergeState')
 const MovesList = require('../../json/moves.json')
 const Pokemon = require('../../json/pokemon.json')
 const analyzeBattleEffectiveness = require('../../src/analyzeBattleEffectiveness')
@@ -37,7 +37,7 @@ exports.getInitialState = () => ({
 })
 
 exports.reducers = {
-  DEX_TEXT_CHANGED(state, action) {
+  DEX_TEXT_CHANGED: mergeState((state, action) => {
     const moves = state.moves
     const pokemon = state.pokemon
     const text = action.payload
@@ -89,5 +89,5 @@ exports.reducers = {
     }
 
     return state
-  },
+  }),
 }
