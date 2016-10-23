@@ -1,5 +1,6 @@
 const B = require('../utils/Lotus.react')
 const Matchup = require('./Matchup')
+const liftState = require('../utils/liftState')
 const MoveCombos = require('./MoveCombos')
 const MovesList = require('../../json/moves.json')
 const Pokemon = require('../../json/pokemon.json')
@@ -19,10 +20,7 @@ const PokeMoves = Pokemon.reduce((pokes, poke) => {
       const info = avgComboDPS(poke, move1, move2)
       o[info.quick.name] = info.quick
       o[info.charge.name] = info.charge
-      o[info.combo.name] = {
-        combo: info.combo,
-        meta: info.meta,
-      }
+      o[info.combo.name] = Object.assign({ meta: info.meta }, info.combo)
       return o
     }, obj)
   }, {})
@@ -110,7 +108,7 @@ const eps = move => (
   move.Energy / (move.DurationMs / 1000)
 ).toFixed(1)
 
-const QuickMoveInfo = ({ move, stab, info }) => (
+const QuickMoveInfo = ({ move, stab, info, setState }) => (
   n(B.View, {
     style: {
       textDecoration: move.retired ? 'line-through' : '',
@@ -120,10 +118,11 @@ const QuickMoveInfo = ({ move, stab, info }) => (
       borderColor: '#333',
     },
   }, [
-    n(B.Text, fixMoveName(move.Name)),
+    n(B.Link, {
+      onClick: () => setState({ quick: move.Name }),
+    }, fixMoveName(move.Name)),
     n(B.Text, { strong: stab }, ucFirst(move.Type)),
-    n(B.Text, `${info.dps.toFixed(2)} DPS`),
-    n(B.Text, `${info.gymDPS.toFixed(2)} Gym DPS`),
+    n(B.Text, `DPS ${info.dps.toFixed(2)} | Gym ${info.gymDPS.toFixed(2)}`),
     n(B.Text, `${eps(move)} EPS`),
   ])
 )
@@ -134,7 +133,7 @@ const dodge = move => (
 
 const startTime = move => (Moves[move.Name].DamageWindowStartMs / 1000).toFixed(1)
 
-const ChargeMoveInfo = ({ move, stab, info }) => (
+const ChargeMoveInfo = ({ move, stab, info, setState }) => (
   n(B.View, {
     style: {
       textDecoration: move.retired ? 'line-through' : '',
@@ -144,7 +143,9 @@ const ChargeMoveInfo = ({ move, stab, info }) => (
       borderColor: '#333',
     },
   }, [
-    n(B.Text, fixMoveName(move.Name)),
+    n(B.Link, {
+      onClick: () => setState({ charge: move.Name }),
+    }, fixMoveName(move.Name)),
     n(B.Text, { strong: stab }, ucFirst(move.Type)),
     n(B.Text, `${info.dmg.toFixed(2)} DMG @ ${move.DurationMs / 1000}s`),
     n(B.Text, `${Math.round(Math.abs(100 / move.Energy))}x`),
@@ -182,6 +183,7 @@ const PokeInfo = props => (
       move,
       stab: isStab(props.pokemon, move),
       info: PokeMoves[props.pokemon.name][move.Name],
+      setState: props.setState,
     }))),
 
     n(B.Divider),
@@ -192,9 +194,18 @@ const PokeInfo = props => (
       move,
       stab: isStab(props.pokemon, move),
       info: PokeMoves[props.pokemon.name][move.Name],
+      setState: props.setState,
     }))),
 
     n(B.Divider),
+
+    // Combo Move DPS
+    props.selectedMoves && (
+      n(B.View, [
+        n(B.Text, PokeMoves[props.pokemon.name][props.selectedMoves].dps),
+        n(B.Text, PokeMoves[props.pokemon.name][props.selectedMoves].gymDPS),
+      ])
+    ),
   ])
 )
 
@@ -376,7 +387,11 @@ function Dex(props) {
 
       // The Pokedex view
       Mon.hasOwnProperty(props.text) && (
-        n(PokeInfo, { pokemon: Mon[props.text] })
+        n(PokeInfo, {
+          pokemon: Mon[props.text],
+          selectedMoves: [props.quick, props.charge].filter(Boolean).join('/'),
+          setState: props.setState,
+        })
       ),
 
       /*
@@ -393,4 +408,7 @@ function Dex(props) {
   )
 }
 
-module.exports = Dex
+module.exports = liftState({
+  quick: null,
+  charge: null,
+}, Dex)
