@@ -1,10 +1,13 @@
-const baseCP = require('../utils/baseCP')
+const atkCP = require('../utils/atkCP')
+const defCP = require('../utils/defCP')
 const mergeState = require('../utils/mergeState')
 const MovesList = require('../../json/moves.json')
 const Pokemon = require('../../json/pokemon.json')
 const analyzeBattleEffectiveness = require('../../src/analyzeBattleEffectiveness')
 const bestMovesFor = require('../../src/best-moves')
 const getEffectiveness = require('../../src/getTypeEffectiveness').getEffectiveness
+
+const baseCP = mon => atkCP(mon) + defCP(mon)
 
 const Types = {}
 const Mon = Pokemon.reduce((obj, mon) => {

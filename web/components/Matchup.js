@@ -7,8 +7,7 @@ function Matchup(props) {
   const matchups = props.name ? idealMatchup.attacking(props.name) : []
   return (
     n(B.View, [
-      n(B.Header, `Ideal Pokemon vs ${props.name}`),
-      n(B.Text, 'This is calculated based on the opposing Pokemon\'s type and assuming the opponent has the best possible moveset combination for their Pokemon. The results do not include legendaries. Pokemon type effectiveness and resistances are also taken into account.'),
+      n(B.Header, `${props.name} Defending`),
       n(B.View, { spacing: 'sm' }),
       matchups.length ? (
         n(B.Table, {

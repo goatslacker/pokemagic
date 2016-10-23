@@ -24,7 +24,7 @@ function getDmgVs(obj) {
 
     const fxMul = getTypeEffectiveness(opponent, move)
 
-    return (0.5 * atk * AtkECpM / (def * DefECpM) * power * stab * fxMul) + 1
+    return (0.5 * (atk * AtkECpM) / (def * DefECpM) * power * stab * fxMul) + 1
   })
 }
 

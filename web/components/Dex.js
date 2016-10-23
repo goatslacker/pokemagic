@@ -7,10 +7,43 @@ const Select = require('react-select')
 const Styles = require('../styles')
 const TypeBadge = require('./TypeBadge')
 const analyzeBattleEffectiveness = require('../../src/analyzeBattleEffectiveness')
-const bestMovesFor = require('../../src/best-moves')
 const redux = require('../redux')
 const n = require('../utils/n')
 const ovRating = require('../utils/ovRating')
+
+const avgComboDPS = require('../../src/avgComboDPS')
+
+const PokeMoves = Pokemon.reduce((pokes, poke) => {
+  pokes[poke.name] = poke.moves1.reduce((obj, move1) => {
+    return poke.moves2.reduce((o, move2) => {
+      const info = avgComboDPS(poke, move1, move2)
+      o[info.quick.name] = info.quick
+      o[info.charge.name] = info.charge
+      o[info.combo.name] = {
+        combo: info.combo,
+        meta: info.meta,
+      }
+      return o
+    }, obj)
+  }, {})
+  return pokes
+})
+
+const Moves = MovesList.reduce((moves, move) => {
+  moves[move.Name] = move
+  return moves
+}, {})
+
+const ucFirst = x => x[0].toUpperCase() + x.slice(1).toLowerCase()
+
+const fixMoveName = moveName => (
+  moveName
+    .replace('_FAST', '')
+    .toLowerCase()
+    .split('_')
+    .map(ucFirst)
+    .join(' ')
+)
 
 const Types = {}
 const Mon = Pokemon.reduce((obj, mon) => {
@@ -39,6 +72,131 @@ const getType = mon => (
 )
 
 const cond = html => html || null
+
+const isStab = (pokemon, move) => (
+  [pokemon.type1, pokemon.type2]
+    .filter(Boolean)
+    .filter(type => type === move.Type)
+    .length > 0
+)
+
+const Badge = props => (
+  n(B.View, {
+    style: {
+      backgroundColor: props.color,
+      border: '1px solid #888',
+      borderRadius: 4,
+      color: '#fff',
+      display: 'inline-block',
+      fontSize: props.small ? '0.5em' : '0.75em',
+      lineHeight: '1em',
+      marginRight: '0.5em',
+      padding: '0.25em',
+      textShadow: '0 0 1px #000',
+    },
+  }, props.text)
+)
+
+const Overall = ({ rate }) => (
+  n(B.View, [
+    n(Badge, {
+      color: 'chartreuse',
+      text: `OVR ${rate.ovr}% ${rate.atk}/${rate.def}`,
+    }),
+  ])
+)
+
+const eps = move => (
+  move.Energy / (move.DurationMs / 1000)
+).toFixed(1)
+
+const QuickMoveInfo = ({ move, stab, info }) => (
+  n(B.View, {
+    style: {
+      textDecoration: move.retired ? 'line-through' : '',
+      marginBottom: 10,
+      borderStyle: 'solid',
+      borderWidth: 1,
+      borderColor: '#333',
+    },
+  }, [
+    n(B.Text, fixMoveName(move.Name)),
+    n(B.Text, { strong: stab }, ucFirst(move.Type)),
+    n(B.Text, `${info.dps.toFixed(2)} DPS`),
+    n(B.Text, `${info.gymDPS.toFixed(2)} Gym DPS`),
+    n(B.Text, `${eps(move)} EPS`),
+  ])
+)
+
+const dodge = move => (
+  (Moves[move.Name].DamageWindowEndMs - Moves[move.Name].DamageWindowStartMs) / 1000
+).toFixed(1)
+
+const startTime = move => (Moves[move.Name].DamageWindowStartMs / 1000).toFixed(1)
+
+const ChargeMoveInfo = ({ move, stab, info }) => (
+  n(B.View, {
+    style: {
+      textDecoration: move.retired ? 'line-through' : '',
+      marginBottom: 10,
+      borderStyle: 'solid',
+      borderWidth: 1,
+      borderColor: '#333',
+    },
+  }, [
+    n(B.Text, fixMoveName(move.Name)),
+    n(B.Text, { strong: stab }, ucFirst(move.Type)),
+    n(B.Text, `${info.dmg.toFixed(2)} DMG @ ${move.DurationMs / 1000}s`),
+    n(B.Text, `${Math.round(Math.abs(100 / move.Energy))}x`),
+    n(B.Text, `DPS ${info.dps.toFixed(2)} | Gym ${info.gymDPS.toFixed(2)}`),
+    n(B.Text, `Dodge ${dodge(move)}s | Start ${startTime(move)}s`),
+  ])
+)
+
+const PokeInfo = props => (
+  n(B.View, [
+    n(B.View, { style: Styles.resultsRow }, [
+      n(B.Header, ucFirst(props.pokemon.name)),
+
+      n(B.Image, {
+        onClick: () => redux.dispatch.dexTextChanged(props.pokemon.name),
+        src: `images/${props.pokemon.name}.png`,
+        height: 150,
+        width: 150,
+      }),
+
+      n(Overall, { rate: ovRating(props.pokemon) }),
+
+      n(B.View, [
+        `ATK ${props.pokemon.stats.attack}`,
+        `DEF ${props.pokemon.stats.defense}`,
+        `STA ${props.pokemon.stats.stamina}`,
+      ].map(text => n(Badge, { color: 'lightsteelblue', text }))),
+
+      n(B.View, [getType(props.pokemon)]),
+    ]),
+
+    n(B.Text, { strong: true }, 'Quick Moves'),
+
+    n(B.View, props.pokemon.moves1.map(move => n(QuickMoveInfo, {
+      move,
+      stab: isStab(props.pokemon, move),
+      info: PokeMoves[props.pokemon.name][move.Name],
+    }))),
+
+    n(B.Divider),
+
+    n(B.Text, { strong: true }, 'Charge Moves'),
+
+    n(B.View, props.pokemon.moves2.map(move => n(ChargeMoveInfo, {
+      move,
+      stab: isStab(props.pokemon, move),
+      info: PokeMoves[props.pokemon.name][move.Name],
+    }))),
+
+    n(B.Divider),
+  ])
+)
 
 function Pokedex(props) {
   const family = Pokemon
@@ -104,16 +262,8 @@ function Report(props) {
   })
 
   return n(B.View, [
-    n(B.Header, `${props.pokemon.name} vs Gym defenders`),
-    n(B.Text, { strong: true }, 'Avg DPS'),
-    n(B.Panel, [
-      n(B.Text, `Average DPS: ${report.bestAvgDPS.toFixed(3)}`),
-      n(B.Text, `Average TTL: ${report.bestAvgTTL.toFixed(3)}`),
-    ]),
+    n(B.Header, `${props.pokemon.name} Attacking`),
 
-    n(B.View, { spacing: 'sm' }),
-
-    n(B.Text, { strong: true }, 'vs Table'),
     n(B.Table, [
       n('thead', [
         n('tr', [
@@ -195,14 +345,12 @@ function PokemonTable(props) {
 function Dex(props) {
   return (
     n(B.View, [
-      n(B.Header, 'Pokemon Database'),
-      n(B.Text, 'Below you will find information on this Pokemon\'s movesets, how this Pokemon fares against others, and which Pokemon are most effective vs it.'),
-      n(B.Divider),
-      n(B.FormControl, { label: 'Pokemon Name or Move Name' }, [
+      // The search bar at the top
+      n(B.FormControl, [
         n(Select, {
           inputProps: {
-            autoCorrect: 'off',
             autoCapitalize: 'off',
+            autoCorrect: 'off',
             spellCheck: 'off',
           },
           name: 'move-selector',
@@ -211,30 +359,36 @@ function Dex(props) {
           onChange: ev => redux.dispatch.dexTextChanged(ev.value),
         }),
       ]),
-      cond(Mon.hasOwnProperty(props.text) && (
-        n(PokemonTable, { pokemon: [Mon[props.text]] })
-      )),
-      cond(props.moves.length && [
-        cond(props.moves[0].Name && n(MovesInfo, { moves: props.moves })),
-        cond(props.moves[0].quick && [
-          n(B.View, [
-            n(B.Text, { strong: true }, 'Attacking Movesets'),
-            n(MoveCombos, { moves: props.moves }),
-            n(B.Divider),
-          ]),
-        ]),
-      ]),
-      cond(props.moves.Name && n(MovesInfo, { moves: [props.moves] })),
-      cond(props.pokemon.length && n(PokemonTable, { pokemon: props.pokemon })),
+
+      // Empty text then list out all the Pokes
+      props.text === '' && (
+        Object.keys(Mon).map(mon => (
+          n(B.View, { style: { display: 'inline-block' } }, [
+            n(B.Image, {
+              onClick: () => redux.dispatch.dexTextChanged(mon),
+              src: `images/${mon}.png`,
+              height: 60,
+              width: 60,
+            }),
+          ])
+        ))
+      ),
+
+      // The Pokedex view
+      Mon.hasOwnProperty(props.text) && (
+        n(PokeInfo, { pokemon: Mon[props.text] })
+      ),
+
+      /*
       Mon.hasOwnProperty(props.text) && n(B.View, [
         n(Matchup, { name: props.text }),
         n(B.Divider),
       ]),
+
       Mon.hasOwnProperty(props.text) && (
         n(Report, { pokemon: Mon[props.text] })
       ),
-      n(B.H3, 'More Info'),
-      n(B.Text, 'The tables above feature a combined DPS score for each possible move combination. The DPS is calculated based on neutral damage for a level 25 Pokemon with 10/10/10 IVs assuming that the Pokemon will be using their quick move constantly and their charge move immediately when it becomes available. STAB damage is taken into account as well as each move\'s animation time. You can also use this search to look up which Pokemon can learn a particular move.'),
+      */
     ])
   )
 }

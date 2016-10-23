@@ -9,7 +9,7 @@ const changeName = x => redux.dispatch.changedName(x && x.value)
 
 function FormPokemonName(props) {
   return (
-    n(B.FormControl, { label: 'Name' }, [
+    n(B.FormControl, [
       n(Select, {
         inputProps: {
           autoCorrect: 'off',
