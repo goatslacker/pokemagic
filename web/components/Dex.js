@@ -211,19 +211,21 @@ const ComboDPS = ({
  rate,
 }) => (
   n(B.Panel, [
-    n(B.Text, 'Overall'),
-    n(B.Text, [rate.rating, '%']),
-    n(B.Text, 'Attacking'),
+    n(
+      B.Text,
+      { strong: true },
+      `${ucFirst(rate.name)} with ${fixMoveName(rate.atk.name.split('/').join(' and_'))}`
+    ),
+    n(B.Text, ['Overall: ', rate.rating, '%']),
     n(B.Text, [
+      'Attacking: ',
       rate.atk.offenseRating,
       '% ',
       rate.atk.dps.toFixed(2),
       'dps',
     ]),
     n(B.Text, [
-    ]),
-    n(B.Text, 'Defending'),
-    n(B.Text, [
+      'Defending: ',
       rate.def.defenseRating,
       '% ',
       rate.def.gymDPS.toFixed(2),
@@ -258,7 +260,6 @@ const PokeInfo = props => (
     // Combo Move DPS
     props.quick && props.charge && (
       n(ComboDPS, {
-//        selectedMoves: [props.quick, props.charge].filter(Boolean).join('/'),
         rate: pokeRatings(props.pokemon, props.quick, props.charge),
       })
     ),
