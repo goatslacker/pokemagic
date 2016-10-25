@@ -154,9 +154,45 @@ PokemonRatings.forEach(poke => {
   poke.def.defenseRating = percentDef(poke.def.raw)
 })
 
+const getRating = (pokemon, move1, move2) => {
+  const statsRate = ovRating(pokemon)
+
+  const comboName = `${move1}/${move2}`
+  const comboMove = PokeMoves[pokemon.name][comboName]
+
+  const poke = {
+    name: pokemon.name,
+
+    raw: superOverallRating(statsRate, comboMove.dps, comboMove.gymDPS),
+
+    statsRate,
+
+    atk: {
+      name: comboMove.name,
+      dps: comboMove.dps,
+      raw: superAtkOverallRating(statsRate, comboMove.dps),
+      moveRating: ovAtk(comboMove.dps),
+    },
+
+    def: {
+      name: comboMove.name,
+      gymDPS: comboMove.gymDPS,
+      raw: superDefOverallRating(statsRate, comboMove.gymDPS),
+      moveRating: ovDef(comboMove.gymDPS),
+    },
+  }
+
+  poke.rating = percent(poke.raw)
+  poke.atk.offenseRating = percentAtk(poke.atk.raw)
+  poke.def.defenseRating = percentDef(poke.def.raw)
+
+  return poke
+}
+
 module.exports = {
   PokemonRatings,
   PokemonMap: Fast,
+  getRating,
 }
 
 //console.log(PokemonRatings.map((x => ({ name: x.name, ov: x.rating }))))

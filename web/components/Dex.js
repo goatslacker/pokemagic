@@ -11,6 +11,7 @@ const analyzeBattleEffectiveness = require('../../src/analyzeBattleEffectiveness
 const redux = require('../redux')
 const n = require('../utils/n')
 const ovRating = require('../utils/ovRating')
+const pokeRatings = require('../utils/pokeRatings').getRating
 
 const avgComboDPS = require('../../src/avgComboDPS')
 
@@ -148,14 +149,20 @@ const eps = move => (
   move.Energy / (move.DurationMs / 1000)
 ).toFixed(1)
 
-const QuickMoveInfo = ({ move, stab, info, setState }) => (
+const QuickMoveInfo = ({
+  info,
+  move,
+  selected,
+  setState,
+  stab,
+}) => (
   n(B.View, {
     style: {
       textDecoration: move.retired ? 'line-through' : '',
       marginBottom: 10,
       borderStyle: 'solid',
       borderWidth: 1,
-      borderColor: '#333',
+      borderColor: selected ? '#ff0000' : '#333',
     },
   }, [
     n(B.Link, {
@@ -173,14 +180,20 @@ const dodge = move => (
 
 const startTime = move => (Moves[move.Name].DamageWindowStartMs / 1000).toFixed(1)
 
-const ChargeMoveInfo = ({ move, stab, info, setState }) => (
+const ChargeMoveInfo = ({
+  info,
+  move,
+  selected,
+  setState,
+  stab,
+}) => (
   n(B.View, {
     style: {
       textDecoration: move.retired ? 'line-through' : '',
       marginBottom: 10,
       borderStyle: 'solid',
       borderWidth: 1,
-      borderColor: '#333',
+      borderColor: selected ? '#ff0000' : '#333',
     },
   }, [
     n(B.Link, {
@@ -191,6 +204,31 @@ const ChargeMoveInfo = ({ move, stab, info, setState }) => (
     n(B.Text, `${Math.round(Math.abs(100 / move.Energy))}x`),
     n(B.Text, `DPS ${info.dps.toFixed(2)} | Gym ${info.gymDPS.toFixed(2)}`),
     n(B.Text, `Dodge ${dodge(move)}s | Start ${startTime(move)}s`),
+  ])
+)
+
+const ComboDPS = ({
+ rate,
+}) => (
+  n(B.Panel, [
+    n(B.Text, 'Overall'),
+    n(B.Text, [rate.rating, '%']),
+    n(B.Text, 'Attacking'),
+    n(B.Text, [
+      rate.atk.offenseRating,
+      '% ',
+      rate.atk.dps.toFixed(2),
+      'dps',
+    ]),
+    n(B.Text, [
+    ]),
+    n(B.Text, 'Defending'),
+    n(B.Text, [
+      rate.def.defenseRating,
+      '% ',
+      rate.def.gymDPS.toFixed(2),
+      'dps',
+    ]),
   ])
 )
 
@@ -206,7 +244,7 @@ const PokeInfo = props => (
         width: 150,
       }),
 
-      n(Overall, { rate: ovRating(props.pokemon) }),
+//      n(Overall, { rate: ovRating(props.pokemon) }),
 
       n(B.View, [
         `ATK ${props.pokemon.stats.attack}`,
@@ -217,6 +255,14 @@ const PokeInfo = props => (
       n(B.View, [getType(props.pokemon)]),
     ]),
 
+    // Combo Move DPS
+    props.quick && props.charge && (
+      n(ComboDPS, {
+//        selectedMoves: [props.quick, props.charge].filter(Boolean).join('/'),
+        rate: pokeRatings(props.pokemon, props.quick, props.charge),
+      })
+    ),
+
     n(B.Text, { strong: true }, 'Quick Moves'),
 
     n(B.View, props.pokemon.moves1.map(move => n(QuickMoveInfo, {
@@ -224,6 +270,7 @@ const PokeInfo = props => (
       stab: isStab(props.pokemon, move),
       info: PokeMoves[props.pokemon.name][move.Name],
       setState: props.setState,
+      selected: props.quick === move.Name,
     }))),
 
     n(B.Divider),
@@ -235,17 +282,10 @@ const PokeInfo = props => (
       stab: isStab(props.pokemon, move),
       info: PokeMoves[props.pokemon.name][move.Name],
       setState: props.setState,
+      selected: props.charge === move.Name,
     }))),
 
     n(B.Divider),
-
-    // Combo Move DPS
-    props.selectedMoves && (
-      n(B.View, [
-        n(B.Text, PokeMoves[props.pokemon.name][props.selectedMoves].dps),
-        n(B.Text, PokeMoves[props.pokemon.name][props.selectedMoves].gymDPS),
-      ])
-    ),
   ])
 )
 
@@ -429,7 +469,8 @@ function Dex(props) {
       Mon.hasOwnProperty(props.text) && (
         n(PokeInfo, {
           pokemon: Mon[props.text],
-          selectedMoves: [props.quick, props.charge].filter(Boolean).join('/'),
+          quick: props.quick || Mon[props.text].moves1[0].Name,
+          charge: props.charge || Mon[props.text].moves2[0].Name,
           setState: props.setState,
         })
       ),
