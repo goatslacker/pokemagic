@@ -1,19 +1,62 @@
-const B = require('../utils/Lotus.react')
+const Appraisal = require('./Appraisal')
+const B = require('../utils/Lotus.React')
+const FormPokemonLevel = require('./FormPokemonLevel')
+const FormPokemonName = require('./FormPokemonName')
+const FormStardust = require('./FormStardust')
 const Matchup = require('./Matchup')
-const liftState = require('../utils/liftState')
 const MoveCombos = require('./MoveCombos')
 const MovesList = require('../../json/moves.json')
 const Pokemon = require('../../json/pokemon.json')
+const Results = require('./Results')
 const Select = require('react-select')
 const Styles = require('../styles')
 const TypeBadge = require('./TypeBadge')
 const analyzeBattleEffectiveness = require('../../src/analyzeBattleEffectiveness')
-const redux = require('../redux')
+const avgComboDPS = require('../../src/avgComboDPS')
+const liftState = require('../utils/liftState')
 const n = require('../utils/n')
 const ovRating = require('../utils/ovRating')
 const pokeRatings = require('../utils/pokeRatings').getRating
+const reactRedux = require('react-redux')
+const redux = require('../redux')
 
-const avgComboDPS = require('../../src/avgComboDPS')
+
+function Rater(props) {
+  if (props.results) return n(Results, props.results)
+
+  return n(B.View, [
+    n(B.FormControl, { label: 'CP' }, [
+      n(B.Input, {
+        type: 'number',
+        onChange: ev => redux.dispatch.changedCp(ev.currentTarget.value),
+        onClick: () => redux.dispatch.changedCp(''),
+        value: props.cp,
+      }),
+    ]),
+    n(B.FormControl, { label: 'HP' }, [
+      n(B.Input, {
+        type: 'number',
+        onChange: ev => redux.dispatch.changedHp(ev.currentTarget.value),
+        onClick: () => redux.dispatch.changedHp(''),
+        value: props.hp,
+      }),
+    ]),
+    n(FormStardust, { stardust: props.stardust }),
+//    n(Appraisal),
+    n(B.Button, {
+      size: 'sm',
+      onClick: () => redux.dispatch.resultsCalculated(),
+      style: {
+        backgroundColor: '#6297de',
+      },
+    }, 'Calculate'),
+    ' ',
+    n(B.Button, { size: 'sm', onClick: redux.dispatch.valuesReset }, 'Clear'),
+  ])
+}
+
+const RaterContainer = reactRedux.connect(state => state.calculator)(Rater)
+
 
 const PokeMoves = Pokemon.reduce((pokes, poke) => {
   pokes[poke.name] = poke.moves1.reduce((obj, move1) => {
@@ -96,15 +139,6 @@ const Mon = Pokemon.reduce((obj, mon) => {
   return obj
 }, {})
 
-const pokemonList = Pokemon.map(x => ({ label: x.name.replace(/_/g, ' '), value: x.name }))
-//const movesList = pokemonList.slice()
-//movesList.push.apply(
-//  movesList,
-//  MovesList.map(x => ({ label: x.Name.replace(/_/g, ' '), value: x.Name }))
-//)
-//const dexList = Object.keys(Types).map(x => ({ label: x, value: x })).concat(movesList)
-
-const dexList = pokemonList
 
 const getType = mon => (
   [mon.type1, mon.type2]
@@ -237,7 +271,7 @@ const ComboDPS = ({
 )
 
 const PokeInfo = props => (
-  n(B.View, [
+  n(B.View, { spacingHorizontal: 'lg' }, [
     n(B.View, { style: Styles.resultsRow }, [
       n(B.Header, ucFirst(props.pokemon.name)),
 
@@ -248,8 +282,6 @@ const PokeInfo = props => (
         width: 150,
       }),
 
-//      n(Overall, { rate: ovRating(props.pokemon) }),
-
       n(B.View, [
         `ATK ${props.pokemon.stats.attack}`,
         `DEF ${props.pokemon.stats.defense}`,
@@ -259,182 +291,52 @@ const PokeInfo = props => (
       n(B.View, [getType(props.pokemon)]),
     ]),
 
-    // Combo Move DPS
-    props.quick && props.charge && (
-      n(ComboDPS, {
-        rate: pokeRatings(props.pokemon, props.quick, props.charge),
-      })
-    ),
+    n(B.View, { className: 'row' }, [
+      // Combo Move DPS
+      n(B.View, { className: 'col c6' }, [
+        n(ComboDPS, {
+          rate: pokeRatings(props.pokemon, props.quick, props.charge),
+        })
+      ]),
 
-    n(B.Text, { strong: true }, 'Quick Moves'),
-
-    n(B.View, props.pokemon.moves1.map(move => n(QuickMoveInfo, {
-      move,
-      stab: isStab(props.pokemon, move),
-      info: PokeMoves[props.pokemon.name][move.Name],
-      setState: props.setState,
-      selected: props.quick === move.Name,
-    }))),
+      // IV Calculator
+      n(B.View, { className: 'col c6' }, [
+        n(RaterContainer),
+      ]),
+    ]),
 
     n(B.Divider),
 
-    n(B.Text, { strong: true }, 'Charge Moves'),
+    n(B.View, { className: 'row' }, [
+      n(B.View, { className: 'col c6' }, [
+        n(B.Text, { strong: true }, 'Quick Moves'),
+        n(B.View, props.pokemon.moves1.map(move => n(QuickMoveInfo, {
+          move,
+          stab: isStab(props.pokemon, move),
+          info: PokeMoves[props.pokemon.name][move.Name],
+          setState: props.setState,
+          selected: props.quick === move.Name,
+        }))),
+      ]),
 
-    n(B.View, props.pokemon.moves2.map(move => n(ChargeMoveInfo, {
-      move,
-      stab: isStab(props.pokemon, move),
-      info: PokeMoves[props.pokemon.name][move.Name],
-      setState: props.setState,
-      selected: props.charge === move.Name,
-    }))),
+      n(B.View, { className: 'col c6' }, [
+        n(B.Text, { strong: true }, 'Charge Moves'),
+        n(B.View, props.pokemon.moves2.map(move => n(ChargeMoveInfo, {
+          move,
+          stab: isStab(props.pokemon, move),
+          info: PokeMoves[props.pokemon.name][move.Name],
+          setState: props.setState,
+          selected: props.charge === move.Name,
+        }))),
+      ]),
+    ]),
 
     n(B.Divider),
   ])
 )
 
-function Pokedex(props) {
-  const family = Pokemon
-    .filter(x => x.family === props.pokemon.family)
-    .filter(x => x.name !== props.pokemon.name)
 
-
-  return n('tr', [
-    n('td', [
-      n(B.View, { style: Styles.resultsRow }, [
-        n(B.Image, {
-          onClick: () => redux.dispatch.dexTextChanged(props.pokemon.name),
-          src: `images/${props.pokemon.name}.png`,
-          height: 60,
-          width: 60,
-        }),
-        n(B.View, [getType(props.pokemon)]),
-      ])
-    ]),
-    n('td', Math.round(ovRating(props.pokemon))),
-    n('td', family.map(fam => n(B.Image, {
-      onClick: () => redux.dispatch.dexTextChanged(fam.name),
-      src: `images/${fam.name}.png`,
-      height: 50,
-      width: 50,
-    }))),
-  ])
-}
-
-function MovesInfo(props) {
-  return n(B.View, [
-    n(B.Text, { strong: true }, 'Moves'),
-    n(B.Table, [
-      n('thead', [
-        n('tr', [
-          n('th', 'Name'),
-          n('th', 'Power'),
-          n('th', 'Energy'),
-          n('th', 'DPS'),
-        ]),
-      ]),
-      n('tbody', props.moves.map(move => (
-        n('tr', [
-          n('td', move.Name),
-          n('td', move.Power),
-          n('td', move.EnergyDelta),
-          n('td', (move.Power / (move.DurationMs / 1000)).toFixed(3)),
-        ])
-      ))),
-    ]),
-    n(B.Divider),
-  ])
-}
-
-function Report(props) {
-  const level = redux.store.getState().calculator.trainerLevel || 20
-  const report = analyzeBattleEffectiveness({
-    name: props.pokemon.name,
-    level,
-    IndAtk: 15,
-    IndDef: 15,
-    IndSta: 15,
-  })
-
-  return n(B.View, [
-    n(B.Header, `${props.pokemon.name} Attacking`),
-
-    n(B.Table, [
-      n('thead', [
-        n('tr', [
-          n('th', 'Pokemon'),
-          n('th', 'DPS'),
-          n('th', 'TTL'),
-        ]),
-      ]),
-      n('tbody', Object.keys(report.breakdown).map(pokemonName => (
-        n('tr', [
-          n('td', pokemonName),
-          n('td', report.breakdown[pokemonName].dps.toFixed(3)),
-          n('td', report.breakdown[pokemonName].ttl.toFixed(3)),
-        ])
-      ))),
-    ]),
-    n(B.Divider),
-  ])
-}
-
-function PokemonTable(props) {
-  const mon = props.pokemon.length === 1 ? props.pokemon[0] : null
-
-  return n(B.View, [
-    n(B.Table, [
-      n('thead', [
-        n('tr', [
-          n('th', 'Pokemon'),
-          n('th', 'Overall'),
-          n('th', 'Family'),
-        ]),
-      ]),
-      n('tbody', props.pokemon.map(pokemon => n(Pokedex, { pokemon }))),
-    ]),
-    n(B.Divider),
-    mon && (
-      n(B.View, [
-        n(B.Text, { strong: true }, 'Quick Moves'),
-        n(B.Table, [
-          n('thead', [
-            n('tr', [
-              n('th', 'Name'),
-              n('th', 'Power'),
-              n('th', 'ms'),
-              n('th', 'Energy'),
-            ]),
-          ]),
-          n('tbody', mon.moves1.map(move => n('tr', [
-            n('td', move.Name),
-            n('td', move.Power),
-            n('td', move.DurationMs),
-            n('td', move.Energy),
-          ]))),
-        ]),
-        n(B.Divider),
-        n(B.Text, { strong: true }, 'Charge Moves'),
-        n(B.Table, [
-          n('thead', [
-            n('tr', [
-              n('th', 'Name'),
-              n('th', 'Power'),
-              n('th', 'ms'),
-              n('th', 'Energy'),
-            ]),
-          ]),
-          n('tbody', mon.moves2.map(move => n('tr', [
-            n('td', move.Name),
-            n('td', move.Power),
-            n('td', move.DurationMs),
-            n('td', move.Energy),
-          ]))),
-        ]),
-        n(B.Divider),
-      ])
-    )
-  ])
-}
+const dexList = Pokemon.map(x => ({ label: x.name.replace(/_/g, ' '), value: x.name }))
 
 function Dex(props) {
   return (
