@@ -97,12 +97,14 @@ const Mon = Pokemon.reduce((obj, mon) => {
 }, {})
 
 const pokemonList = Pokemon.map(x => ({ label: x.name.replace(/_/g, ' '), value: x.name }))
-const movesList = pokemonList.slice()
-movesList.push.apply(
-  movesList,
-  MovesList.map(x => ({ label: x.Name.replace(/_/g, ' '), value: x.Name }))
-)
-const dexList = Object.keys(Types).map(x => ({ label: x, value: x })).concat(movesList)
+//const movesList = pokemonList.slice()
+//movesList.push.apply(
+//  movesList,
+//  MovesList.map(x => ({ label: x.Name.replace(/_/g, ' '), value: x.Name }))
+//)
+//const dexList = Object.keys(Types).map(x => ({ label: x, value: x })).concat(movesList)
+
+const dexList = pokemonList
 
 const getType = mon => (
   [mon.type1, mon.type2]
