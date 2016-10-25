@@ -19,7 +19,7 @@ function getDmgVs(obj) {
 
   return moves.map((move) => {
     const stab = move.Type === player.type1 || move.Type === player.type2 ? 1.25 : 1
-    const power = move.Power
+    const power = move.Power || 0
 
     const fxMul = getTypeEffectiveness(opponent, move)
 
@@ -104,15 +104,15 @@ function comboDPS(mon, opponent, IndAtk, IndDef, pokemonLevel, opponentLevel, mo
 
 module.exports = comboDPS
 
-console.log(
-  comboDPS(
-    Pokemon.filter(x => x.name === 'VAPOREON')[0],
-    Pokemon.filter(x => x.name === 'FLAREON')[0],
-    10,
-    10,
-    25,
-    25,
-    Pokemon.filter(x => x.name === 'VAPOREON')[0].moves1[0],
-    Pokemon.filter(x => x.name === 'VAPOREON')[0].moves2[1]
-  )
-)
+//console.log(
+//  comboDPS(
+//    Pokemon.filter(x => x.name === 'VAPOREON')[0],
+//    Pokemon.filter(x => x.name === 'FLAREON')[0],
+//    10,
+//    10,
+//    25,
+//    25,
+//    Pokemon.filter(x => x.name === 'VAPOREON')[0].moves1[0],
+//    Pokemon.filter(x => x.name === 'VAPOREON')[0].moves2[1]
+//  )
+//)

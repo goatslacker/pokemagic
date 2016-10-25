@@ -25,6 +25,46 @@ const PokeMoves = Pokemon.reduce((pokes, poke) => {
     }, obj)
   }, {})
   return pokes
+}, {})
+
+const max = (poke, n, f) => Math.max.apply(
+  Math.max,
+  [n].concat(
+    Object.keys(PokeMoves[poke])
+    .map(x => PokeMoves[poke][x])
+    .filter(x => x.meta)
+    .map(x => f(x))
+  )
+)
+
+const min = (poke, n, f) => Math.min.apply(
+  Math.min,
+  [n].concat(
+    Object.keys(PokeMoves[poke])
+    .map(x => PokeMoves[poke][x])
+    .filter(x => x.meta)
+    .map(x => f(x))
+  )
+)
+
+const PokeScale = Object.keys(PokeMoves).reduce((best, poke) => ({
+  atk: {
+    max: max(poke, best.atk.max, x => x.dps),
+    min: min(poke, best.atk.min, x => x.dps),
+  },
+  def: {
+    max: max(poke, best.def.max, x => x.gymDPS),
+    min: min(poke, best.def.min, x => x.gymDPS),
+  },
+}), {
+  atk: {
+    max: -Infinity,
+    min: Infinity,
+  },
+  def: {
+    max: -Infinity,
+    min: Infinity,
+  },
 })
 
 const Moves = MovesList.reduce((moves, move) => {
