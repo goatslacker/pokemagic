@@ -26,19 +26,16 @@ const TypeColors = {
 function TypeBadge(props) {
   const type = props.type.toUpperCase()
   const typeColor = TypeColors[type]
-  return n(B.Link, {
-    onClick: () => redux.dispatch.dexTextChanged(type),
+  return n(B.Text, {
+//    onClick: () => redux.dispatch.dexTextChanged(type),
     style: {
       backgroundColor: typeColor,
-      border: '1px solid #888',
+      borderWidth: 1,
+      borderStyle: 'solid',
+      borderColor: '#888',
       borderRadius: 4,
       color: '#fff',
-      display: 'inline-block',
-      fontSize: props.small ? '0.5em' : '0.75em',
-      lineHeight: '1em',
-      marginRight: '0.5em',
-      padding: '0.25em',
-      textShadow: '0 0 1px #000',
+      padding: 4,
     },
   }, type)
 }

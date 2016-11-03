@@ -159,15 +159,12 @@ const Badge = props => (
   n(B.View, {
     style: {
       backgroundColor: props.color,
-      border: '1px solid #888',
+      borderWidth: 1,
+      borderStyle: 'solid',
+      borderColor: '#888',
       borderRadius: 4,
       color: '#fff',
-      display: 'inline-block',
-      fontSize: props.small ? '0.5em' : '0.75em',
-      lineHeight: '1em',
-      marginRight: '0.5em',
-      padding: '0.25em',
-      textShadow: '0 0 1px #000',
+      padding: 4,
     },
   }, props.text)
 )
@@ -271,37 +268,36 @@ const ComboDPS = ({
 )
 
 const PokeInfo = props => (
-  n(B.View, { spacingHorizontal: 'lg' }, [
+  n(B.View, { spacingVertical: 'md', spacingHorizontal: 'lg' }, [
     n(B.View, { style: Styles.resultsRow }, [
       n(B.Header, ucFirst(props.pokemon.name)),
 
-      n(B.Image, {
-        onClick: () => redux.dispatch.dexTextChanged(props.pokemon.name),
-        src: `images/${props.pokemon.name}.png`,
-        height: 150,
-        width: 150,
-      }),
-
-      n(B.View, [
+      n(B.Row, [
         `ATK ${props.pokemon.stats.attack}`,
         `DEF ${props.pokemon.stats.defense}`,
         `STA ${props.pokemon.stats.stamina}`,
-      ].map(text => n(Badge, { color: 'lightsteelblue', text }))),
+      ].map(text => n(B.Col, [n(Badge, { color: 'lightsteelblue', text })]))),
 
-      n(B.View, [getType(props.pokemon)]),
+      n(B.Image, {
+        src: `images/${props.pokemon.name}.png`,
+        height: 100,
+        width: 100,
+      }),
+
+      n(B.Row, [getType(props.pokemon)]),
     ]),
 
     n(B.View, { className: 'row' }, [
+      // IV Calculator
+      n(B.View, { className: 'col c6' }, [
+        n(RaterContainer),
+      ]),
+
       // Combo Move DPS
       n(B.View, { className: 'col c6' }, [
         n(ComboDPS, {
           rate: pokeRatings(props.pokemon, props.quick, props.charge),
         })
-      ]),
-
-      // IV Calculator
-      n(B.View, { className: 'col c6' }, [
-        n(RaterContainer),
       ]),
     ]),
 
