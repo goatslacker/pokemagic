@@ -1,5 +1,5 @@
 const Appraisal = require('./Appraisal')
-const B = require('../utils/Lotus.React')
+const { View, Text, Row, Col, Image } = require('../utils/Lotus.React')
 const FormPokemonLevel = require('./FormPokemonLevel')
 const FormPokemonName = require('./FormPokemonName')
 const FormStardust = require('./FormStardust')
@@ -16,18 +16,33 @@ const avgComboDPS = require('../../src/avgComboDPS')
 const liftState = require('../utils/liftState')
 const n = require('../utils/n')
 const ovRating = require('../utils/ovRating')
-const pokeRatings = require('../utils/pokeRatings').getRating
+const pokeRatings = require('../utils/pokeRatings')
 const reactRedux = require('react-redux')
 const redux = require('../redux')
 const { Card } = require('material-ui/Card')
 const AppBar = require('material-ui/AppBar').default
 const Chip = require('material-ui/Chip').default
 const { Tabs, Tab } = require('material-ui/Tabs')
+const Badge = require('material-ui/Badge').default
 const Divider = require('material-ui/Divider').default
 const IconButton = require('material-ui/IconButton').default
 const SearchIcon = require('material-ui/svg-icons/action/search').default
 const AutoComplete = require('material-ui/AutoComplete').default
 const BackIcon = require('material-ui/svg-icons/navigation/arrow-back').default
+
+const $ = n
+
+const sortByAtk = (a, b) => a.info.combo.dps > b.info.combo.dps ? -1 : 1
+const sortByDef = (a, b) => a.info.combo.gymDPS > b.info.combo.gymDPS ? -1 : 1
+
+const sortMoves = (pokemon, sortOrder) => (
+  pokemon.moves1.reduce((acc, move1) => acc.concat(
+    pokemon.moves2.map(move2 => ({
+      rate: pokeRatings.getRating(pokemon, move1.Name, move2.Name),
+      info: avgComboDPS(pokemon, move1, move2),
+    })
+  )), []).sort(sortOrder ? sortByAtk : sortByDef)
+)
 
 function Rater(props) {
   if (props.results) return n(Results, props.results)
@@ -163,160 +178,95 @@ const isStab = (pokemon, move) => (
     .length > 0
 )
 
-const Badge = props => (
-  n(Chip, props.text)
-)
-
 const Overall = ({ rate }) => (
   n(B.View, [
-    n(Badge, {
-//      color: 'chartreuse',
-      text: `OVR ${rate.ovr}% ${rate.atk}/${rate.def}`,
-    }),
+    n(Chip, `OVR ${rate.ovr}% ${rate.atk}/${rate.def}`),
   ])
 )
 
-const eps = move => (
-  move.Energy / (move.DurationMs / 1000)
-).toFixed(1)
+const styles = {
+  moveName: {
+    fontWeight: 'bold',
+  },
+}
 
-const QuickMoveInfo = ({
+const MoveInfo = ({
   info,
-  move,
-  selected,
-  setState,
-  stab,
+  rate,
 }) => (
-  n(Card, [
-    n(B.Link, {
-      onClick: () => setState({ quick: move.Name }),
-    }, fixMoveName(move.Name)),
-    n(B.Text, { strong: stab }, ucFirst(move.Type)),
-    n(B.Text, `DPS ${info.dps.toFixed(2)} | Gym ${info.gymDPS.toFixed(2)}`),
-    n(B.Text, `${eps(move)} EPS`),
-  ])
-)
+  $(Card, [
+    $(View, [
+      $(View, [
+        $(Text, { style: styles.moveName }, info.quick.name),
+        $(Text, { style: styles.moveName }, info.charge.name),
+      ]),
 
-const dodge = move => (
-  (Moves[move.Name].DamageWindowEndMs - Moves[move.Name].DamageWindowStartMs) / 1000
-).toFixed(1)
+      $(View, [
+        $(Text, {
+          style: info.quick.stab ? styles.moveName : null,
+        }, info.quick.type),
+        $(Text, {
+          style: info.charge.stab ? styles.moveName : null,
+        }, info.charge.type),
+      ]),
 
-const startTime = move => (Moves[move.Name].DamageWindowStartMs / 1000).toFixed(1)
-
-const ChargeMoveInfo = ({
-  info,
-  move,
-  selected,
-  setState,
-  stab,
-}) => (
-  n(Card, [
-    n(B.Link, {
-      onClick: () => setState({ charge: move.Name }),
-    }, fixMoveName(move.Name)),
-    n(B.Text, { strong: stab }, ucFirst(move.Type)),
-    n(B.Text, `${info.dmg.toFixed(2)} DMG @ ${move.DurationMs / 1000}s`),
-    n(B.Text, `${Math.round(Math.abs(100 / move.Energy))}x`),
-    n(B.Text, `DPS ${info.dps.toFixed(2)} | Gym ${info.gymDPS.toFixed(2)}`),
-    n(B.Text, `Dodge ${dodge(move)}s | Start ${startTime(move)}s`),
-  ])
-)
-
-const ComboDPS = ({
- rate,
-}) => (
-  n(Card, [
-    n(
-      B.Text,
-      { strong: true },
-      `${ucFirst(rate.name)} with ${fixMoveName(rate.atk.name.split('/').join(' and_'))}`
-    ),
-    n(B.Text, ['Overall: ', rate.rating, '%']),
-    n(B.Text, [
-      'Attacking: ',
-      rate.atk.offenseRating,
-      '% ',
-      rate.atk.dps.toFixed(2),
-      'dps',
-    ]),
-    n(B.Text, [
-      'Defending: ',
-      rate.def.defenseRating,
-      '% ',
-      rate.def.gymDPS.toFixed(2),
-      'dps',
+      $(View, [
+        $(Badge, {
+          primary: true,
+          badgeContent: rate.atk.offenseRating,
+        }, [
+          $(Chip, rate.atk.dps.toFixed(2)),
+        ]),
+        $(Badge, {
+          secondary: true,
+          badgeContent: rate.def.defenseRating,
+        }, [
+          $(Chip, rate.def.gymDPS.toFixed(2)),
+        ]),
+      ]),
     ]),
   ])
 )
 
-const PokeInfo = props => (
-  n(B.View, { spacingVertical: 'md', spacingHorizontal: 'lg' }, [
-    n(B.View, { style: Styles.resultsRow }, [
-      n(B.Row, [
-        `ATK ${props.pokemon.stats.attack}`,
-        `DEF ${props.pokemon.stats.defense}`,
-        `STA ${props.pokemon.stats.stamina}`,
-      ].map(text => n(B.Col, [n(Badge, { text })]))),
 
-      n(B.Image, {
-        src: `images/${props.pokemon.name}.png`,
+const PokeInfo = ({
+  pokemon,
+}) => (
+  n(View, { spacingVertical: 'md', spacingHorizontal: 'lg' }, [
+    n(View, { style: Styles.resultsRow }, [
+      n(Row, [
+        `ATK ${pokemon.stats.attack}`,
+        `DEF ${pokemon.stats.defense}`,
+        `STA ${pokemon.stats.stamina}`,
+      ].map(text => n(Col, [n(Chip, text)]))),
+
+      n(Image, {
+        src: `images/${pokemon.name}.png`,
         height: 100,
         width: 100,
       }),
 
-      n(B.Row, [getType(props.pokemon)]),
-    ]),
-
-    n(B.View, { className: 'row' }, [
-      // IV Calculator
-      n(B.View, { className: 'col c6' }, [
-        n(RaterContainer),
-      ]),
-
-      // Combo Move DPS
-      n(B.View, { className: 'col c6' }, [
-        n(ComboDPS, {
-          rate: pokeRatings(props.pokemon, props.quick, props.charge),
-        })
-      ]),
+      n(Row, [getType(pokemon)]),
     ]),
 
     n(Divider),
 
     n(Tabs, [
-      n(Tab, { label: 'Attacking' }, [
-        n(B.Text, 'Hi'),
-      ]),
-      n(Tab, { label: 'Defending' }, [
-        n(B.Text, 'Sup'),
-      ]),
+      n(Tab, { label: 'Attacking' }, sortMoves(pokemon, 1).map(res => (
+        $(MoveInfo, {
+          key: res.info.combo.name,
+          rate: res.rate,
+          info: res.info,
+        })
+      ))),
+      n(Tab, { label: 'Defending' }, sortMoves(pokemon, 0).map(res => (
+        $(MoveInfo, {
+          key: res.info.combo.name,
+          rate: res.rate,
+          info: res.info,
+        })
+      ))),
     ]),
-
-    n(B.View, { className: 'row' }, [
-      n(B.View, { className: 'col c6' }, [
-        n(B.Text, { strong: true }, 'Quick Moves'),
-        n(B.View, props.pokemon.moves1.map(move => n(QuickMoveInfo, {
-          move,
-          stab: isStab(props.pokemon, move),
-          info: PokeMoves[props.pokemon.name][move.Name],
-          setState: props.setState,
-          selected: props.quick === move.Name,
-        }))),
-      ]),
-
-      n(B.View, { className: 'col c6' }, [
-        n(B.Text, { strong: true }, 'Charge Moves'),
-        n(B.View, props.pokemon.moves2.map(move => n(ChargeMoveInfo, {
-          move,
-          stab: isStab(props.pokemon, move),
-          info: PokeMoves[props.pokemon.name][move.Name],
-          setState: props.setState,
-          selected: props.charge === move.Name,
-        }))),
-      ]),
-    ]),
-
-    n(Divider),
   ])
 )
 
@@ -326,7 +276,7 @@ const dexList = Pokemon.map(x => x.name.replace(/_/g, ' '))
 
 function Dex(props) {
   return (
-    n(B.View, [
+    n(View, [
       n(AppBar, {
         title: ucFirst(props.text),
         iconElementLeft: n(IconButton, [
@@ -359,8 +309,8 @@ function Dex(props) {
       // Empty text then list out all the Pokes
       props.text === '' && (
         Object.keys(Mon).map(mon => (
-          n(B.View, { style: { display: 'inline-block' } }, [
-            n(B.Image, {
+          n(View, { style: { display: 'inline-block' } }, [
+            n(Image, {
               onClick: () => redux.dispatch.dexTextChanged(mon),
               src: `images/${mon}.png`,
               height: 60,
