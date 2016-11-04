@@ -19,12 +19,20 @@ const ovRating = require('../utils/ovRating')
 const pokeRatings = require('../utils/pokeRatings').getRating
 const reactRedux = require('react-redux')
 const redux = require('../redux')
-
+const { Card } = require('material-ui/Card')
+const AppBar = require('material-ui/AppBar').default
+const Chip = require('material-ui/Chip').default
+const { Tabs, Tab } = require('material-ui/Tabs')
+const Divider = require('material-ui/Divider').default
+const IconButton = require('material-ui/IconButton').default
+const SearchIcon = require('material-ui/svg-icons/action/search').default
+const AutoComplete = require('material-ui/AutoComplete').default
+const BackIcon = require('material-ui/svg-icons/navigation/arrow-back').default
 
 function Rater(props) {
   if (props.results) return n(Results, props.results)
 
-  return n(B.View, [
+  return n(Card, [
     n(B.FormControl, { label: 'CP' }, [
       n(B.Input, {
         type: 'number',
@@ -116,7 +124,7 @@ const Moves = MovesList.reduce((moves, move) => {
   return moves
 }, {})
 
-const ucFirst = x => x[0].toUpperCase() + x.slice(1).toLowerCase()
+const ucFirst = x => x ? x[0].toUpperCase() + x.slice(1).toLowerCase() : ''
 
 const fixMoveName = moveName => (
   moveName
@@ -156,23 +164,13 @@ const isStab = (pokemon, move) => (
 )
 
 const Badge = props => (
-  n(B.View, {
-    style: {
-      backgroundColor: props.color,
-      borderWidth: 1,
-      borderStyle: 'solid',
-      borderColor: '#888',
-      borderRadius: 4,
-      color: '#fff',
-      padding: 4,
-    },
-  }, props.text)
+  n(Chip, props.text)
 )
 
 const Overall = ({ rate }) => (
   n(B.View, [
     n(Badge, {
-      color: 'chartreuse',
+//      color: 'chartreuse',
       text: `OVR ${rate.ovr}% ${rate.atk}/${rate.def}`,
     }),
   ])
@@ -189,15 +187,7 @@ const QuickMoveInfo = ({
   setState,
   stab,
 }) => (
-  n(B.View, {
-    style: {
-      textDecoration: move.retired ? 'line-through' : '',
-      marginBottom: 10,
-      borderStyle: 'solid',
-      borderWidth: 1,
-      borderColor: selected ? '#ff0000' : '#333',
-    },
-  }, [
+  n(Card, [
     n(B.Link, {
       onClick: () => setState({ quick: move.Name }),
     }, fixMoveName(move.Name)),
@@ -220,15 +210,7 @@ const ChargeMoveInfo = ({
   setState,
   stab,
 }) => (
-  n(B.View, {
-    style: {
-      textDecoration: move.retired ? 'line-through' : '',
-      marginBottom: 10,
-      borderStyle: 'solid',
-      borderWidth: 1,
-      borderColor: selected ? '#ff0000' : '#333',
-    },
-  }, [
+  n(Card, [
     n(B.Link, {
       onClick: () => setState({ charge: move.Name }),
     }, fixMoveName(move.Name)),
@@ -243,7 +225,7 @@ const ChargeMoveInfo = ({
 const ComboDPS = ({
  rate,
 }) => (
-  n(B.Panel, [
+  n(Card, [
     n(
       B.Text,
       { strong: true },
@@ -270,13 +252,11 @@ const ComboDPS = ({
 const PokeInfo = props => (
   n(B.View, { spacingVertical: 'md', spacingHorizontal: 'lg' }, [
     n(B.View, { style: Styles.resultsRow }, [
-      n(B.Header, ucFirst(props.pokemon.name)),
-
       n(B.Row, [
         `ATK ${props.pokemon.stats.attack}`,
         `DEF ${props.pokemon.stats.defense}`,
         `STA ${props.pokemon.stats.stamina}`,
-      ].map(text => n(B.Col, [n(Badge, { color: 'lightsteelblue', text })]))),
+      ].map(text => n(B.Col, [n(Badge, { text })]))),
 
       n(B.Image, {
         src: `images/${props.pokemon.name}.png`,
@@ -301,7 +281,16 @@ const PokeInfo = props => (
       ]),
     ]),
 
-    n(B.Divider),
+    n(Divider),
+
+    n(Tabs, [
+      n(Tab, { label: 'Attacking' }, [
+        n(B.Text, 'Hi'),
+      ]),
+      n(Tab, { label: 'Defending' }, [
+        n(B.Text, 'Sup'),
+      ]),
+    ]),
 
     n(B.View, { className: 'row' }, [
       n(B.View, { className: 'col c6' }, [
@@ -327,30 +316,45 @@ const PokeInfo = props => (
       ]),
     ]),
 
-    n(B.Divider),
+    n(Divider),
   ])
 )
 
 
-const dexList = Pokemon.map(x => ({ label: x.name.replace(/_/g, ' '), value: x.name }))
+//const dexList = Pokemon.map(x => ({ label: x.name.replace(/_/g, ' '), value: x.name }))
+const dexList = Pokemon.map(x => x.name.replace(/_/g, ' '))
 
 function Dex(props) {
   return (
     n(B.View, [
-      // The search bar at the top
-      n(B.FormControl, [
-        n(Select, {
-          inputProps: {
-            autoCapitalize: 'off',
-            autoCorrect: 'off',
-            spellCheck: 'off',
-          },
-          name: 'move-selector',
-          value: props.text,
-          options: dexList,
-          onChange: ev => redux.dispatch.dexTextChanged(ev.value),
-        }),
+      n(AppBar, {
+        title: ucFirst(props.text),
+        iconElementLeft: n(IconButton, [
+          props.text === '' ? n(SearchIcon) : n(BackIcon),
+        ]),
+      }, [
+        props.text === '' ? (
+          n(AutoComplete, {
+            hintText: 'Search for Pokemon',
+            dataSource: dexList,
+          })
+        ) : null,
       ]),
+
+      // The search bar at the top
+//      n(B.FormControl, [
+//        n(Select, {
+//          inputProps: {
+//            autoCapitalize: 'off',
+//            autoCorrect: 'off',
+//            spellCheck: 'off',
+//          },
+//          name: 'move-selector',
+//          value: props.text,
+//          options: dexList,
+//          onChange: ev => redux.dispatch.dexTextChanged(ev.value),
+//        }),
+//      ]),
 
       // Empty text then list out all the Pokes
       props.text === '' && (
@@ -379,7 +383,7 @@ function Dex(props) {
       /*
       Mon.hasOwnProperty(props.text) && n(B.View, [
         n(Matchup, { name: props.text }),
-        n(B.Divider),
+        n(Divider),
       ]),
 
       Mon.hasOwnProperty(props.text) && (

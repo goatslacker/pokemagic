@@ -1,12 +1,16 @@
 const B = require('./utils/Lotus.react')
+const MuiThemeProvider = require('material-ui/styles/MuiThemeProvider').default
 const React = require('react')
 const ReactDOM = require('react-dom')
 const Styles = require('./styles')
-const n = require('./utils/n')
-const localforage = require('localforage')
-const scrollTop = require('./utils/scrollTop')
 const SwipeableViews = require('react-swipeable-views').default
+const injectTapEventPlugin = require('react-tap-event-plugin')
+const localforage = require('localforage')
+const n = require('./utils/n')
 const reactRedux = require('react-redux')
+const scrollTop = require('./utils/scrollTop')
+
+injectTapEventPlugin()
 
 const Dex = require('./components/Dex')
 const PowerUp = require('./components/PowerUp')
@@ -51,7 +55,13 @@ localforage.getItem('pogoivcalc.searches').then((searches) => {
   if (searches) redux.dispatch.searchesLoaded(searches)
 })
 
+console.log(MuiThemeProvider)
+
 ReactDOM.render(
-  n(reactRedux.Provider, { store: redux.store }, [n(Main)]),
+  n(reactRedux.Provider, { store: redux.store }, [
+    n(MuiThemeProvider, [
+      n(Main),
+    ]),
+  ]),
   document.querySelector('#app')
 )
