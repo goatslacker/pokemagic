@@ -7,10 +7,12 @@ const Matchup = require('./Matchup')
 const MoveCombos = require('./MoveCombos')
 const MovesList = require('../../json/moves.json')
 const Pokemon = require('../../json/pokemon.json')
+const RaisedButton = require('material-ui/RaisedButton').default
 const Results = require('./Results')
 const Select = require('react-select')
 const Styles = require('../styles')
 const TypeBadge = require('./TypeBadge')
+const Avatar = require('material-ui/Avatar').default
 const analyzeBattleEffectiveness = require('../../src/analyzeBattleEffectiveness')
 const avgComboDPS = require('../../src/avgComboDPS')
 const liftState = require('../utils/liftState')
@@ -18,8 +20,10 @@ const n = require('../utils/n')
 const ovRating = require('../utils/ovRating')
 const pokeRatings = require('../utils/pokeRatings')
 const reactRedux = require('react-redux')
+const { List, ListItem } = require('material-ui/List')
 const redux = require('../redux')
 const { Card } = require('material-ui/Card')
+const Paper = require('material-ui/Paper').default
 const AppBar = require('material-ui/AppBar').default
 const Chip = require('material-ui/Chip').default
 const { Tabs, Tab } = require('material-ui/Tabs')
@@ -184,45 +188,40 @@ const Overall = ({ rate }) => (
   ])
 )
 
-const styles = {
-  moveName: {
-    fontWeight: 'bold',
-  },
-}
-
 const MoveInfo = ({
+  atk,
+  def,
   info,
   rate,
 }) => (
-  $(Card, [
-    $(View, [
-      $(View, [
-        $(Text, { style: styles.moveName }, info.quick.name),
-        $(Text, { style: styles.moveName }, info.charge.name),
+  $(Paper, [
+    $(Row, {
+      vertical: 'center',
+    }, [
+      $(Col, [
+        $(View, [
+          $(Text, info.quick.name),
+          $(Text, info.charge.name),
+        ]),
+
+//        $(TypeBadge, { type: info.quick.type }),
+//        $(TypeBadge, { type: info.charge.type }),
       ]),
 
-      $(View, [
-        $(Text, {
-          style: info.quick.stab ? styles.moveName : null,
-        }, info.quick.type),
-        $(Text, {
-          style: info.charge.stab ? styles.moveName : null,
-        }, info.charge.type),
-      ]),
+      $(Col, [
+        atk && (
+          $(Chip, [
+            $(Avatar, rate.atk.offenseRating),
+            $(Text, rate.atk.dps.toFixed(2)),
+          ])
+        ),
 
-      $(View, [
-        $(Badge, {
-          primary: true,
-          badgeContent: rate.atk.offenseRating,
-        }, [
-          $(Chip, rate.atk.dps.toFixed(2)),
-        ]),
-        $(Badge, {
-          secondary: true,
-          badgeContent: rate.def.defenseRating,
-        }, [
-          $(Chip, rate.def.gymDPS.toFixed(2)),
-        ]),
+        def && (
+          $(Chip, [
+            $(Avatar, rate.def.defenseRating),
+            $(Text, rate.def.gymDPS.toFixed(2)),
+          ])
+        ),
       ]),
     ]),
   ])
@@ -232,41 +231,71 @@ const MoveInfo = ({
 const PokeInfo = ({
   pokemon,
 }) => (
-  n(View, { spacingVertical: 'md', spacingHorizontal: 'lg' }, [
-    n(View, { style: Styles.resultsRow }, [
-      n(Row, [
-        `ATK ${pokemon.stats.attack}`,
-        `DEF ${pokemon.stats.defense}`,
-        `STA ${pokemon.stats.stamina}`,
-      ].map(text => n(Col, [n(Chip, text)]))),
+  $(View, [
+    $(Paper, [
 
-      n(Image, {
-        src: `images/${pokemon.name}.png`,
-        height: 100,
-        width: 100,
-      }),
+      $(Row, {
+        vertical: 'center',
+      }, [
+        $(Col, [
+          $(Avatar, {
+            src: `images/${pokemon.name}.png`,
+            size: 100,
+          })
+        ]),
+        $(Col, [
+          $(RaisedButton, {
+            label: 'Get IVs',
+            secondary: true,
+          }),
+        ]),
+      ]),
 
-      n(Row, [getType(pokemon)]),
+      $(Row, {
+        horizontal: 'space-around',
+        vertical: 'center',
+      }, [
+        $(Chip, [
+          $(Avatar, pokemon.stats.attack),
+          $(Text, 'ATK'),
+        ]),
+
+        $(Chip, [
+          $(Avatar, pokemon.stats.defense),
+          $(Text, 'DEF'),
+        ]),
+
+        $(Chip, [
+          $(Avatar, pokemon.stats.stamina),
+          $(Text, 'STA'),
+        ]),
+      ]),
     ]),
 
-    n(Divider),
+    $(Divider),
 
-    n(Tabs, [
-      n(Tab, { label: 'Attacking' }, sortMoves(pokemon, 1).map(res => (
+    $(Tabs, [
+      $(Tab, { label: 'Attacking' }, sortMoves(pokemon, 1).map(res => (
         $(MoveInfo, {
           key: res.info.combo.name,
           rate: res.rate,
           info: res.info,
+          atk: true,
         })
       ))),
-      n(Tab, { label: 'Defending' }, sortMoves(pokemon, 0).map(res => (
+
+      $(Tab, { label: 'Defending' }, sortMoves(pokemon, 0).map(res => (
         $(MoveInfo, {
           key: res.info.combo.name,
           rate: res.rate,
           info: res.info,
+          def: true,
         })
       ))),
     ]),
+
+    $(Divider),
+
   ])
 )
 
@@ -279,6 +308,7 @@ function Dex(props) {
     n(View, [
       n(AppBar, {
         title: ucFirst(props.text),
+        onLeftIconButtonTouchTap: () => redux.dispatch.dexTextChanged(''),
         iconElementLeft: n(IconButton, [
           props.text === '' ? n(SearchIcon) : n(BackIcon),
         ]),
@@ -291,26 +321,11 @@ function Dex(props) {
         ) : null,
       ]),
 
-      // The search bar at the top
-//      n(B.FormControl, [
-//        n(Select, {
-//          inputProps: {
-//            autoCapitalize: 'off',
-//            autoCorrect: 'off',
-//            spellCheck: 'off',
-//          },
-//          name: 'move-selector',
-//          value: props.text,
-//          options: dexList,
-//          onChange: ev => redux.dispatch.dexTextChanged(ev.value),
-//        }),
-//      ]),
-
       // Empty text then list out all the Pokes
       props.text === '' && (
         Object.keys(Mon).map(mon => (
-          n(View, { style: { display: 'inline-block' } }, [
-            n(Image, {
+          $(View, { style: { display: 'inline-block' } }, [
+            $(Image, {
               onClick: () => redux.dispatch.dexTextChanged(mon),
               src: `images/${mon}.png`,
               height: 60,
@@ -322,7 +337,7 @@ function Dex(props) {
 
       // The Pokedex view
       Mon.hasOwnProperty(props.text) && (
-        n(PokeInfo, {
+        $(PokeInfo, {
           pokemon: Mon[props.text],
           quick: props.quick || Mon[props.text].moves1[0].Name,
           charge: props.charge || Mon[props.text].moves2[0].Name,

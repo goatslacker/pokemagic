@@ -37,6 +37,8 @@ const Row = props => (
       display: 'flex',
       flex: 1,
       flexDirection: 'row',
+      justifyContent: props.horizontal || 'space-between',
+      alignItems: props.vertical || 'baseline',
     },
   }, props.children)
 )

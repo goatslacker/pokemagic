@@ -46,7 +46,7 @@ class Main extends React.Component {
     const Container = n(RaterContainer)
 
     return n(B.View, {
-      style: Styles.mainDesktop,
+//      style: Styles.mainDesktop,
     }, [Container])
   }
 }
