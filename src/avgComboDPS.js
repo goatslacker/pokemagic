@@ -2,6 +2,7 @@ const Pokemon = require('../json/pokemon.json')
 const gymDefenders = require('../json/gym-defenders.json')
 const comboDPS = require('./comboDPS')
 const getTypeEffectiveness = require('./getTypeEffectiveness').getTypeEffectiveness
+const schemaMove = require('./schemaMove')
 
 const GymPokemon = gymDefenders.map(def => Pokemon.filter(x => x.name === def.name)[0])
 
@@ -29,28 +30,17 @@ function avgComboDPS(mon, move1, move2) {
 
   const avg = getAvgFrom(defenders)
 
+  const dmg1 = avg(x => x.quick.dmg)
+  const dmg2 = avg(x => x.charge.dmg)
+
   return {
     combo: {
       name: `${move1.Name}/${move2.Name}`,
       dps: avg(x => x.combo.dps),
       gymDPS: avg(x => x.combo.gymDPS),
     },
-    quick: {
-      name: move1.Name,
-      dmg: avg(x => x.quick.dmg),
-      time: move1.DurationMs / 1000,
-      energy: move1.Energy,
-      dps: avg(x => x.quick.dps),
-      gymDPS: avg(x => x.quick.gymDPS),
-    },
-    charge: {
-      name: move2.Name,
-      dmg: avg(x => x.charge.dmg),
-      time: move1.DurationMs / 1000,
-      energy: move1.Energy,
-      dps: avg(x => x.charge.dps),
-      gymDPS: avg(x => x.charge.gymDPS),
-    },
+    quick: Object.assign({}, schemaMove(mon, move1, dmg1)),
+    charge: Object.assign({}, schemaMove(mon, move2, dmg2)),
     meta: { defenders }
   }
 }
