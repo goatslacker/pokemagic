@@ -39,6 +39,7 @@ const { View, Text, Row, Col, Image } = require('../utils/Lotus.React')
 const { compose, withState } = require('recompose')
 const {
   blueGrey50,
+  cyan500,
   green400,
   grey50,
   grey800,
@@ -346,13 +347,32 @@ function Dex(props) {
     $(View, [
       props.text === '' && (
         $(Paper, {
+          style: {
+            alignItems: 'center',
+            backgroundColor: cyan500,
+            color: '#fff',
+            flex: 1,
+            display: 'flex',
+            height: 64,
+          },
         }, [
+          $(IconButton, {
+            style: {
+              position: 'absolute',
+            },
+            iconStyle: {
+              color: '#fff',
+            },
+          }, [$(SearchIcon)]),
           $(AutoComplete, {
             dataSource: dexList,
             filter: (searchText, key) => key.indexOf(searchText.toUpperCase()) > -1,
             fullWidth: true,
             hintText: 'Search for Pokemon',
             onNewRequest: text => redux.dispatch.dexTextChanged(text),
+            textFieldStyle: {
+              left: 48,
+            },
           })
         ])
       ),
@@ -364,9 +384,7 @@ function Dex(props) {
             null
           ),
           onLeftIconButtonTouchTap: () => redux.dispatch.dexTextChanged(''),
-          iconElementLeft: $(IconButton, [
-            props.text === '' ? $(SearchIcon) : $(BackIcon),
-          ]),
+          iconElementLeft: $(IconButton, [$(BackIcon)]),
         })
       ),
 
