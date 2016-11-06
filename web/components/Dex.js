@@ -11,6 +11,7 @@ const FormPokemonName = require('./FormPokemonName')
 const FormStardust = require('./FormStardust')
 const IconButton = require('material-ui/IconButton').default
 const Matchup = require('./Matchup')
+const MenuItem = require('material-ui/MenuItem').default
 const MoveCombos = require('./MoveCombos')
 const MovesList = require('../../json/moves.json')
 const Paper = require('material-ui/Paper').default
@@ -19,12 +20,13 @@ const RaisedButton = require('material-ui/RaisedButton').default
 const Results = require('./Results')
 const SearchIcon = require('material-ui/svg-icons/action/search').default
 const Select = require('react-select')
+const SelectField = require('material-ui/SelectField').default
 const Styles = require('../styles')
+const TextField = require('material-ui/TextField').default
 const TypeBadge = require('./TypeBadge')
 const analyzeBattleEffectiveness = require('../../src/analyzeBattleEffectiveness')
 const avgComboDPS = require('../../src/avgComboDPS')
 const getTypeColor = require('../utils/getTypeColor')
-const liftState = require('../utils/liftState')
 const n = require('../utils/n')
 const ovRating = require('../utils/ovRating')
 const pokeRatings = require('../utils/pokeRatings')
@@ -34,9 +36,11 @@ const { Card } = require('material-ui/Card')
 const { List, ListItem } = require('material-ui/List')
 const { Tabs, Tab } = require('material-ui/Tabs')
 const { View, Text, Row, Col, Image } = require('../utils/Lotus.React')
+const { compose, withState } = require('recompose')
 const {
   blueGrey50,
   green400,
+  grey50,
   grey800,
   indigo100,
   indigo400,
@@ -58,37 +62,44 @@ const sortMoves = (pokemon, sortOrder) => (
   )), []).sort(sortOrder ? sortByAtk : sortByDef)
 )
 
+const DustToLevel = require('../../json/dust-to-level.json')
+
+const dustOptions = Object.keys(DustToLevel).map(x => Number(x))
+const logStardust = x => redux.dispatch.changedStardust(x)
+
 function Rater(props) {
   if (props.results) return n(Results, props.results)
 
-  return n(Card, [
-    n(B.FormControl, { label: 'CP' }, [
-      n(B.Input, {
-        type: 'number',
-        onChange: ev => redux.dispatch.changedCp(ev.currentTarget.value),
-        onClick: () => redux.dispatch.changedCp(''),
-        value: props.cp,
-      }),
-    ]),
-    n(B.FormControl, { label: 'HP' }, [
-      n(B.Input, {
-        type: 'number',
-        onChange: ev => redux.dispatch.changedHp(ev.currentTarget.value),
-        onClick: () => redux.dispatch.changedHp(''),
-        value: props.hp,
-      }),
-    ]),
-    n(FormStardust, { stardust: props.stardust }),
+  return $(Paper, [
+    $(TextField, {
+      type: 'number',
+      hintText: 'CP',
+      onChange: ev => redux.dispatch.changedCp(ev.currentTarget.value),
+      onClick: () => redux.dispatch.changedCp(''),
+    }),
+
+    $(TextField, {
+      type: 'number',
+      hintText: 'HP',
+      onChange: ev => redux.dispatch.changedHp(ev.currentTarget.value),
+      onClick: () => redux.dispatch.changedHp(''),
+    }),
+
+    $(SelectField, {
+      floatingLabelText: 'Select Stardust',
+      value: '3500',
+      onChange: logStardust,
+    }, dustOptions.map(value => $(MenuItem, { value, primaryText: value }))),
+
+//    n(FormStardust, { stardust: props.stardust }),
 //    n(Appraisal),
-    n(B.Button, {
-      size: 'sm',
-      onClick: () => redux.dispatch.resultsCalculated(),
-      style: {
-        backgroundColor: '#6297de',
-      },
-    }, 'Calculate'),
-    ' ',
-    n(B.Button, { size: 'sm', onClick: redux.dispatch.valuesReset }, 'Clear'),
+//    n(B.Button, {
+//      size: 'sm',
+//      onClick: () => redux.dispatch.resultsCalculated(),
+//      style: {
+//        backgroundColor: '#6297de',
+//      },
+//    }, 'Calculate'),
   ])
 }
 
@@ -153,7 +164,7 @@ const Moves = MovesList.reduce((moves, move) => {
   return moves
 }, {})
 
-const ucFirst = x => x ? x[0].toUpperCase() + x.slice(1).toLowerCase() : ''
+const ucFirst = x => x[0].toUpperCase() + x.slice(1).toLowerCase()
 
 const fixMoveName = moveName => (
   moveName
@@ -257,7 +268,7 @@ const MoveInfo = ({
   ])
 )
 
-const PokeInfo = ({
+const PokeInfoComponent = ({
   pokemon,
 }) => (
   $(View, [
@@ -282,43 +293,43 @@ const PokeInfo = ({
             },
           })
         ]),
+
         $(Col, [
-          $(RaisedButton, {
-            label: 'Get IVs',
-            secondary: true,
-          }),
-        ]),
-      ]),
+          $(Chip, {
+            backgroundColor: indigo100,
+            style: {
+              marginBottom: 4,
+            },
+          }, [
+            $(Avatar, {
+              backgroundColor: indigo400,
+            }, pokemon.stats.attack),
+            $(Text, 'ATK'),
+          ]),
 
-      $(Row, {
-        horizontal: 'space-around',
-        vertical: 'center',
-      }, [
-        $(Chip, {
-          backgroundColor: indigo100,
-        }, [
-          $(Avatar, {
-            backgroundColor: indigo400,
-          }, pokemon.stats.attack),
-          $(Text, 'ATK'),
-        ]),
+          $(Chip, {
+            backgroundColor: indigo100,
+            style: {
+              marginBottom: 4,
+            },
+          }, [
+            $(Avatar, {
+              backgroundColor: indigo400,
+            }, pokemon.stats.defense),
+            $(Text, 'DEF'),
+          ]),
 
-        $(Chip, {
-          backgroundColor: indigo100,
-        }, [
-          $(Avatar, {
-            backgroundColor: indigo400,
-          }, pokemon.stats.defense),
-          $(Text, 'DEF'),
-        ]),
-
-        $(Chip, {
-          backgroundColor: indigo100,
-        }, [
-          $(Avatar, {
-            backgroundColor: indigo400,
-          }, pokemon.stats.stamina),
-          $(Text, 'STA'),
+          $(Chip, {
+            backgroundColor: indigo100,
+            style: {
+              marginBottom: 4,
+            },
+          }, [
+            $(Avatar, {
+              backgroundColor: indigo400,
+            }, pokemon.stats.stamina),
+            $(Text, 'STA'),
+          ]),
         ]),
       ]),
     ]),
@@ -349,6 +360,9 @@ const PokeInfo = ({
   ])
 )
 
+const PokeInfo = compose(
+  withState('iv', 'showIVCalc', false)
+)(PokeInfoComponent)
 
 //const dexList = Pokemon.map(x => ({ label: x.name.replace(/_/g, ' '), value: x.name }))
 const dexList = Pokemon.map(x => x.name.replace(/_/g, ' '))
@@ -356,20 +370,28 @@ const dexList = Pokemon.map(x => x.name.replace(/_/g, ' '))
 function Dex(props) {
   return (
     n(View, [
-      n(AppBar, {
-        title: ucFirst(props.text),
-        onLeftIconButtonTouchTap: () => redux.dispatch.dexTextChanged(''),
-        iconElementLeft: n(IconButton, [
-          props.text === '' ? n(SearchIcon) : n(BackIcon),
-        ]),
-      }, [
-        props.text === '' ? (
-          n(AutoComplete, {
-            hintText: 'Search for Pokemon',
-            dataSource: dexList,
-          })
-        ) : null,
-      ]),
+      props.text === '' && (
+        n(AutoComplete, {
+          dataSource: dexList,
+          filter: (searchText, key) => key.indexOf(searchText.toUpperCase()) > -1,
+          fullWidth: true,
+          hintText: 'Search for Pokemon',
+          onNewRequest: text => redux.dispatch.dexTextChanged(text),
+        })
+      ),
+      props.text !== '' && (
+        n(AppBar, {
+          title: props.text
+          ? ucFirst(props.text)
+          : (
+            null
+          ),
+          onLeftIconButtonTouchTap: () => redux.dispatch.dexTextChanged(''),
+          iconElementLeft: n(IconButton, [
+            props.text === '' ? n(SearchIcon) : n(BackIcon),
+          ]),
+        })
+      ),
 
       // Empty text then list out all the Pokes
       props.text === '' && (
@@ -409,7 +431,4 @@ function Dex(props) {
   )
 }
 
-module.exports = liftState({
-  quick: null,
-  charge: null,
-}, Dex)
+module.exports = Dex

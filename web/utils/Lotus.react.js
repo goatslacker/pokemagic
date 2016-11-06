@@ -46,8 +46,11 @@ const Row = props => (
 const Col = props => (
   n('div', {
     style: {
+      display: 'flex',
       flex: 1,
       flexDirection: 'column',
+      justifyContent: props.horizontal || 'space-between',
+      alignItems: props.vertical || 'baseline',
     },
   }, props.children)
 )
