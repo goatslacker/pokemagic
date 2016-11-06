@@ -27,7 +27,7 @@ const TypeBadge = require('./TypeBadge')
 const analyzeBattleEffectiveness = require('../../src/analyzeBattleEffectiveness')
 const avgComboDPS = require('../../src/avgComboDPS')
 const getTypeColor = require('../utils/getTypeColor')
-const n = require('../utils/n')
+const $ = require('../utils/n')
 const ovRating = require('../utils/ovRating')
 const pokeRatings = require('../utils/pokeRatings')
 const reactRedux = require('react-redux')
@@ -48,8 +48,6 @@ const {
   yellow300,
 } = require('material-ui/styles/colors')
 
-const $ = n
-
 const sortByAtk = (a, b) => a.info.combo.dps > b.info.combo.dps ? -1 : 1
 const sortByDef = (a, b) => a.info.combo.gymDPS > b.info.combo.gymDPS ? -1 : 1
 
@@ -68,7 +66,7 @@ const dustOptions = Object.keys(DustToLevel).map(x => Number(x))
 const logStardust = x => redux.dispatch.changedStardust(x)
 
 function Rater(props) {
-  if (props.results) return n(Results, props.results)
+  if (props.results) return $(Results, props.results)
 
   return $(Paper, [
     $(TextField, {
@@ -90,16 +88,6 @@ function Rater(props) {
       value: '3500',
       onChange: logStardust,
     }, dustOptions.map(value => $(MenuItem, { value, primaryText: value }))),
-
-//    n(FormStardust, { stardust: props.stardust }),
-//    n(Appraisal),
-//    n(B.Button, {
-//      size: 'sm',
-//      onClick: () => redux.dispatch.resultsCalculated(),
-//      style: {
-//        backgroundColor: '#6297de',
-//      },
-//    }, 'Calculate'),
   ])
 }
 
@@ -188,25 +176,11 @@ const Mon = Pokemon.reduce((obj, mon) => {
 }, {})
 
 
-const getType = mon => (
-  [mon.type1, mon.type2]
-    .filter(Boolean)
-    .map(type => n(TypeBadge, { type }))
-)
-
-const cond = html => html || null
-
 const isStab = (pokemon, move) => (
   [pokemon.type1, pokemon.type2]
     .filter(Boolean)
     .filter(type => type === move.Type)
     .length > 0
-)
-
-const Overall = ({ rate }) => (
-  n(B.View, [
-    n(Chip, `OVR ${rate.ovr}% ${rate.atk}/${rate.def}`),
-  ])
 )
 
 const getColor = n => (
@@ -369,26 +343,29 @@ const dexList = Pokemon.map(x => x.name.replace(/_/g, ' '))
 
 function Dex(props) {
   return (
-    n(View, [
+    $(View, [
       props.text === '' && (
-        n(AutoComplete, {
-          dataSource: dexList,
-          filter: (searchText, key) => key.indexOf(searchText.toUpperCase()) > -1,
-          fullWidth: true,
-          hintText: 'Search for Pokemon',
-          onNewRequest: text => redux.dispatch.dexTextChanged(text),
-        })
+        $(Paper, {
+        }, [
+          $(AutoComplete, {
+            dataSource: dexList,
+            filter: (searchText, key) => key.indexOf(searchText.toUpperCase()) > -1,
+            fullWidth: true,
+            hintText: 'Search for Pokemon',
+            onNewRequest: text => redux.dispatch.dexTextChanged(text),
+          })
+        ])
       ),
       props.text !== '' && (
-        n(AppBar, {
+        $(AppBar, {
           title: props.text
           ? ucFirst(props.text)
           : (
             null
           ),
           onLeftIconButtonTouchTap: () => redux.dispatch.dexTextChanged(''),
-          iconElementLeft: n(IconButton, [
-            props.text === '' ? n(SearchIcon) : n(BackIcon),
+          iconElementLeft: $(IconButton, [
+            props.text === '' ? $(SearchIcon) : $(BackIcon),
           ]),
         })
       ),
@@ -416,17 +393,6 @@ function Dex(props) {
           setState: props.setState,
         })
       ),
-
-      /*
-      Mon.hasOwnProperty(props.text) && n(B.View, [
-        n(Matchup, { name: props.text }),
-        n(Divider),
-      ]),
-
-      Mon.hasOwnProperty(props.text) && (
-        n(Report, { pokemon: Mon[props.text] })
-      ),
-      */
     ])
   )
 }
