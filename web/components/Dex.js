@@ -226,9 +226,6 @@ const MoveInfo = ({
           $(Text, info.quick.name),
           $(Text, info.charge.name),
         ]),
-
-//        $(TypeBadge, { type: info.quick.type }),
-//        $(TypeBadge, { type: info.charge.type }),
       ]),
 
       $(Col, [
@@ -249,7 +246,7 @@ const MoveInfo = ({
             backgroundColor: blueGrey50,
           }, [
             $(Avatar, {
-              backgroundColor: getColor(rate.atk.offenseRating),
+              backgroundColor: getColor(rate.def.defenseRating),
               color: grey800,
             }, rate.def.defenseRating),
             $(Text, rate.def.gymDPS.toFixed(2)),
@@ -272,7 +269,6 @@ const PokeInfo = ({
         paddingTop: 12,
       },
     }, [
-
       $(Row, {
         vertical: 'center',
       }, [
@@ -281,6 +277,9 @@ const PokeInfo = ({
             backgroundColor: getTypeColor(pokemon),
             src: `images/${pokemon.name}.png`,
             size: 100,
+            style: {
+              padding: 4,
+            },
           })
         ]),
         $(Col, [
@@ -329,7 +328,7 @@ const PokeInfo = ({
     $(Tabs, [
       $(Tab, { label: 'Attacking' }, sortMoves(pokemon, 1).map(res => (
         $(MoveInfo, {
-          key: res.info.combo.name,
+          key: `ATK+${res.info.combo.name}`,
           rate: res.rate,
           info: res.info,
           atk: true,
@@ -338,7 +337,7 @@ const PokeInfo = ({
 
       $(Tab, { label: 'Defending' }, sortMoves(pokemon, 0).map(res => (
         $(MoveInfo, {
-          key: res.info.combo.name,
+          key: `DEF+${res.info.combo.name}`,
           rate: res.rate,
           info: res.info,
           def: true,
@@ -347,7 +346,6 @@ const PokeInfo = ({
     ]),
 
     $(Divider),
-
   ])
 )
 
