@@ -1,38 +1,48 @@
+const AppBar = require('material-ui/AppBar').default
 const Appraisal = require('./Appraisal')
-const { View, Text, Row, Col, Image } = require('../utils/Lotus.React')
+const AutoComplete = require('material-ui/AutoComplete').default
+const Avatar = require('material-ui/Avatar').default
+const BackIcon = require('material-ui/svg-icons/navigation/arrow-back').default
+const Badge = require('material-ui/Badge').default
+const Chip = require('material-ui/Chip').default
+const Divider = require('material-ui/Divider').default
 const FormPokemonLevel = require('./FormPokemonLevel')
 const FormPokemonName = require('./FormPokemonName')
 const FormStardust = require('./FormStardust')
+const IconButton = require('material-ui/IconButton').default
 const Matchup = require('./Matchup')
 const MoveCombos = require('./MoveCombos')
 const MovesList = require('../../json/moves.json')
+const Paper = require('material-ui/Paper').default
 const Pokemon = require('../../json/pokemon.json')
 const RaisedButton = require('material-ui/RaisedButton').default
 const Results = require('./Results')
+const SearchIcon = require('material-ui/svg-icons/action/search').default
 const Select = require('react-select')
 const Styles = require('../styles')
 const TypeBadge = require('./TypeBadge')
-const Avatar = require('material-ui/Avatar').default
 const analyzeBattleEffectiveness = require('../../src/analyzeBattleEffectiveness')
 const avgComboDPS = require('../../src/avgComboDPS')
+const getTypeColor = require('../utils/getTypeColor')
 const liftState = require('../utils/liftState')
 const n = require('../utils/n')
 const ovRating = require('../utils/ovRating')
 const pokeRatings = require('../utils/pokeRatings')
 const reactRedux = require('react-redux')
-const { List, ListItem } = require('material-ui/List')
 const redux = require('../redux')
 const { Card } = require('material-ui/Card')
-const Paper = require('material-ui/Paper').default
-const AppBar = require('material-ui/AppBar').default
-const Chip = require('material-ui/Chip').default
+const { List, ListItem } = require('material-ui/List')
 const { Tabs, Tab } = require('material-ui/Tabs')
-const Badge = require('material-ui/Badge').default
-const Divider = require('material-ui/Divider').default
-const IconButton = require('material-ui/IconButton').default
-const SearchIcon = require('material-ui/svg-icons/action/search').default
-const AutoComplete = require('material-ui/AutoComplete').default
-const BackIcon = require('material-ui/svg-icons/navigation/arrow-back').default
+const { View, Text, Row, Col, Image } = require('../utils/Lotus.React')
+const {
+  blueGrey50,
+  green400,
+  grey800,
+  indigo100,
+  indigo400,
+  red400,
+  yellow300,
+} = require('material-ui/styles/colors')
 
 const $ = n
 
@@ -188,13 +198,26 @@ const Overall = ({ rate }) => (
   ])
 )
 
+const getColor = n => (
+  n > 86 ? green400 :
+  n > 78 ? yellow300 :
+  red400
+)
+
 const MoveInfo = ({
   atk,
   def,
   info,
   rate,
 }) => (
-  $(Paper, [
+  $(Paper, {
+    style: {
+      paddingBottom: 12,
+      paddingLeft: 24,
+      paddingRight: 24,
+      paddingTop: 12,
+    },
+  }, [
     $(Row, {
       vertical: 'center',
     }, [
@@ -210,15 +233,25 @@ const MoveInfo = ({
 
       $(Col, [
         atk && (
-          $(Chip, [
-            $(Avatar, rate.atk.offenseRating),
+          $(Chip, {
+            backgroundColor: blueGrey50,
+          }, [
+            $(Avatar, {
+              backgroundColor: getColor(rate.atk.offenseRating),
+              color: grey800,
+            }, rate.atk.offenseRating),
             $(Text, rate.atk.dps.toFixed(2)),
           ])
         ),
 
         def && (
-          $(Chip, [
-            $(Avatar, rate.def.defenseRating),
+          $(Chip, {
+            backgroundColor: blueGrey50,
+          }, [
+            $(Avatar, {
+              backgroundColor: getColor(rate.atk.offenseRating),
+              color: grey800,
+            }, rate.def.defenseRating),
             $(Text, rate.def.gymDPS.toFixed(2)),
           ])
         ),
@@ -227,18 +260,25 @@ const MoveInfo = ({
   ])
 )
 
-
 const PokeInfo = ({
   pokemon,
 }) => (
   $(View, [
-    $(Paper, [
+    $(Paper, {
+      style: {
+        paddingBottom: 12,
+        paddingLeft: 24,
+        paddingRight: 24,
+        paddingTop: 12,
+      },
+    }, [
 
       $(Row, {
         vertical: 'center',
       }, [
         $(Col, [
           $(Avatar, {
+            backgroundColor: getTypeColor(pokemon),
             src: `images/${pokemon.name}.png`,
             size: 100,
           })
@@ -255,18 +295,30 @@ const PokeInfo = ({
         horizontal: 'space-around',
         vertical: 'center',
       }, [
-        $(Chip, [
-          $(Avatar, pokemon.stats.attack),
+        $(Chip, {
+          backgroundColor: indigo100,
+        }, [
+          $(Avatar, {
+            backgroundColor: indigo400,
+          }, pokemon.stats.attack),
           $(Text, 'ATK'),
         ]),
 
-        $(Chip, [
-          $(Avatar, pokemon.stats.defense),
+        $(Chip, {
+          backgroundColor: indigo100,
+        }, [
+          $(Avatar, {
+            backgroundColor: indigo400,
+          }, pokemon.stats.defense),
           $(Text, 'DEF'),
         ]),
 
-        $(Chip, [
-          $(Avatar, pokemon.stats.stamina),
+        $(Chip, {
+          backgroundColor: indigo100,
+        }, [
+          $(Avatar, {
+            backgroundColor: indigo400,
+          }, pokemon.stats.stamina),
           $(Text, 'STA'),
         ]),
       ]),
