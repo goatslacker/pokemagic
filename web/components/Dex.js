@@ -25,6 +25,7 @@ const ovRating = require('../utils/ovRating')
 const pokeRatings = require('../utils/pokeRatings')
 const scrollTop = require('../utils/scrollTop')
 const { Card, CardActions, CardHeader, CardText } = require('material-ui/Card')
+const { GridList, GridTile } = require('material-ui/GridList')
 const { List, ListItem } = require('material-ui/List')
 const { Tabs, Tab } = require('material-ui/Tabs')
 const { View, Text, Row, Col, Image } = require('../utils/Lotus.React')
@@ -452,12 +453,21 @@ const PokeImage = ({
   pokemon,
   changePokemon,
 }) => (
-  $(View, { style: { display: 'inline-block' } }, [
+  $(GridTile, {
+    key: pokemon.name,
+    title: ucFirst(pokemon.name),
+    subtitle: (
+      pokemon.atk ? `ATK ${pokemon.atk}` :
+      pokemon.def ? `DEF ${pokemon.def}` :
+      pokemon.cp ? `CP ${pokemon.cp}` :
+      `# ${pokemon.id}`
+    )
+  }, [
     $(Image, {
       onClick: () => changePokemon(pokemon),
       src: `images/${pokemon.name}.png`,
-      height: 60,
-      width: 60,
+      height: 120,
+      width: 120,
     }),
   ])
 )
@@ -524,30 +534,49 @@ const Dex = ({
     // Empty text then list out all the Pokes
     !pokemon && (
       $(Tabs, [
-        $(Tab, { label: '#' }, Pokemon
-          .map(pokemon => $(PokeImage, { pokemon, changePokemon }))
-        ),
-        $(Tab, { label: 'CP' }, Pokemon
-          .map(x => Object.assign(x, {
-            cp: cp.getMaxCPForLevel(x, LevelToCPM['40']),
-          }))
-          .sort((a, b) => a.cp > b.cp ? -1 : 1)
-          .map(pokemon => $(PokeImage, { pokemon, changePokemon }))
-        ),
-        $(Tab, { label: 'Atk' }, Pokemon
-          .map(x => Object.assign(x, {
-            atk: ovRating(x).atk,
-          }))
-          .sort((a, b) => a.atk > b.atk ? -1 : 1)
-          .map(pokemon => $(PokeImage, { pokemon, changePokemon }))
-        ),
-        $(Tab, { label: 'Def' }, Pokemon
-          .map(x => Object.assign(x, {
-            def: ovRating(x).def,
-          }))
-          .sort((a, b) => a.def > b.def ? -1 : 1)
-          .map(pokemon => $(PokeImage, { pokemon, changePokemon }))
-        ),
+        $(Tab, { label: '#' }, [
+          $(
+            GridList,
+            { cellHeight: 120, cols: 3 },
+            Pokemon.map(pokemon => $(PokeImage, { pokemon, changePokemon }))
+          ),
+        ]),
+        $(Tab, { label: 'CP' }, [
+          $(
+            GridList,
+            { cellHeight: 120, cols: 3 },
+            Pokemon
+              .map(x => Object.assign({
+                cp: cp.getMaxCPForLevel(x, LevelToCPM['40']),
+              }, x))
+              .sort((a, b) => a.cp > b.cp ? -1 : 1)
+              .map(pokemon => $(PokeImage, { pokemon, changePokemon }))
+          ),
+        ]),
+        $(Tab, { label: 'Atk' }, [
+          $(
+            GridList,
+            { cellHeight: 120, cols: 3 },
+            Pokemon
+              .map(x => Object.assign({
+                atk: ovRating(x).atk,
+              }, x))
+              .sort((a, b) => a.atk > b.atk ? -1 : 1)
+              .map(pokemon => $(PokeImage, { pokemon, changePokemon }))
+          ),
+        ]),
+        $(Tab, { label: 'Def' }, [
+          $(
+            GridList,
+            { cellHeight: 120, cols: 3 },
+            Pokemon
+              .map(x => Object.assign({
+                def: ovRating(x).def,
+              }, x))
+              .sort((a, b) => a.def > b.def ? -1 : 1)
+              .map(pokemon => $(PokeImage, { pokemon, changePokemon }))
+          ),
+        ]),
       ])
     ),
 
