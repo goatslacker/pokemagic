@@ -21,6 +21,7 @@ const bestVs = require('../../src/bestVs')
 const getTypeColor = require('../utils/getTypeColor')
 const ovRating = require('../utils/ovRating')
 const pokeRatings = require('../utils/pokeRatings')
+const scrollTop = require('../utils/scrollTop')
 const { Card, CardActions, CardHeader, CardText } = require('material-ui/Card')
 const { List, ListItem } = require('material-ui/List')
 const { Tabs, Tab } = require('material-ui/Tabs')
@@ -449,7 +450,9 @@ const Dex = ({
   changePokemon,
   pokemon,
 }) => (
-  $(View, [
+  $(View, {
+    className: 'main',
+  }, [
     !pokemon && (
       $(Paper, {
         style: {
@@ -486,6 +489,17 @@ const Dex = ({
         title: pokemon ? ucFirst(pokemon.name) : null,
         onLeftIconButtonTouchTap: () => changePokemon(null),
         iconElementLeft: $(IconButton, [$(BackIcon)]),
+        iconElementRight: $(IconButton, {
+          style: {
+            marginRight: 8,
+            marginTop: -8,
+          },
+        }, [
+          $(Avatar, {
+            backgroundColor: getColor(ovRating(pokemon).ovr),
+            color: grey800,
+          }, ovRating(pokemon).ovr),
+        ]),
       })
     ),
 
@@ -513,10 +527,11 @@ const hashChanged = () => {
   return Pokemon.filter(x => x.name === arr[1].toUpperCase())[0]
 }
 
+const scrollIf = x => x ? scrollTop() : null
+
 const changePokemonFromHash = ({
   changePokemon,
-}) => changePokemon(hashChanged() || null)
-
+}) => changePokemon(scrollIf(hashChanged()))
 
 module.exports = compose(
   withState('pokemon', 'changePokemon', null),
