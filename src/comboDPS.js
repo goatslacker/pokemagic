@@ -8,11 +8,9 @@ function getDmgVs(obj) {
   const moves = obj.moves
   const player = obj.player
   const opponent = obj.opponent
-  const pokemonLevel = obj.pokemonLevel || 25
+  const pokemonLevel = obj.pokemonLevel || 30
 
-  // We determine DPS combo vs a level 25 pokemon because that's what gyms on average will have.
-  // There's no hard data for this claim btw, it's completely made up.
-  const opponentLevel = obj.opponentLevel || 25
+  const opponentLevel = obj.opponentLevel || 30
 
   const AtkECpM = LevelToCPM[pokemonLevel]
   const DefECpM = LevelToCPM[opponentLevel]
@@ -110,8 +108,8 @@ module.exports = comboDPS
 //    Pokemon.filter(x => x.name === 'DRAGONITE')[0],
 //    10,
 //    10,
-//    25,
-//    25,
+//    30,
+//    30,
 //    Pokemon.filter(x => x.name === 'SLOWBRO')[0].moves1[0],
 //    Pokemon.filter(x => x.name === 'SLOWBRO')[0].moves2[0]
 //  )
