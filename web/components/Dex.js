@@ -20,8 +20,6 @@ const getTypeColor = require('../utils/getTypeColor')
 const $ = require('../utils/n')
 const ovRating = require('../utils/ovRating')
 const pokeRatings = require('../utils/pokeRatings')
-const reactRedux = require('react-redux')
-const redux = require('../redux')
 const { Card, CardActions, CardHeader, CardText } = require('material-ui/Card')
 const { List, ListItem } = require('material-ui/List')
 const { Tabs, Tab } = require('material-ui/Tabs')
@@ -50,11 +48,6 @@ const sortMoves = (pokemon, sortOrder) => (
     })
   )), []).sort(sortOrder ? sortByAtk : sortByDef)
 )
-
-const DustToLevel = require('../../json/dust-to-level.json')
-
-const dustOptions = Object.keys(DustToLevel).map(x => Number(x))
-const logStardust = x => redux.dispatch.changedStardust(x)
 
 const PokeMoves = Pokemon.reduce((pokes, poke) => {
   pokes[poke.name] = poke.moves1.reduce((obj, move1) => {
@@ -386,80 +379,71 @@ const PokeInfo = compose(
   withState('iv', 'showIVCalc', false)
 )(PokeInfoComponent)
 
-//const dexList = Pokemon.map(x => ({ label: x.name.replace(/_/g, ' '), value: x.name }))
 const dexList = Pokemon.map(x => x.name.replace(/_/g, ' '))
 
-function Dex(props) {
-  return (
-    $(View, [
-      props.text === '' && (
-        $(Paper, {
+const Dex = ({
+  changePokemon,
+  pokemon,
+}) => (
+  $(View, [
+    !pokemon && (
+      $(Paper, {
+        style: {
+          alignItems: 'center',
+          backgroundColor: cyan500,
+          color: '#fff',
+          flex: 1,
+          display: 'flex',
+          height: 64,
+        },
+      }, [
+        $(IconButton, {
           style: {
-            alignItems: 'center',
-            backgroundColor: cyan500,
-            color: '#fff',
-            flex: 1,
-            display: 'flex',
-            height: 64,
+            position: 'absolute',
           },
-        }, [
-          $(IconButton, {
-            style: {
-              position: 'absolute',
-            },
-            iconStyle: {
-              color: '#fff',
-            },
-          }, [$(SearchIcon)]),
-          $(AutoComplete, {
-            dataSource: dexList,
-            filter: (searchText, key) => key.indexOf(searchText.toUpperCase()) > -1,
-            fullWidth: true,
-            hintText: 'Search for Pokemon',
-            onNewRequest: text => redux.dispatch.dexTextChanged(text),
-            textFieldStyle: {
-              left: 48,
-            },
-          })
+          iconStyle: {
+            color: '#fff',
+          },
+        }, [$(SearchIcon)]),
+        $(AutoComplete, {
+          dataSource: dexList,
+          filter: (searchText, key) => key.indexOf(searchText.toUpperCase()) > -1,
+          fullWidth: true,
+          hintText: 'Search for Pokemon',
+          onNewRequest: text => changePokemon(Mon[text.toUpperCase()]),
+          textFieldStyle: {
+            left: 48,
+          },
+        })
+      ])
+    ),
+    pokemon && (
+      $(AppBar, {
+        title: pokemon ? ucFirst(pokemon.name) : null,
+        onLeftIconButtonTouchTap: () => changePokemon(null),
+        iconElementLeft: $(IconButton, [$(BackIcon)]),
+      })
+    ),
+
+    // Empty text then list out all the Pokes
+    !pokemon && (
+      Object.keys(Mon).map(mon => (
+        $(View, { style: { display: 'inline-block' } }, [
+          $(Image, {
+            onClick: () => changePokemon(Mon[mon]),
+            src: `images/${mon}.png`,
+            height: 60,
+            width: 60,
+          }),
         ])
-      ),
-      props.text !== '' && (
-        $(AppBar, {
-          title: props.text
-          ? ucFirst(props.text)
-          : (
-            null
-          ),
-          onLeftIconButtonTouchTap: () => redux.dispatch.dexTextChanged(''),
-          iconElementLeft: $(IconButton, [$(BackIcon)]),
-        })
-      ),
+      ))
+    ),
 
-      // Empty text then list out all the Pokes
-      props.text === '' && (
-        Object.keys(Mon).map(mon => (
-          $(View, { style: { display: 'inline-block' } }, [
-            $(Image, {
-              onClick: () => redux.dispatch.dexTextChanged(mon),
-              src: `images/${mon}.png`,
-              height: 60,
-              width: 60,
-            }),
-          ])
-        ))
-      ),
+    // The Pokedex view
+    pokemon && $(PokeInfo, { pokemon }),
+  ])
+)
 
-      // The Pokedex view
-      Mon.hasOwnProperty(props.text) && (
-        $(PokeInfo, {
-          pokemon: Mon[props.text],
-          quick: props.quick || Mon[props.text].moves1[0].Name,
-          charge: props.charge || Mon[props.text].moves2[0].Name,
-          setState: props.setState,
-        })
-      ),
-    ])
-  )
-}
-
-module.exports = Dex
+module.exports = compose(
+  withState('pokemon', 'changePokemon', null)
+)(Dex)
