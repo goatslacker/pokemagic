@@ -1,9 +1,11 @@
+const $ = require('../utils/n')
 const AppBar = require('material-ui/AppBar').default
 const AutoComplete = require('material-ui/AutoComplete').default
 const Avatar = require('material-ui/Avatar').default
 const BackIcon = require('material-ui/svg-icons/navigation/arrow-back').default
 const Chip = require('material-ui/Chip').default
 const Divider = require('material-ui/Divider').default
+const DustTolevel = require('../../json/dust-to-level.json')
 const IconButton = require('material-ui/IconButton').default
 const MenuItem = require('material-ui/MenuItem').default
 const MovesList = require('../../json/moves.json')
@@ -17,7 +19,6 @@ const TextField = require('material-ui/TextField').default
 const avgComboDPS = require('../../src/avgComboDPS')
 const bestVs = require('../../src/bestVs')
 const getTypeColor = require('../utils/getTypeColor')
-const $ = require('../utils/n')
 const ovRating = require('../utils/ovRating')
 const pokeRatings = require('../utils/pokeRatings')
 const { Card, CardActions, CardHeader, CardText } = require('material-ui/Card')
@@ -26,6 +27,7 @@ const { Tabs, Tab } = require('material-ui/Tabs')
 const { View, Text, Row, Col, Image } = require('../utils/Lotus.React')
 const { compose, lifecycle, withState } = require('recompose')
 const {
+  blue300,
   blueGrey50,
   cyan500,
   green400,
@@ -33,6 +35,7 @@ const {
   grey800,
   indigo100,
   indigo400,
+  red300,
   red400,
   yellow300,
 } = require('material-ui/styles/colors')
@@ -374,6 +377,29 @@ const PokeInfoComponent = ({
 //          $(TextField, {
 //            hintText: 'HP',
 //            type: 'number',
+//          }),
+//
+//          $(SelectField, {
+//            hintText: 'Stardust',
+//          }, Object.keys(DustTolevel)
+//            .map(primaryText => $(MenuItem, { primaryText }))
+//          ),
+//
+//          $(Row, {
+//            horizontal: 'center',
+//          }, [red300, blue300, yellow300].map(backgroundColor => (
+//            $(Avatar, {
+//              backgroundColor,
+//              style: {
+//                marginLeft: 32,
+//                marginRight: 32,
+//              },
+//            })
+//          ))),
+//
+//          $(RaisedButton, {
+//            label: 'Calculate',
+//            primary: true,
 //          }),
 //        ])
 //      ),
