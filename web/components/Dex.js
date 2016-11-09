@@ -7,6 +7,7 @@ const Chip = require('material-ui/Chip').default
 const Divider = require('material-ui/Divider').default
 const DustTolevel = require('../../json/dust-to-level.json')
 const IconButton = require('material-ui/IconButton').default
+const LevelToCPM = require('../../json/level-to-cpm')
 const MenuItem = require('material-ui/MenuItem').default
 const MovesList = require('../../json/moves.json')
 const Paper = require('material-ui/Paper').default
@@ -18,6 +19,7 @@ const Styles = require('../styles')
 const TextField = require('material-ui/TextField').default
 const avgComboDPS = require('../../src/avgComboDPS')
 const bestVs = require('../../src/bestVs')
+const cp = require('../../src/cp')
 const getTypeColor = require('../utils/getTypeColor')
 const ovRating = require('../utils/ovRating')
 const pokeRatings = require('../utils/pokeRatings')
@@ -209,19 +211,21 @@ const BestInfo = ({
       ),
       title: best.name,
     }),
-    $(CardText, {
-      expandable: best.rest.length > 0,
-    }, best.rest.map(rest => (
-      $(CardHeader, {
-        title: `${rest.quickMove} + ${rest.chargeMove}`,
-        subtitle: (
-          $(View, [
-            $(Text, `${rest.dps} dps`),
-            $(Text, `${rest.ttl} ttl`),
-          ])
-        ),
-      })
-    ))),
+    best.rest.length > 0 && (
+      $(CardText, {
+        expandable: true,
+      }, best.rest.map(rest => (
+        $(CardHeader, {
+          title: `${rest.quickMove} + ${rest.chargeMove}`,
+          subtitle: (
+            $(View, [
+              $(Text, `${rest.dps} dps`),
+              $(Text, `${rest.ttl} ttl`),
+            ])
+          ),
+        })
+      )))
+    ),
   ])
 )
 
@@ -444,6 +448,20 @@ const PokeInfo = compose(
   withState('iv', 'showIVCalc', false)
 )(PokeInfoComponent)
 
+const PokeImage = ({
+  pokemon,
+  changePokemon,
+}) => (
+  $(View, { style: { display: 'inline-block' } }, [
+    $(Image, {
+      onClick: () => changePokemon(pokemon),
+      src: `images/${pokemon.name}.png`,
+      height: 60,
+      width: 60,
+    }),
+  ])
+)
+
 const dexList = Pokemon.map(x => x.name.replace(/_/g, ' '))
 
 const Dex = ({
@@ -505,16 +523,32 @@ const Dex = ({
 
     // Empty text then list out all the Pokes
     !pokemon && (
-      Object.keys(Mon).map(mon => (
-        $(View, { style: { display: 'inline-block' } }, [
-          $(Image, {
-            onClick: () => changePokemon(Mon[mon]),
-            src: `images/${mon}.png`,
-            height: 60,
-            width: 60,
-          }),
-        ])
-      ))
+      $(Tabs, [
+        $(Tab, { label: '#' }, Pokemon
+          .map(pokemon => $(PokeImage, { pokemon, changePokemon }))
+        ),
+        $(Tab, { label: 'CP' }, Pokemon
+          .map(x => Object.assign(x, {
+            cp: cp.getMaxCPForLevel(x, LevelToCPM['40']),
+          }))
+          .sort((a, b) => a.cp > b.cp ? -1 : 1)
+          .map(pokemon => $(PokeImage, { pokemon, changePokemon }))
+        ),
+        $(Tab, { label: 'Atk' }, Pokemon
+          .map(x => Object.assign(x, {
+            atk: ovRating(x).atk,
+          }))
+          .sort((a, b) => a.atk > b.atk ? -1 : 1)
+          .map(pokemon => $(PokeImage, { pokemon, changePokemon }))
+        ),
+        $(Tab, { label: 'Def' }, Pokemon
+          .map(x => Object.assign(x, {
+            def: ovRating(x).def,
+          }))
+          .sort((a, b) => a.def > b.def ? -1 : 1)
+          .map(pokemon => $(PokeImage, { pokemon, changePokemon }))
+        ),
+      ])
     ),
 
     // The Pokedex view
