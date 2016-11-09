@@ -255,7 +255,7 @@ const Module = ({
       marginTop: 40,
     },
   }, [
-    $(Paper, {
+    title && $(View, {
       style: {
         paddingBottom: 12,
         paddingLeft: 24,
@@ -271,11 +271,13 @@ const Module = ({
     ])
   ].concat(children, [
     $(Divider),
-  ]))
+  ].filter(Boolean)))
 )
 
 const PokeInfoComponent = ({
+  iv,
   pokemon,
+  showIVCalc,
 }) => (
   $(View, [
     $(Paper, {
@@ -340,6 +342,42 @@ const PokeInfoComponent = ({
       ]),
     ]),
 
+//    $(Module, {
+//      title: iv ? 'IVs' : null,
+//    }, [
+//      !iv && (
+//        $(View, {
+//          style: {
+//            paddingBottom: 24,
+//            paddingTop: 24,
+//          },
+//        }, [
+//          $(Row, {
+//            horizontal: 'center',
+//          }, [
+//            $(RaisedButton, {
+//              label: 'Get IVs',
+//              secondary: true,
+//              onClick: () => showIVCalc(true),
+//            }),
+//          ])
+//        ])
+//      ),
+//
+//      iv && (
+//        $(View, [
+//          $(TextField, {
+//            hintText: 'CP',
+//            type: 'number',
+//          }),
+//
+//          $(TextField, {
+//            hintText: 'HP',
+//            type: 'number',
+//          }),
+//        ])
+//      ),
+//    ]),
 
     $(Module, {
       title: 'Movesets',
