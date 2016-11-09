@@ -106,13 +106,13 @@ module.exports = comboDPS
 
 //console.log(
 //  comboDPS(
-//    Pokemon.filter(x => x.name === 'VAPOREON')[0],
-//    Pokemon.filter(x => x.name === 'FLAREON')[0],
+//    Pokemon.filter(x => x.name === 'SLOWBRO')[0],
+//    Pokemon.filter(x => x.name === 'DRAGONITE')[0],
 //    10,
 //    10,
 //    25,
 //    25,
-//    Pokemon.filter(x => x.name === 'VAPOREON')[0].moves1[0],
-//    Pokemon.filter(x => x.name === 'VAPOREON')[0].moves2[1]
+//    Pokemon.filter(x => x.name === 'SLOWBRO')[0].moves1[0],
+//    Pokemon.filter(x => x.name === 'SLOWBRO')[0].moves2[0]
 //  )
 //)
