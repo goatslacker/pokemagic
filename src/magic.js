@@ -7,7 +7,6 @@ const DustToLevel = require('../json/dust-to-level')
 
 const findPokemon = require('./findPokemon')
 const logPokemon = require('./logPokemon')
-const isGoodPokemonForItsClass = require('./isGoodPokemon')
 const guessIVs = require('./guessIVs')
 
 const init = {
@@ -84,10 +83,10 @@ class IvResults {
       return mon.percent.PerfectIV > best.percent.PerfectIV ? mon : best
     }, null)
 
-    this.yes = this.results.every(isGoodPokemonForItsClass)
-    this.maybeValues = this.results.filter(isGoodPokemonForItsClass)
-    this.maybe = this.maybeValues.length > 0
-    this.valuesRange = this.findValuesRange(this.results)
+//    this.yes = this.results.every(isGoodPokemonForItsClass)
+//    this.maybeValues = this.results.filter(isGoodPokemonForItsClass)
+//    this.maybe = this.maybeValues.length > 0
+//    this.valuesRange = this.findValuesRange(this.results)
   }
 
   isValid() {

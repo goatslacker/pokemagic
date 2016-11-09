@@ -14,15 +14,15 @@ const SearchIcon = require('material-ui/svg-icons/action/search').default
 const SelectField = require('material-ui/SelectField').default
 const Styles = require('../styles')
 const TextField = require('material-ui/TextField').default
-const analyzeBattleEffectiveness = require('../../src/analyzeBattleEffectiveness')
 const avgComboDPS = require('../../src/avgComboDPS')
+const bestVs = require('../../src/bestVs')
 const getTypeColor = require('../utils/getTypeColor')
 const $ = require('../utils/n')
 const ovRating = require('../utils/ovRating')
 const pokeRatings = require('../utils/pokeRatings')
 const reactRedux = require('react-redux')
 const redux = require('../redux')
-const { Card } = require('material-ui/Card')
+const { Card, CardActions, CardHeader, CardText } = require('material-ui/Card')
 const { List, ListItem } = require('material-ui/List')
 const { Tabs, Tab } = require('material-ui/Tabs')
 const { View, Text, Row, Col, Image } = require('../utils/Lotus.React')
@@ -55,35 +55,6 @@ const DustToLevel = require('../../json/dust-to-level.json')
 
 const dustOptions = Object.keys(DustToLevel).map(x => Number(x))
 const logStardust = x => redux.dispatch.changedStardust(x)
-
-function Rater(props) {
-  if (props.results) return $(Results, props.results)
-
-  return $(Paper, [
-    $(TextField, {
-      type: 'number',
-      hintText: 'CP',
-      onChange: ev => redux.dispatch.changedCp(ev.currentTarget.value),
-      onClick: () => redux.dispatch.changedCp(''),
-    }),
-
-    $(TextField, {
-      type: 'number',
-      hintText: 'HP',
-      onChange: ev => redux.dispatch.changedHp(ev.currentTarget.value),
-      onClick: () => redux.dispatch.changedHp(''),
-    }),
-
-    $(SelectField, {
-      floatingLabelText: 'Select Stardust',
-      value: '3500',
-      onChange: logStardust,
-    }, dustOptions.map(value => $(MenuItem, { value, primaryText: value }))),
-  ])
-}
-
-const RaterContainer = reactRedux.connect(state => state.calculator)(Rater)
-
 
 const PokeMoves = Pokemon.reduce((pokes, poke) => {
   pokes[poke.name] = poke.moves1.reduce((obj, move1) => {
@@ -143,16 +114,8 @@ const Moves = MovesList.reduce((moves, move) => {
   return moves
 }, {})
 
+// TODO all data should come clean
 const ucFirst = x => x[0].toUpperCase() + x.slice(1).toLowerCase()
-
-const fixMoveName = moveName => (
-  moveName
-    .replace('_FAST', '')
-    .toLowerCase()
-    .split('_')
-    .map(ucFirst)
-    .join(' ')
-)
 
 const Types = {}
 const Mon = Pokemon.reduce((obj, mon) => {
@@ -233,6 +196,91 @@ const MoveInfo = ({
   ])
 )
 
+const BestInfo = ({
+  best,
+}) => (
+  $(Card, {
+  }, [
+    $(CardHeader, {
+      actAsExpander: best.rest.length > 0,
+      showExpandableButton: best.rest.length > 0,
+      subtitle: (
+        $(View, [
+          $(Text, `${best.quickMove} + ${best.chargeMove}`),
+          $(Text, `${best.dps} dps | ${best.ttl} ttl`),
+        ])
+      ),
+      title: best.name,
+    }),
+    $(CardText, {
+      expandable: best.rest.length > 0,
+    }, best.rest.map(rest => (
+      $(CardHeader, {
+        title: `${rest.quickMove} + ${rest.chargeMove}`,
+        subtitle: (
+          $(View, [
+            $(Text, `${rest.dps} dps`),
+            $(Text, `${rest.ttl} ttl`),
+          ])
+        ),
+      })
+    ))),
+  ])
+)
+
+const BestOpponent = ({
+  best,
+}) => (
+  $(Tabs, [
+    $(Tab, {
+      label: 'Score',
+    }, best
+      .sort((a, b) => a.score > b.score ? -1 : 1)
+      .map(best => $(BestInfo, { best }))
+    ),
+    $(Tab, {
+      label: 'DPS',
+    }, best
+      .sort((a, b) => a.dps > b.dps ? -1 : 1)
+      .map(best => $(BestInfo, { best }))
+    ),
+    $(Tab, {
+      label: 'TTL',
+    }, best
+      .sort((a, b) => a.ttl > b.ttl ? -1 : 1)
+      .map(best => $(BestInfo, { best }))
+    ),
+  ])
+)
+
+const Module = ({
+  title,
+  children,
+}) => (
+  $(Paper, {
+    style: {
+      marginTop: 40,
+    },
+  }, [
+    $(Paper, {
+      style: {
+        paddingBottom: 12,
+        paddingLeft: 24,
+        paddingRight: 24,
+        paddingTop: 12,
+      },
+    }, [
+      $(Row, {
+        horizontal: 'center',
+      }, [
+        $(Text, { strong: true }, title),
+      ]),
+    ])
+  ].concat(children, [
+    $(Divider),
+  ]))
+)
+
 const PokeInfoComponent = ({
   pokemon,
 }) => (
@@ -299,29 +347,38 @@ const PokeInfoComponent = ({
       ]),
     ]),
 
-    $(Divider),
 
-    $(Tabs, [
-      $(Tab, { label: 'Attacking' }, sortMoves(pokemon, 1).map(res => (
-        $(MoveInfo, {
-          key: `ATK+${res.info.combo.name}`,
-          rate: res.rate,
-          info: res.info,
-          atk: true,
-        })
-      ))),
+    $(Module, {
+      title: 'Movesets',
+    }, [
+      $(Tabs, [
+        $(Tab, { label: 'Attacking' }, sortMoves(pokemon, 1).map(res => (
+          $(MoveInfo, {
+            key: `ATK+${res.info.combo.name}`,
+            rate: res.rate,
+            info: res.info,
+            atk: true,
+          })
+        ))),
 
-      $(Tab, { label: 'Defending' }, sortMoves(pokemon, 0).map(res => (
-        $(MoveInfo, {
-          key: `DEF+${res.info.combo.name}`,
-          rate: res.rate,
-          info: res.info,
-          def: true,
-        })
-      ))),
+        $(Tab, { label: 'Defending' }, sortMoves(pokemon, 0).map(res => (
+          $(MoveInfo, {
+            key: `DEF+${res.info.combo.name}`,
+            rate: res.rate,
+            info: res.info,
+            def: true,
+          })
+        ))),
+      ]),
     ]),
 
-    $(Divider),
+    $(Module, {
+      title: `Best vs ${ucFirst(pokemon.name)}`,
+    }, [
+      $(BestOpponent, {
+        best: bestVs(pokemon),
+      }),
+    ]),
   ])
 )
 

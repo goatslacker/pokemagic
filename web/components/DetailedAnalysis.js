@@ -2,8 +2,6 @@ const B = require('../utils/Lotus.react')
 const MoveCombos = require('./MoveCombos')
 const ResultsTable = require('./ResultsTable')
 const Styles = require('../styles')
-const analyzeBattleEffectiveness = require('../../src/analyzeBattleEffectiveness')
-const bestMovesFor = require('../../src/best-moves')
 const n = require('../utils/n')
 const React = require('react')
 

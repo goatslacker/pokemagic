@@ -6,8 +6,6 @@ const hp = require('./hp')
 const GOOD_DPS = 10
 const ECpM = LevelToCPM['30']
 
-const lift = (x, f) => f(x)
-
 const avgGymDPS = (poke, mon) => (
   poke.moves1.reduce((acc, move1) => (
       poke.moves2.reduce((acc, move2) => (
@@ -51,24 +49,55 @@ const addExtraMoves = arr => (
   null
 )
 
+const Legendaries = {
+  ARTICUNO: 1,
+  DITTO: 1,
+  MEW: 1,
+  MEWTWO: 1,
+  MOLTRES: 1,
+  ZAPDOS: 1,
+}
+
+const filterLegendaries = x => !Legendaries.hasOwnProperty(x.name.toUpperCase())
+
+const ucFirst = x => x[0].toUpperCase() + x.slice(1).toLowerCase()
+
+const fixMoveName = moveName => (
+  moveName
+    .replace('_FAST', '')
+    .toLowerCase()
+    .split('_')
+    .map(ucFirst)
+    .join(' ')
+)
+
+const schemaComboMove = (mon, moves) => ({
+  name: ucFirst(mon.name),
+  quickMove: fixMoveName(moves.quick.name),
+  chargeMove: fixMoveName(moves.charge.name),
+  dps: fix2(moves.combo.dps),
+  ttl: fix2(moves.ttl),
+})
+
+const fix2 = n => Math.round(n * 100) / 100
+
 const getBestComboMoves = (poke, mon, gymDPS) => (
   getComboMovesSortedByDPS(poke, mon)
-  .map(x => ({
-    name: mon.name,
-    moves: x.combo.name,
-    dps: x.combo.dps,
+  .map(x => Object.assign(x, {
     ttl: getTTLDiff(poke, mon, x.combo.dps, gymDPS),
   }))
+  .map(x => schemaComboMove(mon, x))
   .filter(x => x.dps > GOOD_DPS || x.ttl > 0)
 )
 
 const bestVs = poke => (
   Pokemon.map(mon => ({
     poke: addExtraMoves(getBestComboMoves(poke, mon, avgGymDPS(poke, mon))),
-    score: avgDPS(mon, poke),
+    score: fix2(avgDPS(mon, poke)),
   }))
   .filter(x => Boolean(x.poke))
   .map(x => Object.assign(x.poke, { score: x.score }))
+  .filter(filterLegendaries)
   .sort((a, b) => a.score > b.score ? -1 : 1)
 )
 
@@ -77,4 +106,3 @@ module.exports = bestVs
 //console.log(bestVs(
 //  Pokemon.filter(x => x.name === 'DRAGONITE')[0]
 //))
-
