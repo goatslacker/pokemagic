@@ -24,7 +24,7 @@ const { Card, CardActions, CardHeader, CardText } = require('material-ui/Card')
 const { List, ListItem } = require('material-ui/List')
 const { Tabs, Tab } = require('material-ui/Tabs')
 const { View, Text, Row, Col, Image } = require('../utils/Lotus.React')
-const { compose, withState } = require('recompose')
+const { compose, lifecycle, withState } = require('recompose')
 const {
   blueGrey50,
   cyan500,
@@ -444,6 +444,22 @@ const Dex = ({
   ])
 )
 
+const hashChanged = () => {
+  const arr = window.location.hash.split('/') || ''
+  return Pokemon.filter(x => x.name === arr[1].toUpperCase())[0]
+}
+
+const changePokemonFromHash = ({
+  changePokemon,
+}) => changePokemon(hashChanged() || null)
+
+
 module.exports = compose(
-  withState('pokemon', 'changePokemon', null)
+  withState('pokemon', 'changePokemon', null),
+  lifecycle({
+    componentDidMount() {
+      changePokemonFromHash(this.props)
+      window.onhashchange = () => changePokemonFromHash(this.props)
+    },
+  })
 )(Dex)
