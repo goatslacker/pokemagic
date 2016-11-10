@@ -77,6 +77,7 @@ const ovDef = n => Math.round((Math.log(n) - PokeScale.def.min) / DEF_SCALE)
 // ratings. A superOverallRating is NOT between 0-100. That function exists
 // below.
 const superAtkOverallRating = (statsRate, dps) => statsRate.atk + ovAtk(dps)
+// TODO superDefOverallRating should take into account dodgeability of a move.
 const superDefOverallRating = (statsRate, dps) => statsRate.def + ovDef(dps)
 const superOverallRating = (statsRate, dps1, dps2) => (
   statsRate.ovr +
