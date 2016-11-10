@@ -351,65 +351,65 @@ const PokeInfoComponent = ({
       ]),
     ]),
 
-//    $(Module, {
-//      title: iv ? 'IVs' : null,
-//    }, [
-//      !iv && (
-//        $(View, {
-//          style: {
-//            paddingBottom: 24,
-//            paddingTop: 24,
-//          },
-//        }, [
-//          $(Row, {
-//            horizontal: 'center',
-//          }, [
-//            $(RaisedButton, {
-//              label: 'Get IVs',
-//              secondary: true,
-//              onClick: () => showIVCalc(true),
-//            }),
-//          ])
-//        ])
-//      ),
-//
-//      iv && (
-//        $(View, [
-//          $(TextField, {
-//            hintText: 'CP',
-//            type: 'number',
-//          }),
-//
-//          $(TextField, {
-//            hintText: 'HP',
-//            type: 'number',
-//          }),
-//
-//          $(SelectField, {
-//            hintText: 'Stardust',
-//          }, Object.keys(DustTolevel)
-//            .map(primaryText => $(MenuItem, { primaryText }))
-//          ),
-//
-//          $(Row, {
-//            horizontal: 'center',
-//          }, [red300, blue300, yellow300].map(backgroundColor => (
-//            $(Avatar, {
-//              backgroundColor,
-//              style: {
-//                marginLeft: 32,
-//                marginRight: 32,
-//              },
-//            })
-//          ))),
-//
-//          $(RaisedButton, {
-//            label: 'Calculate',
-//            primary: true,
-//          }),
-//        ])
-//      ),
-//    ]),
+    $(Module, {
+      title: iv ? 'IVs' : null,
+    }, [
+      !iv && (
+        $(View, {
+          style: {
+            paddingBottom: 24,
+            paddingTop: 24,
+          },
+        }, [
+          $(Row, {
+            horizontal: 'center',
+          }, [
+            $(RaisedButton, {
+              label: 'Get IVs',
+              secondary: true,
+              onClick: () => showIVCalc(true),
+            }),
+          ])
+        ])
+      ),
+
+      iv && (
+        $(View, [
+          $(TextField, {
+            hintText: 'CP',
+            type: 'number',
+          }),
+
+          $(TextField, {
+            hintText: 'HP',
+            type: 'number',
+          }),
+
+          $(SelectField, {
+            hintText: 'Stardust',
+          }, Object.keys(DustTolevel)
+            .map(primaryText => $(MenuItem, { primaryText }))
+          ),
+
+          $(Row, {
+            horizontal: 'center',
+          }, [red300, blue300, yellow300].map(backgroundColor => (
+            $(Avatar, {
+              backgroundColor,
+              style: {
+                marginLeft: 32,
+                marginRight: 32,
+              },
+            })
+          ))),
+
+          $(RaisedButton, {
+            label: 'Calculate',
+            primary: true,
+          }),
+        ])
+      ),
+    ]),
 
     $(Module, {
       title: 'Movesets',
@@ -585,16 +585,17 @@ const Dex = ({
   ])
 )
 
-const hashChanged = () => {
-  const arr = window.location.hash.split('/') || ''
-  return Pokemon.filter(x => x.name === arr[1].toUpperCase())[0]
-}
+const findPokemon = name => (
+  Pokemon.filter(x => x.name === name.toUpperCase())[0]
+)
 
-const scrollIf = x => x ? scrollTop() : null
+const hashChanged = () => findPokemon(window.location.hash.split('/')[1] || '')
+
+//const scrollIf = x => x ? scrollTop() : null
 
 const changePokemonFromHash = ({
   changePokemon,
-}) => changePokemon(scrollIf(hashChanged()))
+}) => changePokemon(hashChanged())
 
 module.exports = compose(
   withState('pokemon', 'changePokemon', null),
