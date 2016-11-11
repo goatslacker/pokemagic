@@ -28,16 +28,15 @@ const isQuickMove = name => quickMoveRx.test(name)
 
 const calcDPS = (dmg, duration) => dmg / (duration / 1000)
 
-const fix = x => n => Math.round(n * Math.pow(n, x)) / Math.pow(n, x)
+const fix = n => Math.round(n * 100) / 100
 
 const dodgeTime = move => fix(
-  1,
   (Moves[move.Name].DamageWindowEndMs - Moves[move.Name].DamageWindowStartMs) / 1000
 )
 
-const startTime = move => fix(1, (Moves[move.Name].DamageWindowStartMs / 1000))
+const startTime = move => fix(Moves[move.Name].DamageWindowStartMs / 1000)
 
-const calcEPS = move => fix(2, move.Energy / (move.DurationMs / 1000))
+const calcEPS = move => fix(move.Energy / (move.DurationMs / 1000))
 
 const getMove = (pokemon, move, dmg) => ({
   name: fixMoveName(move.Name),

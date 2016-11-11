@@ -3,7 +3,7 @@ const LevelToCpM = require('../json/level-to-cpm')
 const cpTools = require('./cp')
 
 function percentInRange(num, min, max) {
-  return ((num - min) * 100) / (max - min)
+  return Math.round(((num - min) * 100) / (max - min))
 }
 
 function getCPRangeForPokemon(mon, level, cp) {

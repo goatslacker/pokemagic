@@ -49,8 +49,8 @@ const Col = props => (
       display: 'flex',
       flex: 1,
       flexDirection: 'column',
-      justifyContent: props.horizontal || 'space-between',
-      alignItems: props.vertical || 'baseline',
+      justifyContent: props.vertical || 'space-between',
+      alignItems: props.horizontal || 'baseline',
     },
   }, props.children)
 )

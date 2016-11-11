@@ -83,10 +83,15 @@ class IvResults {
       return mon.percent.PerfectIV > best.percent.PerfectIV ? mon : best
     }, null)
 
+
+    this.yes = []
+    this.maybeValues = []
+    this.maybe = true
+
 //    this.yes = this.results.every(isGoodPokemonForItsClass)
 //    this.maybeValues = this.results.filter(isGoodPokemonForItsClass)
 //    this.maybe = this.maybeValues.length > 0
-//    this.valuesRange = this.findValuesRange(this.results)
+    this.valuesRange = this.findValuesRange(this.results)
   }
 
   isValid() {

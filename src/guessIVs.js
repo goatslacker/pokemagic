@@ -10,6 +10,10 @@ const hpTools = require('./hp')
 const bestCP = require('./bestCP')
 const powerupTools = require('./powerup')
 
+const pokeRatings = require('./pokeRatings')
+const ovRating = require('./ovRating')
+const avgComboDPS = require('./avgComboDPS')
+
 function getMaxLevel(trainerLevel) {
   return LevelToCPM[String((trainerLevel || 0) + 1.5)]
 }
@@ -24,19 +28,15 @@ function calcIndSta(hp, BaseSta, ECpM) {
     .filter(IndSta => hp === Math.floor(ECpM * (BaseSta + IndSta)))
 }
 
-const EEVEELUTIONS = {
-  JOLTEON: 1,
-  FLAREON: 1,
-  VAPOREON: 1,
-}
-
 // A formula that determines in which percentile you are for Atk + Def
 function getAttackPercentage(IndAtk, IndDef) {
   return Math.round((IndAtk + IndDef) / 30 * 100)
 }
 
-function guessIVs(pokemon, mon, ECpM) {
-  const Name = pokemon.name.toUpperCase()
+const ucFirst = x => x[0].toUpperCase() + x.slice(1).toLowerCase()
+
+function guessByLevel(data, mon, ECpM) {
+  const name = ucFirst(mon.name)
 
   const BaseSta = mon.stats.stamina
 
@@ -47,12 +47,12 @@ function guessIVs(pokemon, mon, ECpM) {
     return lvl
   }, null)
 
-  const IndStaValues = calcIndSta(pokemon.hp, BaseSta, ECpM)
+  const IndStaValues = calcIndSta(data.hp, BaseSta, ECpM)
 
-  const MaxLevel = Number(pokemon.trainerLevel) + 1.5
-  const MaxLevelCpM = getMaxLevel(pokemon.trainerLevel)
+  const MaxLevel = Number(data.trainerLevel) + 1.5
+  const MaxLevelCpM = getMaxLevel(data.trainerLevel)
 
-  // If you max this pokemon out, what CP/HP would it have given Perfect IVs
+  // If you max this data out, what CP/HP would it have given Perfect IVs
   const MaxedPossibleCP = cpTools.getMaxCPForLevel(mon, MaxLevelCpM)
   const MaxedPossibleHP = hpTools.getMaxHPForLevel(mon, MaxLevelCpM)
 
@@ -63,10 +63,10 @@ function guessIVs(pokemon, mon, ECpM) {
   const MinLevelHP = hpTools.getMinHPForLevel(mon, ECpM)
 
   // Where is your Pokemon in terms of the CP/HP scale
-  const PercentHP = Math.round(percentInRange(pokemon.hp, MinLevelHP, MaxLevelHP))
-  const PercentCP = Math.round(percentInRange(pokemon.cp, MinLevelCP, MaxLevelCP))
+  const PercentHP = Math.round(percentInRange(data.hp, MinLevelHP, MaxLevelHP))
+  const PercentCP = Math.round(percentInRange(data.cp, MinLevelCP, MaxLevelCP))
 
-  const maxLevel = pokemon.level || Math.max.apply(null, DustToLevel[pokemon.stardust])
+  const maxLevel = data.level || Math.max.apply(null, DustToLevel[data.stardust])
 
   // Brute force find the IVs.
   // For every possible IndSta we'll loop through IndAtk and IndDef until we
@@ -81,7 +81,7 @@ function guessIVs(pokemon, mon, ECpM) {
           def: IndDef,
           sta: IndSta,
         }, ECpM)
-        const HP = pokemon.hp
+        const HP = data.hp
 
         const BaseAtk = mon.stats.attack
         const Atk = (BaseAtk + IndAtk) * ECpM
@@ -106,20 +106,13 @@ function guessIVs(pokemon, mon, ECpM) {
         var EvolveCP = null
         var MaxEvolveCP = null
 
-        // If we can evolve it, what would it evolve to and what does it power up to?
-        if (!EEVEELUTIONS.hasOwnProperty(pokemon.name.toUpperCase()) && CPM[pokemon.name.toUpperCase()]) {
-          EvolveCP = Math.floor(CPM[pokemon.name.toUpperCase()][1] * CP / 100) * 100
-          MaxEvolveCP = Math.floor(CPM[pokemon.name.toUpperCase()][1] * MaxCP / 100) * 100
-        }
-
-        if (pokemon.cp === CP) {
+        if (data.cp === CP) {
           const typeRating = [
             mon.type1,
             mon.type2,
-          ].filter(Boolean).map(type => ({
-            type,
-            rating: bestCP.getCPRangeForType(type, Level, CP),
-          }))
+          ].filter(Boolean).reduce((obj, type) => Object.assign({
+            [type]: bestCP.getCPRangeForType(type, Level, CP).value,
+          }, obj), {})
 
           const levelTable = Array.from(Array(81 - Level * 2)).map((_, lvl) => {
             const level = Number(Level) + (lvl / 2)
@@ -141,52 +134,67 @@ function guessIVs(pokemon, mon, ECpM) {
           })
 
           possibleValues.push({
-            Name,
-            Level,
-            CP,
-            HP,
-            Atk,
-            Def,
-            Sta,
-            ECpM,
-            ivs: {
-              IndAtk,
-              IndDef,
-              IndSta,
-            },
-            rating: {
-              pokemon: bestCP.getCPRangeForPokemon(mon, Level, CP),
-              overall: bestCP.getCPRangeOverall(Level, CP),
-              type: typeRating,
-            },
-            strings: {
-              iv: `${IndAtk}/${IndDef}/${IndSta}`,
-              batt: `${IndAtk + IndDef}/30`,
-              maxcp: `${MaxCP}/${MaxedPossibleCP}`,
-              maxhp: `${MaxHP}/${MaxedPossibleHP}`,
-            },
-            levels: levelTable,
-            percent: {
-              PercentBatt,
-              PercentCP,
-              PercentHP,
-              PerfectIV,
+            id: mon.id,
+            name,
+            level: Level,
+            cp: CP,
+            hp: HP,
+
+            types: [mon.type1, mon.type2].filter(Boolean).map(x => x.toLowerCase()),
+
+            stats: {
+              atk: mon.stats.attack,
+              def: mon.stats.defense,
+              sta: mon.stats.stamina,
             },
 
-            // TODO remove meta
-            meta: {
-              EvolveCP,
-              MaxEvolveCP,
-              MinLevelCP,
-              MaxLevelCP,
-              MinLevelHP,
-              MaxLevelHP,
-              MaxCP,
-              MaxHP,
-              MaxLevel,
-              MaxedPossibleCP,
-              MaxedPossibleHP,
+            ivs: {
+              atk: IndAtk,
+              def: IndDef,
+              sta: IndSta,
             },
+
+            candy: mon.candy,
+
+            moves: mon.moves1.reduce((arr, move1) => (
+              mon.moves2.reduce((acc, move2) => (
+                arr.concat(Object.assign({
+                  rating: pokeRatings.getRating(mon, move1.Name, move2.Name),
+                }, avgComboDPS(mon, move1, move2, IndAtk, Level)))
+              ), arr)
+            ), []),
+
+            // TODO clean up some of this CP shit
+            evolutions: Pokemon.filter(x => x.family === mon.family && x.name !== mon.name).map((poke) => ({
+              name: poke.name,
+              cp: cpTools.getCP(poke, {
+                atk: IndAtk,
+                def: IndDef,
+                sta: IndSta,
+              }, ECpM),
+              hp: hpTools.getHP(poke, IndSta, ECpM),
+              range: {
+                pokemon: Math.round((IndAtk + IndDef + IndSta) / 45 * 100),
+                overall: bestCP.getCPRangeOverall(Level,
+                  cpTools.getCP(poke, {
+                    atk: IndAtk,
+                    def: IndDef,
+                    sta: IndSta,
+                  }, ECpM)
+                ).value,
+              },
+              rating: ovRating(poke),
+            })),
+
+            range: {
+              pokemon: Math.round((IndAtk + IndDef + IndSta) / 45 * 100),
+              overall: bestCP.getCPRangeOverall(Level, CP).value,
+              type: typeRating,
+            },
+
+            rating: ovRating(mon),
+
+            levels: levelTable,
           })
         }
       }
@@ -196,4 +204,18 @@ function guessIVs(pokemon, mon, ECpM) {
   return possibleValues
 }
 
+const guessIVs = (query, mon) => (
+  DustToLevel[query.stardust].reduce((arr, level) => {
+    const ECpM = LevelToCPM[String(level)]
+    return arr.concat(guessByLevel(query, mon, ECpM))
+  }, [])
+)
+
 module.exports = guessIVs
+
+//console.log(
+//  guessIVs(
+//    { cp: 1019, hp: 87, stardust: 5000 },
+//    Pokemon.filter(x => x.name === 'GROWLITHE')[0]
+//  )[0]
+//)

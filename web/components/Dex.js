@@ -24,6 +24,7 @@ const getTypeColor = require('../utils/getTypeColor')
 const ovRating = require('../utils/ovRating')
 const pokeRatings = require('../utils/pokeRatings')
 const scrollTop = require('../utils/scrollTop')
+const guessIVs = require('../../src/guessIVs')
 const { Card, CardActions, CardHeader, CardText } = require('material-ui/Card')
 const { GridList, GridTile } = require('material-ui/GridList')
 const { List, ListItem } = require('material-ui/List')
@@ -43,6 +44,31 @@ const {
   red400,
   yellow300,
 } = require('material-ui/styles/colors')
+
+
+const magic = require('../../src/magic')
+
+const calculateValues = state => ({
+  cp: Number(state.cp),
+  hp: Number(state.hp),
+  stardust: Number(state.stardust),
+//  level: null,
+//  attrs: Object.keys(state.attrs || {}),
+//  ivRange: IV_RANGE[state.ivRange],
+//  stat: STAT_VALUES[state.stat],
+})
+
+const calculateIVs = (pokemon, cp, hp, stardust) => {
+  const payload = { cp, hp, stardust }
+  try {
+    const values = calculateValues(payload)
+    return guessIVs(values, pokemon)
+  } catch (err) {
+    console.error(err)
+    alert('Looks like there is a problem with the values you entered.')
+    return null
+  }
+}
 
 const sortByAtk = (a, b) => a.info.combo.dps > b.info.combo.dps ? -1 : 1
 const sortByDef = (a, b) => a.info.combo.gymDPS > b.info.combo.gymDPS ? -1 : 1
@@ -285,7 +311,13 @@ const Module = ({
 
 const PokeInfoComponent = ({
   iv,
+  ivCP,
+  ivHP,
+  ivStardust,
   pokemon,
+  setCP,
+  setHP,
+  setStardust,
   showIVCalc,
 }) => (
   $(View, [
@@ -374,43 +406,66 @@ const PokeInfoComponent = ({
       ),
 
       iv && (
-        $(View, [
+        $(Col, {
+          horizontal: 'center',
+        }, [
           $(TextField, {
-            hintText: 'CP',
+            floatingLabelText: 'CP',
+            value: ivCP,
+            onClick: () => setCP(''),
+            onChange: ev => setCP(ev.target.value),
             type: 'number',
           }),
 
           $(TextField, {
-            hintText: 'HP',
+            floatingLabelText: 'HP',
+            value: ivHP,
+            onClick: () => setHP(''),
+            onChange: ev => setHP(ev.target.value),
             type: 'number',
           }),
 
           $(SelectField, {
-            hintText: 'Stardust',
+            floatingLabelText: 'Stardust',
+            value: ivStardust,
+            onChange: ev => setStardust(ev.target.innerText),
           }, Object.keys(DustTolevel)
-            .map(primaryText => $(MenuItem, { primaryText }))
+            .map(n => $(MenuItem, { value: n, primaryText: n }))
           ),
 
-          $(Row, {
-            horizontal: 'center',
-          }, [red300, blue300, yellow300].map(backgroundColor => (
-            $(Avatar, {
-              backgroundColor,
-              style: {
-                marginLeft: 32,
-                marginRight: 32,
-              },
-            })
-          ))),
+//          $(Row, {
+//            horizontal: 'center',
+//            style: {
+//              marginBottom: 24,
+//              marginTop: 24,
+//            },
+//          }, [red300, blue300, yellow300].map(backgroundColor => (
+//            $(Avatar, {
+//              backgroundColor,
+//              style: {
+//                marginLeft: 32,
+//                marginRight: 32,
+//              },
+//            })
+//          ))),
 
+          // TODO I need a spacing component
           $(RaisedButton, {
             label: 'Calculate',
             primary: true,
+            onClick: () => console.log(
+              calculateIVs(pokemon, ivCP, ivHP, ivStardust)
+            ),
+            style: {
+              marginBottom: 24,
+              marginTop: 24,
+            },
           }),
         ])
       ),
     ]),
 
+    // TODO some of these can be pure components so we're not recomputing on every change
     $(Module, {
       title: 'Movesets',
     }, [
@@ -446,7 +501,10 @@ const PokeInfoComponent = ({
 )
 
 const PokeInfo = compose(
-  withState('iv', 'showIVCalc', false)
+  withState('iv', 'showIVCalc', false),
+  withState('ivCP', 'setCP', '1019'),
+  withState('ivHP', 'setHP', '87'),
+  withState('ivStardust', 'setStardust', '5000')
 )(PokeInfoComponent)
 
 const PokeImage = ({
