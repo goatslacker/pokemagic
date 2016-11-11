@@ -1,6 +1,8 @@
 {
   "extends": "Airbnb",
   "rules": {
-    "semi": 0
+    "no-mixed-operators": 0,
+    "semi": 0,
+    "spaced-comment": 0
   }
 }
