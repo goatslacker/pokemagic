@@ -6,19 +6,21 @@ const hp = require('./hp')
 const GOOD_DPS = 10
 const ECpM = LevelToCPM['30']
 
+const fix2 = n => Math.round(n * 100) / 100
+
 const avgGymDPS = (poke, mon) => (
   poke.moves1.reduce((acc, move1) => (
-      poke.moves2.reduce((acc, move2) => (
-        acc + comboDPS(poke, mon, 10, 10, 30, 30, move1, move2).combo.gymDPS
-      ), acc)
+    poke.moves2.reduce((n, move2) => (
+      n + comboDPS(poke, mon, 10, 10, 30, 30, move1, move2).combo.gymDPS
+    ), acc)
   ), 0) / (poke.moves1.length * poke.moves2.length)
 )
 
 const avgDPS = (poke, mon) => (
   poke.moves1.reduce((acc, move1) => (
-      poke.moves2.reduce((acc, move2) => (
-        acc + comboDPS(poke, mon, 10, 10, 30, 30, move1, move2).combo.dps
-      ), acc)
+    poke.moves2.reduce((n, move2) => (
+      n + comboDPS(poke, mon, 10, 10, 30, 30, move1, move2).combo.dps
+    ), acc)
   ), 0) / (poke.moves1.length * poke.moves2.length)
 )
 
@@ -78,8 +80,6 @@ const schemaComboMove = (mon, moves) => ({
   dps: fix2(moves.combo.dps),
   ttl: fix2(moves.ttl),
 })
-
-const fix2 = n => Math.round(n * 100) / 100
 
 const getBestComboMoves = (poke, mon, gymDPS) => (
   getComboMovesSortedByDPS(poke, mon)

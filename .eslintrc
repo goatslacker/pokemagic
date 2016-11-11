@@ -1,7 +1,12 @@
 {
   "extends": "Airbnb",
   "rules": {
-    "no-mixed-operators": 0,
+    "comma-dangle": 0,
+    "no-confusing-arrow": 1,
+    "no-restricted-properties": 1,
+    "no-mixed-operators": 1,
+    "no-param-reassign": 0,
+    "no-prototype-builtins": 0,
     "semi": 0,
     "spaced-comment": 0
   }

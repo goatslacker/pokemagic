@@ -1,20 +1,18 @@
-const MovesList = require('../json/moves.json')
 const Pokemon = require('../json/pokemon.json')
 const ovRating = require('./ovRating')
 const avgComboDPS = require('./avgComboDPS')
 
-const PokeMoves = Pokemon.reduce((pokes, poke) => {
-  pokes[poke.name] = poke.moves1.reduce((obj, move1) => {
-    return poke.moves2.reduce((o, move2) => {
+const PokeMoves = Pokemon.reduce((pokes, poke) => Object.assign(pokes, {
+  [poke.name]: poke.moves1.reduce((obj, move1) => (
+    poke.moves2.reduce((o, move2) => {
       const info = avgComboDPS(poke, move1, move2)
       o[info.quick.name] = info.quick
       o[info.charge.name] = info.charge
       o[info.combo.name] = Object.assign({ meta: info.meta }, info.combo)
       return o
     }, obj)
-  }, {})
-  return pokes
-}, {})
+  ), {}),
+}), {})
 
 // Used to calculate a move's "rating" from 0-100%
 const max = (poke, n, f) => Math.max.apply(
@@ -87,7 +85,7 @@ const superOverallRating = (statsRate, dps1, dps2) => (
 
 const Fast = {}
 
-const PokemonRatings = Object.keys(PokeMoves).map(name => {
+const PokemonRatings = Object.keys(PokeMoves).map((name) => {
   const poke = PokeMoves[name]
   const moves = Object.keys(poke)
     .map(x => poke[x])
@@ -138,7 +136,7 @@ const getMaxMin = (arr, f) => arr.reduce((o, x) => {
   min: Infinity,
 })
 
-const makeScale = arr => f => {
+const makeScale = arr => (f) => {
   const x = getMaxMin(arr, f)
   const scale = (x.max - x.min) / 100
   return n => Math.round((n - x.min) / scale)
@@ -149,7 +147,7 @@ const percent = makePercent(x => x.raw)
 const percentAtk = makePercent(x => x.atk.raw)
 const percentDef = makePercent(x => x.def.raw)
 
-PokemonRatings.forEach(poke => {
+PokemonRatings.forEach((poke) => {
   poke.rating = percent(poke.raw)
   poke.atk.offenseRating = percentAtk(poke.atk.raw)
   poke.def.defenseRating = percentDef(poke.def.raw)

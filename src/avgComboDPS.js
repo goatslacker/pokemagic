@@ -1,15 +1,12 @@
 const Pokemon = require('../json/pokemon.json')
 const gymDefenders = require('../json/gym-defenders.json')
 const comboDPS = require('./comboDPS')
-const getTypeEffectiveness = require('./getTypeEffectiveness').getTypeEffectiveness
 const schemaMove = require('./schemaMove')
 //const pokeRatings = require('./pokeRatings')
 
 const GymPokemon = gymDefenders.map(def => Pokemon.filter(x => x.name === def.name)[0])
 
 const getAvgFrom = arr => f => arr.reduce((sum, n) => sum + f(n), 0) / arr.length
-
-const getDPS = (dmg, duration) => (dmg / (duration / 1000)) || 0
 
 // This function's purpose is to get the avg combo dps of a move.
 // our comboDPS function gets the combo DPS of moves but for a particular pokemon
