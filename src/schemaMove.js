@@ -47,7 +47,7 @@ const getMove = (pokemon, move, dmg) => ({
   gymDPS: calcDPS(dmg, 2000 + move.DurationMs),
   eps: calcEPS(move),
   charges: Math.abs(100 / move.Energy),
-  dmg: dmg,
+  dmg,
   startTime: startTime(move),
   dodgeTime: dodgeTime(move),
   base: {

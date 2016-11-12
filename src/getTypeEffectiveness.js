@@ -1,7 +1,3 @@
-const Pokemon = require('../json/pokemon.json')
-const LevelToCPM = require('../json/level-to-cpm.json')
-const hp = require('./hp')
-
 const BUG = 'BUG'
 const DARK = 'DARK'
 const DRAGON = 'DRAGON'
