@@ -3,6 +3,27 @@ const comboDPS = require('./comboDPS')
 const LevelToCPM = require('../json/level-to-cpm.json')
 const hp = require('./hp')
 
+// This module figures out which Pokemon are best vs a particular opponent.
+// API
+//
+// bestVs = Pokemon => BestList
+//
+// BestList = [BestPokemon]
+//
+// BestPokemon = {
+//   ...Move,
+//   rest: [Move]
+// }
+//
+// Move = {
+//   name: String,
+//   quickMove; String,
+//   chargeMove: String,
+//   dps: Number,
+//   ttl: Number,
+//   score: Number,
+// }
+
 const GOOD_DPS = 10
 const ECpM = LevelToCPM['30']
 

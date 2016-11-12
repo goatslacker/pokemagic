@@ -1,4 +1,3 @@
-const Pokemon = require('../json/pokemon.json')
 const LevelToCPM = require('../json/level-to-cpm.json')
 const getTypeEffectiveness = require('./getTypeEffectiveness').getTypeEffectiveness
 
@@ -30,9 +29,6 @@ function getDPS(dmg, duration) {
 }
 
 function battleDPS(obj) {
-  const atk = obj.atk
-  const def = obj.def
-  const level = obj.pokemonLevel
   const moves = obj.moves
 
   const quickHits = Math.ceil(100 / moves[0].Energy)
