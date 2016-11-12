@@ -25,6 +25,7 @@ const scrollTop = require('../utils/scrollTop')
 const guessIVs = require('../../src/guessIVs')
 const { Card, CardHeader, CardText } = require('material-ui/Card')
 const { GridList, GridTile } = require('material-ui/GridList')
+const { List, ListItem } = require('material-ui/List')
 const { Tabs, Tab } = require('material-ui/Tabs')
 const { View, Text, Row, Col, Image } = require('../utils/Lotus.React')
 const { compose, lifecycle, withState } = require('recompose')
@@ -57,7 +58,7 @@ const calculateIVs = (pokemon, cp, hp, stardust) => {
   } catch (err) {
     console.error(err)
     alert('Looks like there is a problem with the values you entered.')
-    return null
+    return []
   }
 }
 
@@ -243,15 +244,15 @@ const Module = ({
 )
 
 const PokeInfoComponent = ({
-  iv,
   ivCP,
   ivHP,
+  ivResults,
   ivStardust,
   pokemon,
   setCP,
   setHP,
+  setResults,
   setStardust,
-  showIVCalc,
 }) => (
   $(View, [
     $(Paper, {
@@ -317,28 +318,24 @@ const PokeInfoComponent = ({
     ]),
 
     $(Module, {
-      title: iv ? 'IVs' : null,
+      title: ivResults.length ? `${ivResults.length} Possible IVs` : 'IVs',
     }, [
-      !iv && (
-        $(View, {
-          style: {
-            paddingBottom: 24,
-            paddingTop: 24,
-          },
-        }, [
-          $(Row, {
-            horizontal: 'center',
-          }, [
-            $(RaisedButton, {
-              label: 'Get IVs',
-              secondary: true,
-              onClick: () => showIVCalc(true),
-            }),
-          ])
-        ])
+      ivResults.length > 0 && (
+        $(List, ivResults.map(result => (
+          $(ListItem, {
+            leftAvatar: (
+              $(Avatar, {
+                backgroundColor: getColor(result.range.pokemon),
+                color: grey800,
+              }, result.range.pokemon)
+            ),
+            primaryText: `${result.ivs.atk}/${result.ivs.def}/${result.ivs.sta}`,
+            secondaryText: `Level ${result.level}`,
+          })
+        )))
       ),
 
-      iv && (
+      ivResults.length === 0 && (
         $(Col, {
           horizontal: 'center',
         }, [
@@ -386,7 +383,7 @@ const PokeInfoComponent = ({
           $(RaisedButton, {
             label: 'Calculate',
             primary: true,
-            onClick: () => console.log(
+            onClick: () => setResults(
               calculateIVs(pokemon, ivCP, ivHP, ivStardust)
             ),
             style: {
@@ -434,10 +431,10 @@ const PokeInfoComponent = ({
 )
 
 const PokeInfo = compose(
-  withState('iv', 'showIVCalc', false),
   withState('ivCP', 'setCP', '1019'),
   withState('ivHP', 'setHP', '87'),
-  withState('ivStardust', 'setStardust', '5000')
+  withState('ivStardust', 'setStardust', '5000'),
+  withState('ivResults', 'setResults', [])
 )(PokeInfoComponent)
 
 const PokeImage = ({
