@@ -124,7 +124,7 @@ function guessByLevel(data, mon, ECpM) {
                     atk: IndAtk,
                     def: IndDef,
                     sta: IndSta,
-                  }, ECpM),
+                  }, ECpM)
                 ).value,
               },
               rating: ovRating(poke),

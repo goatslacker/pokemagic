@@ -9,13 +9,11 @@ const DustTolevel = require('../../json/dust-to-level.json')
 const IconButton = require('material-ui/IconButton').default
 const LevelToCPM = require('../../json/level-to-cpm')
 const MenuItem = require('material-ui/MenuItem').default
-const MovesList = require('../../json/moves.json')
 const Paper = require('material-ui/Paper').default
 const Pokemon = require('../../json/pokemon.json')
 const RaisedButton = require('material-ui/RaisedButton').default
 const SearchIcon = require('material-ui/svg-icons/action/search').default
 const SelectField = require('material-ui/SelectField').default
-const Styles = require('../styles')
 const TextField = require('material-ui/TextField').default
 const avgComboDPS = require('../../src/avgComboDPS')
 const bestVs = require('../../src/bestVs')
@@ -25,28 +23,21 @@ const ovRating = require('../utils/ovRating')
 const pokeRatings = require('../utils/pokeRatings')
 const scrollTop = require('../utils/scrollTop')
 const guessIVs = require('../../src/guessIVs')
-const { Card, CardActions, CardHeader, CardText } = require('material-ui/Card')
+const { Card, CardHeader, CardText } = require('material-ui/Card')
 const { GridList, GridTile } = require('material-ui/GridList')
-const { List, ListItem } = require('material-ui/List')
 const { Tabs, Tab } = require('material-ui/Tabs')
 const { View, Text, Row, Col, Image } = require('../utils/Lotus.React')
 const { compose, lifecycle, withState } = require('recompose')
 const {
-  blue300,
   blueGrey50,
   cyan500,
   green400,
-  grey50,
   grey800,
   indigo100,
   indigo400,
-  red300,
   red400,
   yellow300,
 } = require('material-ui/styles/colors')
-
-
-const magic = require('../../src/magic')
 
 const calculateValues = state => ({
   cp: Number(state.cp),
@@ -81,64 +72,6 @@ const sortMoves = (pokemon, sortOrder) => (
     })
   )), []).sort(sortOrder ? sortByAtk : sortByDef)
 )
-
-const PokeMoves = Pokemon.reduce((pokes, poke) => {
-  pokes[poke.name] = poke.moves1.reduce((obj, move1) => {
-    return poke.moves2.reduce((o, move2) => {
-      const info = avgComboDPS(poke, move1, move2)
-      o[info.quick.name] = info.quick
-      o[info.charge.name] = info.charge
-      o[info.combo.name] = Object.assign({ meta: info.meta }, info.combo)
-      return o
-    }, obj)
-  }, {})
-  return pokes
-}, {})
-
-const max = (poke, n, f) => Math.max.apply(
-  Math.max,
-  [n].concat(
-    Object.keys(PokeMoves[poke])
-    .map(x => PokeMoves[poke][x])
-    .filter(x => x.meta)
-    .map(x => f(x))
-  )
-)
-
-const min = (poke, n, f) => Math.min.apply(
-  Math.min,
-  [n].concat(
-    Object.keys(PokeMoves[poke])
-    .map(x => PokeMoves[poke][x])
-    .filter(x => x.meta)
-    .map(x => f(x))
-  )
-)
-
-const PokeScale = Object.keys(PokeMoves).reduce((best, poke) => ({
-  atk: {
-    max: max(poke, best.atk.max, x => x.dps),
-    min: min(poke, best.atk.min, x => x.dps),
-  },
-  def: {
-    max: max(poke, best.def.max, x => x.gymDPS),
-    min: min(poke, best.def.min, x => x.gymDPS),
-  },
-}), {
-  atk: {
-    max: -Infinity,
-    min: Infinity,
-  },
-  def: {
-    max: -Infinity,
-    min: Infinity,
-  },
-})
-
-const Moves = MovesList.reduce((moves, move) => {
-  moves[move.Name] = move
-  return moves
-}, {})
 
 // TODO all data should come clean
 const ucFirst = x => x[0].toUpperCase() + x.slice(1).toLowerCase()
