@@ -101,7 +101,7 @@ function guessByLevel(data, mon, ECpM) {
             moves: mon.moves1.reduce((arr, move1) => (
               mon.moves2.reduce((acc, move2) => (
                 arr.concat(Object.assign({
-                  rating: pokeRatings.getRating(mon, move1.Name, move2.Name),
+                  rating: pokeRatings.getRating(mon, move1, move2),
                 }, avgComboDPS(mon, move1, move2, IndAtk, Level)))
               ), arr)
             ), []),

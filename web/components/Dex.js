@@ -355,9 +355,9 @@ const PokeInfo = pure(({
 ))
 
 const IVCalculator = compose(
-  withState('ivCP', 'setCP', '1019'),
-  withState('ivHP', 'setHP', '87'),
-  withState('ivStardust', 'setStardust', '5000'),
+  withState('ivCP', 'setCP', '1049'),
+  withState('ivHP', 'setHP', '154'),
+  withState('ivStardust', 'setStardust', '1300'),
   withState('ivResults', 'setResults', [])
 )(({
   ivCP,
