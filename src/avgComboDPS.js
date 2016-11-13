@@ -40,7 +40,7 @@ function avgComboDPS(mon, move1, move2, ivAtk, pokeLevel) {
     quick: Object.assign({}, schemaMove(mon, move1, dmg1)),
     charge: Object.assign({}, schemaMove(mon, move2, dmg2)),
     meta: { defenders },
-//    rating: pokeRatings.getRating(mon, move1.Name, move2.Name),
+//    rating: pokeRatings.getRating(mon, move1, move2),
   }
 }
 

@@ -156,7 +156,7 @@ PokemonRatings.forEach((poke) => {
 const getRating = (pokemon, move1, move2) => {
   const statsRate = ovRating(pokemon)
 
-  const comboName = `${move1}/${move2}`
+  const comboName = `${move1.Name}/${move2.Name}`
   const comboMove = PokeMoves[pokemon.name][comboName]
 
   const poke = {
