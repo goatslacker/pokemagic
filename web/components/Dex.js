@@ -28,7 +28,7 @@ const { GridList, GridTile } = require('material-ui/GridList')
 const { List, ListItem } = require('material-ui/List')
 const { Tabs, Tab } = require('material-ui/Tabs')
 const { View, Text, Row, Col, Image } = require('../utils/Lotus.React')
-const { compose, lifecycle, withState } = require('recompose')
+const { compose, lifecycle, pure, withState } = require('recompose')
 const {
   blueGrey50,
   cyan500,
@@ -243,7 +243,118 @@ const Module = ({
   ].filter(Boolean)))
 )
 
-const PokeInfoComponent = ({
+const BestVs = pure(({
+  pokemon,
+}) => (
+  $(Module, {
+    title: `Best vs ${ucFirst(pokemon.name)}`,
+  }, [
+    $(BestOpponent, {
+      best: bestVs(pokemon),
+    }),
+  ])
+))
+
+const Movesets = pure(({
+  pokemon,
+}) => (
+  $(Module, {
+    title: 'Movesets',
+  }, [
+    $(Tabs, [
+      $(Tab, { label: 'Attacking' }, sortMoves(pokemon, 1).map(res => (
+        $(MoveInfo, {
+          key: `ATK+${res.info.combo.name}`,
+          rate: res.rate,
+          info: res.info,
+          atk: true,
+        })
+      ))),
+
+      $(Tab, { label: 'Defending' }, sortMoves(pokemon, 0).map(res => (
+        $(MoveInfo, {
+          key: `DEF+${res.info.combo.name}`,
+          rate: res.rate,
+          info: res.info,
+          def: true,
+        })
+      ))),
+    ]),
+  ])
+))
+
+const PokeInfo = pure(({
+  pokemon,
+}) => (
+  $(Paper, {
+    style: {
+      paddingBottom: 12,
+      paddingLeft: 24,
+      paddingRight: 24,
+      paddingTop: 12,
+    },
+  }, [
+    $(Row, {
+      vertical: 'center',
+    }, [
+      $(Col, [
+        $(Avatar, {
+          backgroundColor: getTypeColor(pokemon),
+          src: `images/${pokemon.name}.png`,
+          size: 100,
+          style: {
+            padding: 4,
+          },
+        })
+      ]),
+
+      $(Col, [
+        $(Chip, {
+          backgroundColor: indigo100,
+          style: {
+            marginBottom: 4,
+          },
+        }, [
+          $(Avatar, {
+            backgroundColor: indigo400,
+          }, pokemon.stats.attack),
+          $(Text, 'ATK'),
+        ]),
+
+        $(Chip, {
+          backgroundColor: indigo100,
+          style: {
+            marginBottom: 4,
+          },
+        }, [
+          $(Avatar, {
+            backgroundColor: indigo400,
+          }, pokemon.stats.defense),
+          $(Text, 'DEF'),
+        ]),
+
+        $(Chip, {
+          backgroundColor: indigo100,
+          style: {
+            marginBottom: 4,
+          },
+        }, [
+          $(Avatar, {
+            backgroundColor: indigo400,
+          }, pokemon.stats.stamina),
+          $(Text, 'STA'),
+        ]),
+      ]),
+    ]),
+  ])
+))
+
+const IVCalculator = compose(
+  withState('ivCP', 'setCP', '1019'),
+  withState('ivHP', 'setHP', '87'),
+  withState('ivStardust', 'setStardust', '5000'),
+  withState('ivResults', 'setResults', [])
+)(({
   ivCP,
   ivHP,
   ivResults,
@@ -254,114 +365,51 @@ const PokeInfoComponent = ({
   setResults,
   setStardust,
 }) => (
-  $(View, [
-    $(Paper, {
-      style: {
-        paddingBottom: 12,
-        paddingLeft: 24,
-        paddingRight: 24,
-        paddingTop: 12,
-      },
-    }, [
-      $(Row, {
-        vertical: 'center',
-      }, [
-        $(Col, [
-          $(Avatar, {
-            backgroundColor: getTypeColor(pokemon),
-            src: `images/${pokemon.name}.png`,
-            size: 100,
-            style: {
-              padding: 4,
-            },
-          })
-        ]),
-
-        $(Col, [
-          $(Chip, {
-            backgroundColor: indigo100,
-            style: {
-              marginBottom: 4,
-            },
-          }, [
+  $(Module, {
+    title: ivResults.length ? `${ivResults.length} Possible IVs` : 'IVs',
+  }, [
+    ivResults.length > 0 && (
+      $(List, ivResults.map(result => (
+        $(ListItem, {
+          leftAvatar: (
             $(Avatar, {
-              backgroundColor: indigo400,
-            }, pokemon.stats.attack),
-            $(Text, 'ATK'),
-          ]),
-
-          $(Chip, {
-            backgroundColor: indigo100,
-            style: {
-              marginBottom: 4,
-            },
-          }, [
-            $(Avatar, {
-              backgroundColor: indigo400,
-            }, pokemon.stats.defense),
-            $(Text, 'DEF'),
-          ]),
-
-          $(Chip, {
-            backgroundColor: indigo100,
-            style: {
-              marginBottom: 4,
-            },
-          }, [
-            $(Avatar, {
-              backgroundColor: indigo400,
-            }, pokemon.stats.stamina),
-            $(Text, 'STA'),
-          ]),
-        ]),
-      ]),
-    ]),
-
-    $(Module, {
-      title: ivResults.length ? `${ivResults.length} Possible IVs` : 'IVs',
-    }, [
-      ivResults.length > 0 && (
-        $(List, ivResults.map(result => (
-          $(ListItem, {
-            leftAvatar: (
-              $(Avatar, {
-                backgroundColor: getColor(result.range.pokemon),
-                color: grey800,
-              }, result.range.pokemon)
-            ),
-            primaryText: `${result.ivs.atk}/${result.ivs.def}/${result.ivs.sta}`,
-            secondaryText: `Level ${result.level}`,
-          })
-        )))
-      ),
-
-      ivResults.length === 0 && (
-        $(Col, {
-          horizontal: 'center',
-        }, [
-          $(TextField, {
-            floatingLabelText: 'CP',
-            value: ivCP,
-            onClick: () => setCP(''),
-            onChange: ev => setCP(ev.target.value),
-            type: 'number',
-          }),
-
-          $(TextField, {
-            floatingLabelText: 'HP',
-            value: ivHP,
-            onClick: () => setHP(''),
-            onChange: ev => setHP(ev.target.value),
-            type: 'number',
-          }),
-
-          $(SelectField, {
-            floatingLabelText: 'Stardust',
-            value: ivStardust,
-            onChange: ev => setStardust(ev.target.innerText),
-          }, Object.keys(DustTolevel)
-            .map(n => $(MenuItem, { value: n, primaryText: n }))
+              backgroundColor: getColor(result.range.pokemon),
+              color: grey800,
+            }, result.range.pokemon)
           ),
+          primaryText: `${result.ivs.atk}/${result.ivs.def}/${result.ivs.sta}`,
+          secondaryText: `Level ${result.level}`,
+        })
+      )))
+    ),
+
+    ivResults.length === 0 && (
+      $(Col, {
+        horizontal: 'center',
+      }, [
+        $(TextField, {
+          floatingLabelText: 'CP',
+          value: ivCP,
+          onClick: () => setCP(''),
+          onChange: ev => setCP(ev.target.value),
+          type: 'number',
+        }),
+
+        $(TextField, {
+          floatingLabelText: 'HP',
+          value: ivHP,
+          onClick: () => setHP(''),
+          onChange: ev => setHP(ev.target.value),
+          type: 'number',
+        }),
+
+        $(SelectField, {
+          floatingLabelText: 'Stardust',
+          value: ivStardust,
+          onChange: ev => setStardust(ev.target.innerText),
+        }, Object.keys(DustTolevel)
+          .map(n => $(MenuItem, { value: n, primaryText: n }))
+        ),
 
 //          $(Row, {
 //            horizontal: 'center',
@@ -379,67 +427,37 @@ const PokeInfoComponent = ({
 //            })
 //          ))),
 
-          // TODO I need a spacing component
-          $(RaisedButton, {
-            label: 'Calculate',
-            primary: true,
-            onClick: () => setResults(
-              calculateIVs(pokemon, ivCP, ivHP, ivStardust)
-            ),
-            style: {
-              marginBottom: 24,
-              marginTop: 24,
-            },
-          }),
-        ])
-      ),
-    ]),
-
-    // TODO some of these can be pure components so we're not recomputing on every change
-    $(Module, {
-      title: 'Movesets',
-    }, [
-      $(Tabs, [
-        $(Tab, { label: 'Attacking' }, sortMoves(pokemon, 1).map(res => (
-          $(MoveInfo, {
-            key: `ATK+${res.info.combo.name}`,
-            rate: res.rate,
-            info: res.info,
-            atk: true,
-          })
-        ))),
-
-        $(Tab, { label: 'Defending' }, sortMoves(pokemon, 0).map(res => (
-          $(MoveInfo, {
-            key: `DEF+${res.info.combo.name}`,
-            rate: res.rate,
-            info: res.info,
-            def: true,
-          })
-        ))),
-      ]),
-    ]),
-
-    $(Module, {
-      title: `Best vs ${ucFirst(pokemon.name)}`,
-    }, [
-      $(BestOpponent, {
-        best: bestVs(pokemon),
-      }),
-    ]),
+        // TODO I need a spacing component
+        $(RaisedButton, {
+          label: 'Calculate',
+          primary: true,
+          onClick: () => setResults(
+            calculateIVs(pokemon, ivCP, ivHP, ivStardust)
+          ),
+          style: {
+            marginBottom: 24,
+            marginTop: 24,
+          },
+        }),
+      ])
+    ),
   ])
-)
+))
 
-const PokeInfo = compose(
-  withState('ivCP', 'setCP', '1019'),
-  withState('ivHP', 'setHP', '87'),
-  withState('ivStardust', 'setStardust', '5000'),
-  withState('ivResults', 'setResults', [])
-)(PokeInfoComponent)
+const PokemonPage = pure(({
+  pokemon,
+}) => (
+  $(View, [
+    $(PokeInfo, { pokemon }),
+    $(IVCalculator, { pokemon }),
+    $(Movesets, { pokemon }),
+    $(BestVs, { pokemon }),
+  ])
+))
 
 const PokeImage = ({
-  pokemon,
   changePokemon,
+  pokemon,
 }) => (
   $(GridTile, {
     key: pokemon.name,
@@ -459,6 +477,56 @@ const PokeImage = ({
     }),
   ])
 )
+
+const PokeList = pure(({
+  changePokemon,
+}) => (
+  $(Tabs, [
+    $(Tab, { label: '#' }, [
+      $(
+        GridList,
+        { cellHeight: 120, cols: 3 },
+        Pokemon.map(pokemon => $(PokeImage, { pokemon, changePokemon }))
+      ),
+    ]),
+    $(Tab, { label: 'CP' }, [
+      $(
+        GridList,
+        { cellHeight: 120, cols: 3 },
+        Pokemon
+          .map(x => Object.assign({
+            cp: cp.getMaxCPForLevel(x, LevelToCPM['40']),
+          }, x))
+          .sort((a, b) => a.cp > b.cp ? -1 : 1)
+          .map(pokemon => $(PokeImage, { pokemon, changePokemon }))
+      ),
+    ]),
+    $(Tab, { label: 'Atk' }, [
+      $(
+        GridList,
+        { cellHeight: 120, cols: 3 },
+        Pokemon
+          .map(x => Object.assign({
+            atk: ovRating(x).atk,
+          }, x))
+          .sort((a, b) => a.atk > b.atk ? -1 : 1)
+          .map(pokemon => $(PokeImage, { pokemon, changePokemon }))
+      ),
+    ]),
+    $(Tab, { label: 'Def' }, [
+      $(
+        GridList,
+        { cellHeight: 120, cols: 3 },
+        Pokemon
+          .map(x => Object.assign({
+            def: ovRating(x).def,
+          }, x))
+          .sort((a, b) => a.def > b.def ? -1 : 1)
+          .map(pokemon => $(PokeImage, { pokemon, changePokemon }))
+      ),
+    ]),
+  ])
+))
 
 const dexList = Pokemon.map(x => x.name.replace(/_/g, ' '))
 
@@ -520,56 +588,10 @@ const Dex = ({
     ),
 
     // Empty text then list out all the Pokes
-    !pokemon && (
-      $(Tabs, [
-        $(Tab, { label: '#' }, [
-          $(
-            GridList,
-            { cellHeight: 120, cols: 3 },
-            Pokemon.map(pokemon => $(PokeImage, { pokemon, changePokemon }))
-          ),
-        ]),
-        $(Tab, { label: 'CP' }, [
-          $(
-            GridList,
-            { cellHeight: 120, cols: 3 },
-            Pokemon
-              .map(x => Object.assign({
-                cp: cp.getMaxCPForLevel(x, LevelToCPM['40']),
-              }, x))
-              .sort((a, b) => a.cp > b.cp ? -1 : 1)
-              .map(pokemon => $(PokeImage, { pokemon, changePokemon }))
-          ),
-        ]),
-        $(Tab, { label: 'Atk' }, [
-          $(
-            GridList,
-            { cellHeight: 120, cols: 3 },
-            Pokemon
-              .map(x => Object.assign({
-                atk: ovRating(x).atk,
-              }, x))
-              .sort((a, b) => a.atk > b.atk ? -1 : 1)
-              .map(pokemon => $(PokeImage, { pokemon, changePokemon }))
-          ),
-        ]),
-        $(Tab, { label: 'Def' }, [
-          $(
-            GridList,
-            { cellHeight: 120, cols: 3 },
-            Pokemon
-              .map(x => Object.assign({
-                def: ovRating(x).def,
-              }, x))
-              .sort((a, b) => a.def > b.def ? -1 : 1)
-              .map(pokemon => $(PokeImage, { pokemon, changePokemon }))
-          ),
-        ]),
-      ])
-    ),
+    !pokemon && $(PokeList, { changePokemon }),
 
     // The Pokedex view
-    pokemon && $(PokeInfo, { pokemon }),
+    pokemon && $(PokemonPage, { pokemon }),
   ])
 )
 
