@@ -3,6 +3,7 @@ const AppBar = require('material-ui/AppBar').default
 const AutoComplete = require('material-ui/AutoComplete').default
 const Avatar = require('material-ui/Avatar').default
 const BackIcon = require('material-ui/svg-icons/navigation/arrow-back').default
+const ChevronRightIcon = require('material-ui/svg-icons/navigation/chevron-right').default
 const Chip = require('material-ui/Chip').default
 const Divider = require('material-ui/Divider').default
 const DustTolevel = require('../../json/dust-to-level.json')
@@ -199,18 +200,21 @@ const BestOpponent = ({
     }, best
       .sort((a, b) => a.score > b.score ? -1 : 1)
       .map(best => $(BestInfo, { best }))
+      .slice(0, 10)
     ),
     $(Tab, {
       label: 'DPS',
     }, best
       .sort((a, b) => a.dps > b.dps ? -1 : 1)
       .map(best => $(BestInfo, { best }))
+      .slice(0, 10)
     ),
     $(Tab, {
       label: 'TTL',
     }, best
       .sort((a, b) => a.ttl > b.ttl ? -1 : 1)
       .map(best => $(BestInfo, { best }))
+      .slice(0, 10)
     ),
   ])
 )
@@ -460,12 +464,15 @@ const PokeImage = ({
   pokemon,
 }) => (
   $(GridTile, {
+    actionIcon: $(IconButton, {
+      onClick: () => changePokemon(pokemon),
+      touch: true,
+    }, [$(ChevronRightIcon)]),
     key: pokemon.name,
-    title: ucFirst(pokemon.name),
-    subtitle: (
-      pokemon.atk ? `ATK ${pokemon.atk}` :
-      pokemon.def ? `DEF ${pokemon.def}` :
-      pokemon.cp ? `CP ${pokemon.cp}` :
+    title: (
+      pokemon.atk ? pokemon.atk :
+      pokemon.def ? pokemon.def :
+      pokemon.cp ? pokemon.cp :
       `# ${pokemon.id}`
     )
   }, [
@@ -548,23 +555,12 @@ const Dex = ({
           height: 64,
         },
       }, [
-        $(IconButton, {
-          style: {
-            position: 'absolute',
-          },
-          iconStyle: {
-            color: '#fff',
-          },
-        }, [$(SearchIcon)]),
         $(AutoComplete, {
           dataSource: dexList,
           filter: (searchText, key) => key.indexOf(searchText.toUpperCase()) > -1,
           fullWidth: true,
           hintText: 'Search for Pokemon',
           onNewRequest: text => changePokemon(Mon[text.toUpperCase()]),
-          textFieldStyle: {
-            left: 48,
-          },
         })
       ])
     ),
@@ -572,7 +568,7 @@ const Dex = ({
       $(AppBar, {
         title: pokemon ? ucFirst(pokemon.name) : null,
         onLeftIconButtonTouchTap: () => changePokemon(null),
-        iconElementLeft: $(IconButton, [$(BackIcon)]),
+        iconElementLeft: $(IconButton, { touch: true }, [$(BackIcon)]),
         iconElementRight: $(IconButton, {
           style: {
             marginRight: 8,
