@@ -34,6 +34,7 @@ const {
   blueGrey50,
   cyan500,
   green400,
+  grey100,
   grey800,
   indigo100,
   indigo400,
@@ -451,7 +452,11 @@ const IVCalculator = compose(
 const PokemonPage = pure(({
   pokemon,
 }) => (
-  $(View, [
+  $(View, {
+    style: {
+      backgroundColor: grey100,
+    },
+  }, [
     $(PokeInfo, { pokemon }),
     $(IVCalculator, { pokemon }),
     $(Movesets, { pokemon }),
