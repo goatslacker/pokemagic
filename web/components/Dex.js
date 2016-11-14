@@ -32,6 +32,7 @@ const {
   cyan500,
   green400,
   grey100,
+  grey600,
   grey800,
   indigo100,
   indigo400,
@@ -115,15 +116,23 @@ const MoveInfo = ({
 }) => (
   $(Paper, {
     style: {
-      paddingBottom: 12,
-      paddingLeft: 24,
-      paddingRight: 24,
-      paddingTop: 12,
+      padding: 12,
     },
   }, [
     $(Row, {
       vertical: 'center',
     }, [
+      $(Avatar, {
+        backgroundColor: (atk
+          ? getColor(rate.atk.offenseRating)
+          : getColor(rate.def.defenseRating)
+        ),
+        color: grey800,
+        style: {
+          marginRight: 12,
+        }
+      }, atk ? rate.atk.offenseRating : rate.def.defenseRating),
+
       $(Col, [
         $(View, {
           style: {
@@ -136,29 +145,18 @@ const MoveInfo = ({
       ]),
 
       $(Col, [
-        atk && (
-          $(Chip, {
-            backgroundColor: blueGrey50,
-          }, [
-            $(Avatar, {
-              backgroundColor: getColor(rate.atk.offenseRating),
-              color: grey800,
-            }, rate.atk.offenseRating),
-            $(Text, rate.atk.dps.toFixed(2)),
-          ])
-        ),
-
-        def && (
-          $(Chip, {
-            backgroundColor: blueGrey50,
-          }, [
-            $(Avatar, {
-              backgroundColor: getColor(rate.def.defenseRating),
-              color: grey800,
-            }, rate.def.defenseRating),
-            $(Text, rate.def.gymDPS.toFixed(2)),
-          ])
-        ),
+        $(View, {
+          style: {
+            color: grey600,
+            fontSize: 14,
+          },
+        }, [
+          atk && $(Text, `${rate.atk.dps.toFixed(2)}dps`),
+          atk && $(Text, `${info.quick.eps}eps`),
+          def && $(Text, `${rate.def.gymDPS.toFixed(2)}dps`),
+          def && $(Text, `${info.charge.dodgeTime}s dodge`),
+          $(Text, `${info.charge.startTime}s start`),
+        ]),
       ]),
     ]),
   ])
