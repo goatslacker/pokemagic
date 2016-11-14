@@ -5429,7 +5429,16 @@
         "DurationMs": 3400,
         "Energy": -100,
         "DPS": 25.73529411764706
-      }
+      },
+      {
+        "Id": 92,
+        "Name": "GUNK_SHOT",
+        "Type": "POISON",
+        "Power": 65,
+        "DurationMs": 3000,
+        "Energy": -100,
+        "DPS": 27.083333333333336
+      },
     ]
   },
   {
@@ -7279,6 +7288,15 @@
     "family": "FAMILY_STARYU",
     "moves1": [
       {
+        "Id": 221,
+        "Name": "TACKLE_FAST",
+        "Type": "NORMAL",
+        "Power": 12,
+        "DurationMs": 1100,
+        "Energy": 7,
+        "DPS": 6.36363636363636
+      },
+      {
         "Id": 219,
         "Name": "QUICK_ATTACK_FAST",
         "Type": "NORMAL",
@@ -8243,7 +8261,8 @@
         "Power": 10,
         "DurationMs": 1330,
         "Energy": 7,
-        "DPS": 9.398496240601503
+        "DPS": 9.398496240601503,
+        "retired": true
       },
       {
         "Id": 221,
@@ -8253,6 +8272,15 @@
         "DurationMs": 1100,
         "Energy": 7,
         "DPS": 13.636363636363635
+      },
+      {
+        "Id": 234,
+        "Name": "ZEN_HEADBUTT_FAST",
+        "Type": "PSYCHIC",
+        "Power": 12,
+        "DurationMs": 1050,
+        "Energy": 4,
+        "DPS": 14.285714285714286
       }
     ],
     "moves2": [
