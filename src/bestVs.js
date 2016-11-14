@@ -58,6 +58,7 @@ const getComboMovesSortedByDPS = (you, opp) => (
     })
     return arr
   }, [])
+  .filter(x => x.combo.retired === false)
   .sort((a, b) => a.combo.dps > b.combo.dps ? -1 : 1)
 )
 
@@ -106,6 +107,7 @@ const schemaComboMove = (you, moves) => ({
   chargeMove: fixMoveName(moves.charge.name),
   dps: fix2(moves.combo.dps),
   ttl: fix2(moves.ttl),
+  retired: moves.quick.retired === true || moves.charge.retired === true,
 })
 
 // Get your best moves combo moves with TTL and filtering out bad movesets
@@ -115,6 +117,7 @@ const getBestComboMoves = (you, opp, oppGymDPS) => (
     ttl: getTTLDiff(opp, you, x.combo.dps, oppGymDPS),
   }))
   .map(x => schemaComboMove(you, x))
+  .filter(x => x.retired === false)
   .filter(x => x.dps > GOOD_DPS || x.ttl > 0)
 )
 
@@ -144,5 +147,5 @@ const bestVs = opp => (
 module.exports = bestVs
 
 //console.log(bestVs(
-//  Pokemon.filter(x => x.name === 'LAPRAS')[0]
-//).map(x => ({ name: x.name, score: x.score, dps: x.dps, ttl: x.ttl })))
+//  Pokemon.filter(x => x.name === 'ARCANINE')[0]
+//).map(x => ({ name: x.name, q: x.quickMove })))

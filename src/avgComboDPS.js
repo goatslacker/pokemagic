@@ -36,6 +36,7 @@ function avgComboDPS(mon, move1, move2, ivAtk, pokeLevel) {
       name: `${move1.Name}/${move2.Name}`,
       dps: avg(x => x.combo.dps),
       gymDPS: avg(x => x.combo.gymDPS),
+      retired: move1.retired === true || move2.retired == true,
     },
     quick: Object.assign({}, schemaMove(mon, move1, dmg1)),
     charge: Object.assign({}, schemaMove(mon, move2, dmg2)),

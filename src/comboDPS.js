@@ -52,6 +52,7 @@ function battleDPS(obj) {
       name: `${moves[0].Name}/${moves[1].Name}`,
       dps,
       gymDPS,
+      retired: moves[0].retired === true || moves[1].retired === true,
     },
 
     energy100info: {
@@ -98,6 +99,7 @@ function comboDPS(mon, opponent, IndAtk, IndDef, pokemonLevel, opponentLevel, mo
 
 module.exports = comboDPS
 
+//const Pokemon = require('../json/pokemon')
 //console.log(
 //  comboDPS(
 //    Pokemon.filter(x => x.name === 'SLOWBRO')[0],

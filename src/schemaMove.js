@@ -55,6 +55,7 @@ const getMove = (pokemon, move, dmg) => ({
     energy: move.Energy,
     duration: move.DurationMs / 1000,
   },
+  retired: move.retired === true,
 })
 
 module.exports = getMove

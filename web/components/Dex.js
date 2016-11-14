@@ -125,7 +125,11 @@ const MoveInfo = ({
       vertical: 'center',
     }, [
       $(Col, [
-        $(View, [
+        $(View, {
+          style: {
+            textDecoration: info.combo.retired ? 'line-through' : 'none',
+          },
+        }, [
           $(Text, info.quick.name),
           $(Text, info.charge.name),
         ]),
