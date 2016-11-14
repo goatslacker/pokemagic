@@ -29,26 +29,32 @@ const ECpM = LevelToCPM['30']
 
 const fix2 = n => Math.round(n * 100) / 100
 
-const avgGymDPS = (poke, mon) => (
-  poke.moves1.reduce((acc, move1) => (
-    poke.moves2.reduce((n, move2) => (
-      n + comboDPS(poke, mon, 10, 10, 30, 30, move1, move2).combo.gymDPS
+// What the opponen's avg gym DPS is vs you
+const avgGymDPS = (opp, you, gymDPS) => (
+  opp.moves1.reduce((acc, move1) => (
+    opp.moves2.reduce((n, move2) => (
+      n + comboDPS(opp, you, 10, 10, 30, 30, move1, move2).combo.gymDPS
     ), acc)
-  ), 0) / (poke.moves1.length * poke.moves2.length)
+  ), 0) / (opp.moves1.length * opp.moves2.length)
 )
 
-const avgDPS = (poke, mon) => (
-  poke.moves1.reduce((acc, move1) => (
-    poke.moves2.reduce((n, move2) => (
-      n + comboDPS(poke, mon, 10, 10, 30, 30, move1, move2).combo.dps
-    ), acc)
-  ), 0) / (poke.moves1.length * poke.moves2.length)
+const scoreDPS = (x) => (
+  (x.dps * 2) + (x.ttl * 0.4)
 )
 
-const getComboMovesSortedByDPS = (poke, mon) => (
-  mon.moves1.reduce((arr, move1) => {
-    mon.moves2.forEach((move2) => {
-      arr.push(comboDPS(mon, poke, 10, 10, 30, 30, move1, move2))
+const avgScoreMove = arr => (
+  arr.reduce((acc, x) => acc + scoreDPS(x), 0) / arr.length
+)
+
+const scoreAllMoves = (you, opp, oppGymDPS) => avgScoreMove(
+  getBestComboMoves(you, opp, oppGymDPS)
+)
+
+// Get your best combo moves vs Opp sorted by DPS
+const getComboMovesSortedByDPS = (you, opp) => (
+  you.moves1.reduce((arr, move1) => {
+    you.moves2.forEach((move2) => {
+      arr.push(comboDPS(you, opp, 10, 10, 30, 30, move1, move2))
     })
     return arr
   }, [])
@@ -94,27 +100,40 @@ const fixMoveName = moveName => (
     .join(' ')
 )
 
-const schemaComboMove = (mon, moves) => ({
-  name: ucFirst(mon.name),
+const schemaComboMove = (you, moves) => ({
+  name: ucFirst(you.name),
   quickMove: fixMoveName(moves.quick.name),
   chargeMove: fixMoveName(moves.charge.name),
   dps: fix2(moves.combo.dps),
   ttl: fix2(moves.ttl),
 })
 
-const getBestComboMoves = (poke, mon, gymDPS) => (
-  getComboMovesSortedByDPS(poke, mon)
+// Get your best moves combo moves with TTL and filtering out bad movesets
+const getBestComboMoves = (you, opp, oppGymDPS) => (
+  getComboMovesSortedByDPS(you, opp)
   .map(x => Object.assign(x, {
-    ttl: getTTLDiff(poke, mon, x.combo.dps, gymDPS),
+    ttl: getTTLDiff(opp, you, x.combo.dps, oppGymDPS),
   }))
-  .map(x => schemaComboMove(mon, x))
+  .map(x => schemaComboMove(you, x))
   .filter(x => x.dps > GOOD_DPS || x.ttl > 0)
 )
 
-const bestVs = poke => (
-  Pokemon.map(mon => ({
-    poke: addExtraMoves(getBestComboMoves(poke, mon, avgGymDPS(poke, mon))),
-    score: fix2(avgDPS(mon, poke)),
+const bestVs = opp => (
+  Pokemon.map(you => ({
+    poke: addExtraMoves(
+      getBestComboMoves(
+        you,
+        opp,
+        avgGymDPS(opp, you)
+      )
+    ),
+    score: fix2(
+      scoreAllMoves(
+        you,
+        opp,
+        avgGymDPS(opp, you)
+      )
+    ),
   }))
   .filter(x => Boolean(x.poke))
   .map(x => Object.assign(x.poke, { score: x.score }))
@@ -125,5 +144,5 @@ const bestVs = poke => (
 module.exports = bestVs
 
 //console.log(bestVs(
-//  Pokemon.filter(x => x.name === 'DRAGONITE')[0]
-//))
+//  Pokemon.filter(x => x.name === 'LAPRAS')[0]
+//).map(x => ({ name: x.name, score: x.score, dps: x.dps, ttl: x.ttl })))
