@@ -58,7 +58,6 @@ const getComboMovesSortedByDPS = (you, opp) => (
     })
     return arr
   }, [])
-  .filter(x => x.combo.retired === false)
   .sort((a, b) => a.combo.dps > b.combo.dps ? -1 : 1)
 )
 
@@ -117,7 +116,6 @@ const getBestComboMoves = (you, opp, oppGymDPS) => (
     ttl: getTTLDiff(opp, you, x.combo.dps, oppGymDPS),
   }))
   .map(x => schemaComboMove(you, x))
-  .filter(x => x.retired === false)
   .filter(x => x.dps > GOOD_DPS || x.ttl > 0)
 )
 
