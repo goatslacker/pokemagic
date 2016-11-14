@@ -464,9 +464,9 @@ const PokemonPage = pure(({
     },
   }, [
     $(PokeInfo, { pokemon }),
-    $(IVCalculator, { pokemon }),
     $(Movesets, { pokemon }),
     $(BestVs, { pokemon }),
+    $(IVCalculator, { pokemon }),
   ])
 ))
 
