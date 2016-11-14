@@ -52,6 +52,11 @@ const calculateValues = state => ({
 //  stat: STAT_VALUES[state.stat],
 })
 
+const transition = (changePokemon, value) => {
+  changePokemon(value)
+  scrollTop()
+}
+
 const calculateIVs = (pokemon, cp, hp, stardust) => {
   const payload = { cp, hp, stardust }
   try {
@@ -468,75 +473,36 @@ const PokeImage = ({
   changePokemon,
   pokemon,
 }) => (
-  $(GridTile, {
-    actionIcon: $(IconButton, {
-      onClick: () => changePokemon(pokemon),
-      touch: true,
-    }, [$(ChevronRightIcon)]),
-    key: pokemon.name,
-    title: (
-      pokemon.atk ? pokemon.atk :
-      pokemon.def ? pokemon.def :
-      pokemon.cp ? pokemon.cp :
-      `# ${pokemon.id}`
-    )
-  }, [
-    $(Image, {
-      onClick: () => changePokemon(pokemon),
-      src: `images/${pokemon.name}.png`,
-      height: 120,
-      width: 120,
-    }),
-  ])
+  $(Image, {
+    onClick: () => transition(changePokemon, pokemon),
+    src: `images/${pokemon.name}.png`,
+    height: 120,
+    width: 120,
+  })
 )
+
+const PokemonByMaxCP = Pokemon.map(x => Object.assign({
+  cp: cp.getMaxCPForLevel(x, LevelToCPM['40']),
+}, x)).sort((a, b) => a.cp > b.cp ? -1 : 1)
+
+const PokemonByMaxAtk = Pokemon.map(x => Object.assign({
+  atk: ovRating(x).atk,
+}, x)).sort((a, b) => a.atk > b.atk ? -1 : 1)
+
+const PokemonByMaxDef = Pokemon.map(x => Object.assign({
+  def: ovRating(x).def,
+}, x)).sort((a, b) => a.def > b.def ? -1 : 1)
 
 const PokeList = pure(({
   changePokemon,
 }) => (
-  $(Tabs, [
-    $(Tab, { label: '#' }, [
-      $(
-        GridList,
-        { cellHeight: 120, cols: 3 },
-        Pokemon.map(pokemon => $(PokeImage, { pokemon, changePokemon }))
-      ),
-    ]),
-    $(Tab, { label: 'CP' }, [
-      $(
-        GridList,
-        { cellHeight: 120, cols: 3 },
-        Pokemon
-          .map(x => Object.assign({
-            cp: cp.getMaxCPForLevel(x, LevelToCPM['40']),
-          }, x))
-          .sort((a, b) => a.cp > b.cp ? -1 : 1)
-          .map(pokemon => $(PokeImage, { pokemon, changePokemon }))
-      ),
-    ]),
-    $(Tab, { label: 'Atk' }, [
-      $(
-        GridList,
-        { cellHeight: 120, cols: 3 },
-        Pokemon
-          .map(x => Object.assign({
-            atk: ovRating(x).atk,
-          }, x))
-          .sort((a, b) => a.atk > b.atk ? -1 : 1)
-          .map(pokemon => $(PokeImage, { pokemon, changePokemon }))
-      ),
-    ]),
-    $(Tab, { label: 'Def' }, [
-      $(
-        GridList,
-        { cellHeight: 120, cols: 3 },
-        Pokemon
-          .map(x => Object.assign({
-            def: ovRating(x).def,
-          }, x))
-          .sort((a, b) => a.def > b.def ? -1 : 1)
-          .map(pokemon => $(PokeImage, { pokemon, changePokemon }))
-      ),
-    ]),
+  $(Tabs, {
+    initialSelectedIndex: 3,
+  }, [
+    $(Tab, { label: '#' }, Pokemon.map(pokemon => $(PokeImage, { pokemon, changePokemon }))),
+    $(Tab, { label: 'CP' }, PokemonByMaxCP.map(pokemon => $(PokeImage, { pokemon, changePokemon }))),
+    $(Tab, { label: 'Atk' }, PokemonByMaxAtk.map(pokemon => $(PokeImage, { pokemon, changePokemon }))),
+    $(Tab, { label: 'Def' }, PokemonByMaxDef.map(pokemon => $(PokeImage, { pokemon, changePokemon }))),
   ])
 ))
 
@@ -565,14 +531,14 @@ const Dex = ({
           filter: (searchText, key) => key.indexOf(searchText.toUpperCase()) > -1,
           fullWidth: true,
           hintText: 'Search for Pokemon',
-          onNewRequest: text => changePokemon(Mon[text.toUpperCase()]),
+          onNewRequest: text => transition(changePokemon, Mon[text.toUpperCase()]),
         })
       ])
     ),
     pokemon && (
       $(AppBar, {
         title: pokemon ? ucFirst(pokemon.name) : null,
-        onLeftIconButtonTouchTap: () => changePokemon(null),
+        onLeftIconButtonTouchTap: () => transition(changePokemon, null),
         iconElementLeft: $(IconButton, { touch: true }, [$(BackIcon)]),
         iconElementRight: $(IconButton, {
           style: {
@@ -589,10 +555,10 @@ const Dex = ({
     ),
 
     // Empty text then list out all the Pokes
-    !pokemon && $(PokeList, { changePokemon }),
+    pokemon === null && $(PokeList, { changePokemon }),
 
     // The Pokedex view
-    pokemon && $(PokemonPage, { pokemon }),
+    pokemon !== null && $(PokemonPage, { pokemon }),
   ])
 )
 
@@ -602,18 +568,19 @@ const findPokemon = name => (
 
 const hashChanged = () => findPokemon(window.location.hash.split('/')[1] || '')
 
-//const scrollIf = x => x ? scrollTop() : null
-
-const changePokemonFromHash = ({
-  changePokemon,
-}) => changePokemon(hashChanged())
+const maybeChangePokemonFromHash = ({
+  changePokemon
+}) => {
+  const poke = hashChanged()
+  if (poke) transition(changePokemon, poke)
+}
 
 module.exports = compose(
   withState('pokemon', 'changePokemon', null),
   lifecycle({
     componentDidMount() {
-      changePokemonFromHash(this.props)
-      window.onhashchange = () => changePokemonFromHash(this.props)
+      maybeChangePokemonFromHash(this.props)
+      window.onhashchange = () => maybeChangePokemonFromHash(this.props)
     },
   })
 )(Dex)
