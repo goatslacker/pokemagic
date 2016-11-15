@@ -95,18 +95,18 @@ const Mon = Pokemon.reduce((obj, mon) => {
 }, {})
 
 
-const isStab = (pokemon, move) => (
-  [pokemon.type1, pokemon.type2]
-    .filter(Boolean)
-    .filter(type => type === move.Type)
-    .length > 0
-)
-
 const getColor = n => (
   n > 86 ? green400 :
   n > 78 ? yellow300 :
   red400
 )
+
+const SmallText = ({ text }) => $(Text, {
+  style: {
+    color: grey600,
+    fontSize: 14,
+  },
+}, text)
 
 const MoveInfo = ({
   atk,
@@ -120,42 +120,61 @@ const MoveInfo = ({
     },
   }, [
     $(Row, {
+      horizontal: 'flex-start',
       vertical: 'center',
     }, [
-      $(Avatar, {
-        backgroundColor: (atk
-          ? getColor(rate.atk.offenseRating)
-          : getColor(rate.def.defenseRating)
-        ),
-        color: grey800,
+      $(View, {
         style: {
-          marginRight: 12,
-        }
-      }, atk ? rate.atk.offenseRating : rate.def.defenseRating),
-
-      $(Col, [
-        $(View, {
+          marginRight: 24,
+          textAlign: 'center',
+          width: 60,
+        },
+      }, [
+        $(Avatar, {
+          backgroundColor: (atk
+            ? getColor(rate.atk.offenseRating)
+            : getColor(rate.def.defenseRating)
+          ),
+          color: grey800,
+          size: 36,
           style: {
-            textDecoration: info.combo.retired ? 'line-through' : 'none',
-          },
-        }, [
-          $(Text, info.quick.name),
-          $(Text, info.charge.name),
+            marginBottom: 2,
+          }
+        }, atk ? rate.atk.offenseRating : rate.def.defenseRating),
+
+        $(View, [
+          atk && $(SmallText, { text: `DPS ${rate.atk.dps}` }),
+          def && $(SmallText, { text: `DPS ${rate.def.gymDPS}` }),
         ]),
       ]),
 
-      $(Col, [
-        $(View, {
-          style: {
-            color: grey600,
-            fontSize: 14,
-          },
-        }, [
-          atk && $(Text, `${rate.atk.dps.toFixed(2)}dps`),
-          atk && $(Text, `${info.quick.eps}eps`),
-          def && $(Text, `${rate.def.gymDPS.toFixed(2)}dps`),
-          def && $(Text, `${info.charge.dodgeTime}s dodge`),
-          $(Text, `${info.charge.startTime}s start`),
+      $(Row, [
+        $(Col, [
+          $(View, [
+            $(Text, {
+              style: {
+                fontWeight: info.quick.stab ? 'bold' : 'normal',
+                textDecoration: info.quick.retired ? 'line-through' : 'none',
+              },
+            }, info.quick.name),
+            $(SmallText, { text: `CD ${info.quick.base.duration}s` }),
+            $(SmallText, { text: `EPS ${info.quick.eps}` }),
+          ]),
+
+        ]),
+
+        $(Col, [
+          $(View, [
+            $(Text, {
+              style: {
+                fontWeight: info.charge.stab ? 'bold' : 'normal',
+                textDecoration: info.charge.retired ? 'line-through' : 'none',
+              },
+            }, info.charge.name),
+            $(SmallText, { text: `CD ${info.charge.base.duration}s` }),
+            atk && $(SmallText, { text: `Charges ${info.charge.charges}` }),
+            def && $(SmallText, { text: `Dodge ${info.charge.dodgeTime}s` }),
+          ]),
         ]),
       ]),
     ]),

@@ -74,8 +74,10 @@ const ovDef = n => Math.round((Math.log(n) - PokeScale.def.min) / DEF_SCALE)
 // defending one is weighed towards stamina. We then add the ovAtk and ovDef
 // ratings. A superOverallRating is NOT between 0-100. That function exists
 // below.
+// TODO weight ovAtk a bit more than statsRate.atk
 const superAtkOverallRating = (statsRate, dps) => statsRate.atk + ovAtk(dps)
 // TODO superDefOverallRating should take into account dodgeability of a move.
+// TODO heavily weight statsRate.def and nerf ovDef(dps)
 const superDefOverallRating = (statsRate, dps) => statsRate.def + ovDef(dps)
 const superOverallRating = (statsRate, dps1, dps2) => (
   statsRate.ovr +
@@ -153,6 +155,8 @@ PokemonRatings.forEach((poke) => {
   poke.def.defenseRating = percentDef(poke.def.raw)
 })
 
+const fix = n => Math.round(n * 100) / 100
+
 const getRating = (pokemon, move1, move2) => {
   const statsRate = ovRating(pokemon)
 
@@ -168,14 +172,14 @@ const getRating = (pokemon, move1, move2) => {
 
     atk: {
       name: comboMove.name,
-      dps: comboMove.dps,
+      dps: fix(comboMove.dps),
       raw: superAtkOverallRating(statsRate, comboMove.dps),
       moveRating: ovAtk(comboMove.dps),
     },
 
     def: {
       name: comboMove.name,
-      gymDPS: comboMove.gymDPS,
+      gymDPS: fix(comboMove.gymDPS),
       raw: superDefOverallRating(statsRate, comboMove.gymDPS),
       moveRating: ovDef(comboMove.gymDPS),
     },

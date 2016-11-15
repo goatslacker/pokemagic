@@ -8,6 +8,8 @@ const GymPokemon = gymDefenders.map(def => Pokemon.filter(x => x.name === def.na
 
 const getAvgFrom = arr => f => arr.reduce((sum, n) => sum + f(n), 0) / arr.length
 
+const fix = n => Math.round(n * 100) / 100
+
 // This function's purpose is to get the avg combo dps of a move.
 // our comboDPS function gets the combo DPS of moves but for a particular pokemon
 function avgComboDPS(mon, move1, move2, ivAtk, pokeLevel) {
@@ -23,6 +25,8 @@ function avgComboDPS(mon, move1, move2, ivAtk, pokeLevel) {
       move2
     )
 
+    // TODO TTL and then sort by "score" like bestVs
+
     return Object.assign({ vs: opponent.name }, res)
   })
 
@@ -34,8 +38,8 @@ function avgComboDPS(mon, move1, move2, ivAtk, pokeLevel) {
   return {
     combo: {
       name: `${move1.Name}/${move2.Name}`,
-      dps: avg(x => x.combo.dps),
-      gymDPS: avg(x => x.combo.gymDPS),
+      dps: fix(avg(x => x.combo.dps)),
+      gymDPS: fix(avg(x => x.combo.gymDPS)),
       retired: move1.retired === true || move2.retired == true,
     },
     quick: Object.assign({}, schemaMove(mon, move1, dmg1)),

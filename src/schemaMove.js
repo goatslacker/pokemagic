@@ -26,9 +26,9 @@ const isStab = (pokemon, move) => (
 const quickMoveRx = /_FAST$/
 const isQuickMove = name => quickMoveRx.test(name)
 
-const calcDPS = (dmg, duration) => dmg / (duration / 1000)
-
 const fix = n => Math.round(n * 100) / 100
+
+const calcDPS = (dmg, duration) => fix(dmg / (duration / 1000))
 
 const dodgeTime = move => fix(
   (Moves[move.Name].DamageWindowEndMs - Moves[move.Name].DamageWindowStartMs) / 1000
@@ -46,8 +46,8 @@ const getMove = (pokemon, move, dmg) => ({
   dps: calcDPS(dmg, move.DurationMs),
   gymDPS: calcDPS(dmg, 2000 + move.DurationMs),
   eps: calcEPS(move),
-  charges: Math.abs(100 / move.Energy),
-  dmg,
+  charges: Math.floor(Math.abs(100 / move.Energy)),
+  dmg: fix(dmg),
   startTime: startTime(move),
   dodgeTime: dodgeTime(move),
   base: {
