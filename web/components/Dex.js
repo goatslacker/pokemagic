@@ -36,6 +36,7 @@ const {
   grey800,
   indigo100,
   indigo400,
+  pink500,
   red400,
   yellow300,
 } = require('material-ui/styles/colors')
@@ -101,12 +102,29 @@ const getColor = n => (
   red400
 )
 
-const SmallText = ({ text }) => $(Text, {
-  style: {
-    color: grey600,
-    fontSize: 14,
-  },
-}, text)
+const SmallText = ({
+  center,
+  label,
+  value,
+}) => (
+  $(Row, {
+    horizontal: center ? 'center' : 'flex-start',
+  }, [
+    $(Text, {
+      style: {
+        color: grey600,
+        fontSize: 14,
+        marginRight: 2,
+      },
+    }, label),
+    $(Text, {
+      style: {
+        color: pink500,
+        fontSize: 14,
+      },
+    }, value),
+  ])
+)
 
 const MoveInfo = ({
   atk,
@@ -143,8 +161,8 @@ const MoveInfo = ({
         }, atk ? rate.atk.offenseRating : rate.def.defenseRating),
 
         $(View, [
-          atk && $(SmallText, { text: `DPS ${rate.atk.dps}` }),
-          def && $(SmallText, { text: `DPS ${rate.def.gymDPS}` }),
+          atk && $(SmallText, { center: true, label: 'DPS', value: rate.atk.dps }),
+          def && $(SmallText, { center: true, label: 'DPS', value: rate.def.gymDPS }),
         ]),
       ]),
 
@@ -157,8 +175,8 @@ const MoveInfo = ({
                 textDecoration: info.quick.retired ? 'line-through' : 'none',
               },
             }, info.quick.name),
-            $(SmallText, { text: `CD ${info.quick.base.duration}s` }),
-            $(SmallText, { text: `EPS ${info.quick.eps}` }),
+            $(SmallText, { label: 'CD', value: `${info.quick.base.duration}s` }),
+            $(SmallText, { label: 'EPS', value: info.quick.eps }),
           ]),
 
         ]),
@@ -171,9 +189,9 @@ const MoveInfo = ({
                 textDecoration: info.charge.retired ? 'line-through' : 'none',
               },
             }, info.charge.name),
-            $(SmallText, { text: `CD ${info.charge.base.duration}s` }),
-            atk && $(SmallText, { text: `Charges ${info.charge.charges}` }),
-            def && $(SmallText, { text: `Dodge ${info.charge.dodgeTime}s` }),
+            $(SmallText, { label: 'CD', value: `${info.charge.base.duration}s` }),
+            atk && $(SmallText, { label: 'Charges', value: info.charge.charges }),
+            def && $(SmallText, { label: 'Dodge', value: `${info.charge.dodgeTime}s` }),
           ]),
         ]),
       ]),
