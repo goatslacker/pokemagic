@@ -581,12 +581,7 @@ const Dex = ({
             marginRight: 8,
             marginTop: -8,
           },
-        }, [
-          $(Avatar, {
-            backgroundColor: getColor(ovRating(pokemon).ovr),
-            color: grey800,
-          }, ovRating(pokemon).ovr),
-        ]),
+        }),
       })
     ),
 
