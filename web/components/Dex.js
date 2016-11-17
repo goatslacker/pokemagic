@@ -176,7 +176,8 @@ const MoveInfo = ({
               },
             }, info.quick.name),
             $(SmallText, { label: 'CD', value: `${info.quick.base.duration}s` }),
-            $(SmallText, { label: 'EPS', value: info.quick.eps }),
+            atk && $(SmallText, { label: 'EPS', value: info.quick.eps }),
+            def && $(SmallText, { label: 'DMG', value: info.quick.dmg }),
           ]),
 
         ]),
