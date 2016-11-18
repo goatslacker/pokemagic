@@ -69,7 +69,7 @@ const calculateIVs = (pokemon, cp, hp, stardust) => {
 }
 
 const sortByAtk = (a, b) => a.info.combo.dps > b.info.combo.dps ? -1 : 1
-const sortByDef = (a, b) => a.info.combo.gymDPS > b.info.combo.gymDPS ? -1 : 1
+const sortByDef = (a, b) => a.rate.def.raw > b.rate.def.raw ? -1 : 1
 
 const sortMoves = (pokemon, sortOrder) => (
   pokemon.moves1.reduce((acc, move1) => acc.concat(
@@ -175,9 +175,11 @@ const MoveInfo = ({
                 textDecoration: info.quick.retired ? 'line-through' : 'none',
               },
             }, info.quick.name),
-            $(SmallText, { label: 'CD', value: `${info.quick.base.duration}s` }),
+            atk && $(SmallText, { label: 'CD', value: `${info.quick.base.duration}s` }),
             atk && $(SmallText, { label: 'EPS', value: info.quick.eps }),
+            def && $(SmallText, { label: 'Start', value: info.quick.startTime }),
             def && $(SmallText, { label: 'DMG', value: info.quick.dmg }),
+            console.log('@', info),
           ]),
 
         ]),
@@ -190,9 +192,10 @@ const MoveInfo = ({
                 textDecoration: info.charge.retired ? 'line-through' : 'none',
               },
             }, info.charge.name),
-            $(SmallText, { label: 'CD', value: `${info.charge.base.duration}s` }),
+            atk && $(SmallText, { label: 'CD', value: `${info.charge.base.duration}s` }),
             atk && $(SmallText, { label: 'Charges', value: info.charge.charges }),
-            def && $(SmallText, { label: 'Dodge', value: `${info.charge.dodgeTime}s` }),
+            def && $(SmallText, { label: 'Start', value: `${info.charge.startTime}s` }),
+            def && $(SmallText, { label: 'DMG', value: info.charge.dmg }),
           ]),
         ]),
       ]),
