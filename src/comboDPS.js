@@ -1,4 +1,3 @@
-const Pokemon = require('../json/pokemon.json')
 const LevelToCPM = require('../json/level-to-cpm.json')
 const getTypeEffectiveness = require('./getTypeEffectiveness').getTypeEffectiveness
 
@@ -8,18 +7,16 @@ function getDmgVs(obj) {
   const moves = obj.moves
   const player = obj.player
   const opponent = obj.opponent
-  const pokemonLevel = obj.pokemonLevel || 25
+  const pokemonLevel = obj.pokemonLevel || 30
 
-  // We determine DPS combo vs a level 25 pokemon because that's what gyms on average will have.
-  // There's no hard data for this claim btw, it's completely made up.
-  const opponentLevel = obj.opponentLevel || 25
+  const opponentLevel = obj.opponentLevel || 30
 
   const AtkECpM = LevelToCPM[pokemonLevel]
   const DefECpM = LevelToCPM[opponentLevel]
 
   return moves.map((move) => {
     const stab = move.Type === player.type1 || move.Type === player.type2 ? 1.25 : 1
-    const power = move.Power
+    const power = move.Power || 0
 
     const fxMul = getTypeEffectiveness(opponent, move)
 
@@ -32,9 +29,6 @@ function getDPS(dmg, duration) {
 }
 
 function battleDPS(obj) {
-  const atk = obj.atk
-  const def = obj.def
-  const level = obj.pokemonLevel
   const moves = obj.moves
 
   const quickHits = Math.ceil(100 / moves[0].Energy)
@@ -58,6 +52,7 @@ function battleDPS(obj) {
       name: `${moves[0].Name}/${moves[1].Name}`,
       dps,
       gymDPS,
+      retired: moves[0].retired === true || moves[1].retired === true,
     },
 
     energy100info: {
@@ -104,15 +99,16 @@ function comboDPS(mon, opponent, IndAtk, IndDef, pokemonLevel, opponentLevel, mo
 
 module.exports = comboDPS
 
-console.log(
-  comboDPS(
-    Pokemon.filter(x => x.name === 'VAPOREON')[0],
-    Pokemon.filter(x => x.name === 'FLAREON')[0],
-    10,
-    10,
-    25,
-    25,
-    Pokemon.filter(x => x.name === 'VAPOREON')[0].moves1[0],
-    Pokemon.filter(x => x.name === 'VAPOREON')[0].moves2[1]
-  )
-)
+//const Pokemon = require('../json/pokemon')
+//console.log(
+//  comboDPS(
+//    Pokemon.filter(x => x.name === 'SLOWBRO')[0],
+//    Pokemon.filter(x => x.name === 'DRAGONITE')[0],
+//    10,
+//    10,
+//    30,
+//    30,
+//    Pokemon.filter(x => x.name === 'SLOWBRO')[0].moves1[0],
+//    Pokemon.filter(x => x.name === 'SLOWBRO')[0].moves2[0]
+//  )
+//)

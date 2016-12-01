@@ -6,8 +6,8 @@
     "type2": "POISON",
     "stats": {
       "stamina": 90,
-      "attack": 126,
-      "defense": 126
+      "attack": 118,
+      "defense": 118
     },
     "candy": 25,
     "family": "FAMILY_BULBASAUR",
@@ -68,8 +68,8 @@
     "type2": "POISON",
     "stats": {
       "stamina": 120,
-      "attack": 156,
-      "defense": 158
+      "attack": 151,
+      "defense": 151
     },
     "candy": 100,
     "family": "FAMILY_BULBASAUR",
@@ -131,7 +131,7 @@
     "stats": {
       "stamina": 160,
       "attack": 198,
-      "defense": 200
+      "defense": 198
     },
     "family": "FAMILY_BULBASAUR",
     "moves1": [
@@ -190,8 +190,8 @@
     "type1": "FIRE",
     "stats": {
       "stamina": 78,
-      "attack": 128,
-      "defense": 108
+      "attack": 116,
+      "defense": 96
     },
     "candy": 25,
     "family": "FAMILY_CHARMANDER",
@@ -251,8 +251,8 @@
     "type1": "FIRE",
     "stats": {
       "stamina": 116,
-      "attack": 160,
-      "defense": 140
+      "attack": 158,
+      "defense": 129
     },
     "candy": 100,
     "family": "FAMILY_CHARMANDER",
@@ -313,8 +313,8 @@
     "type2": "FLYING",
     "stats": {
       "stamina": 156,
-      "attack": 212,
-      "defense": 182
+      "attack": 223,
+      "defense": 176
     },
     "family": "FAMILY_CHARMANDER",
     "moves1": [
@@ -373,8 +373,8 @@
     "type1": "WATER",
     "stats": {
       "stamina": 88,
-      "attack": 112,
-      "defense": 142
+      "attack": 94,
+      "defense": 122
     },
     "candy": 25,
     "family": "FAMILY_SQUIRTLE",
@@ -434,8 +434,8 @@
     "type1": "WATER",
     "stats": {
       "stamina": 118,
-      "attack": 144,
-      "defense": 176
+      "attack": 126,
+      "defense": 155
     },
     "candy": 100,
     "family": "FAMILY_SQUIRTLE",
@@ -495,8 +495,8 @@
     "type1": "WATER",
     "stats": {
       "stamina": 158,
-      "attack": 186,
-      "defense": 222
+      "attack": 171,
+      "defense": 210
     },
     "family": "FAMILY_SQUIRTLE",
     "moves1": [
@@ -555,8 +555,8 @@
     "type1": "BUG",
     "stats": {
       "stamina": 90,
-      "attack": 62,
-      "defense": 66
+      "attack": 55,
+      "defense": 62
     },
     "candy": 12,
     "family": "FAMILY_CATERPIE",
@@ -598,8 +598,8 @@
     "type1": "BUG",
     "stats": {
       "stamina": 100,
-      "attack": 56,
-      "defense": 86
+      "attack": 45,
+      "defense": 64
     },
     "candy": 50,
     "family": "FAMILY_CATERPIE",
@@ -642,8 +642,8 @@
     "type2": "FLYING",
     "stats": {
       "stamina": 120,
-      "attack": 144,
-      "defense": 144
+      "attack": 167,
+      "defense": 151
     },
     "family": "FAMILY_CATERPIE",
     "moves1": [
@@ -703,8 +703,8 @@
     "type2": "POISON",
     "stats": {
       "stamina": 80,
-      "attack": 68,
-      "defense": 64
+      "attack": 63,
+      "defense": 65
     },
     "candy": 12,
     "family": "FAMILY_WEEDLE",
@@ -747,8 +747,8 @@
     "type2": "POISON",
     "stats": {
       "stamina": 90,
-      "attack": 62,
-      "defense": 82
+      "attack": 46,
+      "defense": 86
     },
     "candy": 50,
     "family": "FAMILY_WEEDLE",
@@ -791,8 +791,8 @@
     "type2": "POISON",
     "stats": {
       "stamina": 130,
-      "attack": 144,
-      "defense": 130
+      "attack": 169,
+      "defense": 150
     },
     "family": "FAMILY_WEEDLE",
     "moves1": [
@@ -852,8 +852,8 @@
     "type2": "FLYING",
     "stats": {
       "stamina": 80,
-      "attack": 94,
-      "defense": 90
+      "attack": 85,
+      "defense": 76
     },
     "candy": 12,
     "family": "FAMILY_PIDGEY",
@@ -914,8 +914,8 @@
     "type2": "FLYING",
     "stats": {
       "stamina": 126,
-      "attack": 126,
-      "defense": 122
+      "attack": 117,
+      "defense": 108
     },
     "candy": 50,
     "family": "FAMILY_PIDGEY",
@@ -976,8 +976,8 @@
     "type2": "FLYING",
     "stats": {
       "stamina": 166,
-      "attack": 170,
-      "defense": 166
+      "attack": 166,
+      "defense": 157
     },
     "family": "FAMILY_PIDGEY",
     "moves1": [
@@ -1036,8 +1036,8 @@
     "type1": "NORMAL",
     "stats": {
       "stamina": 60,
-      "attack": 92,
-      "defense": 86
+      "attack": 103,
+      "defense": 70
     },
     "candy": 25,
     "family": "FAMILY_RATTATA",
@@ -1097,8 +1097,8 @@
     "type1": "NORMAL",
     "stats": {
       "stamina": 110,
-      "attack": 146,
-      "defense": 150
+      "attack": 161,
+      "defense": 144
     },
     "family": "FAMILY_RATTATA",
     "moves1": [
@@ -1158,8 +1158,8 @@
     "type2": "FLYING",
     "stats": {
       "stamina": 80,
-      "attack": 102,
-      "defense": 78
+      "attack": 121,
+      "defense": 61
     },
     "candy": 50,
     "family": "FAMILY_SPEAROW",
@@ -1220,8 +1220,8 @@
     "type2": "FLYING",
     "stats": {
       "stamina": 130,
-      "attack": 168,
-      "defense": 146
+      "attack": 182,
+      "defense": 135
     },
     "family": "FAMILY_SPEAROW",
     "moves1": [
@@ -1280,8 +1280,8 @@
     "type1": "POISON",
     "stats": {
       "stamina": 70,
-      "attack": 112,
-      "defense": 112
+      "attack": 110,
+      "defense": 102
     },
     "candy": 50,
     "family": "FAMILY_EKANS",
@@ -1341,8 +1341,8 @@
     "type1": "POISON",
     "stats": {
       "stamina": 120,
-      "attack": 166,
-      "defense": 166
+      "attack": 167,
+      "defense": 158
     },
     "family": "FAMILY_EKANS",
     "moves1": [
@@ -1401,8 +1401,8 @@
     "type1": "ELECTRIC",
     "stats": {
       "stamina": 70,
-      "attack": 124,
-      "defense": 108
+      "attack": 112,
+      "defense": 101
     },
     "candy": 50,
     "family": "FAMILY_PIKACHU",
@@ -1462,8 +1462,8 @@
     "type1": "ELECTRIC",
     "stats": {
       "stamina": 120,
-      "attack": 200,
-      "defense": 154
+      "attack": 192,
+      "defense": 165
     },
     "family": "FAMILY_PIKACHU",
     "moves1": [
@@ -1522,8 +1522,8 @@
     "type1": "GROUND",
     "stats": {
       "stamina": 100,
-      "attack": 90,
-      "defense": 114
+      "attack": 126,
+      "defense": 145
     },
     "candy": 50,
     "family": "FAMILY_SANDSHREW",
@@ -1583,8 +1583,8 @@
     "type1": "GROUND",
     "stats": {
       "stamina": 150,
-      "attack": 150,
-      "defense": 172
+      "attack": 182,
+      "defense": 282
     },
     "family": "FAMILY_SANDSHREW",
     "moves1": [
@@ -1643,8 +1643,8 @@
     "type1": "POISON",
     "stats": {
       "stamina": 110,
-      "attack": 100,
-      "defense": 104
+      "attack": 86,
+      "defense": 94
     },
     "candy": 25,
     "family": "FAMILY_NIDORAN_FEMALE",
@@ -1704,8 +1704,8 @@
     "type1": "POISON",
     "stats": {
       "stamina": 140,
-      "attack": 132,
-      "defense": 136
+      "attack": 117,
+      "defense": 126
     },
     "candy": 100,
     "family": "FAMILY_NIDORAN_FEMALE",
@@ -1766,8 +1766,8 @@
     "type2": "GROUND",
     "stats": {
       "stamina": 180,
-      "attack": 184,
-      "defense": 190
+      "attack": 180,
+      "defense": 174
     },
     "family": "FAMILY_NIDORAN_FEMALE",
     "moves1": [
@@ -1826,8 +1826,8 @@
     "type1": "POISON",
     "stats": {
       "stamina": 92,
-      "attack": 110,
-      "defense": 94
+      "attack": 105,
+      "defense": 75
     },
     "candy": 25,
     "family": "FAMILY_NIDORAN_MALE",
@@ -1887,8 +1887,8 @@
     "type1": "POISON",
     "stats": {
       "stamina": 122,
-      "attack": 142,
-      "defense": 128
+      "attack": 137,
+      "defense": 112
     },
     "candy": 100,
     "family": "FAMILY_NIDORAN_MALE",
@@ -1950,7 +1950,7 @@
     "stats": {
       "stamina": 162,
       "attack": 204,
-      "defense": 170
+      "defense": 157
     },
     "family": "FAMILY_NIDORAN_MALE",
     "moves1": [
@@ -2009,8 +2009,8 @@
     "type1": "FAIRY",
     "stats": {
       "stamina": 140,
-      "attack": 116,
-      "defense": 124
+      "attack": 107,
+      "defense": 116
     },
     "candy": 50,
     "family": "FAMILY_CLEFAIRY",
@@ -2071,7 +2071,7 @@
     "stats": {
       "stamina": 190,
       "attack": 178,
-      "defense": 178
+      "defense": 171
     },
     "family": "FAMILY_CLEFAIRY",
     "moves1": [
@@ -2130,8 +2130,8 @@
     "type1": "FIRE",
     "stats": {
       "stamina": 76,
-      "attack": 106,
-      "defense": 118
+      "attack": 96,
+      "defense": 122
     },
     "candy": 50,
     "family": "FAMILY_VULPIX",
@@ -2191,8 +2191,8 @@
     "type1": "FIRE",
     "stats": {
       "stamina": 146,
-      "attack": 176,
-      "defense": 194
+      "attack": 169,
+      "defense": 204
     },
     "family": "FAMILY_VULPIX",
     "moves1": [
@@ -2252,8 +2252,8 @@
     "type2": "FAIRY",
     "stats": {
       "stamina": 230,
-      "attack": 98,
-      "defense": 54
+      "attack": 80,
+      "defense": 44
     },
     "candy": 50,
     "family": "FAMILY_JIGGLYPUFF",
@@ -2324,8 +2324,8 @@
     "type2": "FAIRY",
     "stats": {
       "stamina": 280,
-      "attack": 168,
-      "defense": 108
+      "attack": 156,
+      "defense": 93
     },
     "family": "FAMILY_JIGGLYPUFF",
     "moves1": [
@@ -2385,8 +2385,8 @@
     "type2": "FLYING",
     "stats": {
       "stamina": 80,
-      "attack": 88,
-      "defense": 90
+      "attack": 83,
+      "defense": 76
     },
     "candy": 50,
     "family": "FAMILY_ZUBAT",
@@ -2447,8 +2447,8 @@
     "type2": "FLYING",
     "stats": {
       "stamina": 150,
-      "attack": 164,
-      "defense": 164
+      "attack": 161,
+      "defense": 153
     },
     "family": "FAMILY_ZUBAT",
     "moves1": [
@@ -2508,8 +2508,8 @@
     "type2": "POISON",
     "stats": {
       "stamina": 90,
-      "attack": 134,
-      "defense": 130
+      "attack": 131,
+      "defense": 116
     },
     "candy": 25,
     "family": "FAMILY_ODDISH",
@@ -2570,8 +2570,8 @@
     "type2": "POISON",
     "stats": {
       "stamina": 120,
-      "attack": 162,
-      "defense": 158
+      "attack": 153,
+      "defense": 139
     },
     "candy": 100,
     "family": "FAMILY_ODDISH",
@@ -2633,7 +2633,7 @@
     "stats": {
       "stamina": 150,
       "attack": 202,
-      "defense": 190
+      "defense": 170
     },
     "family": "FAMILY_ODDISH",
     "moves1": [
@@ -2693,8 +2693,8 @@
     "type2": "GRASS",
     "stats": {
       "stamina": 70,
-      "attack": 122,
-      "defense": 120
+      "attack": 121,
+      "defense": 99
     },
     "candy": 50,
     "family": "FAMILY_PARAS",
@@ -2755,8 +2755,8 @@
     "type2": "GRASS",
     "stats": {
       "stamina": 120,
-      "attack": 162,
-      "defense": 170
+      "attack": 165,
+      "defense": 146
     },
     "family": "FAMILY_PARAS",
     "moves1": [
@@ -2816,8 +2816,8 @@
     "type2": "POISON",
     "stats": {
       "stamina": 120,
-      "attack": 108,
-      "defense": 118
+      "attack": 100,
+      "defense": 102
     },
     "candy": 50,
     "family": "FAMILY_VENONAT",
@@ -2878,8 +2878,8 @@
     "type2": "POISON",
     "stats": {
       "stamina": 140,
-      "attack": 172,
-      "defense": 154
+      "attack": 179,
+      "defense": 150
     },
     "family": "FAMILY_VENONAT",
     "moves1": [
@@ -2938,8 +2938,8 @@
     "type1": "GROUND",
     "stats": {
       "stamina": 20,
-      "attack": 108,
-      "defense": 86
+      "attack": 109,
+      "defense": 88
     },
     "candy": 50,
     "family": "FAMILY_DIGLETT",
@@ -3009,8 +3009,8 @@
     "type1": "GROUND",
     "stats": {
       "stamina": 70,
-      "attack": 148,
-      "defense": 140
+      "attack": 167,
+      "defense": 147
     },
     "family": "FAMILY_DIGLETT",
     "moves1": [
@@ -3079,8 +3079,8 @@
     "type1": "NORMAL",
     "stats": {
       "stamina": 80,
-      "attack": 104,
-      "defense": 94
+      "attack": 92,
+      "defense": 81
     },
     "candy": 50,
     "family": "FAMILY_MEOWTH",
@@ -3140,8 +3140,8 @@
     "type1": "NORMAL",
     "stats": {
       "stamina": 130,
-      "attack": 156,
-      "defense": 146
+      "attack": 150,
+      "defense": 139
     },
     "family": "FAMILY_MEOWTH",
     "moves1": [
@@ -3200,8 +3200,8 @@
     "type1": "WATER",
     "stats": {
       "stamina": 100,
-      "attack": 132,
-      "defense": 112
+      "attack": 122,
+      "defense": 96
     },
     "candy": 50,
     "family": "FAMILY_PSYDUCK",
@@ -3261,8 +3261,8 @@
     "type1": "WATER",
     "stats": {
       "stamina": 160,
-      "attack": 194,
-      "defense": 176
+      "attack": 191,
+      "defense": 163
     },
     "family": "FAMILY_PSYDUCK",
     "moves1": [
@@ -3321,8 +3321,8 @@
     "type1": "FIGHTING",
     "stats": {
       "stamina": 80,
-      "attack": 122,
-      "defense": 96
+      "attack": 148,
+      "defense": 87
     },
     "candy": 50,
     "family": "FAMILY_MANKEY",
@@ -3382,8 +3382,8 @@
     "type1": "FIGHTING",
     "stats": {
       "stamina": 130,
-      "attack": 178,
-      "defense": 150
+      "attack": 207,
+      "defense": 144
     },
     "family": "FAMILY_MANKEY",
     "moves1": [
@@ -3442,8 +3442,8 @@
     "type1": "FIRE",
     "stats": {
       "stamina": 110,
-      "attack": 156,
-      "defense": 110
+      "attack": 136,
+      "defense": 96
     },
     "candy": 50,
     "family": "FAMILY_GROWLITHE",
@@ -3503,8 +3503,8 @@
     "type1": "FIRE",
     "stats": {
       "stamina": 180,
-      "attack": 230,
-      "defense": 180
+      "attack": 227,
+      "defense": 166
     },
     "family": "FAMILY_GROWLITHE",
     "moves1": [
@@ -3563,8 +3563,8 @@
     "type1": "WATER",
     "stats": {
       "stamina": 80,
-      "attack": 108,
-      "defense": 98
+      "attack": 101,
+      "defense": 82
     },
     "candy": 25,
     "family": "FAMILY_POLIWAG",
@@ -3624,8 +3624,8 @@
     "type1": "WATER",
     "stats": {
       "stamina": 130,
-      "attack": 132,
-      "defense": 132
+      "attack": 130,
+      "defense": 130
     },
     "candy": 100,
     "family": "FAMILY_POLIWAG",
@@ -3686,8 +3686,8 @@
     "type2": "FIGHTING",
     "stats": {
       "stamina": 180,
-      "attack": 180,
-      "defense": 202
+      "attack": 182,
+      "defense": 187
     },
     "family": "FAMILY_POLIWAG",
     "moves1": [
@@ -3746,8 +3746,8 @@
     "type1": "PSYCHIC",
     "stats": {
       "stamina": 50,
-      "attack": 110,
-      "defense": 76
+      "attack": 195,
+      "defense": 103
     },
     "candy": 25,
     "family": "FAMILY_ABRA",
@@ -3798,8 +3798,8 @@
     "type1": "PSYCHIC",
     "stats": {
       "stamina": 80,
-      "attack": 150,
-      "defense": 112
+      "attack": 232,
+      "defense": 138
     },
     "candy": 100,
     "family": "FAMILY_ABRA",
@@ -3859,8 +3859,8 @@
     "type1": "PSYCHIC",
     "stats": {
       "stamina": 110,
-      "attack": 186,
-      "defense": 152
+      "attack": 271,
+      "defense": 194
     },
     "family": "FAMILY_ABRA",
     "moves1": [
@@ -3919,8 +3919,8 @@
     "type1": "FIGHTING",
     "stats": {
       "stamina": 140,
-      "attack": 118,
-      "defense": 96
+      "attack": 137,
+      "defense": 88
     },
     "candy": 25,
     "family": "FAMILY_MACHOP",
@@ -3980,8 +3980,8 @@
     "type1": "FIGHTING",
     "stats": {
       "stamina": 160,
-      "attack": 154,
-      "defense": 144
+      "attack": 177,
+      "defense": 130
     },
     "candy": 100,
     "family": "FAMILY_MACHOP",
@@ -4041,8 +4041,8 @@
     "type1": "FIGHTING",
     "stats": {
       "stamina": 180,
-      "attack": 198,
-      "defense": 180
+      "attack": 234,
+      "defense": 162
     },
     "family": "FAMILY_MACHOP",
     "moves1": [
@@ -4102,8 +4102,8 @@
     "type2": "POISON",
     "stats": {
       "stamina": 100,
-      "attack": 158,
-      "defense": 78
+      "attack": 139,
+      "defense": 64
     },
     "candy": 25,
     "family": "FAMILY_BELLSPROUT",
@@ -4164,8 +4164,8 @@
     "type2": "POISON",
     "stats": {
       "stamina": 130,
-      "attack": 190,
-      "defense": 110
+      "attack": 172,
+      "defense": 95
     },
     "candy": 100,
     "family": "FAMILY_BELLSPROUT",
@@ -4226,8 +4226,8 @@
     "type2": "POISON",
     "stats": {
       "stamina": 160,
-      "attack": 222,
-      "defense": 152
+      "attack": 207,
+      "defense": 138
     },
     "family": "FAMILY_BELLSPROUT",
     "moves1": [
@@ -4287,8 +4287,8 @@
     "type2": "POISON",
     "stats": {
       "stamina": 80,
-      "attack": 106,
-      "defense": 136
+      "attack": 97,
+      "defense": 182
     },
     "candy": 50,
     "family": "FAMILY_TENTACOOL",
@@ -4349,8 +4349,8 @@
     "type2": "POISON",
     "stats": {
       "stamina": 160,
-      "attack": 170,
-      "defense": 196
+      "attack": 166,
+      "defense": 237
     },
     "family": "FAMILY_TENTACOOL",
     "moves1": [
@@ -4410,8 +4410,8 @@
     "type2": "GROUND",
     "stats": {
       "stamina": 80,
-      "attack": 106,
-      "defense": 118
+      "attack": 132,
+      "defense": 163
     },
     "candy": 25,
     "family": "FAMILY_GEODUDE",
@@ -4472,8 +4472,8 @@
     "type2": "GROUND",
     "stats": {
       "stamina": 110,
-      "attack": 142,
-      "defense": 156
+      "attack": 164,
+      "defense": 196
     },
     "candy": 100,
     "family": "FAMILY_GEODUDE",
@@ -4544,8 +4544,8 @@
     "type2": "GROUND",
     "stats": {
       "stamina": 160,
-      "attack": 176,
-      "defense": 198
+      "attack": 211,
+      "defense": 229
     },
     "family": "FAMILY_GEODUDE",
     "moves1": [
@@ -4614,8 +4614,8 @@
     "type1": "FIRE",
     "stats": {
       "stamina": 100,
-      "attack": 168,
-      "defense": 138
+      "attack": 170,
+      "defense": 132
     },
     "candy": 50,
     "family": "FAMILY_PONYTA",
@@ -4675,8 +4675,8 @@
     "type1": "FIRE",
     "stats": {
       "stamina": 130,
-      "attack": 200,
-      "defense": 170
+      "attack": 207,
+      "defense": 167
     },
     "family": "FAMILY_PONYTA",
     "moves1": [
@@ -4736,8 +4736,8 @@
     "type2": "PSYCHIC",
     "stats": {
       "stamina": 180,
-      "attack": 110,
-      "defense": 110
+      "attack": 109,
+      "defense": 109
     },
     "candy": 50,
     "family": "FAMILY_SLOWPOKE",
@@ -4798,8 +4798,8 @@
     "type2": "PSYCHIC",
     "stats": {
       "stamina": 190,
-      "attack": 184,
-      "defense": 198
+      "attack": 177,
+      "defense": 194
     },
     "family": "FAMILY_SLOWPOKE",
     "moves1": [
@@ -4859,8 +4859,8 @@
     "type2": "STEEL",
     "stats": {
       "stamina": 50,
-      "attack": 128,
-      "defense": 138
+      "attack": 165,
+      "defense": 128
     },
     "candy": 50,
     "family": "FAMILY_MAGNEMITE",
@@ -4921,8 +4921,8 @@
     "type2": "STEEL",
     "stats": {
       "stamina": 100,
-      "attack": 186,
-      "defense": 180
+      "attack": 223,
+      "defense": 182
     },
     "family": "FAMILY_MAGNEMITE",
     "moves1": [
@@ -4982,8 +4982,8 @@
     "type2": "FLYING",
     "stats": {
       "stamina": 104,
-      "attack": 138,
-      "defense": 132
+      "attack": 124,
+      "defense": 118
     },
     "family": "FAMILY_FARFETCHD",
     "moves1": [
@@ -5043,8 +5043,8 @@
     "type2": "FLYING",
     "stats": {
       "stamina": 70,
-      "attack": 126,
-      "defense": 96
+      "attack": 158,
+      "defense": 88
     },
     "candy": 50,
     "family": "FAMILY_DODUO",
@@ -5105,8 +5105,8 @@
     "type2": "FLYING",
     "stats": {
       "stamina": 120,
-      "attack": 182,
-      "defense": 150
+      "attack": 218,
+      "defense": 145
     },
     "family": "FAMILY_DODUO",
     "moves1": [
@@ -5165,8 +5165,8 @@
     "type1": "WATER",
     "stats": {
       "stamina": 130,
-      "attack": 104,
-      "defense": 138
+      "attack": 85,
+      "defense": 128
     },
     "candy": 50,
     "family": "FAMILY_SEEL",
@@ -5237,8 +5237,8 @@
     "type2": "ICE",
     "stats": {
       "stamina": 180,
-      "attack": 156,
-      "defense": 192
+      "attack": 139,
+      "defense": 184
     },
     "family": "FAMILY_SEEL",
     "moves1": [
@@ -5297,8 +5297,8 @@
     "type1": "POISON",
     "stats": {
       "stamina": 160,
-      "attack": 124,
-      "defense": 110
+      "attack": 135,
+      "defense": 90
     },
     "candy": 50,
     "family": "FAMILY_GRIMER",
@@ -5368,8 +5368,8 @@
     "type1": "POISON",
     "stats": {
       "stamina": 210,
-      "attack": 180,
-      "defense": 188
+      "attack": 190,
+      "defense": 184
     },
     "family": "FAMILY_GRIMER",
     "moves1": [
@@ -5429,6 +5429,15 @@
         "DurationMs": 3400,
         "Energy": -100,
         "DPS": 25.73529411764706
+      },
+      {
+        "Id": 92,
+        "Name": "GUNK_SHOT",
+        "Type": "POISON",
+        "Power": 65,
+        "DurationMs": 3000,
+        "Energy": -100,
+        "DPS": 27.083333333333336
       }
     ]
   },
@@ -5438,8 +5447,8 @@
     "type1": "WATER",
     "stats": {
       "stamina": 60,
-      "attack": 120,
-      "defense": 112
+      "attack": 116,
+      "defense": 168
     },
     "candy": 50,
     "family": "FAMILY_SHELLDER",
@@ -5500,8 +5509,8 @@
     "type2": "ICE",
     "stats": {
       "stamina": 100,
-      "attack": 196,
-      "defense": 196
+      "attack": 186,
+      "defense": 323
     },
     "family": "FAMILY_SHELLDER",
     "moves1": [
@@ -5561,8 +5570,8 @@
     "type2": "POISON",
     "stats": {
       "stamina": 60,
-      "attack": 136,
-      "defense": 82
+      "attack": 186,
+      "defense": 70
     },
     "candy": 25,
     "family": "FAMILY_GASTLY",
@@ -5623,8 +5632,8 @@
     "type2": "POISON",
     "stats": {
       "stamina": 90,
-      "attack": 172,
-      "defense": 118
+      "attack": 223,
+      "defense": 112
     },
     "candy": 100,
     "family": "FAMILY_GASTLY",
@@ -5685,7 +5694,7 @@
     "type2": "POISON",
     "stats": {
       "stamina": 120,
-      "attack": 204,
+      "attack": 261,
       "defense": 156
     },
     "family": "FAMILY_GASTLY",
@@ -5756,8 +5765,8 @@
     "type2": "GROUND",
     "stats": {
       "stamina": 70,
-      "attack": 90,
-      "defense": 186
+      "attack": 85,
+      "defense": 288
     },
     "family": "FAMILY_ONIX",
     "moves1": [
@@ -5816,8 +5825,8 @@
     "type1": "PSYCHIC",
     "stats": {
       "stamina": 120,
-      "attack": 104,
-      "defense": 140
+      "attack": 89,
+      "defense": 158
     },
     "candy": 50,
     "family": "FAMILY_DROWZEE",
@@ -5877,8 +5886,8 @@
     "type1": "PSYCHIC",
     "stats": {
       "stamina": 170,
-      "attack": 162,
-      "defense": 196
+      "attack": 144,
+      "defense": 215
     },
     "family": "FAMILY_DROWZEE",
     "moves1": [
@@ -5937,8 +5946,8 @@
     "type1": "WATER",
     "stats": {
       "stamina": 60,
-      "attack": 116,
-      "defense": 110
+      "attack": 181,
+      "defense": 156
     },
     "candy": 50,
     "family": "FAMILY_KRABBY",
@@ -5998,8 +6007,8 @@
     "type1": "WATER",
     "stats": {
       "stamina": 110,
-      "attack": 178,
-      "defense": 168
+      "attack": 240,
+      "defense": 214
     },
     "family": "FAMILY_KRABBY",
     "moves1": [
@@ -6058,8 +6067,8 @@
     "type1": "ELECTRIC",
     "stats": {
       "stamina": 80,
-      "attack": 102,
-      "defense": 124
+      "attack": 109,
+      "defense": 114
     },
     "candy": 50,
     "family": "FAMILY_VOLTORB",
@@ -6119,8 +6128,8 @@
     "type1": "ELECTRIC",
     "stats": {
       "stamina": 120,
-      "attack": 150,
-      "defense": 174
+      "attack": 173,
+      "defense": 179
     },
     "family": "FAMILY_VOLTORB",
     "moves1": [
@@ -6180,8 +6189,8 @@
     "type2": "PSYCHIC",
     "stats": {
       "stamina": 120,
-      "attack": 110,
-      "defense": 132
+      "attack": 107,
+      "defense": 140
     },
     "candy": 50,
     "family": "FAMILY_EXEGGCUTE",
@@ -6233,8 +6242,8 @@
     "type2": "PSYCHIC",
     "stats": {
       "stamina": 190,
-      "attack": 232,
-      "defense": 164
+      "attack": 233,
+      "defense": 158
     },
     "family": "FAMILY_EXEGGCUTE",
     "moves1": [
@@ -6293,8 +6302,8 @@
     "type1": "GROUND",
     "stats": {
       "stamina": 100,
-      "attack": 102,
-      "defense": 150
+      "attack": 90,
+      "defense": 165
     },
     "candy": 50,
     "family": "FAMILY_CUBONE",
@@ -6354,8 +6363,8 @@
     "type1": "GROUND",
     "stats": {
       "stamina": 120,
-      "attack": 140,
-      "defense": 202
+      "attack": 144,
+      "defense": 200
     },
     "family": "FAMILY_CUBONE",
     "moves1": [
@@ -6414,8 +6423,8 @@
     "type1": "FIGHTING",
     "stats": {
       "stamina": 100,
-      "attack": 148,
-      "defense": 172
+      "attack": 224,
+      "defense": 211
     },
     "family": "FAMILY_HITMONLEE",
     "moves1": [
@@ -6474,8 +6483,8 @@
     "type1": "FIGHTING",
     "stats": {
       "stamina": 100,
-      "attack": 138,
-      "defense": 204
+      "attack": 193,
+      "defense": 212
     },
     "family": "FAMILY_HITMONCHAN",
     "moves1": [
@@ -6543,8 +6552,8 @@
     "type1": "NORMAL",
     "stats": {
       "stamina": 180,
-      "attack": 126,
-      "defense": 160
+      "attack": 108,
+      "defense": 137
     },
     "family": "FAMILY_LICKITUNG",
     "moves1": [
@@ -6603,8 +6612,8 @@
     "type1": "POISON",
     "stats": {
       "stamina": 80,
-      "attack": 136,
-      "defense": 142
+      "attack": 119,
+      "defense": 164
     },
     "candy": 50,
     "family": "FAMILY_KOFFING",
@@ -6665,8 +6674,8 @@
     "type1": "POISON",
     "stats": {
       "stamina": 130,
-      "attack": 190,
-      "defense": 198
+      "attack": 174,
+      "defense": 221
     },
     "family": "FAMILY_KOFFING",
     "moves1": [
@@ -6727,8 +6736,8 @@
     "type2": "ROCK",
     "stats": {
       "stamina": 160,
-      "attack": 110,
-      "defense": 116
+      "attack": 140,
+      "defense": 157
     },
     "candy": 50,
     "family": "FAMILY_RHYHORN",
@@ -6789,8 +6798,8 @@
     "type2": "ROCK",
     "stats": {
       "stamina": 210,
-      "attack": 166,
-      "defense": 160
+      "attack": 222,
+      "defense": 206
     },
     "family": "FAMILY_RHYHORN",
     "moves1": [
@@ -6849,8 +6858,8 @@
     "type1": "NORMAL",
     "stats": {
       "stamina": 500,
-      "attack": 40,
-      "defense": 60
+      "attack": 60,
+      "defense": 176
     },
     "family": "FAMILY_CHANSEY",
     "moves1": [
@@ -6919,8 +6928,8 @@
     "type1": "GRASS",
     "stats": {
       "stamina": 130,
-      "attack": 164,
-      "defense": 152
+      "attack": 183,
+      "defense": 205
     },
     "family": "FAMILY_TANGELA",
     "moves1": [
@@ -6970,8 +6979,8 @@
     "type1": "NORMAL",
     "stats": {
       "stamina": 210,
-      "attack": 142,
-      "defense": 178
+      "attack": 181,
+      "defense": 165
     },
     "family": "FAMILY_KANGASKHAN",
     "moves1": [
@@ -7030,8 +7039,8 @@
     "type1": "WATER",
     "stats": {
       "stamina": 60,
-      "attack": 122,
-      "defense": 100
+      "attack": 129,
+      "defense": 125
     },
     "candy": 50,
     "family": "FAMILY_HORSEA",
@@ -7091,8 +7100,8 @@
     "type1": "WATER",
     "stats": {
       "stamina": 110,
-      "attack": 176,
-      "defense": 150
+      "attack": 187,
+      "defense": 182
     },
     "family": "FAMILY_HORSEA",
     "moves1": [
@@ -7151,8 +7160,8 @@
     "type1": "WATER",
     "stats": {
       "stamina": 90,
-      "attack": 112,
-      "defense": 126
+      "attack": 123,
+      "defense": 115
     },
     "candy": 50,
     "family": "FAMILY_GOLDEEN",
@@ -7212,8 +7221,8 @@
     "type1": "WATER",
     "stats": {
       "stamina": 160,
-      "attack": 172,
-      "defense": 160
+      "attack": 175,
+      "defense": 154
     },
     "family": "FAMILY_GOLDEEN",
     "moves1": [
@@ -7272,12 +7281,21 @@
     "type1": "WATER",
     "stats": {
       "stamina": 60,
-      "attack": 130,
-      "defense": 128
+      "attack": 137,
+      "defense": 112
     },
     "candy": 50,
     "family": "FAMILY_STARYU",
     "moves1": [
+      {
+        "Id": 221,
+        "Name": "TACKLE_FAST",
+        "Type": "NORMAL",
+        "Power": 12,
+        "DurationMs": 1100,
+        "Energy": 7,
+        "DPS": 6.36363636363636
+      },
       {
         "Id": 219,
         "Name": "QUICK_ATTACK_FAST",
@@ -7335,8 +7353,8 @@
     "type2": "PSYCHIC",
     "stats": {
       "stamina": 120,
-      "attack": 194,
-      "defense": 192
+      "attack": 210,
+      "defense": 184
     },
     "family": "FAMILY_STARYU",
     "moves1": [
@@ -7406,8 +7424,8 @@
     "type2": "FAIRY",
     "stats": {
       "stamina": 80,
-      "attack": 154,
-      "defense": 196
+      "attack": 192,
+      "defense": 233
     },
     "family": "FAMILY_MR_MIME",
     "moves1": [
@@ -7467,8 +7485,8 @@
     "type2": "FLYING",
     "stats": {
       "stamina": 140,
-      "attack": 176,
-      "defense": 180
+      "attack": 218,
+      "defense": 170
     },
     "family": "FAMILY_SCYTHER",
     "moves1": [
@@ -7528,8 +7546,8 @@
     "type2": "PSYCHIC",
     "stats": {
       "stamina": 130,
-      "attack": 172,
-      "defense": 134
+      "attack": 223,
+      "defense": 182
     },
     "family": "FAMILY_JYNX",
     "moves1": [
@@ -7589,7 +7607,7 @@
     "stats": {
       "stamina": 130,
       "attack": 198,
-      "defense": 160
+      "defense": 173
     },
     "family": "FAMILY_ELECTABUZZ",
     "moves1": [
@@ -7648,8 +7666,8 @@
     "type1": "FIRE",
     "stats": {
       "stamina": 130,
-      "attack": 214,
-      "defense": 158
+      "attack": 206,
+      "defense": 169
     },
     "family": "FAMILY_MAGMAR",
     "moves1": [
@@ -7708,8 +7726,8 @@
     "type1": "BUG",
     "stats": {
       "stamina": 130,
-      "attack": 184,
-      "defense": 186
+      "attack": 238,
+      "defense": 197
     },
     "family": "FAMILY_PINSIR",
     "moves1": [
@@ -7768,8 +7786,8 @@
     "type1": "NORMAL",
     "stats": {
       "stamina": 150,
-      "attack": 148,
-      "defense": 184
+      "attack": 198,
+      "defense": 197
     },
     "family": "FAMILY_TAUROS",
     "moves1": [
@@ -7828,8 +7846,8 @@
     "type1": "WATER",
     "stats": {
       "stamina": 40,
-      "attack": 42,
-      "defense": 84
+      "attack": 29,
+      "defense": 102
     },
     "candy": 400,
     "family": "FAMILY_MAGIKARP",
@@ -7862,8 +7880,8 @@
     "type2": "FLYING",
     "stats": {
       "stamina": 190,
-      "attack": 192,
-      "defense": 196
+      "attack": 237,
+      "defense": 197
     },
     "family": "FAMILY_MAGIKARP",
     "moves1": [
@@ -7984,8 +8002,8 @@
     "type1": "NORMAL",
     "stats": {
       "stamina": 96,
-      "attack": 110,
-      "defense": 110
+      "attack": 91,
+      "defense": 91
     },
     "family": "FAMILY_DITTO",
     "moves1": [
@@ -8017,8 +8035,8 @@
     "type1": "NORMAL",
     "stats": {
       "stamina": 110,
-      "attack": 114,
-      "defense": 128
+      "attack": 104,
+      "defense": 121
     },
     "candy": 25,
     "family": "FAMILY_EEVEE",
@@ -8078,8 +8096,8 @@
     "type1": "WATER",
     "stats": {
       "stamina": 260,
-      "attack": 186,
-      "defense": 168
+      "attack": 205,
+      "defense": 177
     },
     "family": "FAMILY_EEVEE",
     "moves1": [
@@ -8129,8 +8147,8 @@
     "type1": "ELECTRIC",
     "stats": {
       "stamina": 130,
-      "attack": 192,
-      "defense": 174
+      "attack": 232,
+      "defense": 201
     },
     "family": "FAMILY_EEVEE",
     "moves1": [
@@ -8180,8 +8198,8 @@
     "type1": "FIRE",
     "stats": {
       "stamina": 130,
-      "attack": 238,
-      "defense": 178
+      "attack": 246,
+      "defense": 204
     },
     "family": "FAMILY_EEVEE",
     "moves1": [
@@ -8231,8 +8249,8 @@
     "type1": "NORMAL",
     "stats": {
       "stamina": 130,
-      "attack": 156,
-      "defense": 158
+      "attack": 153,
+      "defense": 139
     },
     "family": "FAMILY_PORYGON",
     "moves1": [
@@ -8243,7 +8261,8 @@
         "Power": 10,
         "DurationMs": 1330,
         "Energy": 7,
-        "DPS": 9.398496240601503
+        "DPS": 9.398496240601503,
+        "retired": true
       },
       {
         "Id": 221,
@@ -8253,6 +8272,15 @@
         "DurationMs": 1100,
         "Energy": 7,
         "DPS": 13.636363636363635
+      },
+      {
+        "Id": 234,
+        "Name": "ZEN_HEADBUTT_FAST",
+        "Type": "PSYCHIC",
+        "Power": 12,
+        "DurationMs": 1050,
+        "Energy": 4,
+        "DPS": 14.285714285714286
       }
     ],
     "moves2": [
@@ -8292,8 +8320,8 @@
     "type2": "WATER",
     "stats": {
       "stamina": 70,
-      "attack": 132,
-      "defense": 160
+      "attack": 155,
+      "defense": 174
     },
     "candy": 50,
     "family": "FAMILY_OMANYTE",
@@ -8354,8 +8382,8 @@
     "type2": "WATER",
     "stats": {
       "stamina": 140,
-      "attack": 180,
-      "defense": 202
+      "attack": 207,
+      "defense": 227
     },
     "family": "FAMILY_OMANYTE",
     "moves1": [
@@ -8426,7 +8454,7 @@
     "stats": {
       "stamina": 60,
       "attack": 148,
-      "defense": 142
+      "defense": 162
     },
     "candy": 50,
     "family": "FAMILY_KABUTO",
@@ -8487,8 +8515,8 @@
     "type2": "WATER",
     "stats": {
       "stamina": 120,
-      "attack": 190,
-      "defense": 190
+      "attack": 220,
+      "defense": 203
     },
     "family": "FAMILY_KABUTO",
     "moves1": [
@@ -8548,8 +8576,8 @@
     "type2": "FLYING",
     "stats": {
       "stamina": 160,
-      "attack": 182,
-      "defense": 162
+      "attack": 221,
+      "defense": 164
     },
     "family": "FAMILY_AERODACTYL",
     "moves1": [
@@ -8608,8 +8636,8 @@
     "type1": "NORMAL",
     "stats": {
       "stamina": 320,
-      "attack": 180,
-      "defense": 180
+      "attack": 190,
+      "defense": 190
     },
     "family": "FAMILY_SNORLAX",
     "moves1": [
@@ -8669,8 +8697,8 @@
     "type2": "FLYING",
     "stats": {
       "stamina": 180,
-      "attack": 198,
-      "defense": 242
+      "attack": 192,
+      "defense": 249
     },
     "family": "FAMILY_ARTICUNO",
     "moves1": [
@@ -8721,8 +8749,8 @@
     "type2": "FLYING",
     "stats": {
       "stamina": 180,
-      "attack": 232,
-      "defense": 194
+      "attack": 253,
+      "defense": 188
     },
     "family": "FAMILY_ZAPDOS",
     "moves1": [
@@ -8773,8 +8801,8 @@
     "type2": "FLYING",
     "stats": {
       "stamina": 180,
-      "attack": 242,
-      "defense": 194
+      "attack": 251,
+      "defense": 184
     },
     "family": "FAMILY_MOLTRES",
     "moves1": [
@@ -8824,8 +8852,8 @@
     "type1": "DRAGON",
     "stats": {
       "stamina": 82,
-      "attack": 128,
-      "defense": 110
+      "attack": 119,
+      "defense": 94
     },
     "candy": 25,
     "family": "FAMILY_DRATINI",
@@ -8876,8 +8904,8 @@
     "type1": "DRAGON",
     "stats": {
       "stamina": 122,
-      "attack": 170,
-      "defense": 152
+      "attack": 163,
+      "defense": 138
     },
     "candy": 100,
     "family": "FAMILY_DRATINI",
@@ -8929,8 +8957,8 @@
     "type2": "FLYING",
     "stats": {
       "stamina": 182,
-      "attack": 250,
-      "defense": 212
+      "attack": 263,
+      "defense": 201
     },
     "family": "FAMILY_DRATINI",
     "moves1": [
@@ -8989,8 +9017,8 @@
     "type1": "PSYCHIC",
     "stats": {
       "stamina": 212,
-      "attack": 284,
-      "defense": 202
+      "attack": 330,
+      "defense": 200
     },
     "family": "FAMILY_MEWTWO",
     "moves1": [
@@ -9049,8 +9077,8 @@
     "type1": "PSYCHIC",
     "stats": {
       "stamina": 200,
-      "attack": 220,
-      "defense": 220
+      "attack": 210,
+      "defense": 210
     },
     "family": "FAMILY_MEW",
     "moves1": [

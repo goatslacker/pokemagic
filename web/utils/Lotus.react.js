@@ -31,6 +31,30 @@ const Header = props => (
   n('h1', { style: { textAlign: 'center' } }, props.children)
 )
 
+const Row = props => (
+  n('div', {
+    style: {
+      display: 'flex',
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: props.horizontal || 'space-between',
+      alignItems: props.vertical || 'baseline',
+    },
+  }, props.children)
+)
+
+const Col = props => (
+  n('div', {
+    style: {
+      display: 'flex',
+      flex: 1,
+      flexDirection: 'column',
+      justifyContent: props.vertical || 'space-between',
+      alignItems: props.horizontal || 'baseline',
+    },
+  }, props.children)
+)
+
 const H3 = props => n('h3', props, props.children)
 
 const Divider = () => n('hr')
@@ -75,6 +99,7 @@ const Panel = props => (
 
 module.exports = {
   Button,
+  Col,
   Divider,
   FormControl,
   H3,
@@ -83,6 +108,7 @@ module.exports = {
   Input,
   Link,
   Panel,
+  Row,
   Table,
   Text,
   View,

@@ -13,11 +13,11 @@ function howMuchCandy(currentLevel, toLevel) {
 function howMuchStardust(currentLevel, maxPokemonLevel) {
   return Object.keys(DustToLevel).reduce((sum, dust) => {
     const levels = DustToLevel[dust]
-    const stardustIncrease = levels.reduce((num, level) => {
-      return level >= currentLevel && level < maxPokemonLevel
+    const stardustIncrease = levels.reduce((num, level) => (
+      level >= currentLevel && level < maxPokemonLevel
         ? num + Number(dust)
         : num
-    }, 0)
+    ), 0)
 
     return sum + stardustIncrease
   }, 0)

@@ -3,21 +3,16 @@ const LevelToCpM = require('../json/level-to-cpm')
 const cpTools = require('./cp')
 
 function percentInRange(num, min, max) {
-  return ((num - min) * 100) / (max - min)
+  return Math.round(((num - min) * 100) / (max - min))
 }
 
-function getCPRangeForPokemon(mon, level, cp) {
-  const ECpM = LevelToCpM[level]
-  const min = cpTools.getMinCPForLevel(mon, ECpM)
-  const max = cpTools.getMaxCPForLevel(mon, ECpM)
+// This module calculates the CP range for the Pokemon's type and the CP range
+// overall relative to all Pokemon.
 
-  return {
-    min,
-    max,
-    value: percentInRange(cp, min, max),
-  }
-}
-
+// TODO instead of using ECpM just calculate it with max level. You pass it the IVs
+// and it'll calculate the % relative to overall and type.
+// TODO cache the min/max
+// return just the value
 function getCPRangeOverall(level, cp) {
   const ECpM = LevelToCpM[level]
   const minmax = Pokemon.reduce((obj, mon) => {
@@ -37,6 +32,8 @@ function getCPRangeOverall(level, cp) {
   }
 }
 
+// TODO cache the min/max
+// return just the value
 function getCPRangeForType(type, level, cp) {
   const ECpM = LevelToCpM[level]
   const minmax = Pokemon.reduce((obj, mon) => {
@@ -60,8 +57,8 @@ function getCPRangeForType(type, level, cp) {
   }
 }
 
+// TODO rename to range.forType and range.overall
 module.exports = {
   getCPRangeForType,
   getCPRangeOverall,
-  getCPRangeForPokemon,
 }
