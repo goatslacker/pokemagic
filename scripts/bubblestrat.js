@@ -63,6 +63,7 @@ function bubble(opponent, pokemon) {
   const ivs = opponent.ivs
   const opponentLevel = opponent.level
 
+  const pokeName = pokemon.name
   const pokemonLevel = pokemon.level
   const pokeIvs = pokemon.ivs
 
@@ -77,7 +78,9 @@ function bubble(opponent, pokemon) {
       cp: oppCP,
       hp: oppHP,
 
-      attackers: Pokemon.reduce((arr, trainer) => {
+      attackers: Pokemon
+      .filter(x => pokeName ? x.name === pokeName.toUpperCase() : true)
+      .reduce((arr, trainer) => {
         return arr.concat(getDmgVs({
           atk: trainer.stats.attack + pokeIvs.atk,
           def: bubbler.stats.defense + ivs.def,
@@ -121,12 +124,13 @@ function bubble(opponent, pokemon) {
 console.log(
   bubble({
     // bubbler
-    name: 'horsea',
+    name: 'poliwag',
     ivs: { atk: 7, def: 3, sta: 3 },
-    level: 1.5,
+    level: 2,
   }, {
     // attacker's stats
-    ivs: { atk: 7, def: 3, sta: 3 },
-    level: 1.5,
+    name: 'gastly',
+    ivs: { atk: 13, def: 2, sta: 4 },
+    level: 1,
   })[0]
 )
