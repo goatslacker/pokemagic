@@ -121,16 +121,65 @@ function bubble(opponent, pokemon) {
   .filter(x => x.attackers.length > 0)
 }
 
+function attack(poke) {
+  const trainer = Pokemon.filter(x => x.name === poke.name.toUpperCase())[0]
+  const pokeIvs = poke.ivs
+  const pokemonLevel = poke.level
+
+  // bubbler's IVs
+  const ivs = {
+    atk: 10,
+    def: 10,
+    sta: 10,
+  }
+  const opponentLevel = 1.5
+
+  return Pokemon.map(bubbler => {
+    bubbler.moves1
+  })
+
+  return Pokemon.reduce((arr, bubbler) => {
+    return arr.concat(getDmgVs({
+      atk: trainer.stats.attack + pokeIvs.atk,
+      def: bubbler.stats.defense + ivs.def,
+      player: trainer,
+      opponent: bubbler,
+      pokemonLevel,
+      opponentLevel,
+      moves: trainer.moves1,
+    }))
+  }, [])
+  // calculate total damage output for entire fight
+  .map(x => {
+    const howManyHits = Math.floor((move.DurationMs + 1000) / x.duration)
+    return {
+      name: x.poke.name,
+      move: x.name,
+      dmg: x.dmg * howManyHits,
+      cp: getCP(x.poke, pokeIvs, LevelToCPM[pokemonLevel])
+    }
+  })
+  // how many hits can you land before the opponent gets theirs off
+  // Can we destroy the opponent before they land a hit...
+  .filter(x => x.dmg >= oppHP)
+  // calculate the prestige gain
+  .map(x => ({
+    n: x.name,
+    m: x.move,
+    cp: x.cp,
+    p: oppCP > x.cp
+      ? Math.min(1000, Math.floor(500 * (oppCP / x.cp)))
+      : Math.min(100, Math.floor(310 * (oppCP / x.cp)) - 55),
+  }))
+  .filter(x => x.p >= 500)
+  // sort by most prestige
+  .sort((a, b) => a.p > b.p ? -1 : 1)
+}
+
 console.log(
-  bubble({
-    // bubbler
-    name: 'poliwag',
-    ivs: { atk: 7, def: 3, sta: 3 },
-    level: 2,
-  }, {
-    // attacker's stats
+  attack({
     name: 'gastly',
     ivs: { atk: 13, def: 2, sta: 4 },
     level: 1,
-  })[0]
+  })
 )
