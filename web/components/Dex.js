@@ -537,7 +537,7 @@ const PokeList = pure(({
   changePokemon,
 }) => (
   $(Tabs, {
-    initialSelectedIndex: 3,
+    initialSelectedIndex: 0,
   }, [
     $(Tab, { label: '#' }, Pokemon.map(pokemon => $(PokeImage, { pokemon, changePokemon }))),
     $(Tab, { label: 'CP' }, PokemonByMaxCP.map(pokemon => $(PokeImage, { pokemon, changePokemon }))),
