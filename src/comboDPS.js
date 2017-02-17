@@ -108,7 +108,7 @@ module.exports = comboDPS
 //    10,
 //    30,
 //    30,
-//    Pokemon.filter(x => x.name === 'SLOWBRO')[0].moves1[0],
-//    Pokemon.filter(x => x.name === 'SLOWBRO')[0].moves2[0]
+//    Pokemon.filter(x => x.name === 'SLOWBRO')[0].moves.quick[0],
+//    Pokemon.filter(x => x.name === 'SLOWBRO')[0].moves.charge[0]
 //  )
 //)

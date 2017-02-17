@@ -54,7 +54,7 @@ module.exports = avgComboDPS
 //console.log(
 //  avgComboDPS(
 //    Pokemon.filter(x => x.name === 'VAPOREON')[0],
-//    Pokemon.filter(x => x.name === 'VAPOREON')[0].moves1[0],
-//    Pokemon.filter(x => x.name === 'VAPOREON')[0].moves2[1]
+//    Pokemon.filter(x => x.name === 'VAPOREON')[0].moves.quick[0],
+//    Pokemon.filter(x => x.name === 'VAPOREON')[0].moves.charge[1]
 //  )
 //)

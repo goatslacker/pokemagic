@@ -72,8 +72,8 @@ const sortByAtk = (a, b) => a.info.combo.dps > b.info.combo.dps ? -1 : 1
 const sortByDef = (a, b) => a.rate.def.raw > b.rate.def.raw ? -1 : 1
 
 const sortMoves = (pokemon, sortOrder) => (
-  pokemon.moves1.reduce((acc, move1) => acc.concat(
-    pokemon.moves2.map(move2 => ({
+  pokemon.moves.quick.reduce((acc, move1) => acc.concat(
+    pokemon.moves.charge.map(move2 => ({
       rate: pokeRatings.getRating(pokemon, move1, move2),
       info: avgComboDPS(pokemon, move1, move2),
     })

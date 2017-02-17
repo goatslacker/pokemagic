@@ -20,8 +20,8 @@ const defScoreComboMove = (quickMove, chargeMove) => (
 const Fast = {}
 
 const PokeMoves = Pokemon.reduce((pokes, poke) => Object.assign(pokes, {
-  [poke.name]: poke.moves1.reduce((obj, move1) => (
-    poke.moves2.reduce((o, move2) => {
+  [poke.name]: poke.moves.quick.reduce((obj, move1) => (
+    poke.moves.charge.reduce((o, move2) => {
       const info = avgComboDPS(poke, move1, move2)
       o[info.quick.name] = info.quick
       o[info.charge.name] = info.charge
@@ -267,8 +267,8 @@ console.log(2, 'Splash/Struggle', scoreMove({
 
 //console.log(getRating(
 //  Pokemon.filter(x => x.name === 'SNORLAX')[0],
-//  Pokemon.filter(x => x.name === 'SNORLAX')[0].moves1[0],
-//  Pokemon.filter(x => x.name === 'SNORLAX')[0].moves2[0]
+//  Pokemon.filter(x => x.name === 'SNORLAX')[0].moves.quick[0],
+//  Pokemon.filter(x => x.name === 'SNORLAX')[0].moves.charge[0]
 //))
 
 //const rateMoves = poke => (

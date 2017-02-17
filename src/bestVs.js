@@ -31,11 +31,11 @@ const fix2 = n => Math.round(n * 100) / 100
 
 // What the opponen's avg gym DPS is vs you
 const avgGymDPS = (opp, you, gymDPS) => (
-  opp.moves1.reduce((acc, move1) => (
-    opp.moves2.reduce((n, move2) => (
+  opp.moves.quick.reduce((acc, move1) => (
+    opp.moves.charge.reduce((n, move2) => (
       n + comboDPS(opp, you, 10, 10, 30, 30, move1, move2).combo.gymDPS
     ), acc)
-  ), 0) / (opp.moves1.length * opp.moves2.length)
+  ), 0) / (opp.moves.quick.length * opp.moves.charge.length)
 )
 
 const scoreDPS = (x) => (
@@ -52,8 +52,8 @@ const scoreAllMoves = (you, opp, oppGymDPS) => avgScoreMove(
 
 // Get your best combo moves vs Opp sorted by DPS
 const getComboMovesSortedByDPS = (you, opp) => (
-  you.moves1.reduce((arr, move1) => {
-    you.moves2.forEach((move2) => {
+  you.moves.quick.reduce((arr, move1) => {
+    you.moves.charge.forEach((move2) => {
       arr.push(comboDPS(you, opp, 10, 10, 30, 30, move1, move2))
     })
     return arr
