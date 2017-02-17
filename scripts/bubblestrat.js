@@ -1,4 +1,5 @@
 const Pokemon = require('../json/pokemon')
+const Moves = require('../json/moves')
 const getTypeEffectiveness = require('../src/getTypeEffectiveness').getTypeEffectiveness
 
 const LevelToCPM = {
@@ -39,7 +40,8 @@ function getDmgVs(obj) {
   const AtkECpM = LevelToCPM[pokemonLevel]
   const DefECpM = LevelToCPM[opponentLevel]
 
-  return moves.map((move) => {
+  return moves.map((moveObj) => {
+    const move = Moves[moveObj.name]
     const stab = move.Type === player.type1 || move.Type === player.type2 ? 1.25 : 1
     const power = move.Power
 
@@ -71,7 +73,8 @@ function bubble(opponent, pokemon) {
   const oppHP = getBubblerHP(bubbler, ivs.sta, opponentLevel)
   const oppCP = getCP(bubbler, ivs, LevelToCPM[opponentLevel])
 
-  return bubbler.moves1.map(move => {
+  return bubbler.moves.quick.map(moveObj => {
+    const move = Moves[moveObj.name]
     return {
       bubbler: bubbler.name,
       move: move.Name,
@@ -88,7 +91,7 @@ function bubble(opponent, pokemon) {
           opponent: bubbler,
           pokemonLevel,
           opponentLevel,
-          moves: trainer.moves1,
+          moves: trainer.moves.quick,
         }))
       }, [])
       // calculate total damage output for entire fight
@@ -98,6 +101,7 @@ function bubble(opponent, pokemon) {
           name: x.poke.name,
           move: x.name,
           dmg: x.dmg * howManyHits,
+          how: howManyHits,
           cp: getCP(x.poke, pokeIvs, LevelToCPM[pokemonLevel])
         }
       })
@@ -109,6 +113,9 @@ function bubble(opponent, pokemon) {
         n: x.name,
         m: x.move,
         cp: x.cp,
+        how: x.how,
+        d: x.dmg,
+        o: oppHP,
         p: oppCP > x.cp
           ? Math.min(1000, Math.floor(500 * (oppCP / x.cp)))
           : Math.min(100, Math.floor(310 * (oppCP / x.cp)) - 55),
@@ -122,64 +129,89 @@ function bubble(opponent, pokemon) {
 }
 
 function attack(poke) {
-  const trainer = Pokemon.filter(x => x.name === poke.name.toUpperCase())[0]
-  const pokeIvs = poke.ivs
-  const pokemonLevel = poke.level
+  const results = []
+  Pokemon.forEach(bubbler => {
+    const res = bubble({
+      name: bubbler.name,
+      ivs: { atk: 6, def: 6, sta: 6 },
+      level: 1,
+    }, poke)
 
-  // bubbler's IVs
-  const ivs = {
-    atk: 10,
-    def: 10,
-    sta: 10,
-  }
-  const opponentLevel = 1.5
-
-  return Pokemon.map(bubbler => {
-    bubbler.moves1
+    if (res.length > 0) results.push.apply(results, res)
   })
 
-  return Pokemon.reduce((arr, bubbler) => {
-    return arr.concat(getDmgVs({
-      atk: trainer.stats.attack + pokeIvs.atk,
-      def: bubbler.stats.defense + ivs.def,
-      player: trainer,
-      opponent: bubbler,
-      pokemonLevel,
-      opponentLevel,
-      moves: trainer.moves1,
+  const bubblers = []
+  results.forEach(result => {
+    bubblers.push.apply(bubblers, result.attackers.map(attacker => {
+      return Object.assign({}, attacker, {
+        bubbler: {
+          name: result.bubbler,
+          move: result.move,
+          cp: result.cp,
+        },
+      })
     }))
-  }, [])
-  // calculate total damage output for entire fight
-  .map(x => {
-    const howManyHits = Math.floor((move.DurationMs + 1000) / x.duration)
-    return {
-      name: x.poke.name,
-      move: x.name,
-      dmg: x.dmg * howManyHits,
-      cp: getCP(x.poke, pokeIvs, LevelToCPM[pokemonLevel])
-    }
   })
-  // how many hits can you land before the opponent gets theirs off
-  // Can we destroy the opponent before they land a hit...
-  .filter(x => x.dmg >= oppHP)
-  // calculate the prestige gain
-  .map(x => ({
-    n: x.name,
-    m: x.move,
-    cp: x.cp,
-    p: oppCP > x.cp
-      ? Math.min(1000, Math.floor(500 * (oppCP / x.cp)))
-      : Math.min(100, Math.floor(310 * (oppCP / x.cp)) - 55),
-  }))
-  .filter(x => x.p >= 500)
-  // sort by most prestige
-  .sort((a, b) => a.p > b.p ? -1 : 1)
+  return bubblers
+//    .filter(x => x.m !== 'MUD_SHOT_FAST')
+    .filter(x => x.p > 700)
+    .sort((a, b) => a.p > b.p ? -1 : 1)
 }
+
+function who() {
+  const pokes = []
+  Pokemon.forEach(poke => {
+    pokes.push.apply(pokes, attack({
+      name: poke.name,
+      ivs: { atk: 10, def: 10, sta: 10 },
+      level: 1,
+    }))
+
+    pokes.push.apply(pokes, attack({
+      name: poke.name,
+      ivs: { atk: 10, def: 10, sta: 10 },
+      level: 1.5,
+    }))
+
+//    const l1 = attack({
+//      name: poke.name,
+//      ivs: { atk: 10, def: 10, sta: 10 },
+//      level: 1,
+//    })
+//    const l15 = attack({
+//      name: poke.name,
+//      ivs: { atk: 10, def: 10, sta: 10 },
+//      level: 1.5,
+//    })
+//
+//    if (l1.length) pokes.push.apply(pokes, l1)
+//    if (l15.length) pokes.push.apply(pokes, l15)
+  })
+  return pokes.filter(x => x.p === 1000)
+}
+
+//console.log(who())
 
 console.log(
   attack({
-    name: 'gastly',
-    ivs: { atk: 13, def: 2, sta: 4 },
+    name: 'GROWLITHE',
+    ivs: { atk: 10, def: 10, sta: 10 },
     level: 1,
   })
 )
+
+/*
+console.log(
+  bubble({
+    // bubbler
+    name: 'jolteon',
+    ivs: { atk: 0, def: 0, sta: 0 },
+    level: 1,
+  }, {
+    // attacker
+    name: 'diglett',
+    ivs: { atk: 10, def: 10, sta: 10 },
+    level: 3,
+  })[0]
+)
+*/
