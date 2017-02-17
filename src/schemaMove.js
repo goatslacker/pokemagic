@@ -1,9 +1,4 @@
-const MovesList = require('../json/moves.json')
-
-const Moves = MovesList.reduce((moves, move) => {
-  moves[move.Name] = move
-  return moves
-}, {})
+const Moves = require('../json/moves.json')
 
 const ucFirst = x => x[0].toUpperCase() + x.slice(1).toLowerCase()
 
@@ -38,7 +33,7 @@ const startTime = move => fix(Moves[move.Name].DamageWindowStartMs / 1000)
 
 const calcEPS = move => fix(move.Energy / (move.DurationMs / 1000))
 
-const getMove = (pokemon, move, dmg) => ({
+const withMove = (pokemon, move, dmg) => ({
   name: fixMoveName(move.Name),
   type: ucFirst(move.Type),
   category: isQuickMove(move.Name) ? 'quick' : 'charge',
@@ -57,5 +52,9 @@ const getMove = (pokemon, move, dmg) => ({
   },
   retired: move.retired === true,
 })
+
+const getMove = (pokemon, moveId, dmg) => (
+  withMove(pokemon, Moves[moveId.name], dmg)
+)
 
 module.exports = getMove

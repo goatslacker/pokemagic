@@ -181,7 +181,7 @@ const fix = n => Math.round(n * 100) / 100
 const getRating = (pokemon, move1, move2) => {
   const statsRate = ovRating(pokemon)
 
-  const comboName = `${move1.Name}/${move2.Name}`
+  const comboName = `${move1.name}/${move2.name}`
   const comboMove = PokeMoves[pokemon.name][comboName]
 
   const poke = {

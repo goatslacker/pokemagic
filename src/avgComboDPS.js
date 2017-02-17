@@ -37,7 +37,7 @@ function avgComboDPS(mon, move1, move2, ivAtk, pokeLevel) {
 
   return {
     combo: {
-      name: `${move1.Name}/${move2.Name}`,
+      name: `${move1.name}/${move2.name}`,
       dps: fix(avg(x => x.combo.dps)),
       gymDPS: fix(avg(x => x.combo.gymDPS)),
       retired: move1.retired === true || move2.retired == true,

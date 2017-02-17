@@ -1,4 +1,5 @@
 const LevelToCPM = require('../json/level-to-cpm.json')
+const Moves = require('../json/moves')
 const getTypeEffectiveness = require('./getTypeEffectiveness').getTypeEffectiveness
 
 function getDmgVs(obj) {
@@ -14,7 +15,8 @@ function getDmgVs(obj) {
   const AtkECpM = LevelToCPM[pokemonLevel]
   const DefECpM = LevelToCPM[opponentLevel]
 
-  return moves.map((move) => {
+  return moves.map((moveObj) => {
+    const move = Moves[moveObj.name]
     const stab = move.Type === player.type1 || move.Type === player.type2 ? 1.25 : 1
     const power = move.Power || 0
 
@@ -29,9 +31,9 @@ function getDPS(dmg, duration) {
 }
 
 function battleDPS(obj) {
-  const moves = obj.moves
+  const moves = obj.moves.map(x => Moves[x.name])
 
-  const quickHits = Math.ceil(100 / moves[0].Energy)
+  const quickHits = Math.ceil(100 / moves[0].Energy) || 0
   const chargeHits = Math.abs(Math.ceil(100 / moves[1].Energy))
 
   const quickTimeFor100Charge = quickHits * moves[0].DurationMs
@@ -102,13 +104,13 @@ module.exports = comboDPS
 //const Pokemon = require('../json/pokemon')
 //console.log(
 //  comboDPS(
-//    Pokemon.filter(x => x.name === 'SLOWBRO')[0],
-//    Pokemon.filter(x => x.name === 'DRAGONITE')[0],
+//    Pokemon.filter(x => x.name === 'DITTO')[0],
+//    Pokemon.filter(x => x.name === 'RHYDON')[0],
 //    10,
 //    10,
 //    30,
 //    30,
-//    Pokemon.filter(x => x.name === 'SLOWBRO')[0].moves.quick[0],
-//    Pokemon.filter(x => x.name === 'SLOWBRO')[0].moves.charge[0]
+//    Pokemon.filter(x => x.name === 'DITTO')[0].moves.quick[0],
+//    Pokemon.filter(x => x.name === 'DITTO')[0].moves.charge[0]
 //  )
 //)
