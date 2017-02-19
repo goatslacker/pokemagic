@@ -184,11 +184,24 @@ const MoveInfo = ({
                 textDecoration: info.quick.retired ? 'line-through' : 'none',
               },
             }, info.quick.name),
-            atk && $(SmallText, { label: 'CD', value: `${info.quick.base.duration}s` }),
-            atk && $(SmallText, { label: 'EPS', value: info.quick.eps }),
-            def && $(SmallText, { label: 'Start', value: info.quick.startTime }),
-            def && $(SmallText, { label: 'DMG', value: info.quick.dmg }),
-            console.log('@', info),
+
+            $(Row, {
+              horizontal: 'space-around',
+            }, [
+              $(Col, {
+              }, [
+                $(View, {
+                  style: { marginRight: 8 },
+                }, [
+                  $(SmallText, { label: 'DMG', value: info.quick.dmg }),
+                  $(SmallText, { label: 'CD', value: `${info.quick.base.duration}s` }),
+                ]),
+              ]),
+              $(Col, [
+                $(SmallText, { label: 'EPS', value: info.quick.eps }),
+                $(SmallText, { label: 'Start', value: info.quick.startTime }),
+              ]),
+            ]),
           ]),
 
         ]),
@@ -201,10 +214,22 @@ const MoveInfo = ({
                 textDecoration: info.charge.retired ? 'line-through' : 'none',
               },
             }, info.charge.name),
-            atk && $(SmallText, { label: 'CD', value: `${info.charge.base.duration}s` }),
-            atk && $(SmallText, { label: 'Charges', value: info.charge.charges }),
-            def && $(SmallText, { label: 'Start', value: `${info.charge.startTime}s` }),
-            def && $(SmallText, { label: 'DMG', value: info.charge.dmg }),
+            $(Row, {
+              horizontal: 'space-around',
+            }, [
+              $(Col, [
+                $(View, {
+                  style: { marginRight: 8 },
+                }, [
+                  $(SmallText, { label: 'DMG', value: info.charge.dmg }),
+                  $(SmallText, { label: 'CD', value: `${info.charge.base.duration}s` }),
+                ]),
+              ]),
+              $(Col, [
+                $(SmallText, { label: 'Charges', value: info.charge.charges }),
+                $(SmallText, { label: 'Start', value: `${info.charge.startTime}s` }),
+              ]),
+            ]),
           ]),
         ]),
       ]),
@@ -370,7 +395,6 @@ const PokeInfo = pure(({
       paddingTop: 12,
     },
   }, [
-    console.log('>', pokemon),
     $(Row, {
       vertical: 'center',
     }, [
