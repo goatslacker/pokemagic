@@ -529,7 +529,7 @@ const PokemonPage = pure(({
     },
   }, [
     $(PokeInfo, { pokemon }),
-    pokemon.family && $(Evolution, {
+    PokeMap[pokemon.family].length > 1 && $(Evolution, {
       changePokemon,
       evolution: PokeMap[pokemon.family],
       selectedPokemon: pokemon,
