@@ -41,6 +41,13 @@ const {
   yellow300,
 } = require('material-ui/styles/colors')
 
+const AllPokemon = Pokemon.map(x => Object.assign({
+  l30CP: cp.getMaxCPForLevel(x, LevelToCPM['30']),
+  maxCP: cp.getMaxCPForLevel(x, LevelToCPM['40']),
+  atk: ovRating(x).atk,
+  def: ovRating(x).def,
+}, x))
+
 const calculateValues = state => ({
   cp: Number(state.cp),
   hp: Number(state.hp),
@@ -84,7 +91,7 @@ const sortMoves = (pokemon, sortOrder) => (
 const ucFirst = x => x[0].toUpperCase() + x.slice(1).toLowerCase()
 
 const Types = {}
-const Mon = Pokemon.reduce((obj, mon) => {
+const Mon = AllPokemon.reduce((obj, mon) => {
   const type1 = mon.type1
   const type2 = mon.type2
 
@@ -333,6 +340,23 @@ const Movesets = pure(({
   ])
 ))
 
+const Chippy = pure(({
+  leftText,
+  rightText,
+}) => (
+  $(Chip, {
+    backgroundColor: indigo100,
+    style: {
+      marginBottom: 4,
+    },
+  }, [
+    $(Row, { horizontal: true }, [
+      $(Text, { style: { marginRight: 4 } }, leftText),
+      $(Text, { strong: true }, rightText),
+    ])
+  ])
+))
+
 const PokeInfo = pure(({
   pokemon,
 }) => (
@@ -344,6 +368,7 @@ const PokeInfo = pure(({
       paddingTop: 12,
     },
   }, [
+    console.log('>', pokemon),
     $(Row, {
       vertical: 'center',
     }, [
@@ -359,41 +384,18 @@ const PokeInfo = pure(({
       ]),
 
       $(Col, [
-        $(Chip, {
-          backgroundColor: indigo100,
-          style: {
-            marginBottom: 4,
-          },
-        }, [
-          $(Avatar, {
-            backgroundColor: indigo400,
-          }, pokemon.stats.attack),
-          $(Text, 'ATK'),
-        ]),
+        $(Chippy, { leftText: 'Max CP', rightText: pokemon.maxCP }),
+        $(Chippy, { leftText: 'L30 CP', rightText: pokemon.l30CP }),
+        $(Chippy, {
+          leftText: [pokemon.type1, pokemon.type2].filter(Boolean).join(' / '),
+          rightText: null,
+        }),
+      ]),
 
-        $(Chip, {
-          backgroundColor: indigo100,
-          style: {
-            marginBottom: 4,
-          },
-        }, [
-          $(Avatar, {
-            backgroundColor: indigo400,
-          }, pokemon.stats.defense),
-          $(Text, 'DEF'),
-        ]),
-
-        $(Chip, {
-          backgroundColor: indigo100,
-          style: {
-            marginBottom: 4,
-          },
-        }, [
-          $(Avatar, {
-            backgroundColor: indigo400,
-          }, pokemon.stats.stamina),
-          $(Text, 'STA'),
-        ]),
+      $(Col, [
+        $(Chippy, { leftText: 'Atk', rightText: pokemon.stats.attack }),
+        $(Chippy, { leftText: 'Def', rightText: pokemon.stats.defense }),
+        $(Chippy, { leftText: 'Sta', rightText: pokemon.stats.stamina }),
       ]),
     ]),
   ])
@@ -505,7 +507,7 @@ const PokemonPage = pure(({
     $(PokeInfo, { pokemon }),
     $(Movesets, { pokemon }),
     $(BestVs, { pokemon }),
-    $(IVCalculator, { pokemon }),
+//    $(IVCalculator, { pokemon }),
   ])
 ))
 
@@ -521,32 +523,17 @@ const PokeImage = ({
   })
 )
 
-const PokemonByMaxCP = Pokemon.map(x => Object.assign({
-  cp: cp.getMaxCPForLevel(x, LevelToCPM['40']),
-}, x)).sort((a, b) => a.cp > b.cp ? -1 : 1)
-
-const PokemonByMaxAtk = Pokemon.map(x => Object.assign({
-  atk: ovRating(x).atk,
-}, x)).sort((a, b) => a.atk > b.atk ? -1 : 1)
-
-const PokemonByMaxDef = Pokemon.map(x => Object.assign({
-  def: ovRating(x).def,
-}, x)).sort((a, b) => a.def > b.def ? -1 : 1)
+const PokemonByMaxCP = AllPokemon.slice().sort((a, b) => a.maxCP > b.maxCP ? -1 : 1)
+const PokemonByMaxAtk = AllPokemon.slice().sort((a, b) => a.atk > b.atk ? -1 : 1)
+const PokemonByMaxDef = AllPokemon.slice().sort((a, b) => a.def > b.def ? -1 : 1)
 
 const PokeList = pure(({
   changePokemon,
 }) => (
-  $(Tabs, {
-    initialSelectedIndex: 0,
-  }, [
-    $(Tab, { label: '#' }, Pokemon.map(pokemon => $(PokeImage, { pokemon, changePokemon }))),
-    $(Tab, { label: 'CP' }, PokemonByMaxCP.map(pokemon => $(PokeImage, { pokemon, changePokemon }))),
-    $(Tab, { label: 'Atk' }, PokemonByMaxAtk.map(pokemon => $(PokeImage, { pokemon, changePokemon }))),
-    $(Tab, { label: 'Def' }, PokemonByMaxDef.map(pokemon => $(PokeImage, { pokemon, changePokemon }))),
-  ])
+  $(View, AllPokemon.map(pokemon => $(PokeImage, { pokemon, changePokemon })))
 ))
 
-const dexList = Pokemon.map(x => x.name.replace(/_/g, ' '))
+const dexList = AllPokemon.map(x => x.name.replace(/_/g, ' '))
 
 const Dex = ({
   changePokemon,
@@ -598,7 +585,7 @@ const Dex = ({
 )
 
 const findPokemon = name => (
-  Pokemon.filter(x => x.name === name.toUpperCase())[0]
+  AllPokemon.filter(x => x.name === name.toUpperCase())[0]
 )
 
 const hashChanged = () => findPokemon(window.location.hash.split('/')[1] || '')
