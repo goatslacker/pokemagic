@@ -91,7 +91,7 @@ const sortMoves = (pokemon, sortOrder) => (
 const ucFirst = x => x[0].toUpperCase() + x.slice(1).toLowerCase()
 
 const Types = {}
-const Mon = AllPokemon.reduce((obj, mon) => {
+const PokeMap = AllPokemon.reduce((obj, mon) => {
   const type1 = mon.type1
   const type2 = mon.type2
 
@@ -99,6 +99,8 @@ const Mon = AllPokemon.reduce((obj, mon) => {
   if (type2) Types[type2] = type2
 
   obj[mon.name] = mon
+  if (!obj[mon.family]) obj[mon.family] = []
+  obj[mon.family].push(mon)
   return obj
 }, {})
 
@@ -401,6 +403,27 @@ const PokeInfo = pure(({
   ])
 ))
 
+const Evolution = pure(({
+  changePokemon,
+  evolution,
+  selectedPokemon,
+}) => (
+  $(Module, {
+    title: 'Evolution',
+  }, [
+    $(Row, {
+      horizontal: 'center',
+    }, evolution.filter(x => selectedPokemon.name !== x.name).map(pokemon => (
+      $(PokeImage, {
+        changePokemon,
+        pokemon,
+        size: 60,
+      })
+    ))),
+  ])
+))
+
+
 const IVCalculator = compose(
   withState('ivCP', 'setCP', '1049'),
   withState('ivHP', 'setHP', '154'),
@@ -497,6 +520,7 @@ const IVCalculator = compose(
 ))
 
 const PokemonPage = pure(({
+  changePokemon,
   pokemon,
 }) => (
   $(View, {
@@ -505,21 +529,26 @@ const PokemonPage = pure(({
     },
   }, [
     $(PokeInfo, { pokemon }),
+    pokemon.family && $(Evolution, {
+      changePokemon,
+      evolution: PokeMap[pokemon.family],
+      selectedPokemon: pokemon,
+    }),
     $(Movesets, { pokemon }),
     $(BestVs, { pokemon }),
-//    $(IVCalculator, { pokemon }),
   ])
 ))
 
 const PokeImage = ({
   changePokemon,
   pokemon,
+  size,
 }) => (
   $(Image, {
     onClick: () => transition(changePokemon, pokemon),
     src: `images/${pokemon.name}.png`,
-    height: 120,
-    width: 120,
+    height: size || 120,
+    width: size || 120,
   })
 )
 
@@ -558,7 +587,7 @@ const Dex = ({
           filter: (searchText, key) => key.indexOf(searchText.toUpperCase()) > -1,
           fullWidth: true,
           hintText: 'Search for Pokemon',
-          onNewRequest: text => transition(changePokemon, Mon[text.toUpperCase()]),
+          onNewRequest: text => transition(changePokemon, PokeMap[text.toUpperCase()]),
         })
       ])
     ),
@@ -580,7 +609,7 @@ const Dex = ({
     pokemon === null && $(PokeList, { changePokemon }),
 
     // The Pokedex view
-    pokemon !== null && $(PokemonPage, { pokemon }),
+    pokemon !== null && $(PokemonPage, { changePokemon, pokemon }),
   ])
 )
 
