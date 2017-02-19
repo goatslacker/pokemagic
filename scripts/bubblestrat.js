@@ -107,7 +107,7 @@ function bubble(opponent, pokemon) {
       })
       // how many hits can you land before the opponent gets theirs off
       // Can we destroy the opponent before they land a hit...
-      .filter(x => x.dmg >= oppHP)
+      .filter(x => x.dmg > oppHP)
       // calculate the prestige gain
       .map(x => ({
         n: x.name,
@@ -115,7 +115,7 @@ function bubble(opponent, pokemon) {
         cp: x.cp,
         how: x.how,
         d: x.dmg,
-        o: oppHP,
+        h: oppHP,
         p: oppCP > x.cp
           ? Math.min(1000, Math.floor(500 * (oppCP / x.cp)))
           : Math.min(100, Math.floor(310 * (oppCP / x.cp)) - 55),
@@ -133,8 +133,8 @@ function attack(poke) {
   Pokemon.forEach(bubbler => {
     const res = bubble({
       name: bubbler.name,
-      ivs: { atk: 6, def: 6, sta: 6 },
-      level: 1,
+      ivs: { atk: 0, def: 0, sta: 0 },
+      level: 1.5,
     }, poke)
 
     if (res.length > 0) results.push.apply(results, res)
@@ -154,7 +154,7 @@ function attack(poke) {
   })
   return bubblers
 //    .filter(x => x.m !== 'MUD_SHOT_FAST')
-    .filter(x => x.p > 700)
+    .filter(x => x.p > 500)
     .sort((a, b) => a.p > b.p ? -1 : 1)
 }
 
@@ -172,46 +172,32 @@ function who() {
       ivs: { atk: 10, def: 10, sta: 10 },
       level: 1.5,
     }))
-
-//    const l1 = attack({
-//      name: poke.name,
-//      ivs: { atk: 10, def: 10, sta: 10 },
-//      level: 1,
-//    })
-//    const l15 = attack({
-//      name: poke.name,
-//      ivs: { atk: 10, def: 10, sta: 10 },
-//      level: 1.5,
-//    })
-//
-//    if (l1.length) pokes.push.apply(pokes, l1)
-//    if (l15.length) pokes.push.apply(pokes, l15)
   })
-  return pokes.filter(x => x.p === 1000)
+  return pokes
 }
 
 //console.log(who())
 
+/*
 console.log(
   attack({
-    name: 'GROWLITHE',
+    name: 'diglett',
     ivs: { atk: 10, def: 10, sta: 10 },
-    level: 1,
+    level: 1.5,
   })
 )
+*/
 
-/*
 console.log(
   bubble({
     // bubbler
-    name: 'jolteon',
-    ivs: { atk: 0, def: 0, sta: 0 },
+    name: 'raichu',
+    ivs: { atk: 9, def: 6, sta: 6 },
     level: 1,
   }, {
     // attacker
     name: 'diglett',
     ivs: { atk: 10, def: 10, sta: 10 },
-    level: 3,
+    level: 1.5,
   })[0]
 )
-*/
