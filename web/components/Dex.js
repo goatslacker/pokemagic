@@ -7,10 +7,14 @@ const Chip = require('material-ui/Chip').default
 const Divider = require('material-ui/Divider').default
 const DustTolevel = require('../../json/dust-to-level.json')
 const IconButton = require('material-ui/IconButton').default
+const IconMenu = require('material-ui/IconMenu').default
 const LevelToCPM = require('../../json/level-to-cpm')
+const Menu = require('material-ui/Menu').default
 const MenuItem = require('material-ui/MenuItem').default
+const MoreVertIcon = require('material-ui/svg-icons/navigation/more-vert').default
 const Paper = require('material-ui/Paper').default
 const Pokemon = require('../../json/pokemon.json')
+const Popover = require('material-ui/Popover').default
 const RaisedButton = require('material-ui/RaisedButton').default
 const SelectField = require('material-ui/SelectField').default
 const TextField = require('material-ui/TextField').default
@@ -582,8 +586,9 @@ const PokemonByMaxDef = AllPokemon.slice().sort((a, b) => a.def > b.def ? -1 : 1
 
 const PokeList = pure(({
   changePokemon,
+  list,
 }) => (
-  $(View, AllPokemon.map(pokemon => $(PokeImage, { pokemon, changePokemon })))
+  $(View, list.map(pokemon => $(PokeImage, { pokemon, changePokemon })))
 ))
 
 const dexList = AllPokemon.map(x => x.name.replace(/_/g, ' '))
@@ -591,6 +596,8 @@ const dexList = AllPokemon.map(x => x.name.replace(/_/g, ' '))
 const Dex = ({
   changePokemon,
   pokemon,
+  list,
+  sortPokemon,
 }) => (
   $(View, {
     className: 'main',
@@ -606,6 +613,28 @@ const Dex = ({
           height: 64,
         },
       }, [
+        $(IconMenu, {
+          iconButtonElement: $(IconButton, { touch: true }, [$(MoreVertIcon)]),
+          anchorOrigin: { horizontal: 'left', vertical: 'top' },
+          targetOrigin: { horizontal: 'left', vertical: 'top' },
+        }, [
+          $(MenuItem, {
+            primaryText: '#',
+            onTouchTap: () => sortPokemon(AllPokemon),
+          }),
+          $(MenuItem, {
+            primaryText: 'CP',
+            onTouchTap: () => sortPokemon(PokemonByMaxCP),
+          }),
+          $(MenuItem, {
+            primaryText: 'Atk',
+            onTouchTap: () => sortPokemon(PokemonByMaxAtk),
+          }),
+          $(MenuItem, {
+            primaryText: 'Def',
+            onTouchTap: () => sortPokemon(PokemonByMaxDef),
+          }),
+        ]),
         $(AutoComplete, {
           dataSource: dexList,
           filter: (searchText, key) => key.indexOf(searchText.toUpperCase()) > -1,
@@ -630,7 +659,7 @@ const Dex = ({
     ),
 
     // Empty text then list out all the Pokes
-    pokemon === null && $(PokeList, { changePokemon }),
+    pokemon === null && $(PokeList, { list, changePokemon }),
 
     // The Pokedex view
     pokemon !== null && $(PokemonPage, { changePokemon, pokemon }),
@@ -652,6 +681,7 @@ const maybeChangePokemonFromHash = ({
 
 module.exports = compose(
   withState('pokemon', 'changePokemon', null),
+  withState('list', 'sortPokemon', AllPokemon),
   lifecycle({
     componentDidMount() {
       maybeChangePokemonFromHash(this.props)
