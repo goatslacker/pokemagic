@@ -80,10 +80,16 @@ const addExtraMoves = arr => (
 
 const Legendaries = {
   ARTICUNO: 1,
+  CELEBI: 1,
   DITTO: 1,
+  ENTEI: 1,
+  HO_OH: 1,
+  LUGIA: 1,
   MEW: 1,
   MEWTWO: 1,
   MOLTRES: 1,
+  RAIKOU: 1,
+  SUICUNE: 1,
   ZAPDOS: 1,
 }
 
