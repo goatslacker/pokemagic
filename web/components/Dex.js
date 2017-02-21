@@ -108,6 +108,7 @@ const PokeMap = AllPokemon.reduce((obj, mon) => {
   return obj
 }, {})
 
+const filterByType = type => mon => mon.type1 === type || mon.type2 === type
 
 const getColor = n => (
   n > 86 ? green400 :
@@ -634,7 +635,16 @@ const Dex = ({
             primaryText: 'Def',
             onTouchTap: () => sortPokemon(PokemonByMaxDef),
           }),
-        ]),
+        ].concat(
+          Object.keys(Types).map(type => (
+            $(MenuItem, {
+              primaryText: ucFirst(type),
+              onTouchTap: () => sortPokemon(
+                PokemonByMaxCP.filter(filterByType(type))
+              ),
+            })
+          ))
+        )),
         $(AutoComplete, {
           dataSource: dexList,
           filter: (searchText, key) => key.indexOf(searchText.toUpperCase()) > -1,
