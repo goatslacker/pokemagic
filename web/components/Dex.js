@@ -248,6 +248,7 @@ const BestInfo = ({
   $(Card, {
   }, [
     $(CardHeader, {
+      avatar: `images/${best.name.toUpperCase()}.png`,
       actAsExpander: best.rest.length > 0,
       showExpandableButton: best.rest.length > 0,
       subtitle: (
