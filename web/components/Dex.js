@@ -585,6 +585,22 @@ const PokeImage = ({
 const PokemonByMaxCP = AllPokemon.slice().sort((a, b) => a.maxCP > b.maxCP ? -1 : 1)
 const PokemonByMaxAtk = AllPokemon.slice().sort((a, b) => a.atk > b.atk ? -1 : 1)
 const PokemonByMaxDef = AllPokemon.slice().sort((a, b) => a.def > b.def ? -1 : 1)
+const PokemonByDPS = AllPokemon.map(poke => {
+  const moves = []
+  poke.moves.quick.forEach(move1 => {
+    poke.moves.charge.forEach(move2 => {
+      const info = avgComboDPS(poke, move1, move2)
+      moves.push({
+        poke,
+        dps: info.combo.dps,
+      })
+    })
+  })
+  moves.sort((a, b) => a.dps > b.dps ? -1 : 1)
+  return Object.assign({
+    dps: moves[0].dps,
+  }, moves[0].poke)
+}).sort((a, b) => a.dps > b.dps ? -1 : 1)
 
 const PokeList = pure(({
   changePokemon,
@@ -623,6 +639,10 @@ const Dex = ({
           $(MenuItem, {
             primaryText: '#',
             onTouchTap: () => sortPokemon(AllPokemon),
+          }),
+          $(MenuItem, {
+            primaryText: 'DPS',
+            onTouchTap: () => sortPokemon(PokemonByDPS),
           }),
           $(MenuItem, {
             primaryText: 'CP',
