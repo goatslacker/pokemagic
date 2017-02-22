@@ -33,7 +33,7 @@ const startTime = move => fix(Moves[move.Name].DamageWindowStartMs / 1000)
 
 const calcEPS = move => fix(move.Energy / (move.DurationMs / 1000))
 
-const withMove = (pokemon, move, dmg) => ({
+const withMove = (pokemon, move, retired, dmg) => ({
   name: fixMoveName(move.Name),
   type: ucFirst(move.Type),
   category: isQuickMove(move.Name) ? 'quick' : 'charge',
@@ -50,11 +50,11 @@ const withMove = (pokemon, move, dmg) => ({
     energy: move.Energy,
     duration: move.DurationMs / 1000,
   },
-  retired: move.retired === true,
+  retired: retired === true,
 })
 
 const getMove = (pokemon, moveId, dmg) => (
-  withMove(pokemon, Moves[moveId.name], dmg)
+  withMove(pokemon, Moves[moveId.name], moveId.retired, dmg)
 )
 
 module.exports = getMove

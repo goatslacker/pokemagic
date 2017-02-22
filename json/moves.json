@@ -813,8 +813,8 @@
     "Name": "STRUGGLE",
     "Type": "NORMAL",
     "Power": 35,
-    "DurationMs": 2200,
     "Energy": -33,
+    "DurationMs": 2200,
     "DamageWindowStartMs": 1200,
     "DamageWindowEndMs": 2000
   },
@@ -858,7 +858,7 @@
     "Name": "FURY_CUTTER_FAST",
     "Type": "BUG",
     "Power": 3,
-    "DurationMs": 900,
+    "DurationMs": 400,
     "Energy": 6,
     "DamageWindowStartMs": 100,
     "DamageWindowEndMs": 400
@@ -867,7 +867,7 @@
     "Name": "BUG_BITE_FAST",
     "Type": "BUG",
     "Power": 5,
-    "DurationMs": 950,
+    "DurationMs": 500,
     "Energy": 6,
     "DamageWindowStartMs": 250,
     "DamageWindowEndMs": 450
@@ -875,45 +875,45 @@
   "BITE_FAST": {
     "Name": "BITE_FAST",
     "Type": "DARK",
-    "Power": 10,
-    "DurationMs": 1000,
-    "Energy": 6,
+    "Power": 6,
+    "DurationMs": 500,
+    "Energy": 4,
     "DamageWindowStartMs": 300,
     "DamageWindowEndMs": 500
   },
   "SUCKER_PUNCH_FAST": {
     "Name": "SUCKER_PUNCH_FAST",
     "Type": "DARK",
-    "Power": 8,
-    "DurationMs": 1200,
-    "Energy": 9,
+    "Power": 7,
+    "DurationMs": 700,
+    "Energy": 8,
     "DamageWindowStartMs": 300,
     "DamageWindowEndMs": 700
   },
   "DRAGON_BREATH_FAST": {
     "Name": "DRAGON_BREATH_FAST",
     "Type": "DRAGON",
-    "Power": 12,
-    "DurationMs": 1000,
-    "Energy": 5,
+    "Power": 6,
+    "DurationMs": 500,
+    "Energy": 4,
     "DamageWindowStartMs": 300,
     "DamageWindowEndMs": 500
   },
   "THUNDER_SHOCK_FAST": {
     "Name": "THUNDER_SHOCK_FAST",
     "Type": "ELECTRIC",
-    "Power": 6,
-    "DurationMs": 1100,
-    "Energy": 9,
+    "Power": 5,
+    "DurationMs": 600,
+    "Energy": 8,
     "DamageWindowStartMs": 300,
     "DamageWindowEndMs": 600
   },
   "SPARK_FAST": {
     "Name": "SPARK_FAST",
     "Type": "ELECTRIC",
-    "Power": 8,
-    "DurationMs": 1200,
-    "Energy": 8,
+    "Power": 6,
+    "DurationMs": 700,
+    "Energy": 9,
     "DamageWindowStartMs": 300,
     "DamageWindowEndMs": 700
   },
@@ -921,8 +921,8 @@
     "Name": "LOW_KICK_FAST",
     "Type": "FIGHTING",
     "Power": 6,
-    "DurationMs": 1100,
-    "Energy": 8,
+    "DurationMs": 600,
+    "Energy": 6,
     "DamageWindowStartMs": 300,
     "DamageWindowEndMs": 600
   },
@@ -930,7 +930,7 @@
     "Name": "KARATE_CHOP_FAST",
     "Type": "FIGHTING",
     "Power": 8,
-    "DurationMs": 1300,
+    "DurationMs": 800,
     "Energy": 10,
     "DamageWindowStartMs": 600,
     "DamageWindowEndMs": 800
@@ -939,7 +939,7 @@
     "Name": "EMBER_FAST",
     "Type": "FIRE",
     "Power": 10,
-    "DurationMs": 1500,
+    "DurationMs": 1000,
     "Energy": 10,
     "DamageWindowStartMs": 600,
     "DamageWindowEndMs": 800
@@ -947,9 +947,9 @@
   "WING_ATTACK_FAST": {
     "Name": "WING_ATTACK_FAST",
     "Type": "FLYING",
-    "Power": 10,
-    "DurationMs": 1250,
-    "Energy": 10,
+    "Power": 8,
+    "DurationMs": 800,
+    "Energy": 9,
     "DamageWindowStartMs": 550,
     "DamageWindowEndMs": 750
   },
@@ -957,7 +957,7 @@
     "Name": "PECK_FAST",
     "Type": "FLYING",
     "Power": 10,
-    "DurationMs": 1500,
+    "DurationMs": 1000,
     "Energy": 10,
     "DamageWindowStartMs": 450,
     "DamageWindowEndMs": 900
@@ -966,7 +966,7 @@
     "Name": "LICK_FAST",
     "Type": "GHOST",
     "Power": 5,
-    "DurationMs": 1000,
+    "DurationMs": 500,
     "Energy": 6,
     "DamageWindowStartMs": 200,
     "DamageWindowEndMs": 500
@@ -974,8 +974,8 @@
   "SHADOW_CLAW_FAST": {
     "Name": "SHADOW_CLAW_FAST",
     "Type": "GHOST",
-    "Power": 12,
-    "DurationMs": 1200,
+    "Power": 9,
+    "DurationMs": 700,
     "Energy": 6,
     "DamageWindowStartMs": 250,
     "DamageWindowEndMs": 500
@@ -983,26 +983,26 @@
   "VINE_WHIP_FAST": {
     "Name": "VINE_WHIP_FAST",
     "Type": "GRASS",
-    "Power": 8,
-    "DurationMs": 1100,
-    "Energy": 7,
+    "Power": 7,
+    "DurationMs": 600,
+    "Energy": 6,
     "DamageWindowStartMs": 350,
     "DamageWindowEndMs": 600
   },
   "RAZOR_LEAF_FAST": {
     "Name": "RAZOR_LEAF_FAST",
     "Type": "GRASS",
-    "Power": 15,
-    "DurationMs": 1500,
-    "Energy": 8,
+    "Power": 13,
+    "DurationMs": 1000,
+    "Energy": 7,
     "DamageWindowStartMs": 600,
     "DamageWindowEndMs": 850
   },
   "MUD_SHOT_FAST": {
     "Name": "MUD_SHOT_FAST",
     "Type": "GROUND",
-    "Power": 9,
-    "DurationMs": 1050,
+    "Power": 5,
+    "DurationMs": 600,
     "Energy": 7,
     "DamageWindowStartMs": 350,
     "DamageWindowEndMs": 550
@@ -1011,7 +1011,7 @@
     "Name": "ICE_SHARD_FAST",
     "Type": "ICE",
     "Power": 12,
-    "DurationMs": 1700,
+    "DurationMs": 1200,
     "Energy": 12,
     "DamageWindowStartMs": 600,
     "DamageWindowEndMs": 900
@@ -1020,34 +1020,34 @@
     "Name": "FROST_BREATH_FAST",
     "Type": "ICE",
     "Power": 10,
-    "DurationMs": 1400,
-    "Energy": 7,
+    "DurationMs": 900,
+    "Energy": 8,
     "DamageWindowStartMs": 450,
     "DamageWindowEndMs": 750
   },
   "QUICK_ATTACK_FAST": {
     "Name": "QUICK_ATTACK_FAST",
     "Type": "NORMAL",
-    "Power": 10,
-    "DurationMs": 1250,
-    "Energy": 8,
+    "Power": 8,
+    "DurationMs": 800,
+    "Energy": 10,
     "DamageWindowStartMs": 250,
     "DamageWindowEndMs": 550
   },
   "SCRATCH_FAST": {
     "Name": "SCRATCH_FAST",
     "Type": "NORMAL",
-    "Power": 12,
-    "DurationMs": 1000,
-    "Energy": 7,
+    "Power": 6,
+    "DurationMs": 500,
+    "Energy": 4,
     "DamageWindowStartMs": 300,
     "DamageWindowEndMs": 500
   },
   "TACKLE_FAST": {
     "Name": "TACKLE_FAST",
     "Type": "NORMAL",
-    "Power": 10,
-    "DurationMs": 1000,
+    "Power": 5,
+    "DurationMs": 500,
     "Energy": 5,
     "DamageWindowStartMs": 300,
     "DamageWindowEndMs": 500
@@ -1055,17 +1055,17 @@
   "POUND_FAST": {
     "Name": "POUND_FAST",
     "Type": "NORMAL",
-    "Power": 8,
-    "DurationMs": 1040,
-    "Energy": 7,
+    "Power": 7,
+    "DurationMs": 600,
+    "Energy": 6,
     "DamageWindowStartMs": 340,
     "DamageWindowEndMs": 540
   },
   "CUT_FAST": {
     "Name": "CUT_FAST",
     "Type": "NORMAL",
-    "Power": 10,
-    "DurationMs": 1000,
+    "Power": 5,
+    "DurationMs": 500,
     "Energy": 5,
     "DamageWindowStartMs": 300,
     "DamageWindowEndMs": 500
@@ -1073,26 +1073,26 @@
   "POISON_JAB_FAST": {
     "Name": "POISON_JAB_FAST",
     "Type": "POISON",
-    "Power": 12,
-    "DurationMs": 1300,
-    "Energy": 8,
+    "Power": 10,
+    "DurationMs": 800,
+    "Energy": 7,
     "DamageWindowStartMs": 200,
     "DamageWindowEndMs": 800
   },
   "ACID_FAST": {
     "Name": "ACID_FAST",
     "Type": "POISON",
-    "Power": 10,
-    "DurationMs": 1300,
-    "Energy": 9,
+    "Power": 9,
+    "DurationMs": 800,
+    "Energy": 8,
     "DamageWindowStartMs": 400,
     "DamageWindowEndMs": 600
   },
   "PSYCHO_CUT_FAST": {
     "Name": "PSYCHO_CUT_FAST",
     "Type": "PSYCHIC",
-    "Power": 8,
-    "DurationMs": 1070,
+    "Power": 5,
+    "DurationMs": 600,
     "Energy": 8,
     "DamageWindowStartMs": 370,
     "DamageWindowEndMs": 570
@@ -1101,8 +1101,8 @@
     "Name": "ROCK_THROW_FAST",
     "Type": "ROCK",
     "Power": 12,
-    "DurationMs": 1400,
-    "Energy": 10,
+    "DurationMs": 900,
+    "Energy": 7,
     "DamageWindowStartMs": 500,
     "DamageWindowEndMs": 800
   },
@@ -1110,7 +1110,7 @@
     "Name": "METAL_CLAW_FAST",
     "Type": "STEEL",
     "Power": 8,
-    "DurationMs": 1130,
+    "DurationMs": 700,
     "Energy": 7,
     "DamageWindowStartMs": 430,
     "DamageWindowEndMs": 630
@@ -1118,8 +1118,8 @@
   "BULLET_PUNCH_FAST": {
     "Name": "BULLET_PUNCH_FAST",
     "Type": "STEEL",
-    "Power": 12,
-    "DurationMs": 1400,
+    "Power": 9,
+    "DurationMs": 900,
     "Energy": 10,
     "DamageWindowStartMs": 300,
     "DamageWindowEndMs": 900
@@ -1127,9 +1127,9 @@
   "WATER_GUN_FAST": {
     "Name": "WATER_GUN_FAST",
     "Type": "WATER",
-    "Power": 10,
-    "DurationMs": 1000,
-    "Energy": 6,
+    "Power": 5,
+    "DurationMs": 500,
+    "Energy": 5,
     "DamageWindowStartMs": 300,
     "DamageWindowEndMs": 500
   },
@@ -1154,7 +1154,7 @@
     "Name": "MUD_SLAP_FAST",
     "Type": "GROUND",
     "Power": 15,
-    "DurationMs": 1850,
+    "DurationMs": 1400,
     "Energy": 12,
     "DamageWindowStartMs": 1150,
     "DamageWindowEndMs": 1350
@@ -1163,7 +1163,7 @@
     "Name": "ZEN_HEADBUTT_FAST",
     "Type": "PSYCHIC",
     "Power": 12,
-    "DurationMs": 1550,
+    "DurationMs": 1100,
     "Energy": 10,
     "DamageWindowStartMs": 850,
     "DamageWindowEndMs": 1050
@@ -1172,53 +1172,53 @@
     "Name": "CONFUSION_FAST",
     "Type": "PSYCHIC",
     "Power": 20,
-    "DurationMs": 2100,
-    "Energy": 10,
+    "DurationMs": 1600,
+    "Energy": 15,
     "DamageWindowStartMs": 600,
     "DamageWindowEndMs": 1600
   },
   "POISON_STING_FAST": {
     "Name": "POISON_STING_FAST",
     "Type": "POISON",
-    "Power": 6,
-    "DurationMs": 1075,
-    "Energy": 8,
+    "Power": 5,
+    "DurationMs": 600,
+    "Energy": 7,
     "DamageWindowStartMs": 375,
     "DamageWindowEndMs": 575
   },
   "BUBBLE_FAST": {
     "Name": "BUBBLE_FAST",
     "Type": "WATER",
-    "Power": 15,
-    "DurationMs": 1700,
-    "Energy": 12,
+    "Power": 12,
+    "DurationMs": 1200,
+    "Energy": 14,
     "DamageWindowStartMs": 750,
     "DamageWindowEndMs": 1000
   },
   "FEINT_ATTACK_FAST": {
     "Name": "FEINT_ATTACK_FAST",
     "Type": "DARK",
-    "Power": 12,
-    "DurationMs": 1400,
-    "Energy": 10,
+    "Power": 10,
+    "DurationMs": 900,
+    "Energy": 9,
     "DamageWindowStartMs": 750,
     "DamageWindowEndMs": 900
   },
   "STEEL_WING_FAST": {
     "Name": "STEEL_WING_FAST",
     "Type": "STEEL",
-    "Power": 12,
-    "DurationMs": 1300,
-    "Energy": 8,
+    "Power": 11,
+    "DurationMs": 800,
+    "Energy": 6,
     "DamageWindowStartMs": 500,
     "DamageWindowEndMs": 800
   },
   "FIRE_FANG_FAST": {
     "Name": "FIRE_FANG_FAST",
     "Type": "FIRE",
-    "Power": 12,
-    "DurationMs": 1340,
-    "Energy": 10,
+    "Power": 11,
+    "DurationMs": 900,
+    "Energy": 8,
     "DamageWindowStartMs": 640,
     "DamageWindowEndMs": 840
   },
@@ -1226,7 +1226,7 @@
     "Name": "ROCK_SMASH_FAST",
     "Type": "FIGHTING",
     "Power": 15,
-    "DurationMs": 1700,
+    "DurationMs": 1300,
     "Energy": 10,
     "DamageWindowStartMs": 550,
     "DamageWindowEndMs": 800
@@ -1241,7 +1241,7 @@
   "COUNTER_FAST": {
     "Name": "COUNTER_FAST",
     "Type": "FIGHTING",
-    "Power": 10,
+    "Power": 12,
     "DurationMs": 900,
     "Energy": 8,
     "DamageWindowStartMs": 700,
@@ -1296,7 +1296,7 @@
     "Name": "CHARGE_BEAM_FAST",
     "Type": "ELECTRIC",
     "Power": 8,
-    "DurationMs": 1550,
+    "DurationMs": 1100,
     "Energy": 15,
     "DamageWindowStartMs": 850,
     "DamageWindowEndMs": 1050
@@ -1304,9 +1304,9 @@
   "VOLT_SWITCH_FAST": {
     "Name": "VOLT_SWITCH_FAST",
     "Type": "ELECTRIC",
-    "Power": 12,
+    "Power": 20,
     "DurationMs": 2300,
-    "Energy": 20,
+    "Energy": 25,
     "DamageWindowStartMs": 1800,
     "DamageWindowEndMs": 2100
   },
@@ -1332,8 +1332,8 @@
     "Name": "DRAGON_TAIL_FAST",
     "Type": "DRAGON",
     "Power": 15,
-    "DurationMs": 1550,
-    "Energy": 6,
+    "DurationMs": 1100,
+    "Energy": 9,
     "DamageWindowStartMs": 850,
     "DamageWindowEndMs": 1050
   },
@@ -1349,7 +1349,7 @@
   "AIR_SLASH_FAST": {
     "Name": "AIR_SLASH_FAST",
     "Type": "FLYING",
-    "Power": 12,
+    "Power": 14,
     "DurationMs": 1200,
     "Energy": 10,
     "DamageWindowStartMs": 1000,
@@ -1395,7 +1395,7 @@
     "Name": "INFESTATION_FAST",
     "Type": "BUG",
     "Power": 10,
-    "DurationMs": 1550,
+    "DurationMs": 1100,
     "Energy": 14,
     "DamageWindowStartMs": 850,
     "DamageWindowEndMs": 1050
@@ -1403,9 +1403,9 @@
   "STRUGGLE_BUG_FAST": {
     "Name": "STRUGGLE_BUG_FAST",
     "Type": "BUG",
-    "Power": 6,
+    "Power": 15,
     "DurationMs": 1500,
-    "Energy": 12,
+    "Energy": 15,
     "DamageWindowStartMs": 1200,
     "DamageWindowEndMs": 1500
   },
@@ -1422,8 +1422,8 @@
     "Name": "ASTONISH_FAST",
     "Type": "GHOST",
     "Power": 8,
-    "DurationMs": 1050,
-    "Energy": 12,
+    "DurationMs": 1100,
+    "Energy": 14,
     "DamageWindowStartMs": 700,
     "DamageWindowEndMs": 1050
   },
@@ -1449,8 +1449,8 @@
     "Name": "IRON_TAIL_FAST",
     "Type": "STEEL",
     "Power": 15,
-    "DurationMs": 1550,
-    "Energy": 6,
+    "DurationMs": 1100,
+    "Energy": 7,
     "DamageWindowStartMs": 850,
     "DamageWindowEndMs": 1050
   },
@@ -1475,8 +1475,8 @@
   "FIRE_SPIN_FAST": {
     "Name": "FIRE_SPIN_FAST",
     "Type": "FIRE",
-    "Power": 15,
-    "DurationMs": 1550,
+    "Power": 14,
+    "DurationMs": 1100,
     "Energy": 10,
     "DamageWindowStartMs": 850,
     "DamageWindowEndMs": 1050
@@ -1494,8 +1494,8 @@
     "Name": "BULLET_SEED_FAST",
     "Type": "GRASS",
     "Power": 8,
-    "DurationMs": 1550,
-    "Energy": 12,
+    "DurationMs": 1100,
+    "Energy": 14,
     "DamageWindowStartMs": 850,
     "DamageWindowEndMs": 1050
   },
@@ -1521,7 +1521,7 @@
     "Name": "EXTRASENSORY_FAST",
     "Type": "PSYCHIC",
     "Power": 12,
-    "DurationMs": 1550,
+    "DurationMs": 1100,
     "Energy": 12,
     "DamageWindowStartMs": 850,
     "DamageWindowEndMs": 1050
@@ -1557,7 +1557,7 @@
     "Name": "SNARL_FAST",
     "Type": "DARK",
     "Power": 12,
-    "DurationMs": 1550,
+    "DurationMs": 1100,
     "Energy": 12,
     "DamageWindowStartMs": 850,
     "DamageWindowEndMs": 1050
@@ -1583,7 +1583,7 @@
   "HIDDEN_POWER_FAST": {
     "Name": "HIDDEN_POWER_FAST",
     "Type": "NORMAL",
-    "Power": 10,
+    "Power": 15,
     "DurationMs": 1500,
     "Energy": 15,
     "DamageWindowStartMs": 1100,
