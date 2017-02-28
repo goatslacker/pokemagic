@@ -39,7 +39,6 @@ const ATK_SCALE = (atk.max - atk.min) / 100
 const DEF_SCALE = (def.max - def.min) / 100
 const OVR_SCALE = (total.max - total.min) / 100
 
-// TODO take into account best moveset?
 const ovRating = mon => ({
   ovr: Math.round((Math.log(atkCP(mon)) + Math.log(defCP(mon)) - total.min) / OVR_SCALE),
   atk: Math.round((Math.log(atkCP(mon)) - atk.min) / ATK_SCALE),

@@ -15,8 +15,8 @@ function getDmgVs(obj) {
   const AtkECpM = LevelToCPM[pokemonLevel]
   const DefECpM = LevelToCPM[opponentLevel]
 
-  return moves.map((moveObj) => {
-    const move = Moves[moveObj.name]
+  return moves.map((moveName) => {
+    const move = Moves[moveName]
     const stab = move.Type === player.type1 || move.Type === player.type2 ? 1.25 : 1
     const power = move.Power || 0
 
@@ -31,7 +31,7 @@ function getDPS(dmg, duration) {
 }
 
 function battleDPS(obj) {
-  const moves = obj.moves.map(x => Moves[x.name])
+  const moves = obj.moves.map(name => Moves[name])
 
   const quickHits = Math.ceil(100 / moves[0].Energy) || 0
   const chargeHits = Math.abs(Math.ceil(100 / moves[1].Energy))

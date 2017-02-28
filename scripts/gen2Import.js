@@ -1,10 +1,39 @@
 const master = require('../master')
-const Pokemon = require('../json/pokemon')
+const Pokemon = require('../og')
 
 const pokemon = []
-const moves = {}
 
 const maybeAccessMoves = (id, type) => Pokemon[id] ? Pokemon[id][type] : []
+
+const buildMoves = (poke, len) => {
+  if (!Pokemon[len]) {
+    return poke.quickMoves.reduce((arr, move1) => {
+      return arr.concat(poke.cinematicMoves.map(move2 => ({ A: move1, B: move2 })))
+    }, [])
+  }
+
+  const newComboMoves = poke.quickMoves.reduce((arr, move1) => {
+    return arr.concat(poke.cinematicMoves.map(move2 => ({ A: move1, B: move2 })))
+  }, [])
+
+  const cache = {}
+  newComboMoves.forEach(x => cache[x.A + x.B] = 1)
+
+  return maybeAccessMoves(len, 'moves1').reduce((arr, move1) => {
+    return arr.concat(maybeAccessMoves(len, 'moves2').map(move2 => {
+      if (cache.hasOwnProperty(move1.Name + move2.Name)) {
+        return null
+      }
+      if (move1.retired || move2.retired) {
+        return { A: move1.Name, B: move2.Name, retired: true }
+      }
+      if (!cache.hasOwnProperty(move1.Name + move2.Name)) {
+        return { A: move1.Name, B: move2.Name, retired: true }
+      }
+      return { A: move1.Name, B: move2.Name }
+    }))
+  }, []).filter(Boolean).concat(newComboMoves)
+}
 
 const pokemonShape = (poke, len) => ({
   id: len + 1,
@@ -12,16 +41,21 @@ const pokemonShape = (poke, len) => ({
   type1: poke.type.replace('POKEMON_TYPE_', ''),
   type2: poke.type2 ? poke.type2.replace('POKEMON_TYPE_', '') : null,
   moves: {
-    quick: poke.quickMoves.map(move => ({ name: move })).concat(
-      maybeAccessMoves(len, 'moves1')
-        .filter(move => !poke.quickMoves.includes(move.Name))
-        .map(move => ({ name: move.Name, retired: true }))
-    ),
-    charge: poke.cinematicMoves.map(move => ({ name: move })).concat(
-      maybeAccessMoves(len, 'moves2')
-        .filter(move => !poke.cinematicMoves.includes(move.Name))
-        .map(move => ({ name: move.Name, retired: true }))
-    ),
+    combo: buildMoves(poke, len),
+
+    quick: poke.quickMoves,
+
+//    .map(move => ({ name: move })).concat(
+//      maybeAccessMoves(len, 'moves1')
+//        .filter(move => !poke.quickMoves.includes(move.Name))
+//        .map(move => ({ name: move.Name, retired: true }))
+//    ),
+    charge: poke.cinematicMoves,
+//  .map(move => ({ name: move })).concat(
+//      maybeAccessMoves(len, 'moves2')
+//        .filter(move => !poke.cinematicMoves.includes(move.Name))
+//        .map(move => ({ name: move.Name, retired: true }))
+//    ),
   },
   stats: {
     stamina: poke.stats.baseStamina,
@@ -35,25 +69,10 @@ const pokemonShape = (poke, len) => ({
   evolutionBranch: poke.evolutionBranch,
 })
 
-const moveShape = move => ({
-  Name: move.movementId,
-  Type: move.pokemonType.replace('POKEMON_TYPE_', ''),
-  Power: move.power,
-  DurationMs: move.durationMs,
-  Energy: move.energyDelta,
-  DamageWindowStartMs: move.damageWindowStartMs,
-  DamageWindowEndMs: move.damageWindowEndMs,
-})
-
 master.itemTemplates.forEach(item => {
-//  if (item.pokemonSettings) {
-//    pokemon.push(pokemonShape(item.pokemonSettings, pokemon.length))
-//  }
-
-  if (item.moveSettings) {
-    moves[item.moveSettings.movementId] = moveShape(item.moveSettings)
+  if (item.pokemonSettings) {
+    pokemon.push(pokemonShape(item.pokemonSettings, pokemon.length))
   }
 })
 
-//console.log(JSON.stringify(pokemon))
-console.log(JSON.stringify(moves))
+console.log(JSON.stringify(pokemon))

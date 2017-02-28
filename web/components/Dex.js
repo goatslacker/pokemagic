@@ -83,12 +83,14 @@ const sortByAtk = (a, b) => a.info.combo.dps > b.info.combo.dps ? -1 : 1
 const sortByDef = (a, b) => a.rate.def.raw > b.rate.def.raw ? -1 : 1
 
 const sortMoves = (pokemon, sortOrder) => (
-  pokemon.moves.quick.reduce((acc, move1) => acc.concat(
-    pokemon.moves.charge.map(move2 => ({
+  pokemon.moves.combo.reduce((acc, x) => {
+    const move1 = x.A
+    const move2 = x.B
+    return acc.concat({
       rate: pokeRatings.getRating(pokemon, move1, move2),
       info: avgComboDPS(pokemon, move1, move2),
     })
-  )), []).sort(sortOrder ? sortByAtk : sortByDef)
+  }, []).sort(sortOrder ? sortByAtk : sortByDef)
 )
 
 // TODO all data should come clean
@@ -186,7 +188,7 @@ const MoveInfo = ({
             $(Text, {
               style: {
                 fontWeight: info.quick.stab ? 'bold' : 'normal',
-                textDecoration: info.quick.retired ? 'line-through' : 'none',
+                textDecoration: info.combo.retired ? 'line-through' : 'none',
               },
             }, info.quick.name),
 
@@ -216,7 +218,7 @@ const MoveInfo = ({
             $(Text, {
               style: {
                 fontWeight: info.charge.stab ? 'bold' : 'normal',
-                textDecoration: info.charge.retired ? 'line-through' : 'none',
+                textDecoration: info.combo.retired ? 'line-through' : 'none',
               },
             }, info.charge.name),
             $(Row, {
@@ -586,17 +588,13 @@ const PokemonByMaxCP = AllPokemon.slice().sort((a, b) => a.maxCP > b.maxCP ? -1 
 const PokemonByMaxAtk = AllPokemon.slice().sort((a, b) => a.atk > b.atk ? -1 : 1)
 const PokemonByMaxDef = AllPokemon.slice().sort((a, b) => a.def > b.def ? -1 : 1)
 const PokemonByDPS = AllPokemon.map(poke => {
-  const moves = []
-  poke.moves.quick.forEach(move1 => {
-    poke.moves.charge.forEach(move2 => {
-      const info = avgComboDPS(poke, move1, move2)
-      moves.push({
-        poke,
-        dps: info.combo.dps,
-      })
-    })
-  })
-  moves.sort((a, b) => a.dps > b.dps ? -1 : 1)
+  const moves = poke.moves.combo.map(x => {
+    const move1 = x.A
+    const move2 = x.B
+    const info = avgComboDPS(poke, move1, move2)
+    return { poke, dps: info.combo.dps }
+  }).sort((a, b) => a.dps > b.dps ? -1 : 1)
+
   return Object.assign({
     dps: moves[0].dps,
   }, moves[0].poke)

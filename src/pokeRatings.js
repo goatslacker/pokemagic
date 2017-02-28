@@ -20,20 +20,18 @@ const defScoreComboMove = (quickMove, chargeMove) => (
 const Fast = {}
 
 const PokeMoves = Pokemon.reduce((pokes, poke) => Object.assign(pokes, {
-  [poke.name]: poke.moves.quick.reduce((obj, move1) => (
-    poke.moves.charge.reduce((o, move2) => {
-      const info = avgComboDPS(poke, move1, move2)
-      o[info.quick.name] = info.quick
-      o[info.charge.name] = info.charge
-      o[info.combo.name] = Object.assign({}, info.combo, {
-        quick: info.quick,
-        charge: info.charge,
-        combo: true,
-        gymScore: defScoreComboMove(info.quick, info.charge),
-      })
-      return o
-    }, obj)
-  ), {}),
+  [poke.name]: poke.moves.combo.reduce((o, { A, B }) => {
+    const info = avgComboDPS(poke, A, B)
+    o[info.quick.name] = info.quick
+    o[info.charge.name] = info.charge
+    o[info.combo.name] = Object.assign({}, info.combo, {
+      quick: info.quick,
+      charge: info.charge,
+      combo: true,
+      gymScore: defScoreComboMove(info.quick, info.charge),
+    })
+    return o
+  }, {})
 }), {})
 
 // Used to calculate a move's "rating" from 0-100%
@@ -181,7 +179,7 @@ const fix = n => Math.round(n * 100) / 100
 const getRating = (pokemon, move1, move2) => {
   const statsRate = ovRating(pokemon)
 
-  const comboName = `${move1.name}/${move2.name}`
+  const comboName = `${move1}/${move2}`
   const comboMove = PokeMoves[pokemon.name][comboName]
 
   const poke = {

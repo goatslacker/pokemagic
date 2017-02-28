@@ -25,8 +25,6 @@ function avgComboDPS(mon, move1, move2, ivAtk, pokeLevel) {
       move2
     )
 
-    // TODO TTL and then sort by "score" like bestVs
-
     return Object.assign({ vs: opponent.name }, res)
   })
 
@@ -37,10 +35,10 @@ function avgComboDPS(mon, move1, move2, ivAtk, pokeLevel) {
 
   return {
     combo: {
-      name: `${move1.name}/${move2.name}`,
+      name: `${move1}/${move2}`,
       dps: fix(avg(x => x.combo.dps)),
       gymDPS: fix(avg(x => x.combo.gymDPS)),
-      retired: move1.retired === true || move2.retired == true,
+      retired: mon.moves.combo.filter(x => x.A === move1 && x.B === move2).every(x => x.retired === true),
     },
     quick: Object.assign({}, schemaMove(mon, move1, dmg1)),
     charge: Object.assign({}, schemaMove(mon, move2, dmg2)),
