@@ -1,18 +1,39 @@
 const Pokemon = require('../json/pokemon.json')
-const gymDefenders = require('../json/gym-defenders.json')
+const LevelToCPM = require('../json/level-to-cpm')
 const comboDPS = require('./comboDPS')
 const schemaMove = require('./schemaMove')
-//const pokeRatings = require('./pokeRatings')
+const cp = require('./cp')
 
-const GymPokemon = gymDefenders.map(def => Pokemon.filter(x => x.name === def.name)[0])
+const GymPokemon = Pokemon.filter(x => !x.evolutionBranch)
 
 const getAvgFrom = arr => f => arr.reduce((sum, n) => sum + f(n), 0) / arr.length
 
 const fix = n => Math.round(n * 100) / 100
 
+const PokeCache = {}
+Pokemon.forEach(mon => PokeCache[mon.name] = mon)
+
+const Legendaries = {
+  ARTICUNO: 1,
+  CELEBI: 1,
+  DITTO: 1,
+  ENTEI: 1,
+  HO_OH: 1,
+  LUGIA: 1,
+  MEW: 1,
+  MEWTWO: 1,
+  MOLTRES: 1,
+  RAIKOU: 1,
+  SUICUNE: 1,
+  ZAPDOS: 1,
+}
+
+const filterLegendaries = x => !Legendaries.hasOwnProperty(x.name.toUpperCase())
+
 // This function's purpose is to get the avg combo dps of a move.
 // our comboDPS function gets the combo DPS of moves but for a particular pokemon
 function avgComboDPS(mon, move1, move2, ivAtk, pokeLevel) {
+  const cache = {}
   const defenders = GymPokemon.map((opponent) => {
     const res = comboDPS(
       mon,
@@ -24,9 +45,26 @@ function avgComboDPS(mon, move1, move2, ivAtk, pokeLevel) {
       move1,
       move2
     )
-
+    cache[opponent.name] = res
     return Object.assign({ vs: opponent.name }, res)
   })
+
+  const goodAgainst = GymPokemon
+    .map(x => Object.assign({ vs: x.name }, cache[x.name]))
+    .map(x => Object.assign({
+      score: (
+        x.combo.dps *
+        cp.getMaxCPForLevel(PokeCache[x.vs], LevelToCPM['40'])
+      ),
+    }, PokeCache[x.vs]))
+    .filter(filterLegendaries)
+    .sort((a, b) => a.score > b.score ? -1 : 1)
+    .slice(0, 10)
+
+  const badAgainst = defenders
+    .sort((a, b) => a.combo.dps > b.combo.dps ? 1 : -1)
+    .map(x => PokeCache[x.vs])
+    .slice(0, 10)
 
   const avg = getAvgFrom(defenders)
 
@@ -42,8 +80,7 @@ function avgComboDPS(mon, move1, move2, ivAtk, pokeLevel) {
     },
     quick: Object.assign({}, schemaMove(mon, move1, dmg1)),
     charge: Object.assign({}, schemaMove(mon, move2, dmg2)),
-    meta: { defenders },
-//    rating: pokeRatings.getRating(mon, move1, move2),
+    meta: { badAgainst, goodAgainst },
   }
 }
 
@@ -54,5 +91,5 @@ module.exports = avgComboDPS
 //    Pokemon.filter(x => x.name === 'VAPOREON')[0],
 //    Pokemon.filter(x => x.name === 'VAPOREON')[0].moves.quick[0],
 //    Pokemon.filter(x => x.name === 'VAPOREON')[0].moves.charge[1]
-//  )
+//  ).meta.badAgainst.map(x => x.name)
 //)

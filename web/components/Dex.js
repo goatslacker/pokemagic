@@ -22,6 +22,7 @@ const avgComboDPS = require('../../src/avgComboDPS')
 const bestVs = require('../../src/bestVs')
 const cp = require('../../src/cp')
 const getTypeColor = require('../utils/getTypeColor')
+const goodFor = require('../../src/goodFor')
 const ovRating = require('../../src/ovRating')
 const pokeRatings = require('../../src/pokeRatings')
 const scrollTop = require('../utils/scrollTop')
@@ -279,6 +280,18 @@ const BestInfo = ({
   ])
 )
 
+const GoodInfo = ({
+  poke,
+}) => (
+  $(Card, [
+    $(CardHeader, {
+      avatar: `images/${poke.name.toUpperCase()}.png`,
+      subtitle: [poke.type1, poke.type2].filter(Boolean).map(ucFirst).join('/'),
+      title: ucFirst(poke.name),
+    }),
+  ])
+)
+
 const BestOpponent = ({
   best,
 }) => (
@@ -345,6 +358,14 @@ const BestVs = pure(({
       best: bestVs(pokemon),
     }),
   ])
+))
+
+const GoodAgainst = pure(({
+  pokemon,
+}) => (
+  $(Module, {
+    title: `${ucFirst(pokemon.name)} is good against...`,
+  }, goodFor(pokemon).map(poke => $(GoodInfo, { poke })))
 ))
 
 const Movesets = pure(({
@@ -568,6 +589,7 @@ const PokemonPage = pure(({
     }),
     $(Movesets, { pokemon }),
     $(BestVs, { pokemon }),
+    $(GoodAgainst, { pokemon }),
   ])
 ))
 
