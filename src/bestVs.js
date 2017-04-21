@@ -38,16 +38,21 @@ const avgGymDPS = (opp, you, gymDPS) => (
   }, 0) / opp.moves.combo.length
 )
 
-const scoreDPS = (x) => (
-  (x.dps * 2) + (x.ttl * 0.4)
+const willTimeout = (dps, oppHP) => dps * 60 <= oppHP
+
+const scoreDPS = (x, oppHP) => (
+  ((x.dps * 2) + (x.ttl * 0.4)) *
+  // If we're going to timeout then the score should be 0
+  (willTimeout(x.dps, oppHP) ? 0 : 1)
 )
 
-const avgScoreMove = arr => (
-  arr.reduce((acc, x) => acc + scoreDPS(x), 0) / arr.length
+const avgScoreMove = (arr, oppHP) => (
+  arr.reduce((acc, x) => acc + scoreDPS(x, oppHP), 0) / arr.length
 )
 
 const scoreAllMoves = (you, opp, oppGymDPS) => avgScoreMove(
-  getBestComboMoves(you, opp, oppGymDPS)
+  getBestComboMoves(you, opp, oppGymDPS),
+  hp.getHP(opp, 10, ECpM) * 2
 )
 
 // Get your best combo moves vs Opp sorted by DPS
@@ -69,6 +74,8 @@ const getYourTTL = (you, oppGymDPS) => (
 )
 
 const getTTLDiff = (opp, you, yourDPS, oppGymDPS) => (
+  // Timeouts get a -Infinity TTL
+  willTimeout(yourDPS, hp.getHP(opp, 10, ECpM) * 2) ? 0 :
   getYourTTL(you, oppGymDPS) - getOpponentTTL(opp, yourDPS)
 )
 
