@@ -242,6 +242,46 @@ const MoveInfo = ({
         ]),
       ]),
     ]),
+
+    $(View, {
+      style: {
+        marginTop: 8,
+        marginBottom: 8,
+      },
+    }, [
+      $(Divider),
+    ]),
+
+    $(Row, [
+      info.meta.goodAgainst.slice(0, 3).map(poke => (
+        $(Col, { key: poke.name, horizontal: 'center' }, [
+          $(Row, {
+            vertical: 'center',
+          }, [
+            $(Col, [
+              $(Avatar, {
+                backgroundColor: getTypeColor(poke),
+                src: `images/${poke.name}.png`,
+                size: 32,
+                style: {
+                  padding: 4,
+                },
+              }),
+            ]),
+            $(Col, [
+              $(View, {
+                style: { marginLeft: 4 },
+              }, [
+                $(Text, ucFirst(poke.name)),
+                $(SmallText, { label: 'DPS', value: poke.dps.toFixed(2) }),
+              ]),
+            ]),
+          ]),
+        ])
+      )),
+    ]),
+
+    $(View, { style: { marginBottom: 24 }}),
   ])
 )
 
