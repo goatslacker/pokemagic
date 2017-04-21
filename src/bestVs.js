@@ -150,5 +150,5 @@ const bestVs = opp => (
 module.exports = bestVs
 
 //console.log(bestVs(
-//  Pokemon.filter(x => x.name === 'ARCANINE')[0]
-//).map(x => ({ name: x.name, q: x.quickMove })))
+//  Pokemon.filter(x => x.name === 'RHYDON')[0]
+//).map(x => ({ p: x.name, q: x.quickMove, c: x.chargeMove, d: x.dps })))

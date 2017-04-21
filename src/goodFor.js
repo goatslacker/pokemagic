@@ -23,5 +23,5 @@ module.exports = goodFor
 
 //const Pokemon = require('../json/pokemon')
 //console.log(
-//  goodFor(Pokemon.filter(x => x.name === 'DRAGONITE')[0]).map(x => x.name)
+//  goodFor(Pokemon.filter(x => x.name === 'EXEGGUTOR')[0]).map(x => x.name)
 //)

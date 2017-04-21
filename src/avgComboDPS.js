@@ -52,6 +52,7 @@ function avgComboDPS(mon, move1, move2, ivAtk, pokeLevel) {
   const goodAgainst = GymPokemon
     .map(x => Object.assign({ vs: x.name }, cache[x.name]))
     .map(x => Object.assign({
+      dps: x.combo.dps,
       score: (
         x.combo.dps *
         cp.getMaxCPForLevel(PokeCache[x.vs], LevelToCPM['40'])
@@ -84,12 +85,18 @@ function avgComboDPS(mon, move1, move2, ivAtk, pokeLevel) {
   }
 }
 
+const lookup = (name, move1Name, move2Name) => {
+  const poke = Pokemon.find(x => x.name === name.toUpperCase())
+  if (!poke) throw new ReferenceError('Could not find Pokemon ' + name)
+  const move1 = poke.moves.quick.find(x => x === move1Name)
+  const move2 = poke.moves.charge.find(x => x === move2Name)
+  if (!move1) throw new ReferenceError('Could not find quick move ' + move1)
+  if (!move2) throw new ReferenceError('Could not find charge move ' + move2)
+  return avgComboDPS(poke, move1, move2)
+}
+
 module.exports = avgComboDPS
 
 //console.log(
-//  avgComboDPS(
-//    Pokemon.filter(x => x.name === 'VAPOREON')[0],
-//    Pokemon.filter(x => x.name === 'VAPOREON')[0].moves.quick[0],
-//    Pokemon.filter(x => x.name === 'VAPOREON')[0].moves.charge[1]
-//  ).meta.badAgainst.map(x => x.name)
+//  lookup('EXEGGUTOR', 'BULLET_SEED_FAST', 'SOLAR_BEAM').meta.goodAgainst
 //)
