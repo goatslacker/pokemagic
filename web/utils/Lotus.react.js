@@ -1,35 +1,25 @@
 const n = require('./n')
-//const RN = require('react-native-web')
-//const View = RN.View
 
-function Table(props) {
-  const classList = props.className ? props.className.split(' ') : []
-  classList.push('table')
+const View = ({
+  className,
+  spacing,
+  spacingVertical,
+  spacingHorizontal,
 
-  if (props.clean) classList.push('clean')
-  if (props.border) classList.push('border')
+  style,
+  children,
+}) => {
+  const classList = className ? className.split(' ') : []
 
-  return n('table', {
-    className: classList.join(' '),
-  }, props.children)
-}
-
-function View(props) {
-  const classList = props.className ? props.className.split(' ') : []
-
-  if (props.spacing) classList.push(`sp-${props.spacing}`)
-  if (props.spacingVertical) classList.push(`sp-vert-${props.spacingVertical}`)
-  if (props.spacingHorizontal) classList.push(`sp-horiz-${props.spacingHorizontal}`)
+  if (spacing) classList.push(`sp-${spacing}`)
+  if (spacingVertical) classList.push(`sp-vert-${spacingVertical}`)
+  if (spacingHorizontal) classList.push(`sp-horiz-${spacingHorizontal}`)
 
   return n('div', {
     className: classList.join(' '),
-    style: props.style,
-  }, props.children)
+    style,
+  }, children)
 }
-
-const Header = props => (
-  n('h1', { style: { textAlign: 'center' } }, props.children)
-)
 
 const Row = props => (
   n('div', {
@@ -55,61 +45,34 @@ const Col = props => (
   }, props.children)
 )
 
-const H3 = props => n('h3', props, props.children)
+const Text = ({
+  strong,
+  style,
 
-const Divider = () => n('hr')
-
-const Button = props => (
-  n('button', {
-    className: `btn btn-${props.size}`,
-    onClick: props.onClick,
-    style: props.style,
-  }, props.children)
-)
-
-const FormControl = props => (
-  n('label', [
-    n('strong', props.label),
-  ].concat(props.children))
-)
-
-function Text(props) {
+  children,
+}) => {
   const textProps = { style: {} }
-  if (props.className) textProps.className = props.className
-  if (props.style) textProps.style = props.style
-  if (props.strong) textProps.style.fontWeight = 'bold'
+  if (style) textProps.style = style
+  if (strong) textProps.style.fontWeight = 'bold'
 
-  return n('div', textProps, props.children)
+  return n('div', textProps, children)
 }
 
-const Link = props => n('a', props, props.children)
-
-const Input = props => n('input', props)
-
-const Image = props => n('img', props)
-
-const Panel = props => (
+const Touchable = ({
+  onTouch,
+  style,
+  children,
+}) => (
   n('div', {
-    style: {
-      border: '1px solid #b2b2b2',
-      padding: '0.5em',
-    },
-  }, props.children)
+    onClick: ev => onTouch(ev),
+    style,
+  }, children)
 )
 
 module.exports = {
-  Button,
   Col,
-  Divider,
-  FormControl,
-  H3,
-  Header,
-  Image,
-  Input,
-  Link,
-  Panel,
   Row,
-  Table,
   Text,
+  Touchable,
   View,
 }
