@@ -3,7 +3,7 @@ const comboDPS = require('./comboDPS')
 const LevelToCPM = require('../json/level-to-cpm.json')
 const hp = require('./hp')
 
-const N_LVL = 40
+const N_LVL = 30
 const N_IV = 15
 
 // This module figures out which Pokemon are best vs a particular opponent.
@@ -27,7 +27,6 @@ const N_IV = 15
 //   score: Number,
 // }
 
-const GOOD_DPS = 10
 const ECpM = LevelToCPM[N_LVL]
 
 const fix2 = n => Math.round(n * 100) / 100
@@ -45,7 +44,7 @@ const willTimeout = (dps, oppHP) => dps * 60 <= oppHP
 
 const scoreDPS = (x, oppHP) => (
   ((x.dps * 2) + (x.ttl * 0.4)) *
-  // If we're going to timeout then the score should be 0
+  // If we're going to timeout then the score should be 0 for this move
   (willTimeout(x.dps, oppHP) ? 0 : 1)
 )
 
@@ -77,8 +76,8 @@ const getYourTTL = (you, oppGymDPS) => (
 )
 
 const getTTLDiff = (opp, you, yourDPS, oppGymDPS) => (
-  // Timeouts get a -Infinity TTL
-  willTimeout(yourDPS, hp.getHP(opp, N_IV, ECpM) * 2) ? 0 :
+  // Timeouts get a NaN as TTL
+  willTimeout(yourDPS, hp.getHP(opp, N_IV, ECpM) * 2) ? NaN :
   getYourTTL(you, oppGymDPS) - getOpponentTTL(opp, yourDPS)
 )
 
@@ -131,7 +130,8 @@ const getBestComboMoves = (you, opp, oppGymDPS) => (
     ttl: getTTLDiff(opp, you, x.combo.dps, oppGymDPS),
   }))
   .map(x => schemaComboMove(you, x))
-  .filter(x => x.dps > GOOD_DPS || x.ttl > 0)
+  // filter out any moves that will time you out
+  .filter(x => !willTimeout(x.dps, hp.getHP(opp, N_IV, ECpM) * 2))
 )
 
 const bestVs = opp => (

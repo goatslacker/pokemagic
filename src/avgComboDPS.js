@@ -5,7 +5,7 @@ const schemaMove = require('./schemaMove')
 const cp = require('./cp')
 
 // The level and IV stat to use for calculations
-const N_LVL = 40
+const N_LVL = 30
 const N_IV = 15
 
 const GymPokemon = Pokemon.filter(x => !x.evolutionBranch)
