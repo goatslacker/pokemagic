@@ -4,6 +4,10 @@ const comboDPS = require('./comboDPS')
 const schemaMove = require('./schemaMove')
 const cp = require('./cp')
 
+// The level and IV stat to use for calculations
+const N_LVL = 40
+const N_IV = 15
+
 const GymPokemon = Pokemon.filter(x => !x.evolutionBranch)
 
 const getAvgFrom = arr => f => arr.reduce((sum, n) => sum + f(n), 0) / arr.length
@@ -38,10 +42,10 @@ function avgComboDPS(mon, move1, move2, ivAtk, pokeLevel) {
     const res = comboDPS(
       mon,
       opponent,
-      ivAtk || 10,
-      10,
-      pokeLevel || 30,
-      30,
+      ivAtk,
+      N_IV,
+      pokeLevel || N_LVL,
+      N_LVL,
       move1,
       move2
     )
@@ -55,7 +59,7 @@ function avgComboDPS(mon, move1, move2, ivAtk, pokeLevel) {
       dps: x.combo.dps,
       score: (
         x.combo.dps *
-        cp.getMaxCPForLevel(PokeCache[x.vs], LevelToCPM['40'])
+        cp.getMaxCPForLevel(PokeCache[x.vs], LevelToCPM[N_LVL])
       ),
     }, PokeCache[x.vs]))
     .filter(filterLegendaries)

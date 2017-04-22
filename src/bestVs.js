@@ -3,6 +3,9 @@ const comboDPS = require('./comboDPS')
 const LevelToCPM = require('../json/level-to-cpm.json')
 const hp = require('./hp')
 
+const N_LVL = 40
+const N_IV = 15
+
 // This module figures out which Pokemon are best vs a particular opponent.
 // API
 //
@@ -25,7 +28,7 @@ const hp = require('./hp')
 // }
 
 const GOOD_DPS = 10
-const ECpM = LevelToCPM['30']
+const ECpM = LevelToCPM[N_LVL]
 
 const fix2 = n => Math.round(n * 100) / 100
 
@@ -34,7 +37,7 @@ const avgGymDPS = (opp, you, gymDPS) => (
   opp.moves.combo.reduce((n, x) => {
     const move1 = x.A
     const move2 = x.B
-    return n + comboDPS(opp, you, 10, 10, 30, 30, move1, move2).combo.gymDPS
+    return n + comboDPS(opp, you, N_IV, N_IV, N_LVL, N_LVL, move1, move2).combo.gymDPS
   }, 0) / opp.moves.combo.length
 )
 
@@ -52,7 +55,7 @@ const avgScoreMove = (arr, oppHP) => (
 
 const scoreAllMoves = (you, opp, oppGymDPS) => avgScoreMove(
   getBestComboMoves(you, opp, oppGymDPS),
-  hp.getHP(opp, 10, ECpM) * 2
+  hp.getHP(opp, N_IV, ECpM) * 2
 )
 
 // Get your best combo moves vs Opp sorted by DPS
@@ -60,22 +63,22 @@ const getComboMovesSortedByDPS = (you, opp) => (
   you.moves.combo.reduce((arr, x) => {
     const move1 = x.A
     const move2 = x.B
-    return arr.concat(comboDPS(you, opp, 10, 10, 30, 30, move1, move2))
+    return arr.concat(comboDPS(you, opp, N_IV, N_IV, N_LVL, N_LVL, move1, move2))
   }, [])
   .sort((a, b) => a.combo.dps > b.combo.dps ? -1 : 1)
 )
 
 const getOpponentTTL = (opp, yourDPS) => (
-  hp.getHP(opp, 10, ECpM) * 2 / yourDPS
+  hp.getHP(opp, N_IV, ECpM) * 2 / yourDPS
 )
 
 const getYourTTL = (you, oppGymDPS) => (
-  hp.getHP(you, 10, ECpM) / oppGymDPS
+  hp.getHP(you, N_IV, ECpM) / oppGymDPS
 )
 
 const getTTLDiff = (opp, you, yourDPS, oppGymDPS) => (
   // Timeouts get a -Infinity TTL
-  willTimeout(yourDPS, hp.getHP(opp, 10, ECpM) * 2) ? 0 :
+  willTimeout(yourDPS, hp.getHP(opp, N_IV, ECpM) * 2) ? 0 :
   getYourTTL(you, oppGymDPS) - getOpponentTTL(opp, yourDPS)
 )
 

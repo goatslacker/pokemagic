@@ -8,9 +8,9 @@ function getDmgVs(obj) {
   const moves = obj.moves
   const player = obj.player
   const opponent = obj.opponent
-  const pokemonLevel = obj.pokemonLevel || 30
+  const pokemonLevel = obj.pokemonLevel || 40
 
-  const opponentLevel = obj.opponentLevel || 30
+  const opponentLevel = obj.opponentLevel || 40
 
   const AtkECpM = LevelToCPM[pokemonLevel]
   const DefECpM = LevelToCPM[opponentLevel]
@@ -84,17 +84,17 @@ function battleDPS(obj) {
 // IndAtk is the attacking pokemon's (mon) IV attack
 // IndDef is the defeneding pokemon's (opponent) IV defense
 function comboDPS(mon, opponent, IndAtk, IndDef, pokemonLevel, opponentLevel, move1, move2) {
-  const def = opponent.stats.defense + IndDef
-
-  const atk = mon.stats.attack + IndAtk
+  // If IndDef or IndAtk are undefined use max stats of 15
+  const def = opponent.stats.defense + (IndDef === undefined ? 15 : IndDef)
+  const atk = mon.stats.attack + (IndAtk === undefined ? 15 : IndAtk)
 
   return battleDPS({
     atk,
     def,
     player: mon,
     opponent,
-    pokemonLevel,
-    opponentLevel,
+    pokemonLevel: pokemonLevel || 40,
+    opponentLevel: opponentLevel || 40,
     moves: [move1, move2],
   })
 }
@@ -106,10 +106,10 @@ module.exports = comboDPS
 //  comboDPS(
 //    Pokemon.filter(x => x.name === 'DITTO')[0],
 //    Pokemon.filter(x => x.name === 'RHYDON')[0],
-//    10,
-//    10,
-//    30,
-//    30,
+//    15,
+//    15,
+//    40,
+//    40,
 //    Pokemon.filter(x => x.name === 'DITTO')[0].moves.quick[0],
 //    Pokemon.filter(x => x.name === 'DITTO')[0].moves.charge[0]
 //  )
