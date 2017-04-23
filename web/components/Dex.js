@@ -30,7 +30,7 @@ const guessIVs = require('../../src/guessIVs')
 const { Card, CardHeader, CardText } = require('material-ui/Card')
 const { List, ListItem } = require('material-ui/List')
 const { Tabs, Tab } = require('material-ui/Tabs')
-const { View, Text, Row, Col, Image } = require('../utils/Lotus.React')
+const { View, Text, Row, Col } = require('../utils/Lotus.React')
 const { compose, lifecycle, pure, withState } = require('recompose')
 const {
   blueGrey50,
@@ -67,6 +67,11 @@ const transition = (changePokemon, value) => {
   changePokemon(value)
   scrollTop()
 }
+
+const chunk2 = arr => arr.map((x, i, l) => {
+  if (i % 2 === 0) return l.slice(i, i + 2)
+  return null
+}).filter(Boolean)
 
 const calculateIVs = (pokemon, cp, hp, stardust) => {
   const payload = { cp, hp, stardust }
@@ -143,6 +148,32 @@ const SmallText = ({
   ])
 )
 
+const SmallPokeInfo = ({
+  poke,
+}) => (
+  $(Row, {
+    vertical: 'center',
+  }, [
+    $(Avatar, {
+      backgroundColor: getTypeColor(poke),
+      src: `images/${poke.name}.png`,
+      size: 32,
+      style: {
+        marginRight: 4,
+        padding: 4,
+      },
+    }),
+    $(Col, [
+      $(View, {
+        style: { marginLeft: 4 },
+      }, [
+        $(Text, ucFirst(poke.name)),
+        $(SmallText, { label: 'DPS', value: poke.dps.toFixed(2) }),
+      ]),
+    ]),
+  ])
+)
+
 const MoveInfo = ({
   atk,
   def,
@@ -155,89 +186,92 @@ const MoveInfo = ({
     },
   }, [
     $(Row, {
-      horizontal: 'flex-start',
+      horizontal: 'center',
       vertical: 'center',
     }, [
-      $(View, {
-        style: {
-          marginRight: 24,
-          textAlign: 'center',
-          width: 60,
-        },
+      $(Col, {
+        horizontal: 'center',
       }, [
-        $(Avatar, {
-          backgroundColor: (atk
-            ? getColor(rate.atk.offenseRating)
-            : getColor(rate.def.defenseRating)
-          ),
-          color: grey800,
-          size: 36,
+        $(View, {
           style: {
-            marginBottom: 2,
-          }
-        }, atk ? rate.atk.offenseRating : rate.def.defenseRating),
+            marginBottom: 8,
+          },
+        }, [
+          $(Text, {
+            style: {
+              fontWeight: info.quick.stab ? 'bold' : 'normal',
+              textDecoration: info.combo.retired ? 'line-through' : 'none',
+            },
+          }, info.quick.name),
+          $(Row, {
+            horizontal: 'space-around',
+          }, [
+            $(Col, {
+            }, [
+              $(View, {
+                style: { marginRight: 8 },
+              }, [
+                $(SmallText, { label: 'DMG', value: info.quick.dmg }),
+                $(SmallText, { label: 'CD', value: `${info.quick.base.duration}s` }),
+              ]),
+            ]),
+            $(Col, [
+              $(SmallText, { label: 'EPS', value: info.quick.eps }),
+              $(SmallText, { label: 'Start', value: info.quick.startTime }),
+            ]),
+          ]),
+        ]),
 
         $(View, [
-          atk && $(SmallText, { center: true, label: 'DPS', value: rate.atk.dps }),
-          def && $(SmallText, { center: true, label: 'DPS', value: rate.def.gymDPS }),
+          $(Text, {
+            style: {
+              fontWeight: info.charge.stab ? 'bold' : 'normal',
+              textDecoration: info.combo.retired ? 'line-through' : 'none',
+            },
+          }, info.charge.name),
+          $(Row, {
+            horizontal: 'space-around',
+          }, [
+            $(Col, [
+              $(View, {
+                style: { marginRight: 8 },
+              }, [
+                $(SmallText, { label: 'DMG', value: info.charge.dmg }),
+                $(SmallText, { label: 'CD', value: `${info.charge.base.duration}s` }),
+              ]),
+            ]),
+            $(Col, [
+              $(SmallText, { label: 'Charges', value: info.charge.charges }),
+              $(SmallText, { label: 'Start', value: `${info.charge.startTime}s` }),
+            ]),
+          ]),
         ]),
       ]),
 
-      $(Row, [
-        $(Col, [
+      $(Col, {
+        horizontal: 'flex-end',
+      }, [
+        $(View, {
+          style: {
+            marginRight: 24,
+            textAlign: 'center',
+          },
+        }, [
+          $(Avatar, {
+            backgroundColor: (atk
+              ? getColor(rate.atk.offenseRating)
+              : getColor(rate.def.defenseRating)
+            ),
+            color: grey800,
+            size: 36,
+            style: {
+              marginBottom: 2,
+            },
+          }, atk ? rate.atk.offenseRating : rate.def.defenseRating),
+
           $(View, [
-            $(Text, {
-              style: {
-                fontWeight: info.quick.stab ? 'bold' : 'normal',
-                textDecoration: info.combo.retired ? 'line-through' : 'none',
-              },
-            }, info.quick.name),
-
-            $(Row, {
-              horizontal: 'space-around',
-            }, [
-              $(Col, {
-              }, [
-                $(View, {
-                  style: { marginRight: 8 },
-                }, [
-                  $(SmallText, { label: 'DMG', value: info.quick.dmg }),
-                  $(SmallText, { label: 'CD', value: `${info.quick.base.duration}s` }),
-                ]),
-              ]),
-              $(Col, [
-                $(SmallText, { label: 'EPS', value: info.quick.eps }),
-                $(SmallText, { label: 'Start', value: info.quick.startTime }),
-              ]),
-            ]),
-          ]),
-
-        ]),
-
-        $(Col, [
-          $(View, [
-            $(Text, {
-              style: {
-                fontWeight: info.charge.stab ? 'bold' : 'normal',
-                textDecoration: info.combo.retired ? 'line-through' : 'none',
-              },
-            }, info.charge.name),
-            $(Row, {
-              horizontal: 'space-around',
-            }, [
-              $(Col, [
-                $(View, {
-                  style: { marginRight: 8 },
-                }, [
-                  $(SmallText, { label: 'DMG', value: info.charge.dmg }),
-                  $(SmallText, { label: 'CD', value: `${info.charge.base.duration}s` }),
-                ]),
-              ]),
-              $(Col, [
-                $(SmallText, { label: 'Charges', value: info.charge.charges }),
-                $(SmallText, { label: 'Start', value: `${info.charge.startTime}s` }),
-              ]),
-            ]),
+            atk && $(SmallText, { center: true, label: 'DPS', value: rate.atk.dps }),
+            def && $(SmallText, { center: true, label: 'DPS', value: rate.def.gymDPS }),
           ]),
         ]),
       ]),
@@ -245,43 +279,57 @@ const MoveInfo = ({
 
     $(View, {
       style: {
-        marginTop: 8,
-        marginBottom: 8,
+        marginBottom: 16,
+        marginTop: 16,
+        textAlign: 'center',
       },
     }, [
-      $(Divider),
-    ]),
-
-    $(Row, [
-      info.meta.goodAgainst.slice(0, 3).map(poke => (
-        $(Col, { key: poke.name, horizontal: 'center' }, [
+      $(Text, { strong: true }, 'Best Pokemon for this moveset'),
+      chunk2(info.meta.goodAgainst.slice(0, 4)).map(pokes => (
+        $(View, {
+          key: pokes[0].name + pokes[1].name,
+          style: { paddingTop: 4, paddingBottom: 4 },
+        }, [
           $(Row, {
-            vertical: 'center',
+            horizontal: 'center',
           }, [
-            $(Col, [
-              $(Avatar, {
-                backgroundColor: getTypeColor(poke),
-                src: `images/${poke.name}.png`,
-                size: 32,
-                style: {
-                  padding: 4,
-                },
-              }),
-            ]),
-            $(Col, [
-              $(View, {
-                style: { marginLeft: 4 },
-              }, [
-                $(Text, ucFirst(poke.name)),
-                $(SmallText, { label: 'DPS', value: poke.dps.toFixed(2) }),
-              ]),
-            ]),
+            $(Col, {
+              horizontal: 'center',
+            }, [$(SmallPokeInfo, { poke: pokes[0] })]),
+            $(Col, {
+              horizontal: 'center',
+            }, [$(SmallPokeInfo, { poke: pokes[1] })]),
           ]),
         ])
       )),
     ]),
 
-    $(View, { style: { marginBottom: 24 }}),
+    $(View, {
+      style: {
+        marginBottom: 16,
+        marginTop: 16,
+        textAlign: 'center',
+      },
+    }, [
+      $(Text, { strong: true }, 'This moveset vs Top Gym Defenders'),
+      chunk2(info.meta.common).map(pokes => (
+        $(View, {
+          key: pokes[0].name + pokes[1].name,
+          style: { paddingTop: 4, paddingBottom: 4 },
+        }, [
+          $(Row, {
+            horizontal: 'center',
+          }, [
+            $(Col, {
+              horizontal: 'center',
+            }, [$(SmallPokeInfo, { poke: pokes[0] })]),
+            $(Col, {
+              horizontal: 'center',
+            }, [$(SmallPokeInfo, { poke: pokes[1] })]),
+          ]),
+        ])
+      )),
+    ]),
   ])
 )
 
@@ -638,7 +686,7 @@ const PokeImage = ({
   pokemon,
   size,
 }) => (
-  $(Image, {
+  $('img', {
     onClick: () => transition(changePokemon, pokemon),
     src: `images/${pokemon.name}.png`,
     height: size || 120,

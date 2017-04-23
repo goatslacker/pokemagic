@@ -8,15 +8,6 @@ const cp = require('./cp')
 const N_LVL = 30
 const N_IV = 15
 
-const GymPokemon = Pokemon.filter(x => !x.evolutionBranch)
-
-const getAvgFrom = arr => f => arr.reduce((sum, n) => sum + f(n), 0) / arr.length
-
-const fix = n => Math.round(n * 100) / 100
-
-const PokeCache = {}
-Pokemon.forEach(mon => PokeCache[mon.name] = mon)
-
 const Legendaries = {
   ARTICUNO: 1,
   CELEBI: 1,
@@ -33,6 +24,25 @@ const Legendaries = {
 }
 
 const filterLegendaries = x => !Legendaries.hasOwnProperty(x.name.toUpperCase())
+
+const GymPokemon = Pokemon
+  .filter(x => !x.evolutionBranch)
+  .filter(filterLegendaries)
+  .sort((a, b) => {
+    return cp.getMaxCPForLevel(a, LevelToCPM[N_LVL]) >
+      cp.getMaxCPForLevel(b, LevelToCPM[N_LVL]) ? -1 : 1
+  })
+  // Only calculate the top 10 in CP minus legendaries. DPS is a most useful list
+  .slice(0, 10)
+
+const getAvgFrom = arr => f => arr.reduce((sum, n) => sum + f(n), 0) / arr.length
+
+const fix = n => Math.round(n * 100) / 100
+
+const PokeCache = {}
+Pokemon.forEach(mon => PokeCache[mon.name] = mon)
+
+const CommonGymPokemon = GymPokemon.slice(0, 6)
 
 // This function's purpose is to get the avg combo dps of a move.
 // our comboDPS function gets the combo DPS of moves but for a particular pokemon
@@ -62,7 +72,6 @@ function avgComboDPS(mon, move1, move2, ivAtk, pokeLevel) {
         cp.getMaxCPForLevel(PokeCache[x.vs], LevelToCPM[N_LVL])
       ),
     }, PokeCache[x.vs]))
-    .filter(filterLegendaries)
     .sort((a, b) => a.score > b.score ? -1 : 1)
     .slice(0, 10)
 
@@ -70,6 +79,11 @@ function avgComboDPS(mon, move1, move2, ivAtk, pokeLevel) {
     .sort((a, b) => a.combo.dps > b.combo.dps ? 1 : -1)
     .map(x => PokeCache[x.vs])
     .slice(0, 10)
+
+  const common = CommonGymPokemon
+    .map(x => Object.assign({
+      dps: cache[x.name].combo.dps,
+    }, PokeCache[x.name]))
 
   const avg = getAvgFrom(defenders)
 
@@ -85,7 +99,7 @@ function avgComboDPS(mon, move1, move2, ivAtk, pokeLevel) {
     },
     quick: Object.assign({}, schemaMove(mon, move1, dmg1)),
     charge: Object.assign({}, schemaMove(mon, move2, dmg2)),
-    meta: { badAgainst, goodAgainst },
+    meta: { badAgainst, goodAgainst, common },
   }
 }
 
