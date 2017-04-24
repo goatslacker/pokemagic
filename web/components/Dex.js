@@ -23,10 +23,11 @@ const bestVs = require('../../src/bestVs')
 const cp = require('../../src/cp')
 const getTypeColor = require('../utils/getTypeColor')
 const goodFor = require('../../src/goodFor')
+const guessIVs = require('../../src/guessIVs')
 const ovRating = require('../../src/ovRating')
 const pokeRatings = require('../../src/pokeRatings')
 const scrollTop = require('../utils/scrollTop')
-const guessIVs = require('../../src/guessIVs')
+const transmitter = require('transmitter')
 const { Card, CardHeader, CardText } = require('material-ui/Card')
 const { List, ListItem } = require('material-ui/List')
 const { Tabs, Tab } = require('material-ui/Tabs')
@@ -46,6 +47,8 @@ const {
   yellow300,
 } = require('material-ui/styles/colors')
 
+const bus = transmitter()
+
 const AllPokemon = Pokemon.map(x => Object.assign({
   l30CP: cp.getMaxCPForLevel(x, LevelToCPM['30']),
   maxCP: cp.getMaxCPForLevel(x, LevelToCPM['40']),
@@ -63,8 +66,8 @@ const calculateValues = state => ({
 //  stat: STAT_VALUES[state.stat],
 })
 
-const transition = (changePokemon, value) => {
-  changePokemon(value)
+const changePokemon = pokemon => {
+  bus.publish(pokemon)
   scrollTop()
 }
 
@@ -158,6 +161,7 @@ const SmallPokeInfo = ({
       backgroundColor: getTypeColor(poke),
       src: `images/${poke.name}.png`,
       size: 32,
+      onClick: () => changePokemon(poke),
       style: {
         marginRight: 4,
         padding: 4,
@@ -523,7 +527,6 @@ const PokeInfo = pure(({
 ))
 
 const Evolution = pure(({
-  changePokemon,
   evolution,
   selectedPokemon,
 }) => (
@@ -534,7 +537,6 @@ const Evolution = pure(({
       horizontal: 'center',
     }, evolution.filter(x => selectedPokemon.name !== x.name).map(pokemon => (
       $(PokeImage, {
-        changePokemon,
         pokemon,
         size: 60,
       })
@@ -639,7 +641,6 @@ const IVCalculator = compose(
 ))
 
 const PokemonPage = pure(({
-  changePokemon,
   pokemon,
 }) => (
   $(View, {
@@ -649,7 +650,6 @@ const PokemonPage = pure(({
   }, [
     $(PokeInfo, { pokemon }),
     PokeMap[pokemon.family].length > 1 && $(Evolution, {
-      changePokemon,
       evolution: PokeMap[pokemon.family],
       selectedPokemon: pokemon,
     }),
@@ -660,12 +660,11 @@ const PokemonPage = pure(({
 ))
 
 const PokeImage = ({
-  changePokemon,
   pokemon,
   size,
 }) => (
   $('img', {
-    onClick: () => transition(changePokemon, pokemon),
+    onClick: () => changePokemon(pokemon),
     src: `images/${pokemon.name}.png`,
     height: size || 120,
     width: size || 120,
@@ -689,16 +688,14 @@ const PokemonByDPS = AllPokemon.map(poke => {
 }).sort((a, b) => a.dps > b.dps ? -1 : 1)
 
 const PokeList = pure(({
-  changePokemon,
   list,
 }) => (
-  $(View, list.map(pokemon => $(PokeImage, { pokemon, changePokemon })))
+  $(View, list.map(pokemon => $(PokeImage, { pokemon })))
 ))
 
 const dexList = AllPokemon.map(x => x.name.replace(/_/g, ' '))
 
 const Dex = ({
-  changePokemon,
   pokemon,
   list,
   sortPokemon,
@@ -757,14 +754,14 @@ const Dex = ({
           filter: (searchText, key) => key.indexOf(searchText.toUpperCase()) > -1,
           fullWidth: true,
           hintText: 'Search for Pokemon',
-          onNewRequest: text => transition(changePokemon, PokeMap[text.toUpperCase()]),
+          onNewRequest: text => changePokemon(PokeMap[text.toUpperCase()]),
         })
       ])
     ),
     pokemon && (
       $(AppBar, {
         title: pokemon ? ucFirst(pokemon.name) : null,
-        onLeftIconButtonTouchTap: () => transition(changePokemon, null),
+        onLeftIconButtonTouchTap: () => changePokemon(null),
         iconElementLeft: $(IconButton, { touch: true }, [$(BackIcon)]),
         iconElementRight: $(IconButton, {
           style: {
@@ -776,10 +773,10 @@ const Dex = ({
     ),
 
     // Empty text then list out all the Pokes
-    pokemon === null && $(PokeList, { list, changePokemon }),
+    pokemon === null && $(PokeList, { list }),
 
     // The Pokedex view
-    pokemon !== null && $(PokemonPage, { changePokemon, pokemon }),
+    pokemon !== null && $(PokemonPage, { pokemon }),
   ])
 )
 
@@ -789,20 +786,19 @@ const findPokemon = name => (
 
 const hashChanged = () => findPokemon(window.location.hash.split('/')[1] || '')
 
-const maybeChangePokemonFromHash = ({
-  changePokemon
-}) => {
+const maybeChangePokemonFromHash = () => {
   const poke = hashChanged()
-  if (poke) transition(changePokemon, poke)
+  if (poke) changePokemon(poke)
 }
 
 module.exports = compose(
-  withState('pokemon', 'changePokemon', null),
+  withState('pokemon', 'changePokemonInternal', null),
   withState('list', 'sortPokemon', AllPokemon),
   lifecycle({
     componentDidMount() {
       maybeChangePokemonFromHash(this.props)
       window.onhashchange = () => maybeChangePokemonFromHash(this.props)
+      bus.subscribe(pokemon => this.props.changePokemonInternal(pokemon))
     },
   })
 )(Dex)
