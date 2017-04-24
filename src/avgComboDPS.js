@@ -25,9 +25,11 @@ const Legendaries = {
 
 const filterLegendaries = x => !Legendaries.hasOwnProperty(x.name.toUpperCase())
 
-const GymPokemon = Pokemon
+const FinalEvos = Pokemon
   .filter(x => !x.evolutionBranch)
   .filter(filterLegendaries)
+
+const GymPokemon = FinalEvos
   .sort((a, b) => {
     return cp.getMaxCPForLevel(a, LevelToCPM[N_LVL]) >
       cp.getMaxCPForLevel(b, LevelToCPM[N_LVL]) ? -1 : 1
@@ -48,7 +50,7 @@ const CommonGymPokemon = GymPokemon.slice(0, 6)
 // our comboDPS function gets the combo DPS of moves but for a particular pokemon
 function avgComboDPS(mon, move1, move2, ivAtk, pokeLevel) {
   const cache = {}
-  const defenders = GymPokemon.map((opponent) => {
+  FinalEvos.forEach((opponent) => {
     const res = comboDPS(
       mon,
       opponent,
@@ -60,24 +62,23 @@ function avgComboDPS(mon, move1, move2, ivAtk, pokeLevel) {
       move2
     )
     cache[opponent.name] = res
-    return Object.assign({ vs: opponent.name }, res)
   })
 
-  const goodAgainst = GymPokemon
-    .map(x => Object.assign({ vs: x.name }, cache[x.name]))
+  const goodAgainst = FinalEvos
     .map(x => Object.assign({
-      dps: x.combo.dps,
+      dps: cache[x.name].combo.dps,
       score: (
-        x.combo.dps *
-        cp.getMaxCPForLevel(PokeCache[x.vs], LevelToCPM[N_LVL])
+        cache[x.name].combo.dps *
+        cp.getMaxCPForLevel(PokeCache[x.name], LevelToCPM[N_LVL])
       ),
-    }, PokeCache[x.vs]))
+    }, PokeCache[x.name]))
     .sort((a, b) => a.score > b.score ? -1 : 1)
     .slice(0, 10)
 
-  const badAgainst = defenders
+  const badAgainst = FinalEvos
+    .map(x => cache[x.name])
     .sort((a, b) => a.combo.dps > b.combo.dps ? 1 : -1)
-    .map(x => PokeCache[x.vs])
+    .map(x => PokeCache[x.name])
     .slice(0, 10)
 
   const common = CommonGymPokemon
@@ -85,7 +86,8 @@ function avgComboDPS(mon, move1, move2, ivAtk, pokeLevel) {
       dps: cache[x.name].combo.dps,
     }, PokeCache[x.name]))
 
-  const avg = getAvgFrom(defenders)
+  const dpsAverage = GymPokemon.map(x => cache[x.name])
+  const avg = getAvgFrom(dpsAverage)
 
   const dmg1 = avg(x => x.quick.dmg)
   const dmg2 = avg(x => x.charge.dmg)

@@ -182,13 +182,41 @@ const MoveInfo = ({
 }) => (
   $(Paper, {
     style: {
-      padding: 12,
+      padding: 24,
     },
   }, [
     $(Row, {
       horizontal: 'center',
       vertical: 'center',
     }, [
+      $(Col, {
+        horizontal: 'center',
+      }, [
+        $(View, {
+          style: {
+            marginRight: 24,
+            textAlign: 'center',
+          },
+        }, [
+          $(Avatar, {
+            backgroundColor: (atk
+              ? getColor(rate.atk.offenseRating)
+              : getColor(rate.def.defenseRating)
+            ),
+            color: grey800,
+            size: 48,
+            style: {
+              marginBottom: 2,
+            },
+          }, atk ? rate.atk.offenseRating : rate.def.defenseRating),
+
+          $(View, [
+            atk && $(SmallText, { center: true, label: 'DPS', value: rate.atk.dps }),
+            def && $(SmallText, { center: true, label: 'DPS', value: rate.def.gymDPS }),
+          ]),
+        ]),
+      ]),
+
       $(Col, {
         horizontal: 'center',
       }, [
@@ -248,33 +276,6 @@ const MoveInfo = ({
         ]),
       ]),
 
-      $(Col, {
-        horizontal: 'flex-end',
-      }, [
-        $(View, {
-          style: {
-            marginRight: 24,
-            textAlign: 'center',
-          },
-        }, [
-          $(Avatar, {
-            backgroundColor: (atk
-              ? getColor(rate.atk.offenseRating)
-              : getColor(rate.def.defenseRating)
-            ),
-            color: grey800,
-            size: 36,
-            style: {
-              marginBottom: 2,
-            },
-          }, atk ? rate.atk.offenseRating : rate.def.defenseRating),
-
-          $(View, [
-            atk && $(SmallText, { center: true, label: 'DPS', value: rate.atk.dps }),
-            def && $(SmallText, { center: true, label: 'DPS', value: rate.def.gymDPS }),
-          ]),
-        ]),
-      ]),
     ]),
 
     $(View, {
@@ -284,7 +285,7 @@ const MoveInfo = ({
         textAlign: 'center',
       },
     }, [
-      $(Text, { strong: true }, 'Best Pokemon for this moveset'),
+      $(Text, { strong: true }, 'This moveset is good against'),
       chunk2(info.meta.goodAgainst.slice(0, 4)).map(pokes => (
         $(View, {
           key: pokes[0].name + pokes[1].name,
