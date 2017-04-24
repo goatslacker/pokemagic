@@ -24,6 +24,7 @@ const cp = require('../../src/cp')
 const getTypeColor = require('../utils/getTypeColor')
 const goodFor = require('../../src/goodFor')
 const guessIVs = require('../../src/guessIVs')
+const hp = require('../../src/hp')
 const ovRating = require('../../src/ovRating')
 const pokeRatings = require('../../src/pokeRatings')
 const scrollTop = require('../utils/scrollTop')
@@ -45,6 +46,7 @@ const {
   pink500,
   red400,
   yellow300,
+  yellow600,
 } = require('material-ui/styles/colors')
 
 const bus = transmitter()
@@ -105,6 +107,8 @@ const sortMoves = (pokemon, sortOrder) => (
 // TODO all data should come clean
 const ucFirst = x => x[0].toUpperCase() + x.slice(1).toLowerCase()
 
+const timeoutRatio = (dps, opp) => dps * 60 / (hp.getHP(opp, 15, LevelToCPM['40']) * 2)
+
 const Types = {}
 const PokeMap = AllPokemon.reduce((obj, mon) => {
   const type1 = mon.type1
@@ -130,6 +134,7 @@ const getColor = n => (
 const SmallText = ({
   center,
   label,
+  textColor,
   value,
 }) => (
   $(Row, {
@@ -144,7 +149,7 @@ const SmallText = ({
     }, label),
     $(Text, {
       style: {
-        color: pink500,
+        color: textColor || pink500,
         fontSize: 14,
       },
     }, value),
@@ -172,7 +177,15 @@ const SmallPokeInfo = ({
         style: { marginLeft: 4 },
       }, [
         $(Text, ucFirst(poke.name)),
-        $(SmallText, { label: 'DPS', value: poke.dps.toFixed(2) }),
+        $(SmallText, {
+          label: 'DPS',
+          textColor: (
+            timeoutRatio(poke.dps, poke) > 2 ? green400 :
+            timeoutRatio(poke.dps, poke) > 1 ? yellow600 :
+            red400
+          ),
+          value: poke.dps.toFixed(2),
+        }),
       ]),
     ]),
   ])
@@ -796,9 +809,9 @@ module.exports = compose(
   withState('list', 'sortPokemon', AllPokemon),
   lifecycle({
     componentDidMount() {
+      bus.subscribe(pokemon => this.props.changePokemonInternal(pokemon))
       maybeChangePokemonFromHash(this.props)
       window.onhashchange = () => maybeChangePokemonFromHash(this.props)
-      bus.subscribe(pokemon => this.props.changePokemonInternal(pokemon))
     },
   })
 )(Dex)
