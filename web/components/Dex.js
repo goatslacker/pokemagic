@@ -178,7 +178,6 @@ const MoveInfo = ({
   atk,
   def,
   info,
-  rate,
 }) => (
   $(Paper, {
     style: {
@@ -189,34 +188,6 @@ const MoveInfo = ({
       horizontal: 'center',
       vertical: 'center',
     }, [
-      $(Col, {
-        horizontal: 'center',
-      }, [
-        $(View, {
-          style: {
-            marginRight: 24,
-            textAlign: 'center',
-          },
-        }, [
-          $(Avatar, {
-            backgroundColor: (atk
-              ? getColor(rate.atk.offenseRating)
-              : getColor(rate.def.defenseRating)
-            ),
-            color: grey800,
-            size: 48,
-            style: {
-              marginBottom: 2,
-            },
-          }, atk ? rate.atk.offenseRating : rate.def.defenseRating),
-
-          $(View, [
-            atk && $(SmallText, { center: true, label: 'DPS', value: rate.atk.dps }),
-            def && $(SmallText, { center: true, label: 'DPS', value: rate.def.gymDPS }),
-          ]),
-        ]),
-      ]),
-
       $(Col, {
         horizontal: 'center',
       }, [
@@ -249,8 +220,16 @@ const MoveInfo = ({
             ]),
           ]),
         ]),
+      ]),
 
-        $(View, [
+      $(Col, {
+        horizontal: 'center',
+      }, [
+        $(View, {
+          style: {
+            marginBottom: 8,
+          },
+        }, [
           $(Text, {
             style: {
               fontWeight: info.charge.stab ? 'bold' : 'normal',
@@ -467,7 +446,6 @@ const Movesets = pure(({
       $(Tab, { label: 'Attacking' }, sortMoves(pokemon, 1).map(res => (
         $(MoveInfo, {
           key: `ATK+${res.info.combo.name}`,
-          rate: res.rate,
           info: res.info,
           atk: true,
         })
@@ -476,7 +454,6 @@ const Movesets = pure(({
       $(Tab, { label: 'Defending' }, sortMoves(pokemon, 0).map(res => (
         $(MoveInfo, {
           key: `DEF+${res.info.combo.name}`,
-          rate: res.rate,
           info: res.info,
           def: true,
         })
