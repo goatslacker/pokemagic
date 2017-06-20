@@ -17,7 +17,7 @@ function getDmgVs(obj) {
 
   return moves.map((moveName) => {
     const move = Moves[moveName]
-    const stab = move.Type === player.type1 || move.Type === player.type2 ? 1.25 : 1
+    const stab = move.Type === player.type1 || move.Type === player.type2 ? 1.2 : 1
     const power = move.Power || 0
 
     const fxMul = getTypeEffectiveness(opponent, move)

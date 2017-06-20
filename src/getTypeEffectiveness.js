@@ -91,27 +91,27 @@ function getTypeEffectiveness(pokemon, move) {
   const i2 = ImmuneTypes[pokemon.type2]
 
   if (s1.hasOwnProperty(move.Type) && s2 && s2.hasOwnProperty(move.Type)) {
-    return 1.56
+    return 1.96
   }
 
   if (s1.hasOwnProperty(move.Type) || (s2 && s2.hasOwnProperty(move.Type))) {
-    return 1.25
+    return 1.4
   }
 
   if (r1.hasOwnProperty(move.Type) && r2 && r2.hasOwnProperty(move.Type)) {
-    return 0.64
+    return 0.501
   }
 
   if (i1.hasOwnProperty(move.Type) && i2 && i2.hasOwnProperty(move.Type)) {
-    return 0.64
+    return 0.26
   }
 
   if (r1.hasOwnProperty(move.Type) || (r2 && r2.hasOwnProperty(move.Type))) {
-    return 0.8
+    return 0.714
   }
 
   if (i1.hasOwnProperty(move.Type) || (i2 && i2.hasOwnProperty(move.Type))) {
-    return 0.8
+    return 0.51
   }
 
   return 1
