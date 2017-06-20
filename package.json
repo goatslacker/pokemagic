@@ -13,8 +13,9 @@
   },
   "dependencies": {
     "material-ui": "0.16.1",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
+    "react": "^15.3.2",
+    "react-addons-transition-group": "^15.3.2",
+    "react-dom": "^15.3.2",
     "react-redux": "4.4.5",
     "react-tap-event-plugin": "^1.0.0",
     "recompose": "0.20.2",
