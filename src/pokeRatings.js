@@ -1,6 +1,7 @@
 const Pokemon = require('../json/pokemon.json')
 const ovRating = require('./ovRating')
 const avgComboDPS = require('./avgComboDPS')
+const addTMCombinations = require('./addTMCombinations')
 
 const scoreQuickMove = move => (
   (1 / Math.pow(Math.min(move.startTime, 2), 0.2)) *
@@ -20,7 +21,7 @@ const defScoreComboMove = (quickMove, chargeMove) => (
 const Fast = {}
 
 const PokeMoves = Pokemon.reduce((pokes, poke) => Object.assign(pokes, {
-  [poke.name]: poke.moves.combo.reduce((o, { A, B }) => {
+  [poke.name]: addTMCombinations(poke).reduce((o, { A, B }) => {
     const info = avgComboDPS(poke, A, B)
     o[info.quick.name] = info.quick
     o[info.charge.name] = info.charge

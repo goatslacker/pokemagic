@@ -2,6 +2,7 @@ const Pokemon = require('../json/pokemon.json')
 const comboDPS = require('./comboDPS')
 const LevelToCPM = require('../json/level-to-cpm.json')
 const hp = require('./hp')
+const addTMCombinations = require('./addTMCombinations')
 
 const N_LVL = 30
 const N_IV = 15
@@ -32,13 +33,15 @@ const ECpM = LevelToCPM[N_LVL]
 const fix2 = n => Math.round(n * 100) / 100
 
 // What the opponen's avg gym DPS is vs you
-const avgGymDPS = (opp, you, gymDPS) => (
-  opp.moves.combo.reduce((n, x) => {
+const avgGymDPS = (opp, you, gymDPS) => {
+  const moves = addTMCombinations(opp)
+
+  return moves.reduce((n, x) => {
     const move1 = x.A
     const move2 = x.B
     return n + comboDPS(opp, you, N_IV, N_IV, N_LVL, N_LVL, move1, move2).combo.gymDPS
-  }, 0) / opp.moves.combo.length
-)
+  }, 0) / moves.length
+}
 
 const willTimeout = (dps, oppHP) => dps * 60 <= oppHP
 
@@ -58,14 +61,16 @@ const scoreAllMoves = (you, opp, oppGymDPS) => avgScoreMove(
 )
 
 // Get your best combo moves vs Opp sorted by DPS
-const getComboMovesSortedByDPS = (you, opp) => (
-  you.moves.combo.reduce((arr, x) => {
+const getComboMovesSortedByDPS = (you, opp) => {
+  const moves = addTMCombinations(you)
+
+  return moves.reduce((arr, x) => {
     const move1 = x.A
     const move2 = x.B
     return arr.concat(comboDPS(you, opp, N_IV, N_IV, N_LVL, N_LVL, move1, move2))
   }, [])
   .sort((a, b) => a.combo.dps > b.combo.dps ? -1 : 1)
-)
+}
 
 const getOpponentTTL = (opp, yourDPS) => (
   hp.getHP(opp, N_IV, ECpM) * 2 / yourDPS
@@ -154,11 +159,11 @@ const bestVs = opp => (
   .filter(x => Boolean(x.poke))
   .map(x => Object.assign(x.poke, { score: x.score }))
   .filter(filterLegendaries)
-  .sort((a, b) => a.score > b.score ? -1 : 1)
+  .sort((a, b) => a.dps > b.dps ? -1 : 1)
 )
 
 module.exports = bestVs
 
-//console.log(bestVs(
-//  Pokemon.filter(x => x.name === 'RHYDON')[0]
-//).map(x => ({ p: x.name, q: x.quickMove, c: x.chargeMove, d: x.dps })))
+console.log(bestVs(
+ Pokemon.filter(x => x.name === 'DRAGONITE')[0]
+).map(x => ({ p: x.name, q: x.quickMove, c: x.chargeMove, d: x.dps })))

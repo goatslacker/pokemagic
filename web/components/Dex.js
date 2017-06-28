@@ -18,6 +18,7 @@ const Popover = require('material-ui/Popover').default
 const RaisedButton = require('material-ui/RaisedButton').default
 const SelectField = require('material-ui/SelectField').default
 const TextField = require('material-ui/TextField').default
+const addTMCombinations = require('../../src/addTMCombinations')
 const avgComboDPS = require('../../src/avgComboDPS')
 const bestVs = require('../../src/bestVs')
 const cp = require('../../src/cp')
@@ -93,8 +94,9 @@ const calculateIVs = (pokemon, cp, hp, stardust) => {
 const sortByAtk = (a, b) => a.info.combo.dps > b.info.combo.dps ? -1 : 1
 const sortByDef = (a, b) => a.rate.def.raw > b.rate.def.raw ? -1 : 1
 
-const sortMoves = (pokemon, sortOrder) => (
-  pokemon.moves.combo.reduce((acc, x) => {
+const sortMoves = (pokemon, sortOrder) => {
+  const moves = addTMCombinations(pokemon)
+  return moves.reduce((acc, x) => {
     const move1 = x.A
     const move2 = x.B
     return acc.concat({
@@ -102,7 +104,7 @@ const sortMoves = (pokemon, sortOrder) => (
       info: avgComboDPS(pokemon, move1, move2),
     })
   }, []).sort(sortOrder ? sortByAtk : sortByDef)
-)
+}
 
 // TODO all data should come clean
 const ucFirst = x => x[0].toUpperCase() + x.slice(1).toLowerCase()

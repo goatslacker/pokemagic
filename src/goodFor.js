@@ -1,8 +1,10 @@
 const avgComboDPS = require('./avgComboDPS')
+const addTMCombinations = require('./addTMCombinations')
 
 const goodFor = poke => {
   const defenders = {}
-  poke.moves.combo.forEach((move) => {
+  const moves = addTMCombinations(poke)
+  moves.forEach((move) => {
     const info = avgComboDPS(poke, move.A, move.B)
     info.meta.goodAgainst.forEach(opp => {
       if (defenders[opp.name]) {
