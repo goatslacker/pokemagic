@@ -23,7 +23,6 @@ const avgComboDPS = require('../../src/avgComboDPS')
 const bestVs = require('../../src/bestVs')
 const cp = require('../../src/cp')
 const getTypeColor = require('../utils/getTypeColor')
-const goodFor = require('../../src/goodFor')
 const guessIVs = require('../../src/guessIVs')
 const hp = require('../../src/hp')
 const ovRating = require('../../src/ovRating')
@@ -59,16 +58,6 @@ const AllPokemon = Pokemon.map(x => Object.assign({
   def: ovRating(x).def,
 }, x))
 
-const calculateValues = state => ({
-  cp: Number(state.cp),
-  hp: Number(state.hp),
-  stardust: Number(state.stardust),
-//  level: null,
-//  attrs: Object.keys(state.attrs || {}),
-//  ivRange: IV_RANGE[state.ivRange],
-//  stat: STAT_VALUES[state.stat],
-})
-
 const changePokemon = pokemon => {
   bus.publish(pokemon)
   scrollTop()
@@ -78,18 +67,6 @@ const chunk2 = arr => arr.map((x, i, l) => {
   if (i % 2 === 0) return l.slice(i, i + 2)
   return null
 }).filter(Boolean)
-
-const calculateIVs = (pokemon, cp, hp, stardust) => {
-  const payload = { cp, hp, stardust }
-  try {
-    const values = calculateValues(payload)
-    return guessIVs(values, pokemon)
-  } catch (err) {
-    console.error(err)
-    alert('Looks like there is a problem with the values you entered.')
-    return []
-  }
-}
 
 const sortByAtk = (a, b) => a.info.combo.dps > b.info.combo.dps ? -1 : 1
 const sortByDef = (a, b) => a.rate.def.raw > b.rate.def.raw ? -1 : 1
@@ -302,33 +279,6 @@ const MoveInfo = ({
         ])
       )),
     ]),
-
-    $(View, {
-      style: {
-        marginBottom: 16,
-        marginTop: 16,
-        textAlign: 'center',
-      },
-    }, [
-      $(Text, { strong: true }, 'This moveset vs Top Gym Defenders'),
-      chunk2(info.meta.common).map(pokes => (
-        $(View, {
-          key: pokes[0].name + pokes[1].name,
-          style: { paddingTop: 4, paddingBottom: 4 },
-        }, [
-          $(Row, {
-            horizontal: 'center',
-          }, [
-            $(Col, {
-              horizontal: 'center',
-            }, [$(SmallPokeInfo, { poke: pokes[0] })]),
-            $(Col, {
-              horizontal: 'center',
-            }, [$(SmallPokeInfo, { poke: pokes[1] })]),
-          ]),
-        ])
-      )),
-    ]),
   ])
 )
 
@@ -445,14 +395,6 @@ const BestVs = pure(({
       best: bestVs(pokemon),
     }),
   ])
-))
-
-const GoodAgainst = pure(({
-  pokemon,
-}) => (
-  $(Module, {
-    title: `${ucFirst(pokemon.name)} is good against...`,
-  }, goodFor(pokemon).map(poke => $(GoodInfo, { poke })))
 ))
 
 const Movesets = pure(({
@@ -637,19 +579,6 @@ const IVCalculator = compose(
 //              },
 //            })
 //          ))),
-
-        // TODO I need a spacing component
-        $(RaisedButton, {
-          label: 'Calculate',
-          primary: true,
-          onClick: () => setResults(
-            calculateIVs(pokemon, ivCP, ivHP, ivStardust)
-          ),
-          style: {
-            marginBottom: 24,
-            marginTop: 24,
-          },
-        }),
       ])
     ),
   ])
@@ -670,7 +599,6 @@ const PokemonPage = pure(({
     }),
     $(Movesets, { pokemon }),
     $(BestVs, { pokemon }),
-    $(GoodAgainst, { pokemon }),
   ])
 ))
 
