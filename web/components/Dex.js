@@ -35,6 +35,8 @@ const {
   yellow600,
 } = require('material-ui/styles/colors')
 
+const TypeIcon = require('./TypeIcon')
+
 const DustTolevel = require('../../json/dust-to-level.json')
 const LevelToCPM = require('../../json/level-to-cpm')
 const Pokemon = require('../../json/pokemon.json')
@@ -328,22 +330,16 @@ const Movesets = pure(({
   $(Module, {
     title: 'Movesets',
   }, [
-    $(Tabs, [
-      $(Tab, { label: 'Attacking' }, sortMoves(pokemon, 1).map(res => (
+    $(View, {
+      horizontal: 'center',
+    }, [
+      sortMoves(pokemon, 1).map(res => (
         $(MoveInfo, {
           key: `ATK+${res.info.combo.name}`,
           info: res.info,
           atk: true,
         })
-      ))),
-
-      $(Tab, { label: 'Defending' }, sortMoves(pokemon, 0).map(res => (
-        $(MoveInfo, {
-          key: `DEF+${res.info.combo.name}`,
-          info: res.info,
-          def: true,
-        })
-      ))),
+      )),
     ]),
   ])
 ))
@@ -379,7 +375,7 @@ const PokeInfo = pure(({
     $(Row, {
       vertical: 'center',
     }, [
-      $(Col, [
+      $(View, [
         $(Avatar, {
           backgroundColor: getTypeColor(pokemon),
           src: `images/${pokemon.name}.png`,
@@ -387,16 +383,16 @@ const PokeInfo = pure(({
           style: {
             padding: 4,
           },
-        })
+        }),
+        $(Col, [
+          pokemon.type1 && $(TypeIcon, { type: pokemon.type1 }),
+          pokemon.type2 && $(TypeIcon, { type: pokemon.type2 }),
+        ]),
       ]),
 
       $(Col, [
         $(Chippy, { leftText: 'Max CP', rightText: pokemon.maxCP }),
         $(Chippy, { leftText: 'L30 CP', rightText: pokemon.l30CP }),
-        $(Chippy, {
-          leftText: [pokemon.type1, pokemon.type2].filter(Boolean).join(' / '),
-          rightText: null,
-        }),
       ]),
 
       $(Col, [
