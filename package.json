@@ -12,21 +12,20 @@
     "deploy": "npm run build && cd static && surge --domain pocketmaster.surge.sh"
   },
   "dependencies": {
-    "material-ui": "0.16.1",
-    "react": "^15.3.2",
-    "react-addons-transition-group": "^15.3.2",
-    "react-dom": "^15.3.2",
-    "react-redux": "4.4.5",
-    "react-tap-event-plugin": "^1.0.0",
-    "recompose": "0.20.2",
-    "redux": "3.6.0",
-    "transmitter": "3.0.1"
+    "material-ui": "^0.20.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "react-tap-event-plugin": "^3.0.2",
+    "recompose": "^0.26.0",
+    "redux": "^3.7.2",
+    "transmitter": "^3.0.1"
   },
   "devDependencies": {
-    "babel-preset-airbnb": "2.0.0",
-    "babelify": "7.3.0",
-    "browserify": "13.1.0",
-    "cssify": "1.0.3",
-    "surge": "0.18.0"
+    "babel-core": "^6.26.0",
+    "babel-preset-airbnb": "^2.4.0",
+    "babelify": "^8.0.0",
+    "browserify": "^14.5.0",
+    "surge": "^0.19.0"
   }
 }

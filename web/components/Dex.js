@@ -1,42 +1,25 @@
-const $ = require('../utils/n')
+const transmitter = require('transmitter')
+const { compose, lifecycle, pure, withState } = require('recompose')
+
 const AppBar = require('material-ui/AppBar').default
 const AutoComplete = require('material-ui/AutoComplete').default
 const Avatar = require('material-ui/Avatar').default
 const BackIcon = require('material-ui/svg-icons/navigation/arrow-back').default
 const Chip = require('material-ui/Chip').default
 const Divider = require('material-ui/Divider').default
-const DustTolevel = require('../../json/dust-to-level.json')
 const IconButton = require('material-ui/IconButton').default
 const IconMenu = require('material-ui/IconMenu').default
-const LevelToCPM = require('../../json/level-to-cpm')
 const Menu = require('material-ui/Menu').default
 const MenuItem = require('material-ui/MenuItem').default
 const MoreVertIcon = require('material-ui/svg-icons/navigation/more-vert').default
 const Paper = require('material-ui/Paper').default
-const Pokemon = require('../../json/pokemon.json')
 const Popover = require('material-ui/Popover').default
 const RaisedButton = require('material-ui/RaisedButton').default
 const SelectField = require('material-ui/SelectField').default
 const TextField = require('material-ui/TextField').default
-
-
-// TODO rm all these
-const addTMCombinations = require('../../src/addTMCombinations')
-const avgComboDPS = require('../../src/avgComboDPS')
-const cp = require('../../src/cp')
-const getTypeColor = require('../utils/getTypeColor')
-const guessIVs = require('../../src/guessIVs')
-const hp = require('../../src/hp')
-const ovRating = require('../../src/ovRating')
-const pokeRatings = require('../../src/pokeRatings')
-
-const scrollTop = require('../utils/scrollTop')
-const transmitter = require('transmitter')
 const { Card, CardHeader, CardText } = require('material-ui/Card')
 const { List, ListItem } = require('material-ui/List')
 const { Tabs, Tab } = require('material-ui/Tabs')
-const { View, Text, Row, Col } = require('../utils/Lotus.React')
-const { compose, lifecycle, pure, withState } = require('recompose')
 const {
   blueGrey50,
   cyan500,
@@ -51,6 +34,24 @@ const {
   yellow300,
   yellow600,
 } = require('material-ui/styles/colors')
+
+const DustTolevel = require('../../json/dust-to-level.json')
+const LevelToCPM = require('../../json/level-to-cpm')
+const Pokemon = require('../../json/pokemon.json')
+
+const $ = require('../utils/n')
+const scrollTop = require('../utils/scrollTop')
+const { View, Text, Row, Col } = require('../utils/Lotus.React')
+
+// TODO rm all these
+const addTMCombinations = require('../../src/addTMCombinations')
+const avgComboDPS = require('../../src/avgComboDPS')
+const cp = require('../../src/cp')
+const getTypeColor = require('../utils/getTypeColor')
+const guessIVs = require('../../src/guessIVs')
+const hp = require('../../src/hp')
+const ovRating = require('../../src/ovRating')
+const pokeRatings = require('../../src/pokeRatings')
 
 const bus = transmitter()
 
