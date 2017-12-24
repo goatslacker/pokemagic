@@ -1,48 +1,62 @@
 const Pokemon = require('../json/pokemon')
+const Legacy = require('../json/legacy')
+
+const FAST = /_FAST$/
+function isFast(move) {
+  return FAST.test(move)
+}
 
 const addTMCombinations = poke => {
-  const quick = {}
-  const charge = {}
-  const combos = {}
-  poke.moves.combo.forEach(move => {
-    quick[move.A] = 1
-    charge[move.B] = 1
-    combos[move.A + move.B] = 1
-  })
+  const comboMoves = []
 
-  const currentQuick = poke.moves.quick
-  const currentCharge = poke.moves.charge
+  if (!poke) return comboMoves
 
-  const keysQuick = Object.keys(quick)
-  const keysCharge = Object.keys(charge)
-
-  const prevQuick = keysQuick.filter(x => !currentQuick.includes(x))
-  const prevCharge = keysCharge.filter(x => !currentCharge.includes(x))
-
-  const newCombo = []
-  currentQuick.forEach(A => {
-    prevCharge.forEach(B => {
-      if (!combos[A + B]) newCombo.push({ A, B })
+  poke.moves.quick.forEach(quickMove => {
+    poke.moves.charge.forEach(chargeMove => {
+      comboMoves.push({
+        A: quickMove,
+        B: chargeMove,
+      })
     })
   })
 
-  currentCharge.forEach(B => {
-    prevQuick.forEach(A => {
-      if (!combos[A + B]) newCombo.push({ A, B })
+  const legacy = Legacy[poke.name]
+  if (legacy) {
+    // Add legacy combos
+    legacy.forEach(legacyMove => {
+      legacy.forEach(legacyMove2 => {
+        if (legacyMove === legacyMove2) return
+
+        if (isFast(legacyMove)) {
+          comboMoves.push({
+            A: legacyMove,
+            B: legacyMove2,
+            retired: true,
+          })
+        }
+      })
+
+      if (isFast(legacyMove)) {
+        poke.moves.charge.forEach(chargeMove => {
+          comboMoves.push({
+            A: legacyMove,
+            B: chargeMove,
+            tm: true,
+          })
+        })
+      } else {
+        poke.moves.quick.forEach(quickMove => {
+          comboMoves.push({
+            A: quickMove,
+            B: legacyMove,
+            tm: true,
+          })
+        })
+      }
     })
-  })
-
-  return newCombo.map(x => Object.assign(x, { tm: true })).concat(poke.moves.combo)
-
-  return {
-    currentQuick,
-    currentCharge,
-    prevQuick,
-    prevCharge,
   }
+
+  return comboMoves
 }
 
 module.exports = addTMCombinations
-
-// const moves = Pokemon.map(addTMCombinations)
-// console.log(moves[148])

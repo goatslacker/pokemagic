@@ -18,15 +18,18 @@ const Popover = require('material-ui/Popover').default
 const RaisedButton = require('material-ui/RaisedButton').default
 const SelectField = require('material-ui/SelectField').default
 const TextField = require('material-ui/TextField').default
+
+
+// TODO rm all these
 const addTMCombinations = require('../../src/addTMCombinations')
 const avgComboDPS = require('../../src/avgComboDPS')
-const bestVs = require('../../src/bestVs')
 const cp = require('../../src/cp')
 const getTypeColor = require('../utils/getTypeColor')
 const guessIVs = require('../../src/guessIVs')
 const hp = require('../../src/hp')
 const ovRating = require('../../src/ovRating')
 const pokeRatings = require('../../src/pokeRatings')
+
 const scrollTop = require('../utils/scrollTop')
 const transmitter = require('transmitter')
 const { Card, CardHeader, CardText } = require('material-ui/Card')
@@ -252,33 +255,6 @@ const MoveInfo = ({
       ]),
 
     ]),
-
-    $(View, {
-      style: {
-        marginBottom: 16,
-        marginTop: 16,
-        textAlign: 'center',
-      },
-    }, [
-      $(Text, { strong: true }, 'This moveset is good against'),
-      chunk2(info.meta.goodAgainst.slice(0, 4)).map(pokes => (
-        $(View, {
-          key: pokes[0].name + pokes[1].name,
-          style: { paddingTop: 4, paddingBottom: 4 },
-        }, [
-          $(Row, {
-            horizontal: 'center',
-          }, [
-            $(Col, {
-              horizontal: 'center',
-            }, [$(SmallPokeInfo, { poke: pokes[0] })]),
-            $(Col, {
-              horizontal: 'center',
-            }, [$(SmallPokeInfo, { poke: pokes[1] })]),
-          ]),
-        ])
-      )),
-    ]),
   ])
 )
 
@@ -317,46 +293,6 @@ const BestInfo = ({
   ])
 )
 
-const GoodInfo = ({
-  poke,
-}) => (
-  $(Card, [
-    $(CardHeader, {
-      avatar: `images/${poke.name.toUpperCase()}.png`,
-      subtitle: [poke.type1, poke.type2].filter(Boolean).map(ucFirst).join('/'),
-      title: ucFirst(poke.name),
-    }),
-  ])
-)
-
-const BestOpponent = ({
-  best,
-}) => (
-  $(Tabs, [
-    $(Tab, {
-      label: 'Score',
-    }, best
-      .sort((a, b) => a.score > b.score ? -1 : 1)
-      .map(best => $(BestInfo, { best }))
-      .slice(0, 10)
-    ),
-    $(Tab, {
-      label: 'DPS',
-    }, best
-      .sort((a, b) => a.dps > b.dps ? -1 : 1)
-      .map(best => $(BestInfo, { best }))
-      .slice(0, 10)
-    ),
-    $(Tab, {
-      label: 'TTL',
-    }, best
-      .sort((a, b) => a.ttl > b.ttl ? -1 : 1)
-      .map(best => $(BestInfo, { best }))
-      .slice(0, 10)
-    ),
-  ])
-)
-
 const Module = ({
   title,
   children,
@@ -384,18 +320,6 @@ const Module = ({
     $(Divider),
   ].filter(Boolean)))
 )
-
-const BestVs = pure(({
-  pokemon,
-}) => (
-  $(Module, {
-    title: `Best vs ${ucFirst(pokemon.name)}`,
-  }, [
-    $(BestOpponent, {
-      best: bestVs(pokemon),
-    }),
-  ])
-))
 
 const Movesets = pure(({
   pokemon,
@@ -501,89 +425,6 @@ const Evolution = pure(({
   ])
 ))
 
-
-const IVCalculator = compose(
-  withState('ivCP', 'setCP', '1049'),
-  withState('ivHP', 'setHP', '154'),
-  withState('ivStardust', 'setStardust', '1300'),
-  withState('ivResults', 'setResults', [])
-)(({
-  ivCP,
-  ivHP,
-  ivResults,
-  ivStardust,
-  pokemon,
-  setCP,
-  setHP,
-  setResults,
-  setStardust,
-}) => (
-  $(Module, {
-    title: ivResults.length ? `${ivResults.length} Possible IVs` : 'IVs',
-  }, [
-    ivResults.length > 0 && (
-      $(List, ivResults.map(result => (
-        $(ListItem, {
-          leftAvatar: (
-            $(Avatar, {
-              backgroundColor: getColor(result.range.pokemon),
-              color: grey800,
-            }, result.range.pokemon)
-          ),
-          primaryText: `${result.ivs.atk}/${result.ivs.def}/${result.ivs.sta}`,
-          secondaryText: `Level ${result.level}`,
-        })
-      )))
-    ),
-
-    ivResults.length === 0 && (
-      $(Col, {
-        horizontal: 'center',
-      }, [
-        $(TextField, {
-          floatingLabelText: 'CP',
-          value: ivCP,
-          onClick: () => setCP(''),
-          onChange: ev => setCP(ev.target.value),
-          type: 'number',
-        }),
-
-        $(TextField, {
-          floatingLabelText: 'HP',
-          value: ivHP,
-          onClick: () => setHP(''),
-          onChange: ev => setHP(ev.target.value),
-          type: 'number',
-        }),
-
-        $(SelectField, {
-          floatingLabelText: 'Stardust',
-          value: ivStardust,
-          onChange: ev => setStardust(ev.target.innerText),
-        }, Object.keys(DustTolevel)
-          .map(n => $(MenuItem, { value: n, primaryText: n }))
-        ),
-
-//          $(Row, {
-//            horizontal: 'center',
-//            style: {
-//              marginBottom: 24,
-//              marginTop: 24,
-//            },
-//          }, [red300, blue300, yellow300].map(backgroundColor => (
-//            $(Avatar, {
-//              backgroundColor,
-//              style: {
-//                marginLeft: 32,
-//                marginRight: 32,
-//              },
-//            })
-//          ))),
-      ])
-    ),
-  ])
-))
-
 const PokemonPage = pure(({
   pokemon,
 }) => (
@@ -598,7 +439,7 @@ const PokemonPage = pure(({
       selectedPokemon: pokemon,
     }),
     $(Movesets, { pokemon }),
-    $(BestVs, { pokemon }),
+//    $(BestVs, { pokemon }),
   ])
 ))
 
@@ -618,7 +459,14 @@ const PokemonByMaxCP = AllPokemon.slice().sort((a, b) => a.maxCP > b.maxCP ? -1 
 const PokemonByMaxAtk = AllPokemon.slice().sort((a, b) => a.atk > b.atk ? -1 : 1)
 const PokemonByMaxDef = AllPokemon.slice().sort((a, b) => a.def > b.def ? -1 : 1)
 const PokemonByDPS = AllPokemon.map(poke => {
-  const moves = poke.moves.combo.map(x => {
+  const combo = []
+  poke.moves.quick.forEach(A => {
+    poke.moves.charge.forEach(B => {
+      combo.push({ A, B })
+    })
+  })
+
+  const moves = combo.map(x => {
     const move1 = x.A
     const move2 = x.B
     const info = avgComboDPS(poke, move1, move2)

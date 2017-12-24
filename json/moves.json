@@ -813,7 +813,7 @@
     "Name": "STRUGGLE",
     "Type": "NORMAL",
     "Power": 35,
-    "Energy": -33,
+    "Energy": 0,
     "DurationMs": 2200,
     "DamageWindowStartMs": 1200,
     "DamageWindowEndMs": 2000
@@ -1588,5 +1588,94 @@
     "Energy": 15,
     "DamageWindowStartMs": 1100,
     "DamageWindowEndMs": 1400
+  },
+  "TAKE_DOWN_FAST": {
+    "Name": "TAKE_DOWN_FAST",
+    "Type": "NORMAL",
+    "Power": 8,
+    "DurationMs": 1200,
+    "Energy": 10,
+    "DamageWindowStartMs": 950,
+    "DamageWindowEndMs": 1100
+  },
+  "WATERFALL_FAST": {
+    "Name": "WATERFALL_FAST",
+    "Type": "WATER",
+    "Power": 16,
+    "DurationMs": 1200,
+    "Energy": 8,
+    "DamageWindowStartMs": 950,
+    "DamageWindowEndMs": 1100
+  },
+  "SURF": {
+    "Name": "SURF",
+    "Type": "WATER",
+    "Power": 65,
+    "DurationMs": 1700,
+    "Energy": -50,
+    "DamageWindowStartMs": 1400,
+    "DamageWindowEndMs": 1600
+  },
+  "DRACO_METEOR": {
+    "Name": "DRACO_METEOR",
+    "Type": "DRAGON",
+    "Power": 150,
+    "DurationMs": 3600,
+    "Energy": -100,
+    "DamageWindowStartMs": 3000,
+    "DamageWindowEndMs": 3500
+  },
+  "DOOM_DESIRE": {
+    "Name": "DOOM_DESIRE",
+    "Type": "STEEL",
+    "Power": 80,
+    "DurationMs": 1700,
+    "Energy": -50,
+    "DamageWindowStartMs": 1400,
+    "DamageWindowEndMs": 1600
+  },
+  "YAWN_FAST": {
+    "Name": "YAWN_FAST",
+    "Type": "NORMAL",
+    "DurationMs": 1700,
+    "Energy": 15,
+    "DamageWindowStartMs": 1400,
+    "DamageWindowEndMs": 1600
+  },
+  "PSYCHO_BOOST": {
+    "Name": "PSYCHO_BOOST",
+    "Type": "PSYCHIC",
+    "Power": 70,
+    "DurationMs": 4000,
+    "Energy": -50,
+    "DamageWindowStartMs": 3500,
+    "DamageWindowEndMs": 4000
+  },
+  "ORIGIN_PULSE": {
+    "Name": "ORIGIN_PULSE",
+    "Type": "WATER",
+    "Power": 130,
+    "DurationMs": 1700,
+    "Energy": -100,
+    "DamageWindowStartMs": 1400,
+    "DamageWindowEndMs": 1600
+  },
+  "PRECIPICE_BLADES": {
+    "Name": "PRECIPICE_BLADES",
+    "Type": "GROUND",
+    "Power": 130,
+    "DurationMs": 1700,
+    "Energy": -100,
+    "DamageWindowStartMs": 1400,
+    "DamageWindowEndMs": 1600
+  },
+  "PRESENT_FAST": {
+    "Name": "PRESENT_FAST",
+    "Type": "NORMAL",
+    "Power": 5,
+    "DurationMs": 1300,
+    "Energy": 20,
+    "DamageWindowStartMs": 1100,
+    "DamageWindowEndMs": 1300
   }
 }
