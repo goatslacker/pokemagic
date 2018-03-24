@@ -1,31 +1,59 @@
 {
-  "name": "pokemon-go-iv-calculator",
-  "version": "0.0.1",
-  "description": "Pokemon Go IV calculator",
-  "keywords": [],
-  "author": "goatslacker",
-  "homepage": "https://github.com/goatslacker/pokemon-go-iv-calculator",
-  "license": "MIT",
+  "name": "pokemagic",
+  "version": "1.0.0",
+  "description": "Gym/Raid battle simulator for Pokemon GO + breakpoints and rankings",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
   "scripts": {
-    "build": "browserify -t babelify web/index.js > static/js/build.js",
-    "build:fast": "browserify web/index.js > static/js/build.js",
-    "deploy": "npm run build && cd static && surge --domain pocketmaster.surge.sh"
+    "build:gm": "node scripts",
+    "pretty": "prettier --write '**/*.js'",
+    "lint": "xo",
+    "test": "ava"
   },
-  "dependencies": {
-    "material-ui": "^0.20.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-redux": "^5.0.6",
-    "react-tap-event-plugin": "^3.0.2",
-    "recompose": "^0.26.0",
-    "redux": "^3.7.2",
-    "transmitter": "^3.0.1"
-  },
+  "author": "Josh Perez <josh@goatslacker.com>",
+  "license": "MIT",
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-preset-airbnb": "^2.4.0",
-    "babelify": "^8.0.0",
-    "browserify": "^14.5.0",
-    "surge": "^0.19.0"
-  }
+    "ava": "^0.25.0",
+    "axios": "^0.18.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "prettier": "^1.11.1",
+    "xo": "^0.20.3"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "xo": {
+    "extends": "airbnb",
+    "rules": {
+      "arrow-parens": 0,
+      "comma-dangle": 0,
+      "function-paren-newline": 0,
+      "indent": 0,
+      "no-mixed-operators": 0,
+      "no-nested-ternary": 0,
+      "no-prototype-builtins": 0,
+      "no-restricted-properties": 0,
+      "object-curly-newline": 0,
+      "react/jsx-filename-extension": [
+        1,
+        {
+          "extensions": [
+            ".js",
+            ".jsx"
+          ]
+        }
+      ],
+      "unicorn/explicit-length-check": 0,
+      "unicorn/filename-case": 0,
+      "unicorn/new-for-builtins": 0,
+      "unicorn/number-literal-case": 0
+    }
+  },
+  "dependencies": {}
 }

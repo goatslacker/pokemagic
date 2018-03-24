@@ -1,265 +1,362 @@
 {
-  "CHARMELEON": [
-    "SCRATCH_FAST"
-  ],
-  "CHARIZARD": [
-    "EMBER_FAST",
-    "FLAMETHROWER",
-    "WING_ATTACK_FAST"
-  ],
-  "BUTTERFREE": [
-    "BUG_BITE_FAST"
-  ],
-  "BEEDRILL": [
-    "BUG_BITE_FAST"
-  ],
-  "PIDGEOT": [
-    "AIR_CUTTER",
-    "WING_ATTACK_FAST"
-  ],
-  "SPEAROW": [
-    "TWISTER"
-  ],
-  "FEAROW": [
-    "TWISTER"
-  ],
-  "EKANS": [
-    "GUNK_SHOT"
-  ],
-  "PIKACHU": [
-    "THUNDER"
-  ],
-  "RAICHU": [
-    "THUNDER",
-    "THUNDER_SHOCK_FAST"
-  ],
-  "SANDSHREW": [
-    "ROCK_TOMB"
-  ],
-  "NIDORINO": [
-    "BITE_FAST"
-  ],
-  "NIDOKING": [
-    "FURY_CUTTER_FAST"
-  ],
-  "CLEFABLE": [
-    "POUND_FAST"
-  ],
-  "NINETALES": [
-    "EMBER_FAST",
-    "FIRE_BLAST",
-    "FLAMETHROWER"
-  ],
-  "JIGGLYPUFF": [
-    "BODY_SLAM"
-  ],
-  "ZUBAT": [
-    "SLUDGE_BOMB"
-  ],
-  "GOLBAT": [
-    "OMINOUS_WIND"
-  ],
-  "PARASECT": [
-    "BUG_BITE_FAST"
-  ],
-  "VENOMOTH": [
-    "BUG_BITE_FAST",
-    "POISON_FANG"
-  ],
-  "MEOWTH": [
-    "BODY_SLAM"
-  ],
-  "PERSIAN": [
-    "NIGHT_SLASH"
-  ],
-  "PRIMEAPE": [
-    "KARATE_CHOP_FAST",
-    "CROSS_CHOP"
+  "ALAKAZAM": [
+    "DAZZLING_GLEAM",
+    "PSYCHIC"
   ],
   "ARCANINE": [
     "BITE_FAST",
     "BULLDOZE",
     "FLAMETHROWER"
   ],
-  "POLIWHIRL": [
-    "SCALD"
+  "BEEDRILL": [
+    "BUG_BITE_FAST"
   ],
-  "POLIWRATH": [
-    "SUBMISSION",
-    "MUD_SHOT_FAST"
+  "BLAZIKEN": [
+    "STONE_EDGE"
   ],
-  "ALAKAZAM": [
-    "DAZZLING_GLEAM",
-    "PSYCHIC"
+  "BUTTERFREE": [
+    "BUG_BITE_FAST"
   ],
-  "MACHOP": [
-    "LOW_KICK_FAST"
+  "CHANSEY": [
+    "PSYBEAM"
   ],
-  "MACHOKE": [
-    "CROSS_CHOP"
+  "CHARIZARD": [
+    "EMBER_FAST",
+    "WING_ATTACK_FAST",
+    "FLAMETHROWER"
   ],
-  "MACHAMP": [
-    "CROSS_CHOP",
-    "STONE_EDGE",
-    "SUBMISSION",
-    "KARATE_CHOP_FAST"
+  "CHARMELEON": [
+    "SCRATCH_FAST"
   ],
-  "WEEPINBELL": [
-    "RAZOR_LEAF_FAST"
+  "CLEFABLE": [
+    "POUND_FAST"
   ],
-  "GRAVELER": [
-    "ROCK_SLIDE"
-  ],
-  "GOLEM": [
-    "ANCIENT_POWER"
-  ],
-  "PONYTA": [
-    "FIRE_BLAST"
-  ],
-  "RAPIDASH": [
-    "EMBER_FAST"
-  ],
-  "MAGNETON": [
-    "DISCHARGE",
-    "THUNDER_SHOCK_FAST"
-  ],
-  "FARFETCHD": [
-    "CUT_FAST"
-  ],
-  "DODUO": [
-    "SWIFT"
-  ],
-  "DODRIO": [
-    "AIR_CUTTER"
-  ],
-  "SEEL": [
-    "AQUA_JET"
-  ],
-  "DEWGONG": [
-    "AQUA_JET",
-    "ICY_WIND",
-    "ICE_SHARD_FAST"
-  ],
-  "MUK": [
-    "SLUDGE_BOMB",
-    "LICK_FAST"
+  "CLEFFA": [
+    "PSYCHIC",
+    "BODY_SLAM"
   ],
   "CLOYSTER": [
     "BLIZZARD",
     "ICY_WIND"
   ],
-  "GASTLY": [
-    "OMINOUS_WIND",
-    "SUCKER_PUNCH_FAST"
+  "DELIBIRD": [
+    "ICE_SHARD_FAST",
+    "QUICK_ATTACK_FAST"
   ],
-  "HAUNTER": [
-    "LICK_FAST",
-    "SHADOW_BALL"
+  "DEWGONG": [
+    "ICE_SHARD_FAST",
+    "AQUA_JET",
+    "ICY_WIND"
   ],
-  "GENGAR": [
-    "SHADOW_CLAW_FAST",
-    "DARK_PULSE"
-  ],
-  "ONIX": [
-    "IRON_HEAD",
-    "ROCK_SLIDE"
-  ],
-  "HYPNO": [
-    "PSYSHOCK",
-    "SHADOW_BALL"
-  ],
-  "KINGLER": [
+  "DIGLETT": [
     "MUD_SHOT_FAST"
   ],
-  "VOLTORB": [
-    "SIGNAL_BEAM"
+  "DODRIO": [
+    "AIR_CUTTER"
+  ],
+  "DODUO": [
+    "SWIFT"
+  ],
+  "DRAGONITE": [
+    "DRACO_METEOR",
+    "DRAGON_BREATH_FAST",
+    "DRAGON_CLAW",
+    "DRAGON_PULSE"
+  ],
+  "DUGTRIO": [
+    "MUD_SHOT_FAST"
+  ],
+  "EEVEE": [
+    "BODY_SLAM"
+  ],
+  "EKANS": [
+    "GUNK_SHOT"
   ],
   "ELECTRODE": [
     "TACKLE_FAST"
+  ],
+  "ELEKID": [
+    "THUNDERBOLT"
   ],
   "EXEGGUTOR": [
     "CONFUSION_FAST",
     "ZEN_HEADBUTT_FAST"
   ],
-  "HITMONLEE": [
-    "BRICK_BREAK"
+  "FARFETCH'D": [
+    "CUT_FAST"
+  ],
+  "FEAROW": [
+    "TWISTER"
+  ],
+  "FERALIGATR": [
+    "WATER_GUN_FAST"
+  ],
+  "FLAREON": [
+    "HEAT_WAVE"
+  ],
+  "GASTLY": [
+    "SUCKER_PUNCH_FAST",
+    "OMINOUS_WIND"
+  ],
+  "GENGAR": [
+    "SHADOW_CLAW_FAST",
+    "SLUDGE_WAVE",
+    "DARK_PULSE"
+  ],
+  "GOLBAT": [
+    "OMINOUS_WIND"
+  ],
+  "GOLEM": [
+    "MUD_SHOT_FAST",
+    "ANCIENT_POWER"
+  ],
+  "GRAVELER": [
+    "MUD_SHOT_FAST"
+  ],
+  "GRIMER": [
+    "ACID_FAST"
+  ],
+  "GYARADOS": [
+    "DRAGON_BREATH_FAST",
+    "DRAGON_TAIL_FAST",
+    "DRAGON_PULSE",
+    "TWISTER"
+  ],
+  "HAUNTER": [
+    "LICK_FAST",
+    "SHADOW_BALL"
   ],
   "HITMONCHAN": [
-    "BRICK_BREAK",
-    "ROCK_SMASH_FAST"
+    "ROCK_SMASH_FAST",
+    "BRICK_BREAK"
   ],
-  "TANGELA": [
-    "POWER_WHIP"
+  "HITMONLEE": [
+    "STOMP",
+    "BRICK_BREAK"
+  ],
+  "HYPNO": [
+    "PSYSHOCK",
+    "SHADOW_BALL"
+  ],
+  "IGGLYBUFF": [
+    "BODY_SLAM"
+  ],
+  "JIGGLYPUFF": [
+    "PLAY_ROUGH",
+    "BODY_SLAM"
+  ],
+  "JYNX": [
+    "POUND_FAST",
+    "ICE_PUNCH"
+  ],
+  "KABUTOPS": [
+    "FURY_CUTTER_FAST"
   ],
   "KANGASKHAN": [
     "BRICK_BREAK",
     "STOMP"
   ],
-  "SEADRA": [
-    "BLIZZARD"
+  "KINGDRA": [
+    "WATER_GUN_FAST"
   ],
-  "SEAKING": [
-    "DRILL_RUN",
-    "ICY_WIND"
+  "KINGLER": [
+    "MUD_SHOT_FAST"
   ],
-  "STARMIE": [
-    "TACKLE_FAST"
+  "KOFFING": [
+    "ACID_FAST"
   ],
-  "SCYTHER": [
-    "BUG_BUZZ",
-    "STEEL_WING_FAST"
-  ],
-  "JYNX": [
-    "ICE_PUNCH",
-    "POUND_FAST"
-  ],
-  "PINSIR": [
-    "FURY_CUTTER_FAST",
-    "SUBMISSION"
-  ],
-  "GYARADOS": [
-    "DRAGON_PULSE",
-    "TWISTER",
-    "DRAGON_BREATH_FAST",
+  "KYOGRE": [
     "DRAGON_TAIL_FAST"
   ],
   "LAPRAS": [
+    "ICE_SHARD_FAST",
     "DRAGON_PULSE",
-    "ICE_SHARD_FAST"
+    "ICE_BEAM"
   ],
-  "DITTO": [
-    "POUND_FAST"
+  "LOUDRED": [
+    "CRUNCH"
   ],
-  "EEVEE": [
+  "MACHAMP": [
+    "KARATE_CHOP_FAST",
+    "CROSS_CHOP",
+    "STONE_EDGE",
+    "SUBMISSION"
+  ],
+  "MACHOKE": [
+    "CROSS_CHOP"
+  ],
+  "MACHOP": [
+    "LOW_KICK_FAST"
+  ],
+  "MAGBY": [
+    "FLAMETHROWER"
+  ],
+  "MAGNETON": [
+    "THUNDER_SHOCK_FAST",
+    "DISCHARGE"
+  ],
+  "MEOWTH": [
     "BODY_SLAM"
   ],
-  "FLAREON": [
-    "HEAT_WAVE"
+  "MEW": [
+    "HURRICANE",
+    "DRAGON_PULSE"
   ],
-  "PORYGON": [
-    "DISCHARGE",
-    "PSYBEAM",
-    "SIGNAL_BEAM",
-    "TACKLE_FAST",
-    "ZEN_HEADBUTT_FAST"
+  "MILOTIC": [
+    "WATER_GUN_FAST"
+  ],
+  "MOLTRES": [
+    "EMBER_FAST",
+    "FLAMETHROWER"
+  ],
+  "MUK": [
+    "ACID_FAST",
+    "LICK_FAST"
+  ],
+  "NIDOKING": [
+    "FURY_CUTTER_FAST"
+  ],
+  "NINETALES": [
+    "EMBER_FAST",
+    "FIRE_BLAST",
+    "FLAMETHROWER"
   ],
   "OMANYTE": [
-    "BRINE",
-    "ROCK_TOMB"
+    "ROCK_TOMB",
+    "BRINE"
   ],
   "OMASTAR": [
     "ROCK_THROW_FAST",
     "ROCK_SLIDE"
   ],
-  "KABUTOPS": [
-    "FURY_CUTTER_FAST"
+  "ONIX": [
+    "IRON_HEAD",
+    "ROCK_SLIDE"
+  ],
+  "PARASECT": [
+    "BUG_BITE_FAST"
+  ],
+  "PERSIAN": [
+    "NIGHT_SLASH"
+  ],
+  "PICHU": [
+    "QUICK_ATTACK_FAST"
+  ],
+  "PIDGEOT": [
+    "WING_ATTACK_FAST",
+    "AIR_CUTTER"
+  ],
+  "PIKACHU": [
+    "PRESENT_FAST",
+    "SURF",
+    "THUNDER"
+  ],
+  "PINSIR": [
+    "FURY_CUTTER_FAST",
+    "SUBMISSION"
+  ],
+  "POLITOED": [
+    "EARTHQUAKE"
+  ],
+  "POLIWHIRL": [
+    "SCALD"
+  ],
+  "POLIWRATH": [
+    "MUD_SHOT_FAST",
+    "SUBMISSION"
+  ],
+  "PONYTA": [
+    "FIRE_BLAST"
+  ],
+  "PORYGON": [
+    "QUICK_ATTACK_FAST",
+    "TACKLE_FAST",
+    "ZEN_HEADBUTT_FAST",
+    "DISCHARGE",
+    "PSYBEAM",
+    "SIGNAL_BEAM"
+  ],
+  "PRIMEAPE": [
+    "KARATE_CHOP_FAST",
+    "CROSS_CHOP"
+  ],
+  "RAICHU": [
+    "THUNDER_SHOCK_FAST",
+    "THUNDER"
+  ],
+  "RAPIDASH": [
+    "EMBER_FAST"
+  ],
+  "RHYDON": [
+    "MEGAHORN"
+  ],
+  "SANDSHREW": [
+    "ROCK_TOMB"
+  ],
+  "SCYTHER": [
+    "STEEL_WING_FAST",
+    "BUG_BUZZ"
+  ],
+  "SEADRA": [
+    "BLIZZARD"
+  ],
+  "SEAKING": [
+    "POISON_JAB_FAST",
+    "ICY_WIND",
+    "DRILL_RUN"
+  ],
+  "SEEL": [
+    "WATER_GUN_FAST",
+    "AQUA_JET"
+  ],
+  "SMOOCHUM": [
+    "FROST_BREATH_FAST"
   ],
   "SNORLAX": [
     "BODY_SLAM"
   ],
-  "DRAGONITE": [
-    "DRAGON_BREATH_FAST",
-    "DRAGON_CLAW",
-    "DRAGON_PULSE"
+  "SPEAROW": [
+    "TWISTER"
+  ],
+  "STARMIE": [
+    "QUICK_ATTACK_FAST",
+    "TACKLE_FAST",
+    "PSYBEAM"
+  ],
+  "STARYU": [
+    "QUICK_ATTACK_FAST"
+  ],
+  "SUICUNE": [
+    "HIDDEN_POWER_FAST"
+  ],
+  "TANGELA": [
+    "POWER_WHIP"
+  ],
+  "TOGEPI": [
+    "ZEN_HEADBUTT_FAST"
+  ],
+  "TOGETIC": [
+    "STEEL_WING_FAST",
+    "ZEN_HEADBUTT_FAST"
+  ],
+  "VENOMOTH": [
+    "BUG_BITE_FAST",
+    "POISON_FANG"
+  ],
+  "VOLTORB": [
+    "SIGNAL_BEAM"
+  ],
+  "WEEPINBELL": [
+    "RAZOR_LEAF_FAST"
+  ],
+  "WEEZING": [
+    "ACID_FAST"
+  ],
+  "ZAPDOS": [
+    "THUNDER_SHOCK_FAST",
+    "DISCHARGE"
+  ],
+  "ZUBAT": [
+    "SLUDGE_BOMB"
   ]
 }

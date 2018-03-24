@@ -6243,8 +6243,7 @@
     "type2": "FLYING",
     "moves": {
       "quick": [
-        "ICE_SHARD_FAST",
-        "QUICK_ATTACK_FAST"
+        "PRESENT_FAST"
       ],
       "charge": [
         "ICE_PUNCH",
@@ -8145,7 +8144,7 @@
         "ROCK_SMASH_FAST"
       ],
       "charge": [
-        "CRUNCH",
+        "STOMP",
         "DISARMING_VOICE",
         "FLAMETHROWER"
       ]
@@ -9669,13 +9668,12 @@
     "type2": null,
     "moves": {
       "quick": [
-        "BITE_FAST",
-        "ROCK_SMASH_FAST"
+        "TACKLE_FAST",
+        "HEX_FAST"
       ],
       "charge": [
-        "STOMP",
-        "CRUNCH",
-        "ANCIENT_POWER"
+        "HURRICANE",
+        "ENERGY_BALL"
       ]
     },
     "stats": {
@@ -9688,6 +9686,98 @@
   },
   {
     "id": 352,
+    "name": "CASTFORM",
+    "type1": "NORMAL",
+    "type2": null,
+    "moves": {
+      "quick": [
+        "TACKLE_FAST",
+        "HEX_FAST"
+      ],
+      "charge": [
+        "HURRICANE",
+        "ENERGY_BALL"
+      ]
+    },
+    "stats": {
+      "stamina": 140,
+      "attack": 139,
+      "defense": 139
+    },
+    "family": "FAMILY_CASTFORM",
+    "kmBuddyDistance": 5
+  },
+  {
+    "id": 353,
+    "name": "CASTFORM",
+    "type1": "WATER",
+    "type2": null,
+    "moves": {
+      "quick": [
+        "WATER_GUN_FAST",
+        "TACKLE_FAST"
+      ],
+      "charge": [
+        "HYDRO_PUMP",
+        "THUNDER"
+      ]
+    },
+    "stats": {
+      "stamina": 140,
+      "attack": 139,
+      "defense": 139
+    },
+    "family": "FAMILY_CASTFORM",
+    "kmBuddyDistance": 5
+  },
+  {
+    "id": 354,
+    "name": "CASTFORM",
+    "type1": "ICE",
+    "type2": null,
+    "moves": {
+      "quick": [
+        "POWDER_SNOW_FAST",
+        "TACKLE_FAST"
+      ],
+      "charge": [
+        "BLIZZARD",
+        "ICE_BEAM"
+      ]
+    },
+    "stats": {
+      "stamina": 140,
+      "attack": 139,
+      "defense": 139
+    },
+    "family": "FAMILY_CASTFORM",
+    "kmBuddyDistance": 5
+  },
+  {
+    "id": 355,
+    "name": "CASTFORM",
+    "type1": "FIRE",
+    "type2": null,
+    "moves": {
+      "quick": [
+        "EMBER_FAST",
+        "TACKLE_FAST"
+      ],
+      "charge": [
+        "FIRE_BLAST",
+        "SOLAR_BEAM"
+      ]
+    },
+    "stats": {
+      "stamina": 140,
+      "attack": 139,
+      "defense": 139
+    },
+    "family": "FAMILY_CASTFORM",
+    "kmBuddyDistance": 5
+  },
+  {
+    "id": 356,
     "name": "KECLEON",
     "type1": "NORMAL",
     "type2": null,
@@ -9714,7 +9804,7 @@
     "kmBuddyDistance": 5
   },
   {
-    "id": 353,
+    "id": 357,
     "name": "SHUPPET",
     "type1": "GHOST",
     "type2": null,
@@ -9744,7 +9834,7 @@
     ]
   },
   {
-    "id": 354,
+    "id": 358,
     "name": "BANETTE",
     "type1": "GHOST",
     "type2": null,
@@ -9769,7 +9859,7 @@
     "kmBuddyDistance": 3
   },
   {
-    "id": 355,
+    "id": 359,
     "name": "DUSKULL",
     "type1": "GHOST",
     "type2": null,
@@ -9799,7 +9889,7 @@
     ]
   },
   {
-    "id": 356,
+    "id": 360,
     "name": "DUSCLOPS",
     "type1": "GHOST",
     "type2": null,
@@ -9824,7 +9914,7 @@
     "kmBuddyDistance": 3
   },
   {
-    "id": 357,
+    "id": 361,
     "name": "TROPIUS",
     "type1": "GRASS",
     "type2": "FLYING",
@@ -9848,7 +9938,7 @@
     "kmBuddyDistance": 5
   },
   {
-    "id": 358,
+    "id": 362,
     "name": "CHIMECHO",
     "type1": "PSYCHIC",
     "type2": null,
@@ -9872,7 +9962,7 @@
     "kmBuddyDistance": 5
   },
   {
-    "id": 359,
+    "id": 363,
     "name": "ABSOL",
     "type1": "DARK",
     "type2": null,
@@ -9896,7 +9986,7 @@
     "kmBuddyDistance": 5
   },
   {
-    "id": 360,
+    "id": 364,
     "name": "WYNAUT",
     "type1": "PSYCHIC",
     "type2": null,
@@ -9924,7 +10014,7 @@
     ]
   },
   {
-    "id": 361,
+    "id": 365,
     "name": "SNORUNT",
     "type1": "ICE",
     "type2": null,
@@ -9954,7 +10044,7 @@
     ]
   },
   {
-    "id": 362,
+    "id": 366,
     "name": "GLALIE",
     "type1": "ICE",
     "type2": null,
@@ -9979,7 +10069,7 @@
     "kmBuddyDistance": 3
   },
   {
-    "id": 363,
+    "id": 367,
     "name": "SPHEAL",
     "type1": "ICE",
     "type2": "WATER",
@@ -10009,7 +10099,7 @@
     ]
   },
   {
-    "id": 364,
+    "id": 368,
     "name": "SEALEO",
     "type1": "ICE",
     "type2": "WATER",
@@ -10040,7 +10130,7 @@
     ]
   },
   {
-    "id": 365,
+    "id": 369,
     "name": "WALREIN",
     "type1": "ICE",
     "type2": "WATER",
@@ -10065,7 +10155,7 @@
     "kmBuddyDistance": 3
   },
   {
-    "id": 366,
+    "id": 370,
     "name": "CLAMPERL",
     "type1": "WATER",
     "type2": null,
@@ -10098,7 +10188,7 @@
     ]
   },
   {
-    "id": 367,
+    "id": 371,
     "name": "HUNTAIL",
     "type1": "WATER",
     "type2": null,
@@ -10123,7 +10213,7 @@
     "kmBuddyDistance": 3
   },
   {
-    "id": 368,
+    "id": 372,
     "name": "GOREBYSS",
     "type1": "WATER",
     "type2": null,
@@ -10148,7 +10238,7 @@
     "kmBuddyDistance": 3
   },
   {
-    "id": 369,
+    "id": 373,
     "name": "RELICANTH",
     "type1": "WATER",
     "type2": "ROCK",
@@ -10172,7 +10262,7 @@
     "kmBuddyDistance": 5
   },
   {
-    "id": 370,
+    "id": 374,
     "name": "LUVDISC",
     "type1": "WATER",
     "type2": null,
@@ -10196,7 +10286,7 @@
     "kmBuddyDistance": 3
   },
   {
-    "id": 371,
+    "id": 375,
     "name": "BAGON",
     "type1": "DRAGON",
     "type2": null,
@@ -10226,7 +10316,7 @@
     ]
   },
   {
-    "id": 372,
+    "id": 376,
     "name": "SHELGON",
     "type1": "DRAGON",
     "type2": null,
@@ -10257,7 +10347,7 @@
     ]
   },
   {
-    "id": 373,
+    "id": 377,
     "name": "SALAMENCE",
     "type1": "DRAGON",
     "type2": "FLYING",
@@ -10282,7 +10372,7 @@
     "kmBuddyDistance": 5
   },
   {
-    "id": 374,
+    "id": 378,
     "name": "BELDUM",
     "type1": "STEEL",
     "type2": "PSYCHIC",
@@ -10309,7 +10399,7 @@
     ]
   },
   {
-    "id": 375,
+    "id": 379,
     "name": "METANG",
     "type1": "STEEL",
     "type2": "PSYCHIC",
@@ -10340,7 +10430,7 @@
     ]
   },
   {
-    "id": 376,
+    "id": 380,
     "name": "METAGROSS",
     "type1": "STEEL",
     "type2": "PSYCHIC",
@@ -10365,7 +10455,7 @@
     "kmBuddyDistance": 5
   },
   {
-    "id": 377,
+    "id": 381,
     "name": "REGIROCK",
     "type1": "ROCK",
     "type2": null,
@@ -10389,7 +10479,7 @@
     "kmBuddyDistance": 20
   },
   {
-    "id": 378,
+    "id": 382,
     "name": "REGICE",
     "type1": "ICE",
     "type2": null,
@@ -10413,7 +10503,7 @@
     "kmBuddyDistance": 20
   },
   {
-    "id": 379,
+    "id": 383,
     "name": "REGISTEEL",
     "type1": "STEEL",
     "type2": null,
@@ -10437,7 +10527,7 @@
     "kmBuddyDistance": 20
   },
   {
-    "id": 380,
+    "id": 384,
     "name": "LATIAS",
     "type1": "DRAGON",
     "type2": "PSYCHIC",
@@ -10461,7 +10551,7 @@
     "kmBuddyDistance": 20
   },
   {
-    "id": 381,
+    "id": 385,
     "name": "LATIOS",
     "type1": "DRAGON",
     "type2": "PSYCHIC",
@@ -10485,14 +10575,13 @@
     "kmBuddyDistance": 20
   },
   {
-    "id": 382,
+    "id": 386,
     "name": "KYOGRE",
     "type1": "WATER",
     "type2": null,
     "moves": {
       "quick": [
-        "WATERFALL_FAST",
-        "DRAGON_TAIL_FAST"
+        "WATERFALL_FAST"
       ],
       "charge": [
         "HYDRO_PUMP",
@@ -10509,7 +10598,7 @@
     "kmBuddyDistance": 20
   },
   {
-    "id": 383,
+    "id": 387,
     "name": "GROUDON",
     "type1": "GROUND",
     "type2": null,
@@ -10533,7 +10622,7 @@
     "kmBuddyDistance": 20
   },
   {
-    "id": 384,
+    "id": 388,
     "name": "RAYQUAZA",
     "type1": "DRAGON",
     "type2": "FLYING",
@@ -10557,7 +10646,7 @@
     "kmBuddyDistance": 20
   },
   {
-    "id": 385,
+    "id": 389,
     "name": "JIRACHI",
     "type1": "STEEL",
     "type2": "PSYCHIC",
@@ -10581,7 +10670,103 @@
     "kmBuddyDistance": 20
   },
   {
-    "id": 386,
+    "id": 390,
+    "name": "DEOXYS",
+    "type1": "PSYCHIC",
+    "type2": null,
+    "moves": {
+      "quick": [
+        "ZEN_HEADBUTT_FAST",
+        "COUNTER_FAST"
+      ],
+      "charge": [
+        "PSYCHO_BOOST",
+        "ZAP_CANNON",
+        "SWIFT"
+      ]
+    },
+    "stats": {
+      "stamina": 1,
+      "attack": 1,
+      "defense": 1
+    },
+    "family": "FAMILY_DEOXYS",
+    "kmBuddyDistance": 20
+  },
+  {
+    "id": 391,
+    "name": "DEOXYS",
+    "type1": "PSYCHIC",
+    "type2": null,
+    "moves": {
+      "quick": [
+        "ZEN_HEADBUTT_FAST",
+        "COUNTER_FAST"
+      ],
+      "charge": [
+        "PSYCHO_BOOST",
+        "ZAP_CANNON",
+        "SWIFT"
+      ]
+    },
+    "stats": {
+      "stamina": 1,
+      "attack": 1,
+      "defense": 1
+    },
+    "family": "FAMILY_DEOXYS",
+    "kmBuddyDistance": 20
+  },
+  {
+    "id": 392,
+    "name": "DEOXYS",
+    "type1": "PSYCHIC",
+    "type2": null,
+    "moves": {
+      "quick": [
+        "ZEN_HEADBUTT_FAST",
+        "COUNTER_FAST"
+      ],
+      "charge": [
+        "PSYCHO_BOOST",
+        "ZAP_CANNON",
+        "SWIFT"
+      ]
+    },
+    "stats": {
+      "stamina": 1,
+      "attack": 1,
+      "defense": 1
+    },
+    "family": "FAMILY_DEOXYS",
+    "kmBuddyDistance": 20
+  },
+  {
+    "id": 393,
+    "name": "DEOXYS",
+    "type1": "PSYCHIC",
+    "type2": null,
+    "moves": {
+      "quick": [
+        "ZEN_HEADBUTT_FAST",
+        "COUNTER_FAST"
+      ],
+      "charge": [
+        "PSYCHO_BOOST",
+        "ZAP_CANNON",
+        "SWIFT"
+      ]
+    },
+    "stats": {
+      "stamina": 1,
+      "attack": 1,
+      "defense": 1
+    },
+    "family": "FAMILY_DEOXYS",
+    "kmBuddyDistance": 20
+  },
+  {
+    "id": 394,
     "name": "DEOXYS",
     "type1": "PSYCHIC",
     "type2": null,

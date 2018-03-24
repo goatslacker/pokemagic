@@ -813,7 +813,6 @@
     "Name": "STRUGGLE",
     "Type": "NORMAL",
     "Power": 35,
-    "Energy": 0,
     "DurationMs": 2200,
     "DamageWindowStartMs": 1200,
     "DamageWindowEndMs": 2000
@@ -1367,7 +1366,7 @@
   "SKY_ATTACK": {
     "Name": "SKY_ATTACK",
     "Type": "FLYING",
-    "Power": 70,
+    "Power": 80,
     "DurationMs": 2000,
     "Energy": -50,
     "DamageWindowStartMs": 1500,
