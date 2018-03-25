@@ -1,6 +1,6 @@
 {
   "name": "pokemagic",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Gym/Raid battle simulator for Pokemon GO + breakpoints and rankings",
   "main": "index.js",
   "files": [
