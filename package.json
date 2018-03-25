@@ -3,6 +3,17 @@
   "version": "1.0.0",
   "description": "Gym/Raid battle simulator for Pokemon GO + breakpoints and rankings",
   "main": "index.js",
+  "files": [
+    "README.md",
+    "breakpoint.js",
+    "calculateIV.js",
+    "defenderProfile.js",
+    "index.js",
+    "json",
+    "lib",
+    "simulateBattle.js",
+    "typeRankings.js"
+  ],
   "directories": {
     "lib": "lib",
     "test": "test"
