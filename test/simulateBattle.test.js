@@ -1,6 +1,5 @@
 const test = require('ava');
 
-const findPokemon = require('../lib/findPokemon');
 const simulateBattle = require('../lib/simulateBattle');
 
 test(t => {
