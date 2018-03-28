@@ -8,6 +8,7 @@
     "breakpoint.js",
     "calculateIV.js",
     "defenderProfile.js",
+    "dex.js",
     "index.js",
     "json",
     "lib",

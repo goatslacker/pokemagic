@@ -8,6 +8,19 @@ npm install pokemagic
 
 ## API
 
+### Pokedex
+
+Example
+
+```js
+const dex = require('pokemagic/dex');
+
+dex.findPokemon('jolteon'); // Pokemon
+dex.findMove('struggle'); // Move
+dex.getAllPokemon(); // [Pokemon]
+dex.getMoves(); // [Moves]
+```
+
 ### Battle Simulator
 
 Example
