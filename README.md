@@ -145,12 +145,21 @@ Response
 
 ```js
 {
-  counters: {
+  pokemon: Pokemon,
+  raidInfo: {
+    cp: "number",
+    hp: "number",
+    cpm: "number"
+  },
+  counters: [{
     // Each move will have its own counters list
-    'EMBER_FAST/FIRE_BLAST': [
-      // Each list belongs to a Pokemon, in case there are multiple movesets
-      // that are viable counters
-      [{
+    quick: "string",
+    charge: "string",
+    // Each list belongs to a Pokemon, in case there are multiple movesets
+    // that are viable counters
+    results: [{
+      name: "string",
+      stats: [{
         dmg: 'number', // Damage dealt
         hp: 'number', // HP lost
         kop: 'number', // KO% How close can you get to KO opponent
@@ -161,11 +170,11 @@ Response
         time: 'number', // Time to win
         tm: 'boolean', // Whether moveset combo is exclusive to TM
       }],
-    ],
-  },
+    }],
+  }],
   immune: ['string'],
   notEffective: ['string'],
-  superEffective: ['string']
+  superEffective: ['string'],
 }
 ```
 

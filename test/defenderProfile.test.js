@@ -1,22 +1,24 @@
 const test = require('ava');
 
-const findPokemon = require('../lib/findPokemon');
 const defenderProfile = require('../lib/defenderProfile');
 
 test(t => {
-  const profile = defenderProfile(findPokemon('kyogre'), null, null, {
+  const profile = defenderProfile('kyogre', null, null, {
     raid: true,
     weather: 'EXTREME',
   });
 
-  const moveKey = 'WATERFALL_FAST/THUNDER';
+  const quick = 'WATERFALL_FAST';
+  const charge = 'THUNDER';
 
-  const raikouMoves = profile.counters[moveKey][0];
+  const countersForWT = profile.counters.find(
+    res => res.quick === quick && res.charge === charge
+  );
 
-  raikouMoves.forEach(move => {
-    t.is(move.name, 'RAIKOU');
-  });
+  t.is(!!countersForWT, true);
 
-  t.is(raikouMoves[0].moves[0], 'THUNDER_SHOCK_FAST');
-  t.is(raikouMoves[0].moves[1], 'WILD_CHARGE');
+  const raikouStats = countersForWT.results.find(res => res.name === 'RAIKOU');
+
+  t.is(raikouStats.stats[0].moves[0], 'THUNDER_SHOCK_FAST');
+  t.is(raikouStats.stats[0].moves[1], 'WILD_CHARGE');
 });
