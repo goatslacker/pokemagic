@@ -26,9 +26,12 @@ GameMaster.then(data => {
       },
       family: pokemonSettings.familyId,
       parentPokemonId: pokemonSettings.parentPokemonId,
-      candy: pokemonSettings.candyToEvolve,
       kmBuddyDistance: pokemonSettings.kmBuddyDistance,
       evolutionBranch: pokemonSettings.evolutionBranch,
+      captureRate: pokemonSettings.encounter.baseCaptureRate,
+      fleeRate: pokemonSettings.encounter.baseFleeRate,
+      height: pokemonSettings.pokedexHeightM,
+      weight: pokemonSettings.pokedexWeightKg,
     }));
 
   prettyWrite('./json/pokemon.json', Pokemon);

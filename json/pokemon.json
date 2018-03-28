@@ -21,14 +21,17 @@
       "defense": 118
     },
     "family": "FAMILY_BULBASAUR",
-    "candy": 25,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "IVYSAUR",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.2,
+    "fleeRate": 0.1,
+    "height": 0.7,
+    "weight": 6.9
   },
   {
     "id": 2,
@@ -53,14 +56,17 @@
     },
     "family": "FAMILY_BULBASAUR",
     "parentPokemonId": "BULBASAUR",
-    "candy": 100,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "VENUSAUR",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.1,
+    "fleeRate": 0.07,
+    "height": 1,
+    "weight": 13
   },
   {
     "id": 3,
@@ -85,7 +91,11 @@
     },
     "family": "FAMILY_BULBASAUR",
     "parentPokemonId": "IVYSAUR",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.05,
+    "fleeRate": 0.05,
+    "height": 2,
+    "weight": 100
   },
   {
     "id": 4,
@@ -109,14 +119,17 @@
       "defense": 96
     },
     "family": "FAMILY_CHARMANDER",
-    "candy": 25,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "CHARMELEON",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.2,
+    "fleeRate": 0.1,
+    "height": 0.6,
+    "weight": 8.5
   },
   {
     "id": 5,
@@ -141,14 +154,17 @@
     },
     "family": "FAMILY_CHARMANDER",
     "parentPokemonId": "CHARMANDER",
-    "candy": 100,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "CHARIZARD",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.1,
+    "fleeRate": 0.07,
+    "height": 1.1,
+    "weight": 19
   },
   {
     "id": 6,
@@ -173,7 +189,11 @@
     },
     "family": "FAMILY_CHARMANDER",
     "parentPokemonId": "CHARMELEON",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.05,
+    "fleeRate": 0.05,
+    "height": 1.7,
+    "weight": 90.5
   },
   {
     "id": 7,
@@ -197,14 +217,17 @@
       "defense": 122
     },
     "family": "FAMILY_SQUIRTLE",
-    "candy": 25,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "WARTORTLE",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.2,
+    "fleeRate": 0.1,
+    "height": 0.5,
+    "weight": 9
   },
   {
     "id": 8,
@@ -229,14 +252,17 @@
     },
     "family": "FAMILY_SQUIRTLE",
     "parentPokemonId": "SQUIRTLE",
-    "candy": 100,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "BLASTOISE",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.1,
+    "fleeRate": 0.07,
+    "height": 1,
+    "weight": 22.5
   },
   {
     "id": 9,
@@ -261,7 +287,11 @@
     },
     "family": "FAMILY_SQUIRTLE",
     "parentPokemonId": "WARTORTLE",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.05,
+    "fleeRate": 0.05,
+    "height": 1.6,
+    "weight": 85.5
   },
   {
     "id": 10,
@@ -283,14 +313,17 @@
       "defense": 62
     },
     "family": "FAMILY_CATERPIE",
-    "candy": 12,
     "kmBuddyDistance": 1,
     "evolutionBranch": [
       {
         "evolution": "METAPOD",
         "candyCost": 12
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.2,
+    "height": 0.3,
+    "weight": 2.9
   },
   {
     "id": 11,
@@ -313,14 +346,17 @@
     },
     "family": "FAMILY_CATERPIE",
     "parentPokemonId": "CATERPIE",
-    "candy": 50,
     "kmBuddyDistance": 1,
     "evolutionBranch": [
       {
         "evolution": "BUTTERFREE",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.25,
+    "fleeRate": 0.09,
+    "height": 0.7,
+    "weight": 9.9
   },
   {
     "id": 12,
@@ -345,7 +381,11 @@
     },
     "family": "FAMILY_CATERPIE",
     "parentPokemonId": "METAPOD",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.125,
+    "fleeRate": 0.06,
+    "height": 1.1,
+    "weight": 32
   },
   {
     "id": 13,
@@ -367,14 +407,17 @@
       "defense": 55
     },
     "family": "FAMILY_WEEDLE",
-    "candy": 12,
     "kmBuddyDistance": 1,
     "evolutionBranch": [
       {
         "evolution": "KAKUNA",
         "candyCost": 12
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.2,
+    "height": 0.3,
+    "weight": 3.2
   },
   {
     "id": 14,
@@ -397,14 +440,17 @@
     },
     "family": "FAMILY_WEEDLE",
     "parentPokemonId": "WEEDLE",
-    "candy": 50,
     "kmBuddyDistance": 1,
     "evolutionBranch": [
       {
         "evolution": "BEEDRILL",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.25,
+    "fleeRate": 0.09,
+    "height": 0.6,
+    "weight": 10
   },
   {
     "id": 15,
@@ -429,7 +475,11 @@
     },
     "family": "FAMILY_WEEDLE",
     "parentPokemonId": "KAKUNA",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.125,
+    "fleeRate": 0.06,
+    "height": 1,
+    "weight": 29.5
   },
   {
     "id": 16,
@@ -453,14 +503,17 @@
       "defense": 76
     },
     "family": "FAMILY_PIDGEY",
-    "candy": 12,
     "kmBuddyDistance": 1,
     "evolutionBranch": [
       {
         "evolution": "PIDGEOTTO",
         "candyCost": 12
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.2,
+    "height": 0.3,
+    "weight": 1.8
   },
   {
     "id": 17,
@@ -485,14 +538,17 @@
     },
     "family": "FAMILY_PIDGEY",
     "parentPokemonId": "PIDGEY",
-    "candy": 50,
     "kmBuddyDistance": 1,
     "evolutionBranch": [
       {
         "evolution": "PIDGEOT",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.25,
+    "fleeRate": 0.09,
+    "height": 1.1,
+    "weight": 30
   },
   {
     "id": 18,
@@ -517,7 +573,11 @@
     },
     "family": "FAMILY_PIDGEY",
     "parentPokemonId": "PIDGEOTTO",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.125,
+    "fleeRate": 0.06,
+    "height": 1.5,
+    "weight": 39.5
   },
   {
     "id": 19,
@@ -541,14 +601,17 @@
       "defense": 70
     },
     "family": "FAMILY_RATTATA",
-    "candy": 25,
     "kmBuddyDistance": 1,
     "evolutionBranch": [
       {
         "evolution": "RATICATE",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.2,
+    "height": 0.3,
+    "weight": 3.5
   },
   {
     "id": 20,
@@ -573,7 +636,11 @@
     },
     "family": "FAMILY_RATTATA",
     "parentPokemonId": "RATTATA",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.2,
+    "fleeRate": 0.07,
+    "height": 0.7,
+    "weight": 18.5
   },
   {
     "id": 21,
@@ -597,14 +664,17 @@
       "defense": 61
     },
     "family": "FAMILY_SPEAROW",
-    "candy": 50,
     "kmBuddyDistance": 1,
     "evolutionBranch": [
       {
         "evolution": "FEAROW",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.15,
+    "height": 0.3,
+    "weight": 2
   },
   {
     "id": 22,
@@ -629,7 +699,11 @@
     },
     "family": "FAMILY_SPEAROW",
     "parentPokemonId": "SPEAROW",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.2,
+    "fleeRate": 0.07,
+    "height": 1.2,
+    "weight": 38
   },
   {
     "id": 23,
@@ -653,14 +727,17 @@
       "defense": 102
     },
     "family": "FAMILY_EKANS",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "ARBOK",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.15,
+    "height": 2,
+    "weight": 6.9
   },
   {
     "id": 24,
@@ -685,7 +762,11 @@
     },
     "family": "FAMILY_EKANS",
     "parentPokemonId": "EKANS",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.07,
+    "height": 3.5,
+    "weight": 65
   },
   {
     "id": 25,
@@ -710,14 +791,17 @@
     },
     "family": "FAMILY_PIKACHU",
     "parentPokemonId": "PICHU",
-    "candy": 50,
     "kmBuddyDistance": 1,
     "evolutionBranch": [
       {
         "evolution": "RAICHU",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.2,
+    "fleeRate": 0.1,
+    "height": 0.4,
+    "weight": 6
   },
   {
     "id": 26,
@@ -742,7 +826,11 @@
     },
     "family": "FAMILY_PIKACHU",
     "parentPokemonId": "PIKACHU",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.1,
+    "fleeRate": 0.06,
+    "height": 0.8,
+    "weight": 30
   },
   {
     "id": 27,
@@ -766,14 +854,17 @@
       "defense": 145
     },
     "family": "FAMILY_SANDSHREW",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "SANDSLASH",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.6,
+    "weight": 12
   },
   {
     "id": 28,
@@ -798,7 +889,11 @@
     },
     "family": "FAMILY_SANDSHREW",
     "parentPokemonId": "SANDSHREW",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1,
+    "weight": 29.5
   },
   {
     "id": 29,
@@ -822,14 +917,17 @@
       "defense": 94
     },
     "family": "FAMILY_NIDORAN_FEMALE",
-    "candy": 25,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "NIDORINA",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.15,
+    "height": 0.4,
+    "weight": 7
   },
   {
     "id": 30,
@@ -854,14 +952,17 @@
     },
     "family": "FAMILY_NIDORAN_FEMALE",
     "parentPokemonId": "NIDORAN_FEMALE",
-    "candy": 100,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "NIDOQUEEN",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.25,
+    "fleeRate": 0.07,
+    "height": 0.8,
+    "weight": 20
   },
   {
     "id": 31,
@@ -886,7 +987,11 @@
     },
     "family": "FAMILY_NIDORAN_FEMALE",
     "parentPokemonId": "NIDORINA",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.125,
+    "fleeRate": 0.05,
+    "height": 1.3,
+    "weight": 60
   },
   {
     "id": 32,
@@ -910,14 +1015,17 @@
       "defense": 76
     },
     "family": "FAMILY_NIDORAN_MALE",
-    "candy": 25,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "NIDORINO",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.15,
+    "height": 0.5,
+    "weight": 9
   },
   {
     "id": 33,
@@ -942,14 +1050,17 @@
     },
     "family": "FAMILY_NIDORAN_MALE",
     "parentPokemonId": "NIDORAN_MALE",
-    "candy": 100,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "NIDOKING",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.25,
+    "fleeRate": 0.07,
+    "height": 0.9,
+    "weight": 19.5
   },
   {
     "id": 34,
@@ -974,7 +1085,11 @@
     },
     "family": "FAMILY_NIDORAN_MALE",
     "parentPokemonId": "NIDORINO",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.125,
+    "fleeRate": 0.05,
+    "height": 1.4,
+    "weight": 62
   },
   {
     "id": 35,
@@ -999,14 +1114,17 @@
     },
     "family": "FAMILY_CLEFAIRY",
     "parentPokemonId": "CLEFFA",
-    "candy": 50,
     "kmBuddyDistance": 1,
     "evolutionBranch": [
       {
         "evolution": "CLEFABLE",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.3,
+    "fleeRate": 0.1,
+    "height": 0.6,
+    "weight": 7.5
   },
   {
     "id": 36,
@@ -1031,7 +1149,11 @@
     },
     "family": "FAMILY_CLEFAIRY",
     "parentPokemonId": "CLEFAIRY",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.1,
+    "fleeRate": 0.06,
+    "height": 1.3,
+    "weight": 40
   },
   {
     "id": 37,
@@ -1055,14 +1177,17 @@
       "defense": 122
     },
     "family": "FAMILY_VULPIX",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "NINETALES",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.3,
+    "fleeRate": 0.1,
+    "height": 0.6,
+    "weight": 9.9
   },
   {
     "id": 38,
@@ -1087,7 +1212,11 @@
     },
     "family": "FAMILY_VULPIX",
     "parentPokemonId": "VULPIX",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.1,
+    "fleeRate": 0.06,
+    "height": 1.1,
+    "weight": 19.9
   },
   {
     "id": 39,
@@ -1112,14 +1241,17 @@
     },
     "family": "FAMILY_JIGGLYPUFF",
     "parentPokemonId": "IGGLYBUFF",
-    "candy": 50,
     "kmBuddyDistance": 1,
     "evolutionBranch": [
       {
         "evolution": "WIGGLYTUFF",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.5,
+    "weight": 5.5
   },
   {
     "id": 40,
@@ -1144,7 +1276,11 @@
     },
     "family": "FAMILY_JIGGLYPUFF",
     "parentPokemonId": "JIGGLYPUFF",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1,
+    "weight": 12
   },
   {
     "id": 41,
@@ -1168,14 +1304,17 @@
       "defense": 76
     },
     "family": "FAMILY_ZUBAT",
-    "candy": 50,
     "kmBuddyDistance": 1,
     "evolutionBranch": [
       {
         "evolution": "GOLBAT",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.2,
+    "height": 0.8,
+    "weight": 7.5
   },
   {
     "id": 42,
@@ -1206,7 +1345,11 @@
         "evolution": "CROBAT",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.2,
+    "fleeRate": 0.07,
+    "height": 1.6,
+    "weight": 55
   },
   {
     "id": 43,
@@ -1230,14 +1373,17 @@
       "defense": 116
     },
     "family": "FAMILY_ODDISH",
-    "candy": 25,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "GLOOM",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.6,
+    "fleeRate": 0.15,
+    "height": 0.5,
+    "weight": 5.4
   },
   {
     "id": 44,
@@ -1262,7 +1408,6 @@
     },
     "family": "FAMILY_ODDISH",
     "parentPokemonId": "ODDISH",
-    "candy": 100,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
@@ -1274,7 +1419,11 @@
         "evolutionItemRequirement": "ITEM_SUN_STONE",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.3,
+    "fleeRate": 0.07,
+    "height": 0.8,
+    "weight": 8.6
   },
   {
     "id": 45,
@@ -1299,7 +1448,11 @@
     },
     "family": "FAMILY_ODDISH",
     "parentPokemonId": "GLOOM",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.15,
+    "fleeRate": 0.05,
+    "height": 1.2,
+    "weight": 18.6
   },
   {
     "id": 46,
@@ -1323,14 +1476,17 @@
       "defense": 99
     },
     "family": "FAMILY_PARAS",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "PARASECT",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.4,
+    "fleeRate": 0.15,
+    "height": 0.3,
+    "weight": 5.4
   },
   {
     "id": 47,
@@ -1355,7 +1511,11 @@
     },
     "family": "FAMILY_PARAS",
     "parentPokemonId": "PARAS",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.07,
+    "height": 1,
+    "weight": 29.5
   },
   {
     "id": 48,
@@ -1379,14 +1539,17 @@
       "defense": 102
     },
     "family": "FAMILY_VENONAT",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "VENOMOTH",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.15,
+    "height": 1,
+    "weight": 30
   },
   {
     "id": 49,
@@ -1411,7 +1574,11 @@
     },
     "family": "FAMILY_VENONAT",
     "parentPokemonId": "VENONAT",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.07,
+    "height": 1.5,
+    "weight": 12.5
   },
   {
     "id": 50,
@@ -1435,14 +1602,17 @@
       "defense": 88
     },
     "family": "FAMILY_DIGLETT",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "DUGTRIO",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.2,
+    "weight": 0.8
   },
   {
     "id": 51,
@@ -1467,7 +1637,11 @@
     },
     "family": "FAMILY_DIGLETT",
     "parentPokemonId": "DIGLETT",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 0.7,
+    "weight": 33.3
   },
   {
     "id": 52,
@@ -1491,14 +1665,17 @@
       "defense": 81
     },
     "family": "FAMILY_MEOWTH",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "PERSIAN",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.15,
+    "height": 0.4,
+    "weight": 4.2
   },
   {
     "id": 53,
@@ -1523,7 +1700,11 @@
     },
     "family": "FAMILY_MEOWTH",
     "parentPokemonId": "MEOWTH",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.07,
+    "height": 1,
+    "weight": 32
   },
   {
     "id": 54,
@@ -1547,14 +1728,17 @@
       "defense": 96
     },
     "family": "FAMILY_PSYDUCK",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "GOLDUCK",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.8,
+    "weight": 19.6
   },
   {
     "id": 55,
@@ -1579,7 +1763,11 @@
     },
     "family": "FAMILY_PSYDUCK",
     "parentPokemonId": "PSYDUCK",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1.7,
+    "weight": 76.6
   },
   {
     "id": 56,
@@ -1603,14 +1791,17 @@
       "defense": 87
     },
     "family": "FAMILY_MANKEY",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "PRIMEAPE",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.5,
+    "weight": 28
   },
   {
     "id": 57,
@@ -1635,7 +1826,11 @@
     },
     "family": "FAMILY_MANKEY",
     "parentPokemonId": "MANKEY",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1,
+    "weight": 32
   },
   {
     "id": 58,
@@ -1659,14 +1854,17 @@
       "defense": 96
     },
     "family": "FAMILY_GROWLITHE",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "ARCANINE",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.3,
+    "fleeRate": 0.1,
+    "height": 0.7,
+    "weight": 19
   },
   {
     "id": 59,
@@ -1691,7 +1889,11 @@
     },
     "family": "FAMILY_GROWLITHE",
     "parentPokemonId": "GROWLITHE",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.1,
+    "fleeRate": 0.06,
+    "height": 1.9,
+    "weight": 155
   },
   {
     "id": 60,
@@ -1715,14 +1917,17 @@
       "defense": 82
     },
     "family": "FAMILY_POLIWAG",
-    "candy": 25,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "POLIWHIRL",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.15,
+    "height": 0.6,
+    "weight": 12.4
   },
   {
     "id": 61,
@@ -1747,7 +1952,6 @@
     },
     "family": "FAMILY_POLIWAG",
     "parentPokemonId": "POLIWAG",
-    "candy": 100,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
@@ -1759,7 +1963,11 @@
         "evolutionItemRequirement": "ITEM_KINGS_ROCK",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.25,
+    "fleeRate": 0.07,
+    "height": 1,
+    "weight": 20
   },
   {
     "id": 62,
@@ -1784,7 +1992,11 @@
     },
     "family": "FAMILY_POLIWAG",
     "parentPokemonId": "POLIWHIRL",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.125,
+    "fleeRate": 0.05,
+    "height": 1.3,
+    "weight": 54
   },
   {
     "id": 63,
@@ -1808,14 +2020,17 @@
       "defense": 103
     },
     "family": "FAMILY_ABRA",
-    "candy": 25,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "KADABRA",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.99,
+    "height": 0.9,
+    "weight": 19.5
   },
   {
     "id": 64,
@@ -1840,14 +2055,17 @@
     },
     "family": "FAMILY_ABRA",
     "parentPokemonId": "ABRA",
-    "candy": 100,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "ALAKAZAM",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.25,
+    "fleeRate": 0.07,
+    "height": 1.3,
+    "weight": 56.5
   },
   {
     "id": 65,
@@ -1872,7 +2090,11 @@
     },
     "family": "FAMILY_ABRA",
     "parentPokemonId": "KADABRA",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.1,
+    "fleeRate": 0.05,
+    "height": 1.5,
+    "weight": 48
   },
   {
     "id": 66,
@@ -1896,14 +2118,17 @@
       "defense": 88
     },
     "family": "FAMILY_MACHOP",
-    "candy": 25,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "MACHOKE",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.8,
+    "weight": 19.5
   },
   {
     "id": 67,
@@ -1928,14 +2153,17 @@
     },
     "family": "FAMILY_MACHOP",
     "parentPokemonId": "MACHOP",
-    "candy": 100,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "MACHAMP",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.25,
+    "fleeRate": 0.07,
+    "height": 1.5,
+    "weight": 70.5
   },
   {
     "id": 68,
@@ -1960,7 +2188,11 @@
     },
     "family": "FAMILY_MACHOP",
     "parentPokemonId": "MACHOKE",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.1,
+    "fleeRate": 0.05,
+    "height": 1.6,
+    "weight": 130
   },
   {
     "id": 69,
@@ -1984,14 +2216,17 @@
       "defense": 64
     },
     "family": "FAMILY_BELLSPROUT",
-    "candy": 25,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "WEEPINBELL",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.15,
+    "height": 0.7,
+    "weight": 4
   },
   {
     "id": 70,
@@ -2016,14 +2251,17 @@
     },
     "family": "FAMILY_BELLSPROUT",
     "parentPokemonId": "BELLSPROUT",
-    "candy": 100,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "VICTREEBEL",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.25,
+    "fleeRate": 0.07,
+    "height": 1,
+    "weight": 6.4
   },
   {
     "id": 71,
@@ -2048,7 +2286,11 @@
     },
     "family": "FAMILY_BELLSPROUT",
     "parentPokemonId": "WEEPINBELL",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.125,
+    "fleeRate": 0.05,
+    "height": 1.7,
+    "weight": 15.5
   },
   {
     "id": 72,
@@ -2072,14 +2314,17 @@
       "defense": 182
     },
     "family": "FAMILY_TENTACOOL",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "TENTACRUEL",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.15,
+    "height": 0.9,
+    "weight": 45.5
   },
   {
     "id": 73,
@@ -2104,7 +2349,11 @@
     },
     "family": "FAMILY_TENTACOOL",
     "parentPokemonId": "TENTACOOL",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.07,
+    "height": 1.6,
+    "weight": 55
   },
   {
     "id": 74,
@@ -2128,14 +2377,17 @@
       "defense": 163
     },
     "family": "FAMILY_GEODUDE",
-    "candy": 25,
     "kmBuddyDistance": 1,
     "evolutionBranch": [
       {
         "evolution": "GRAVELER",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.4,
+    "weight": 20
   },
   {
     "id": 75,
@@ -2160,14 +2412,17 @@
     },
     "family": "FAMILY_GEODUDE",
     "parentPokemonId": "GEODUDE",
-    "candy": 100,
     "kmBuddyDistance": 1,
     "evolutionBranch": [
       {
         "evolution": "GOLEM",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.25,
+    "fleeRate": 0.07,
+    "height": 1,
+    "weight": 105
   },
   {
     "id": 76,
@@ -2192,7 +2447,11 @@
     },
     "family": "FAMILY_GEODUDE",
     "parentPokemonId": "GRAVELER",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.125,
+    "fleeRate": 0.05,
+    "height": 1.4,
+    "weight": 300
   },
   {
     "id": 77,
@@ -2216,14 +2475,17 @@
       "defense": 132
     },
     "family": "FAMILY_PONYTA",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "RAPIDASH",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.4,
+    "fleeRate": 0.1,
+    "height": 1,
+    "weight": 30
   },
   {
     "id": 78,
@@ -2248,7 +2510,11 @@
     },
     "family": "FAMILY_PONYTA",
     "parentPokemonId": "PONYTA",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.15,
+    "fleeRate": 0.06,
+    "height": 1.7,
+    "weight": 95
   },
   {
     "id": 79,
@@ -2272,7 +2538,6 @@
       "defense": 109
     },
     "family": "FAMILY_SLOWPOKE",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
@@ -2284,7 +2549,11 @@
         "evolutionItemRequirement": "ITEM_KINGS_ROCK",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 1.2,
+    "weight": 36
   },
   {
     "id": 80,
@@ -2309,7 +2578,11 @@
     },
     "family": "FAMILY_SLOWPOKE",
     "parentPokemonId": "SLOWPOKE",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1.6,
+    "weight": 78.5
   },
   {
     "id": 81,
@@ -2333,14 +2606,17 @@
       "defense": 128
     },
     "family": "FAMILY_MAGNEMITE",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "MAGNETON",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.3,
+    "weight": 6
   },
   {
     "id": 82,
@@ -2365,7 +2641,11 @@
     },
     "family": "FAMILY_MAGNEMITE",
     "parentPokemonId": "MAGNEMITE",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1,
+    "weight": 60
   },
   {
     "id": 83,
@@ -2389,7 +2669,11 @@
       "defense": 118
     },
     "family": "FAMILY_FARFETCHD",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.3,
+    "fleeRate": 0.09,
+    "height": 0.8,
+    "weight": 15
   },
   {
     "id": 84,
@@ -2413,14 +2697,17 @@
       "defense": 88
     },
     "family": "FAMILY_DODUO",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "DODRIO",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 1.4,
+    "weight": 39.2
   },
   {
     "id": 85,
@@ -2445,7 +2732,11 @@
     },
     "family": "FAMILY_DODUO",
     "parentPokemonId": "DODUO",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1.8,
+    "weight": 85.2
   },
   {
     "id": 86,
@@ -2469,14 +2760,17 @@
       "defense": 128
     },
     "family": "FAMILY_SEEL",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "DEWGONG",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.09,
+    "height": 1.1,
+    "weight": 90
   },
   {
     "id": 87,
@@ -2501,7 +2795,11 @@
     },
     "family": "FAMILY_SEEL",
     "parentPokemonId": "SEEL",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1.7,
+    "weight": 120
   },
   {
     "id": 88,
@@ -2525,14 +2823,17 @@
       "defense": 90
     },
     "family": "FAMILY_GRIMER",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "MUK",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.9,
+    "weight": 30
   },
   {
     "id": 89,
@@ -2557,7 +2858,11 @@
     },
     "family": "FAMILY_GRIMER",
     "parentPokemonId": "GRIMER",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1.2,
+    "weight": 30
   },
   {
     "id": 90,
@@ -2581,14 +2886,17 @@
       "defense": 168
     },
     "family": "FAMILY_SHELLDER",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "CLOYSTER",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.3,
+    "weight": 4
   },
   {
     "id": 91,
@@ -2613,7 +2921,11 @@
     },
     "family": "FAMILY_SHELLDER",
     "parentPokemonId": "SHELLDER",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1.5,
+    "weight": 132.5
   },
   {
     "id": 92,
@@ -2637,14 +2949,17 @@
       "defense": 70
     },
     "family": "FAMILY_GASTLY",
-    "candy": 25,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "HAUNTER",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.4,
+    "fleeRate": 0.1,
+    "height": 1.3,
+    "weight": 0.1
   },
   {
     "id": 93,
@@ -2669,14 +2984,17 @@
     },
     "family": "FAMILY_GASTLY",
     "parentPokemonId": "GASTLY",
-    "candy": 100,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "GENGAR",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.2,
+    "fleeRate": 0.07,
+    "height": 1.6,
+    "weight": 0.1
   },
   {
     "id": 94,
@@ -2701,7 +3019,11 @@
     },
     "family": "FAMILY_GASTLY",
     "parentPokemonId": "HAUNTER",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.1,
+    "fleeRate": 0.05,
+    "height": 1.5,
+    "weight": 40.5
   },
   {
     "id": 95,
@@ -2732,7 +3054,11 @@
         "evolutionItemRequirement": "ITEM_METAL_COAT",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.2,
+    "fleeRate": 0.09,
+    "height": 8.8,
+    "weight": 210
   },
   {
     "id": 96,
@@ -2756,14 +3082,17 @@
       "defense": 158
     },
     "family": "FAMILY_DROWZEE",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "HYPNO",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 1,
+    "weight": 32.4
   },
   {
     "id": 97,
@@ -2788,7 +3117,11 @@
     },
     "family": "FAMILY_DROWZEE",
     "parentPokemonId": "DROWZEE",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1.6,
+    "weight": 75.6
   },
   {
     "id": 98,
@@ -2812,14 +3145,17 @@
       "defense": 156
     },
     "family": "FAMILY_KRABBY",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "KINGLER",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.15,
+    "height": 0.4,
+    "weight": 6.5
   },
   {
     "id": 99,
@@ -2844,7 +3180,11 @@
     },
     "family": "FAMILY_KRABBY",
     "parentPokemonId": "KRABBY",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.07,
+    "height": 1.3,
+    "weight": 60
   },
   {
     "id": 100,
@@ -2868,14 +3208,17 @@
       "defense": 114
     },
     "family": "FAMILY_VOLTORB",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "ELECTRODE",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.5,
+    "weight": 10.4
   },
   {
     "id": 101,
@@ -2900,7 +3243,11 @@
     },
     "family": "FAMILY_VOLTORB",
     "parentPokemonId": "VOLTORB",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1.2,
+    "weight": 66.6
   },
   {
     "id": 102,
@@ -2924,14 +3271,17 @@
       "defense": 140
     },
     "family": "FAMILY_EXEGGCUTE",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "EXEGGUTOR",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.4,
+    "weight": 2.5
   },
   {
     "id": 103,
@@ -2956,7 +3306,11 @@
     },
     "family": "FAMILY_EXEGGCUTE",
     "parentPokemonId": "EXEGGCUTE",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 2,
+    "weight": 120
   },
   {
     "id": 104,
@@ -2980,14 +3334,17 @@
       "defense": 165
     },
     "family": "FAMILY_CUBONE",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "MAROWAK",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.4,
+    "fleeRate": 0.1,
+    "height": 0.4,
+    "weight": 6.5
   },
   {
     "id": 105,
@@ -3012,7 +3369,11 @@
     },
     "family": "FAMILY_CUBONE",
     "parentPokemonId": "CUBONE",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.15,
+    "fleeRate": 0.06,
+    "height": 1,
+    "weight": 45
   },
   {
     "id": 106,
@@ -3037,7 +3398,11 @@
     },
     "family": "FAMILY_TYROGUE",
     "parentPokemonId": "TYROGUE",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.2,
+    "fleeRate": 0.09,
+    "height": 1.5,
+    "weight": 49.8
   },
   {
     "id": 107,
@@ -3063,7 +3428,11 @@
     },
     "family": "FAMILY_TYROGUE",
     "parentPokemonId": "TYROGUE",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.2,
+    "fleeRate": 0.09,
+    "height": 1.4,
+    "weight": 50.2
   },
   {
     "id": 108,
@@ -3087,7 +3456,11 @@
       "defense": 137
     },
     "family": "FAMILY_LICKITUNG",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.09,
+    "height": 1.2,
+    "weight": 65.5
   },
   {
     "id": 109,
@@ -3111,14 +3484,17 @@
       "defense": 164
     },
     "family": "FAMILY_KOFFING",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "WEEZING",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.6,
+    "weight": 1
   },
   {
     "id": 110,
@@ -3143,7 +3519,11 @@
     },
     "family": "FAMILY_KOFFING",
     "parentPokemonId": "KOFFING",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1.2,
+    "weight": 9.5
   },
   {
     "id": 111,
@@ -3167,14 +3547,17 @@
       "defense": 157
     },
     "family": "FAMILY_RHYHORN",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "RHYDON",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 1,
+    "weight": 115
   },
   {
     "id": 112,
@@ -3199,7 +3582,11 @@
     },
     "family": "FAMILY_RHYHORN",
     "parentPokemonId": "RHYHORN",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.05,
+    "fleeRate": 0.06,
+    "height": 1.9,
+    "weight": 120
   },
   {
     "id": 113,
@@ -3229,7 +3616,11 @@
         "evolution": "BLISSEY",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.2,
+    "fleeRate": 0.09,
+    "height": 1.1,
+    "weight": 34.6
   },
   {
     "id": 114,
@@ -3253,7 +3644,11 @@
       "defense": 205
     },
     "family": "FAMILY_TANGELA",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.4,
+    "fleeRate": 0.09,
+    "height": 1,
+    "weight": 35
   },
   {
     "id": 115,
@@ -3277,7 +3672,11 @@
       "defense": 165
     },
     "family": "FAMILY_KANGASKHAN",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.09,
+    "height": 2.2,
+    "weight": 80
   },
   {
     "id": 116,
@@ -3301,14 +3700,17 @@
       "defense": 125
     },
     "family": "FAMILY_HORSEA",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "SEADRA",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.4,
+    "weight": 8
   },
   {
     "id": 117,
@@ -3340,7 +3742,11 @@
         "evolutionItemRequirement": "ITEM_DRAGON_SCALE",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1.2,
+    "weight": 25
   },
   {
     "id": 118,
@@ -3364,14 +3770,17 @@
       "defense": 115
     },
     "family": "FAMILY_GOLDEEN",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "SEAKING",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.15,
+    "height": 0.6,
+    "weight": 15
   },
   {
     "id": 119,
@@ -3396,7 +3805,11 @@
     },
     "family": "FAMILY_GOLDEEN",
     "parentPokemonId": "GOLDEEN",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.07,
+    "height": 1.3,
+    "weight": 39
   },
   {
     "id": 120,
@@ -3420,14 +3833,17 @@
       "defense": 112
     },
     "family": "FAMILY_STARYU",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "STARMIE",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.15,
+    "height": 0.8,
+    "weight": 34.5
   },
   {
     "id": 121,
@@ -3452,7 +3868,11 @@
     },
     "family": "FAMILY_STARYU",
     "parentPokemonId": "STARYU",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1.1,
+    "weight": 80
   },
   {
     "id": 122,
@@ -3476,7 +3896,11 @@
       "defense": 233
     },
     "family": "FAMILY_MR_MIME",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.3,
+    "fleeRate": 0.09,
+    "height": 1.3,
+    "weight": 54.5
   },
   {
     "id": 123,
@@ -3507,7 +3931,11 @@
         "evolutionItemRequirement": "ITEM_METAL_COAT",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.3,
+    "fleeRate": 0.09,
+    "height": 1.5,
+    "weight": 56
   },
   {
     "id": 124,
@@ -3532,7 +3960,11 @@
     },
     "family": "FAMILY_JYNX",
     "parentPokemonId": "SMOOCHUM",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.3,
+    "fleeRate": 0.09,
+    "height": 1.4,
+    "weight": 40.6
   },
   {
     "id": 125,
@@ -3557,7 +3989,11 @@
     },
     "family": "FAMILY_ELECTABUZZ",
     "parentPokemonId": "ELEKID",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.2,
+    "fleeRate": 0.09,
+    "height": 1.1,
+    "weight": 30
   },
   {
     "id": 126,
@@ -3582,7 +4018,11 @@
     },
     "family": "FAMILY_MAGMAR",
     "parentPokemonId": "MAGBY",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.2,
+    "fleeRate": 0.09,
+    "height": 1.3,
+    "weight": 44.5
   },
   {
     "id": 127,
@@ -3606,7 +4046,11 @@
       "defense": 197
     },
     "family": "FAMILY_PINSIR",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.3,
+    "fleeRate": 0.09,
+    "height": 1.5,
+    "weight": 55
   },
   {
     "id": 128,
@@ -3630,7 +4074,11 @@
       "defense": 197
     },
     "family": "FAMILY_TAUROS",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.3,
+    "fleeRate": 0.09,
+    "height": 1.4,
+    "weight": 88.4
   },
   {
     "id": 129,
@@ -3651,14 +4099,17 @@
       "defense": 102
     },
     "family": "FAMILY_MAGIKARP",
-    "candy": 400,
     "kmBuddyDistance": 1,
     "evolutionBranch": [
       {
         "evolution": "GYARADOS",
         "candyCost": 400
       }
-    ]
+    ],
+    "captureRate": 0.7,
+    "fleeRate": 0.15,
+    "height": 0.9,
+    "weight": 10
   },
   {
     "id": 130,
@@ -3683,7 +4134,11 @@
     },
     "family": "FAMILY_MAGIKARP",
     "parentPokemonId": "MAGIKARP",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.1,
+    "fleeRate": 0.07,
+    "height": 6.5,
+    "weight": 235
   },
   {
     "id": 131,
@@ -3707,7 +4162,11 @@
       "defense": 180
     },
     "family": "FAMILY_LAPRAS",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.05,
+    "fleeRate": 0.09,
+    "height": 2.5,
+    "weight": 220
   },
   {
     "id": 132,
@@ -3728,7 +4187,11 @@
       "defense": 91
     },
     "family": "FAMILY_DITTO",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.1,
+    "height": 0.3,
+    "weight": 4
   },
   {
     "id": 133,
@@ -3751,7 +4214,6 @@
       "defense": 121
     },
     "family": "FAMILY_EEVEE",
-    "candy": 25,
     "kmBuddyDistance": 5,
     "evolutionBranch": [
       {
@@ -3774,7 +4236,11 @@
         "evolution": "UMBREON",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.4,
+    "fleeRate": 0.1,
+    "height": 0.3,
+    "weight": 6.5
   },
   {
     "id": 134,
@@ -3798,7 +4264,11 @@
     },
     "family": "FAMILY_EEVEE",
     "parentPokemonId": "EEVEE",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.125,
+    "fleeRate": 0.06,
+    "height": 1,
+    "weight": 29
   },
   {
     "id": 135,
@@ -3823,7 +4293,11 @@
     },
     "family": "FAMILY_EEVEE",
     "parentPokemonId": "EEVEE",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.125,
+    "fleeRate": 0.06,
+    "height": 0.8,
+    "weight": 24.5
   },
   {
     "id": 136,
@@ -3848,7 +4322,11 @@
     },
     "family": "FAMILY_EEVEE",
     "parentPokemonId": "EEVEE",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.125,
+    "fleeRate": 0.06,
+    "height": 0.9,
+    "weight": 25
   },
   {
     "id": 137,
@@ -3879,7 +4357,11 @@
         "evolutionItemRequirement": "ITEM_UP_GRADE",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.4,
+    "fleeRate": 0.09,
+    "height": 0.8,
+    "weight": 36.5
   },
   {
     "id": 138,
@@ -3903,14 +4385,17 @@
       "defense": 174
     },
     "family": "FAMILY_OMANYTE",
-    "candy": 50,
     "kmBuddyDistance": 5,
     "evolutionBranch": [
       {
         "evolution": "OMASTAR",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.4,
+    "fleeRate": 0.09,
+    "height": 0.4,
+    "weight": 7.5
   },
   {
     "id": 139,
@@ -3935,7 +4420,11 @@
     },
     "family": "FAMILY_OMANYTE",
     "parentPokemonId": "OMANYTE",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.15,
+    "fleeRate": 0.05,
+    "height": 1,
+    "weight": 35
   },
   {
     "id": 140,
@@ -3959,14 +4448,17 @@
       "defense": 162
     },
     "family": "FAMILY_KABUTO",
-    "candy": 50,
     "kmBuddyDistance": 5,
     "evolutionBranch": [
       {
         "evolution": "KABUTOPS",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.4,
+    "fleeRate": 0.09,
+    "height": 0.5,
+    "weight": 11.5
   },
   {
     "id": 141,
@@ -3991,7 +4483,11 @@
     },
     "family": "FAMILY_KABUTO",
     "parentPokemonId": "KABUTO",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.15,
+    "fleeRate": 0.05,
+    "height": 1.3,
+    "weight": 40.5
   },
   {
     "id": 142,
@@ -4015,7 +4511,11 @@
       "defense": 164
     },
     "family": "FAMILY_AERODACTYL",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.2,
+    "fleeRate": 0.09,
+    "height": 1.8,
+    "weight": 59
   },
   {
     "id": 143,
@@ -4039,7 +4539,11 @@
       "defense": 190
     },
     "family": "FAMILY_SNORLAX",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.05,
+    "fleeRate": 0.09,
+    "height": 2.1,
+    "weight": 460
   },
   {
     "id": 144,
@@ -4062,7 +4566,11 @@
       "defense": 249
     },
     "family": "FAMILY_ARTICUNO",
-    "kmBuddyDistance": 20
+    "kmBuddyDistance": 20,
+    "captureRate": 0.03,
+    "fleeRate": 0.1,
+    "height": 1.7,
+    "weight": 55.4
   },
   {
     "id": 145,
@@ -4085,7 +4593,11 @@
       "defense": 188
     },
     "family": "FAMILY_ZAPDOS",
-    "kmBuddyDistance": 20
+    "kmBuddyDistance": 20,
+    "captureRate": 0.03,
+    "fleeRate": 0.1,
+    "height": 1.6,
+    "weight": 52.6
   },
   {
     "id": 146,
@@ -4108,7 +4620,11 @@
       "defense": 184
     },
     "family": "FAMILY_MOLTRES",
-    "kmBuddyDistance": 20
+    "kmBuddyDistance": 20,
+    "captureRate": 0.03,
+    "fleeRate": 0.1,
+    "height": 2,
+    "weight": 60
   },
   {
     "id": 147,
@@ -4132,14 +4648,17 @@
       "defense": 94
     },
     "family": "FAMILY_DRATINI",
-    "candy": 25,
     "kmBuddyDistance": 5,
     "evolutionBranch": [
       {
         "evolution": "DRAGONAIR",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.4,
+    "fleeRate": 0.09,
+    "height": 1.8,
+    "weight": 3.3
   },
   {
     "id": 148,
@@ -4164,14 +4683,17 @@
     },
     "family": "FAMILY_DRATINI",
     "parentPokemonId": "DRATINI",
-    "candy": 100,
     "kmBuddyDistance": 5,
     "evolutionBranch": [
       {
         "evolution": "DRAGONITE",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.1,
+    "fleeRate": 0.06,
+    "height": 4,
+    "weight": 16.5
   },
   {
     "id": 149,
@@ -4196,7 +4718,11 @@
     },
     "family": "FAMILY_DRATINI",
     "parentPokemonId": "DRAGONAIR",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.05,
+    "fleeRate": 0.05,
+    "height": 2.2,
+    "weight": 210
   },
   {
     "id": 150,
@@ -4221,7 +4747,11 @@
       "defense": 182
     },
     "family": "FAMILY_MEWTWO",
-    "kmBuddyDistance": 20
+    "kmBuddyDistance": 20,
+    "captureRate": 0.06,
+    "fleeRate": 0.1,
+    "height": 2,
+    "weight": 122
   },
   {
     "id": 151,
@@ -4249,7 +4779,10 @@
       "defense": 210
     },
     "family": "FAMILY_MEW",
-    "kmBuddyDistance": 20
+    "kmBuddyDistance": 20,
+    "fleeRate": 0.1,
+    "height": 0.4,
+    "weight": 4
   },
   {
     "id": 152,
@@ -4273,14 +4806,17 @@
       "defense": 122
     },
     "family": "FAMILY_CHIKORITA",
-    "candy": 25,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "BAYLEEF",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.2,
+    "fleeRate": 0.1,
+    "height": 0.89,
+    "weight": 6.4
   },
   {
     "id": 153,
@@ -4305,14 +4841,17 @@
     },
     "family": "FAMILY_CHIKORITA",
     "parentPokemonId": "CHIKORITA",
-    "candy": 100,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "MEGANIUM",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.125,
+    "fleeRate": 0.07,
+    "height": 1.19,
+    "weight": 15.8
   },
   {
     "id": 154,
@@ -4337,7 +4876,11 @@
     },
     "family": "FAMILY_CHIKORITA",
     "parentPokemonId": "BAYLEEF",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.05,
+    "fleeRate": 0.05,
+    "height": 1.8,
+    "weight": 100.5
   },
   {
     "id": 155,
@@ -4361,14 +4904,17 @@
       "defense": 96
     },
     "family": "FAMILY_CYNDAQUIL",
-    "candy": 25,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "QUILAVA",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.2,
+    "fleeRate": 0.1,
+    "height": 0.51,
+    "weight": 7.9
   },
   {
     "id": 156,
@@ -4393,14 +4939,17 @@
     },
     "family": "FAMILY_CYNDAQUIL",
     "parentPokemonId": "CYNDAQUIL",
-    "candy": 100,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "TYPHLOSION",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.125,
+    "fleeRate": 0.07,
+    "height": 0.89,
+    "weight": 19
   },
   {
     "id": 157,
@@ -4425,7 +4974,11 @@
     },
     "family": "FAMILY_CYNDAQUIL",
     "parentPokemonId": "QUILAVA",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.05,
+    "fleeRate": 0.05,
+    "height": 1.7,
+    "weight": 79.5
   },
   {
     "id": 158,
@@ -4449,14 +5002,17 @@
       "defense": 116
     },
     "family": "FAMILY_TOTODILE",
-    "candy": 25,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "CROCONAW",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.2,
+    "fleeRate": 0.1,
+    "height": 0.61,
+    "weight": 9.5
   },
   {
     "id": 159,
@@ -4481,14 +5037,17 @@
     },
     "family": "FAMILY_TOTODILE",
     "parentPokemonId": "TOTODILE",
-    "candy": 100,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "FERALIGATR",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.125,
+    "fleeRate": 0.07,
+    "height": 1.09,
+    "weight": 25
   },
   {
     "id": 160,
@@ -4513,7 +5072,11 @@
     },
     "family": "FAMILY_TOTODILE",
     "parentPokemonId": "CROCONAW",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.05,
+    "fleeRate": 0.05,
+    "height": 2.31,
+    "weight": 88.8
   },
   {
     "id": 161,
@@ -4537,14 +5100,17 @@
       "defense": 77
     },
     "family": "FAMILY_SENTRET",
-    "candy": 25,
     "kmBuddyDistance": 1,
     "evolutionBranch": [
       {
         "evolution": "FURRET",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.2,
+    "height": 0.79,
+    "weight": 6
   },
   {
     "id": 162,
@@ -4569,7 +5135,11 @@
     },
     "family": "FAMILY_SENTRET",
     "parentPokemonId": "SENTRET",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.15,
+    "fleeRate": 0.07,
+    "height": 1.8,
+    "weight": 32.5
   },
   {
     "id": 163,
@@ -4593,14 +5163,17 @@
       "defense": 101
     },
     "family": "FAMILY_HOOTHOOT",
-    "candy": 50,
     "kmBuddyDistance": 1,
     "evolutionBranch": [
       {
         "evolution": "NOCTOWL",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.15,
+    "height": 0.71,
+    "weight": 21.2
   },
   {
     "id": 164,
@@ -4625,7 +5198,11 @@
     },
     "family": "FAMILY_HOOTHOOT",
     "parentPokemonId": "HOOTHOOT",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.15,
+    "fleeRate": 0.07,
+    "height": 1.6,
+    "weight": 40.8
   },
   {
     "id": 165,
@@ -4649,14 +5226,17 @@
       "defense": 142
     },
     "family": "FAMILY_LEDYBA",
-    "candy": 25,
     "kmBuddyDistance": 1,
     "evolutionBranch": [
       {
         "evolution": "LEDIAN",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.2,
+    "height": 0.99,
+    "weight": 10.8
   },
   {
     "id": 166,
@@ -4681,7 +5261,11 @@
     },
     "family": "FAMILY_LEDYBA",
     "parentPokemonId": "LEDYBA",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.15,
+    "fleeRate": 0.07,
+    "height": 1.4,
+    "weight": 35.6
   },
   {
     "id": 167,
@@ -4705,14 +5289,17 @@
       "defense": 73
     },
     "family": "FAMILY_SPINARAK",
-    "candy": 50,
     "kmBuddyDistance": 1,
     "evolutionBranch": [
       {
         "evolution": "ARIADOS",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.2,
+    "height": 0.51,
+    "weight": 8.5
   },
   {
     "id": 168,
@@ -4737,7 +5324,11 @@
     },
     "family": "FAMILY_SPINARAK",
     "parentPokemonId": "SPINARAK",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.15,
+    "fleeRate": 0.07,
+    "height": 1.09,
+    "weight": 33.5
   },
   {
     "id": 169,
@@ -4762,7 +5353,11 @@
     },
     "family": "FAMILY_ZUBAT",
     "parentPokemonId": "GOLBAT",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.1,
+    "fleeRate": 0.05,
+    "height": 1.8,
+    "weight": 75
   },
   {
     "id": 170,
@@ -4786,14 +5381,17 @@
       "defense": 106
     },
     "family": "FAMILY_CHINCHOU",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "LANTURN",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.4,
+    "fleeRate": 0.1,
+    "height": 0.51,
+    "weight": 12
   },
   {
     "id": 171,
@@ -4818,7 +5416,11 @@
     },
     "family": "FAMILY_CHINCHOU",
     "parentPokemonId": "CHINCHOU",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.15,
+    "fleeRate": 0.07,
+    "height": 1.19,
+    "weight": 22.5
   },
   {
     "id": 172,
@@ -4841,14 +5443,16 @@
       "defense": 63
     },
     "family": "FAMILY_PIKACHU",
-    "candy": 25,
     "kmBuddyDistance": 1,
     "evolutionBranch": [
       {
         "evolution": "PIKACHU",
         "candyCost": 25
       }
-    ]
+    ],
+    "fleeRate": 0.05,
+    "height": 0.3,
+    "weight": 2
   },
   {
     "id": 173,
@@ -4872,14 +5476,16 @@
       "defense": 91
     },
     "family": "FAMILY_CLEFAIRY",
-    "candy": 25,
     "kmBuddyDistance": 1,
     "evolutionBranch": [
       {
         "evolution": "CLEFAIRY",
         "candyCost": 25
       }
-    ]
+    ],
+    "fleeRate": 0.05,
+    "height": 0.3,
+    "weight": 3
   },
   {
     "id": 174,
@@ -4903,14 +5509,16 @@
       "defense": 34
     },
     "family": "FAMILY_JIGGLYPUFF",
-    "candy": 25,
     "kmBuddyDistance": 1,
     "evolutionBranch": [
       {
         "evolution": "JIGGLYPUFF",
         "candyCost": 25
       }
-    ]
+    ],
+    "fleeRate": 0.05,
+    "height": 0.3,
+    "weight": 1
   },
   {
     "id": 175,
@@ -4934,14 +5542,16 @@
       "defense": 116
     },
     "family": "FAMILY_TOGEPI",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "TOGETIC",
         "candyCost": 50
       }
-    ]
+    ],
+    "fleeRate": 0.05,
+    "height": 0.3,
+    "weight": 1.5
   },
   {
     "id": 176,
@@ -4966,7 +5576,11 @@
     },
     "family": "FAMILY_TOGEPI",
     "parentPokemonId": "TOGEPI",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.05,
+    "fleeRate": 0.05,
+    "height": 0.61,
+    "weight": 3.2
   },
   {
     "id": 177,
@@ -4990,14 +5604,17 @@
       "defense": 89
     },
     "family": "FAMILY_NATU",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "XATU",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.4,
+    "fleeRate": 0.15,
+    "height": 0.2,
+    "weight": 2
   },
   {
     "id": 178,
@@ -5022,7 +5639,11 @@
     },
     "family": "FAMILY_NATU",
     "parentPokemonId": "NATU",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.15,
+    "fleeRate": 0.07,
+    "height": 1.5,
+    "weight": 15
   },
   {
     "id": 179,
@@ -5046,14 +5667,17 @@
       "defense": 82
     },
     "family": "FAMILY_MAREEP",
-    "candy": 25,
     "kmBuddyDistance": 5,
     "evolutionBranch": [
       {
         "evolution": "FLAAFFY",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.61,
+    "weight": 7.8
   },
   {
     "id": 180,
@@ -5078,14 +5702,17 @@
     },
     "family": "FAMILY_MAREEP",
     "parentPokemonId": "MAREEP",
-    "candy": 100,
     "kmBuddyDistance": 5,
     "evolutionBranch": [
       {
         "evolution": "AMPHAROS",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.25,
+    "fleeRate": 0.07,
+    "height": 0.79,
+    "weight": 13.3
   },
   {
     "id": 181,
@@ -5110,7 +5737,11 @@
     },
     "family": "FAMILY_MAREEP",
     "parentPokemonId": "FLAAFFY",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.125,
+    "fleeRate": 0.05,
+    "height": 1.4,
+    "weight": 61.5
   },
   {
     "id": 182,
@@ -5135,7 +5766,11 @@
     },
     "family": "FAMILY_ODDISH",
     "parentPokemonId": "GLOOM",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.05,
+    "fleeRate": 0.05,
+    "height": 0.41,
+    "weight": 5.8
   },
   {
     "id": 183,
@@ -5160,14 +5795,17 @@
     },
     "family": "FAMILY_MARILL",
     "parentPokemonId": "AZURILL",
-    "candy": 25,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "AZUMARILL",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.41,
+    "weight": 8.5
   },
   {
     "id": 184,
@@ -5192,7 +5830,11 @@
     },
     "family": "FAMILY_MARILL",
     "parentPokemonId": "MARILL",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.15,
+    "fleeRate": 0.07,
+    "height": 0.79,
+    "weight": 28.5
   },
   {
     "id": 185,
@@ -5216,7 +5858,11 @@
       "defense": 198
     },
     "family": "FAMILY_SUDOWOODO",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.125,
+    "fleeRate": 0.05,
+    "height": 1.19,
+    "weight": 38
   },
   {
     "id": 186,
@@ -5241,7 +5887,11 @@
     },
     "family": "FAMILY_POLIWAG",
     "parentPokemonId": "POLIWHIRL",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.1,
+    "fleeRate": 0.05,
+    "height": 1.09,
+    "weight": 33.9
   },
   {
     "id": 187,
@@ -5265,14 +5915,17 @@
       "defense": 101
     },
     "family": "FAMILY_HOPPIP",
-    "candy": 25,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "SKIPLOOM",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.12,
+    "height": 0.41,
+    "weight": 0.5
   },
   {
     "id": 188,
@@ -5297,14 +5950,17 @@
     },
     "family": "FAMILY_HOPPIP",
     "parentPokemonId": "HOPPIP",
-    "candy": 100,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "JUMPLUFF",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.25,
+    "fleeRate": 0.07,
+    "height": 0.61,
+    "weight": 1
   },
   {
     "id": 189,
@@ -5329,7 +5985,11 @@
     },
     "family": "FAMILY_HOPPIP",
     "parentPokemonId": "SKIPLOOM",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.125,
+    "fleeRate": 0.05,
+    "height": 0.79,
+    "weight": 3
   },
   {
     "id": 190,
@@ -5353,7 +6013,11 @@
       "defense": 112
     },
     "family": "FAMILY_AIPOM",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.09,
+    "height": 0.79,
+    "weight": 11.5
   },
   {
     "id": 191,
@@ -5377,7 +6041,6 @@
       "defense": 55
     },
     "family": "FAMILY_SUNKERN",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
@@ -5385,7 +6048,11 @@
         "evolutionItemRequirement": "ITEM_SUN_STONE",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.09,
+    "height": 0.3,
+    "weight": 1.8
   },
   {
     "id": 192,
@@ -5410,7 +6077,11 @@
     },
     "family": "FAMILY_SUNKERN",
     "parentPokemonId": "SUNKERN",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.1,
+    "fleeRate": 0.07,
+    "height": 0.79,
+    "weight": 8.5
   },
   {
     "id": 193,
@@ -5434,7 +6105,11 @@
       "defense": 94
     },
     "family": "FAMILY_YANMA",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.3,
+    "fleeRate": 0.1,
+    "height": 1.19,
+    "weight": 38
   },
   {
     "id": 194,
@@ -5458,14 +6133,17 @@
       "defense": 75
     },
     "family": "FAMILY_WOOPER",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "QUAGSIRE",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.4,
+    "fleeRate": 0.1,
+    "height": 0.41,
+    "weight": 8.5
   },
   {
     "id": 195,
@@ -5490,7 +6168,11 @@
     },
     "family": "FAMILY_WOOPER",
     "parentPokemonId": "WOOPER",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.15,
+    "fleeRate": 0.07,
+    "height": 1.4,
+    "weight": 75
   },
   {
     "id": 196,
@@ -5515,7 +6197,10 @@
     },
     "family": "FAMILY_EEVEE",
     "parentPokemonId": "EEVEE",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "fleeRate": 0.05,
+    "height": 0.89,
+    "weight": 26.5
   },
   {
     "id": 197,
@@ -5539,7 +6224,10 @@
     },
     "family": "FAMILY_EEVEE",
     "parentPokemonId": "EEVEE",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "fleeRate": 0.05,
+    "height": 0.99,
+    "weight": 27
   },
   {
     "id": 198,
@@ -5563,7 +6251,11 @@
       "defense": 87
     },
     "family": "FAMILY_MURKROW",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.1,
+    "height": 0.51,
+    "weight": 2.1
   },
   {
     "id": 199,
@@ -5588,7 +6280,11 @@
     },
     "family": "FAMILY_SLOWPOKE",
     "parentPokemonId": "SLOWPOKE",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.1,
+    "fleeRate": 0.05,
+    "height": 2.01,
+    "weight": 79.5
   },
   {
     "id": 200,
@@ -5612,7 +6308,11 @@
       "defense": 167
     },
     "family": "FAMILY_MISDREAVUS",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.3,
+    "fleeRate": 0.07,
+    "height": 0.71,
+    "weight": 1
   },
   {
     "id": 201,
@@ -5633,7 +6333,11 @@
       "defense": 91
     },
     "family": "FAMILY_UNOWN",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.3,
+    "fleeRate": 0.1,
+    "height": 0.51,
+    "weight": 5
   },
   {
     "id": 202,
@@ -5656,7 +6360,11 @@
     },
     "family": "FAMILY_WOBBUFFET",
     "parentPokemonId": "WYNAUT",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.25,
+    "fleeRate": 0.07,
+    "height": 1.3,
+    "weight": 28.5
   },
   {
     "id": 203,
@@ -5680,7 +6388,11 @@
       "defense": 133
     },
     "family": "FAMILY_GIRAFARIG",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.3,
+    "fleeRate": 0.07,
+    "height": 1.5,
+    "weight": 41.5
   },
   {
     "id": 204,
@@ -5704,14 +6416,17 @@
       "defense": 146
     },
     "family": "FAMILY_PINECO",
-    "candy": 50,
     "kmBuddyDistance": 5,
     "evolutionBranch": [
       {
         "evolution": "FORRETRESS",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.4,
+    "fleeRate": 0.12,
+    "height": 0.61,
+    "weight": 7.2
   },
   {
     "id": 205,
@@ -5736,7 +6451,11 @@
     },
     "family": "FAMILY_PINECO",
     "parentPokemonId": "PINECO",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.15,
+    "fleeRate": 0.07,
+    "height": 1.19,
+    "weight": 125.8
   },
   {
     "id": 206,
@@ -5760,7 +6479,11 @@
       "defense": 131
     },
     "family": "FAMILY_DUNSPARCE",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.3,
+    "fleeRate": 0.2,
+    "height": 1.5,
+    "weight": 14
   },
   {
     "id": 207,
@@ -5784,7 +6507,11 @@
       "defense": 204
     },
     "family": "FAMILY_GLIGAR",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.2,
+    "fleeRate": 0.07,
+    "height": 1.09,
+    "weight": 64.8
   },
   {
     "id": 208,
@@ -5809,7 +6536,11 @@
     },
     "family": "FAMILY_ONIX",
     "parentPokemonId": "ONIX",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.1,
+    "fleeRate": 0.05,
+    "height": 9.19,
+    "weight": 400
   },
   {
     "id": 209,
@@ -5833,14 +6564,17 @@
       "defense": 89
     },
     "family": "FAMILY_SNUBBULL",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "GRANBULL",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.4,
+    "fleeRate": 0.1,
+    "height": 0.61,
+    "weight": 7.8
   },
   {
     "id": 210,
@@ -5865,7 +6599,11 @@
     },
     "family": "FAMILY_SNUBBULL",
     "parentPokemonId": "SNUBBULL",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.15,
+    "fleeRate": 0.08,
+    "height": 1.4,
+    "weight": 48.7
   },
   {
     "id": 211,
@@ -5889,7 +6627,11 @@
       "defense": 148
     },
     "family": "FAMILY_QWILFISH",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.3,
+    "fleeRate": 0.08,
+    "height": 0.51,
+    "weight": 3.9
   },
   {
     "id": 212,
@@ -5914,7 +6656,11 @@
     },
     "family": "FAMILY_SCYTHER",
     "parentPokemonId": "SCYTHER",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.05,
+    "fleeRate": 0.05,
+    "height": 2.01,
+    "weight": 125
   },
   {
     "id": 213,
@@ -5938,7 +6684,11 @@
       "defense": 396
     },
     "family": "FAMILY_SHUCKLE",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.3,
+    "fleeRate": 0.07,
+    "height": 0.61,
+    "weight": 20.5
   },
   {
     "id": 214,
@@ -5962,7 +6712,11 @@
       "defense": 189
     },
     "family": "FAMILY_HERACROSS",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.3,
+    "fleeRate": 0.09,
+    "height": 1.5,
+    "weight": 54
   },
   {
     "id": 215,
@@ -5986,7 +6740,11 @@
       "defense": 157
     },
     "family": "FAMILY_SNEASEL",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.07,
+    "height": 0.89,
+    "weight": 28
   },
   {
     "id": 216,
@@ -6010,14 +6768,17 @@
       "defense": 93
     },
     "family": "FAMILY_TEDDIURSA",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "URSARING",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.2,
+    "height": 0.61,
+    "weight": 8.8
   },
   {
     "id": 217,
@@ -6042,7 +6803,11 @@
     },
     "family": "FAMILY_TEDDIURSA",
     "parentPokemonId": "TEDDIURSA",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.15,
+    "fleeRate": 0.07,
+    "height": 1.8,
+    "weight": 125.8
   },
   {
     "id": 218,
@@ -6066,14 +6831,17 @@
       "defense": 71
     },
     "family": "FAMILY_SLUGMA",
-    "candy": 50,
     "kmBuddyDistance": 1,
     "evolutionBranch": [
       {
         "evolution": "MAGCARGO",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.3,
+    "fleeRate": 0.1,
+    "height": 0.71,
+    "weight": 35
   },
   {
     "id": 219,
@@ -6098,7 +6866,11 @@
     },
     "family": "FAMILY_SLUGMA",
     "parentPokemonId": "SLUGMA",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.125,
+    "fleeRate": 0.06,
+    "height": 0.79,
+    "weight": 55
   },
   {
     "id": 220,
@@ -6122,14 +6894,17 @@
       "defense": 74
     },
     "family": "FAMILY_SWINUB",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "PILOSWINE",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.3,
+    "fleeRate": 0.1,
+    "height": 0.41,
+    "weight": 6.5
   },
   {
     "id": 221,
@@ -6154,7 +6929,11 @@
     },
     "family": "FAMILY_SWINUB",
     "parentPokemonId": "SWINUB",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.125,
+    "fleeRate": 0.06,
+    "height": 1.09,
+    "weight": 55.8
   },
   {
     "id": 222,
@@ -6178,7 +6957,11 @@
       "defense": 156
     },
     "family": "FAMILY_CORSOLA",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.3,
+    "fleeRate": 0.12,
+    "height": 0.61,
+    "weight": 5
   },
   {
     "id": 223,
@@ -6202,14 +6985,17 @@
       "defense": 69
     },
     "family": "FAMILY_REMORAID",
-    "candy": 50,
     "kmBuddyDistance": 1,
     "evolutionBranch": [
       {
         "evolution": "OCTILLERY",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.61,
+    "weight": 12
   },
   {
     "id": 224,
@@ -6234,7 +7020,11 @@
     },
     "family": "FAMILY_REMORAID",
     "parentPokemonId": "REMORAID",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.15,
+    "fleeRate": 0.07,
+    "height": 0.89,
+    "weight": 28.5
   },
   {
     "id": 225,
@@ -6257,7 +7047,11 @@
       "defense": 90
     },
     "family": "FAMILY_DELIBIRD",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.2,
+    "fleeRate": 0.2,
+    "height": 0.89,
+    "weight": 16
   },
   {
     "id": 226,
@@ -6281,7 +7075,11 @@
       "defense": 260
     },
     "family": "FAMILY_MANTINE",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.3,
+    "fleeRate": 0.07,
+    "height": 2.11,
+    "weight": 220
   },
   {
     "id": 227,
@@ -6305,7 +7103,11 @@
       "defense": 260
     },
     "family": "FAMILY_SKARMORY",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.2,
+    "fleeRate": 0.09,
+    "height": 1.7,
+    "weight": 50.5
   },
   {
     "id": 228,
@@ -6329,14 +7131,17 @@
       "defense": 93
     },
     "family": "FAMILY_HOUNDOUR",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "HOUNDOOM",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.4,
+    "fleeRate": 0.1,
+    "height": 0.61,
+    "weight": 10.8
   },
   {
     "id": 229,
@@ -6361,7 +7166,11 @@
     },
     "family": "FAMILY_HOUNDOUR",
     "parentPokemonId": "HOUNDOUR",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.15,
+    "fleeRate": 0.06,
+    "height": 1.4,
+    "weight": 35
   },
   {
     "id": 230,
@@ -6386,7 +7195,11 @@
     },
     "family": "FAMILY_HORSEA",
     "parentPokemonId": "SEADRA",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.1,
+    "fleeRate": 0.05,
+    "height": 1.8,
+    "weight": 152
   },
   {
     "id": 231,
@@ -6410,14 +7223,17 @@
       "defense": 107
     },
     "family": "FAMILY_PHANPY",
-    "candy": 50,
     "kmBuddyDistance": 3,
     "evolutionBranch": [
       {
         "evolution": "DONPHAN",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.2,
+    "height": 0.51,
+    "weight": 33.5
   },
   {
     "id": 232,
@@ -6442,7 +7258,11 @@
     },
     "family": "FAMILY_PHANPY",
     "parentPokemonId": "PHANPY",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.125,
+    "fleeRate": 0.07,
+    "height": 1.09,
+    "weight": 120
   },
   {
     "id": 233,
@@ -6467,7 +7287,11 @@
     },
     "family": "FAMILY_PORYGON",
     "parentPokemonId": "PORYGON",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.05,
+    "fleeRate": 0.05,
+    "height": 0.61,
+    "weight": 32.5
   },
   {
     "id": 234,
@@ -6491,7 +7315,11 @@
       "defense": 132
     },
     "family": "FAMILY_STANTLER",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.3,
+    "fleeRate": 0.08,
+    "height": 1.4,
+    "weight": 71.2
   },
   {
     "id": 235,
@@ -6512,7 +7340,11 @@
       "defense": 88
     },
     "family": "FAMILY_SMEARGLE",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.25,
+    "fleeRate": 0.07,
+    "height": 1.19,
+    "weight": 58
   },
   {
     "id": 236,
@@ -6536,7 +7368,6 @@
       "defense": 64
     },
     "family": "FAMILY_TYROGUE",
-    "candy": 25,
     "kmBuddyDistance": 5,
     "evolutionBranch": [
       {
@@ -6551,7 +7382,10 @@
         "evolution": "HITMONTOP",
         "candyCost": 25
       }
-    ]
+    ],
+    "fleeRate": 0.2,
+    "height": 0.71,
+    "weight": 21
   },
   {
     "id": 237,
@@ -6576,7 +7410,11 @@
     },
     "family": "FAMILY_TYROGUE",
     "parentPokemonId": "TYROGUE",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.1,
+    "fleeRate": 0.05,
+    "height": 1.4,
+    "weight": 48
   },
   {
     "id": 238,
@@ -6600,14 +7438,16 @@
       "defense": 116
     },
     "family": "FAMILY_JYNX",
-    "candy": 25,
     "kmBuddyDistance": 5,
     "evolutionBranch": [
       {
         "evolution": "JYNX",
         "candyCost": 25
       }
-    ]
+    ],
+    "fleeRate": 0.2,
+    "height": 0.41,
+    "weight": 6
   },
   {
     "id": 239,
@@ -6631,14 +7471,16 @@
       "defense": 110
     },
     "family": "FAMILY_ELECTABUZZ",
-    "candy": 25,
     "kmBuddyDistance": 5,
     "evolutionBranch": [
       {
         "evolution": "ELECTABUZZ",
         "candyCost": 25
       }
-    ]
+    ],
+    "fleeRate": 0.2,
+    "height": 0.61,
+    "weight": 23.5
   },
   {
     "id": 240,
@@ -6662,14 +7504,16 @@
       "defense": 108
     },
     "family": "FAMILY_MAGMAR",
-    "candy": 25,
     "kmBuddyDistance": 5,
     "evolutionBranch": [
       {
         "evolution": "MAGMAR",
         "candyCost": 25
       }
-    ]
+    ],
+    "fleeRate": 0.2,
+    "height": 0.71,
+    "weight": 21.4
   },
   {
     "id": 241,
@@ -6693,7 +7537,11 @@
       "defense": 211
     },
     "family": "FAMILY_MILTANK",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.2,
+    "fleeRate": 0.08,
+    "height": 1.19,
+    "weight": 75.5
   },
   {
     "id": 242,
@@ -6718,7 +7566,11 @@
     },
     "family": "FAMILY_CHANSEY",
     "parentPokemonId": "CHANSEY",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.05,
+    "fleeRate": 0.05,
+    "height": 1.5,
+    "weight": 46.8
   },
   {
     "id": 243,
@@ -6742,7 +7594,11 @@
       "defense": 210
     },
     "family": "FAMILY_RAIKOU",
-    "kmBuddyDistance": 20
+    "kmBuddyDistance": 20,
+    "captureRate": 0.02,
+    "fleeRate": 0.04,
+    "height": 1.91,
+    "weight": 178
   },
   {
     "id": 244,
@@ -6766,7 +7622,11 @@
       "defense": 176
     },
     "family": "FAMILY_ENTEI",
-    "kmBuddyDistance": 20
+    "kmBuddyDistance": 20,
+    "captureRate": 0.02,
+    "fleeRate": 0.04,
+    "height": 2.11,
+    "weight": 198
   },
   {
     "id": 245,
@@ -6790,7 +7650,11 @@
       "defense": 235
     },
     "family": "FAMILY_SUICUNE",
-    "kmBuddyDistance": 20
+    "kmBuddyDistance": 20,
+    "captureRate": 0.02,
+    "fleeRate": 0.04,
+    "height": 2.01,
+    "weight": 187
   },
   {
     "id": 246,
@@ -6814,14 +7678,17 @@
       "defense": 93
     },
     "family": "FAMILY_LARVITAR",
-    "candy": 25,
     "kmBuddyDistance": 5,
     "evolutionBranch": [
       {
         "evolution": "PUPITAR",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.4,
+    "fleeRate": 0.1,
+    "height": 0.61,
+    "weight": 72
   },
   {
     "id": 247,
@@ -6846,14 +7713,17 @@
     },
     "family": "FAMILY_LARVITAR",
     "parentPokemonId": "LARVITAR",
-    "candy": 100,
     "kmBuddyDistance": 5,
     "evolutionBranch": [
       {
         "evolution": "TYRANITAR",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.1,
+    "fleeRate": 0.07,
+    "height": 1.19,
+    "weight": 152
   },
   {
     "id": 248,
@@ -6878,7 +7748,11 @@
     },
     "family": "FAMILY_LARVITAR",
     "parentPokemonId": "PUPITAR",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.05,
+    "fleeRate": 0.04,
+    "height": 2.01,
+    "weight": 202
   },
   {
     "id": 249,
@@ -6902,7 +7776,11 @@
       "defense": 323
     },
     "family": "FAMILY_LUGIA",
-    "kmBuddyDistance": 20
+    "kmBuddyDistance": 20,
+    "captureRate": 0.02,
+    "fleeRate": 0.04,
+    "height": 5.21,
+    "weight": 216
   },
   {
     "id": 250,
@@ -6926,7 +7804,11 @@
       "defense": 274
     },
     "family": "FAMILY_HO_OH",
-    "kmBuddyDistance": 20
+    "kmBuddyDistance": 20,
+    "captureRate": 0.02,
+    "fleeRate": 0.04,
+    "height": 3.81,
+    "weight": 199
   },
   {
     "id": 251,
@@ -6950,7 +7832,10 @@
       "defense": 210
     },
     "family": "FAMILY_CELEBI",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "fleeRate": 0.04,
+    "height": 0.61,
+    "weight": 5
   },
   {
     "id": 252,
@@ -6980,7 +7865,11 @@
         "evolution": "GROVYLE",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.2,
+    "fleeRate": 0.1,
+    "height": 0.51,
+    "weight": 5
   },
   {
     "id": 253,
@@ -7011,7 +7900,11 @@
         "evolution": "SCEPTILE",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.1,
+    "fleeRate": 0.07,
+    "height": 0.89,
+    "weight": 21.6
   },
   {
     "id": 254,
@@ -7036,7 +7929,11 @@
     },
     "family": "FAMILY_TREECKO",
     "parentPokemonId": "GROVYLE",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.05,
+    "fleeRate": 0.05,
+    "height": 1.7,
+    "weight": 52.2
   },
   {
     "id": 255,
@@ -7066,7 +7963,11 @@
         "evolution": "COMBUSKEN",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.2,
+    "fleeRate": 0.1,
+    "height": 0.41,
+    "weight": 2.5
   },
   {
     "id": 256,
@@ -7097,7 +7998,11 @@
         "evolution": "BLAZIKEN",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.1,
+    "fleeRate": 0.07,
+    "height": 0.89,
+    "weight": 19.5
   },
   {
     "id": 257,
@@ -7122,7 +8027,11 @@
     },
     "family": "FAMILY_TORCHIC",
     "parentPokemonId": "COMBUSKEN",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.05,
+    "fleeRate": 0.05,
+    "height": 1.91,
+    "weight": 52
   },
   {
     "id": 258,
@@ -7152,7 +8061,11 @@
         "evolution": "MARSHTOMP",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.2,
+    "fleeRate": 0.1,
+    "height": 0.41,
+    "weight": 7.6
   },
   {
     "id": 259,
@@ -7183,7 +8096,11 @@
         "evolution": "SWAMPERT",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.1,
+    "fleeRate": 0.07,
+    "height": 0.71,
+    "weight": 28
   },
   {
     "id": 260,
@@ -7208,7 +8125,11 @@
     },
     "family": "FAMILY_MUDKIP",
     "parentPokemonId": "MARSHTOMP",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.05,
+    "fleeRate": 0.05,
+    "height": 1.5,
+    "weight": 81.9
   },
   {
     "id": 261,
@@ -7238,7 +8159,11 @@
         "evolution": "MIGHTYENA",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.2,
+    "height": 0.51,
+    "weight": 13.6
   },
   {
     "id": 262,
@@ -7263,7 +8188,11 @@
     },
     "family": "FAMILY_POOCHYENA",
     "parentPokemonId": "POOCHYENA",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.2,
+    "fleeRate": 0.07,
+    "height": 0.99,
+    "weight": 37
   },
   {
     "id": 263,
@@ -7293,7 +8222,11 @@
         "evolution": "LINOONE",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.2,
+    "height": 0.41,
+    "weight": 17.5
   },
   {
     "id": 264,
@@ -7318,7 +8251,11 @@
     },
     "family": "FAMILY_ZIGZAGOON",
     "parentPokemonId": "ZIGZAGOON",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.2,
+    "fleeRate": 0.07,
+    "height": 0.51,
+    "weight": 32.5
   },
   {
     "id": 265,
@@ -7350,7 +8287,11 @@
         "evolution": "CASCOON",
         "candyCost": 12
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.2,
+    "height": 0.3,
+    "weight": 3.6
   },
   {
     "id": 266,
@@ -7379,7 +8320,11 @@
         "evolution": "BEAUTIFLY",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.25,
+    "fleeRate": 0.09,
+    "height": 0.61,
+    "weight": 10
   },
   {
     "id": 267,
@@ -7404,7 +8349,11 @@
     },
     "family": "FAMILY_WURMPLE",
     "parentPokemonId": "SILCOON",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.125,
+    "fleeRate": 0.06,
+    "height": 0.99,
+    "weight": 28.4
   },
   {
     "id": 268,
@@ -7433,7 +8382,11 @@
         "evolution": "DUSTOX",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.25,
+    "fleeRate": 0.09,
+    "height": 0.71,
+    "weight": 11.5
   },
   {
     "id": 269,
@@ -7458,7 +8411,11 @@
     },
     "family": "FAMILY_WURMPLE",
     "parentPokemonId": "CASCOON",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.125,
+    "fleeRate": 0.06,
+    "height": 1.19,
+    "weight": 31.6
   },
   {
     "id": 270,
@@ -7487,7 +8444,11 @@
         "evolution": "LOMBRE",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.2,
+    "height": 0.51,
+    "weight": 2.6
   },
   {
     "id": 271,
@@ -7518,7 +8479,11 @@
         "evolution": "LUDICOLO",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.25,
+    "fleeRate": 0.09,
+    "height": 1.19,
+    "weight": 32.5
   },
   {
     "id": 272,
@@ -7543,7 +8508,11 @@
     },
     "family": "FAMILY_LOTAD",
     "parentPokemonId": "LOMBRE",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.125,
+    "fleeRate": 0.06,
+    "height": 1.5,
+    "weight": 55
   },
   {
     "id": 273,
@@ -7573,7 +8542,11 @@
         "evolution": "NUZLEAF",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.2,
+    "height": 0.51,
+    "weight": 4
   },
   {
     "id": 274,
@@ -7604,7 +8577,11 @@
         "evolution": "SHIFTRY",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.25,
+    "fleeRate": 0.09,
+    "height": 0.99,
+    "weight": 28
   },
   {
     "id": 275,
@@ -7629,7 +8606,11 @@
     },
     "family": "FAMILY_SEEDOT",
     "parentPokemonId": "NUZLEAF",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.125,
+    "fleeRate": 0.06,
+    "height": 1.3,
+    "weight": 59.6
   },
   {
     "id": 276,
@@ -7657,7 +8638,11 @@
         "evolution": "SWELLOW",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.2,
+    "height": 0.3,
+    "weight": 2.3
   },
   {
     "id": 277,
@@ -7682,7 +8667,11 @@
     },
     "family": "FAMILY_TAILLOW",
     "parentPokemonId": "TAILLOW",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.2,
+    "fleeRate": 0.07,
+    "height": 0.71,
+    "weight": 19.8
   },
   {
     "id": 278,
@@ -7712,7 +8701,11 @@
         "evolution": "PELIPPER",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.2,
+    "height": 0.61,
+    "weight": 9.5
   },
   {
     "id": 279,
@@ -7737,7 +8730,11 @@
     },
     "family": "FAMILY_WINGULL",
     "parentPokemonId": "WINGULL",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.07,
+    "height": 1.19,
+    "weight": 28
   },
   {
     "id": 280,
@@ -7767,7 +8764,11 @@
         "evolution": "KIRLIA",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.4,
+    "fleeRate": 0.09,
+    "height": 0.41,
+    "weight": 6.6
   },
   {
     "id": 281,
@@ -7798,7 +8799,11 @@
         "evolution": "GARDEVOIR",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.1,
+    "fleeRate": 0.06,
+    "height": 0.79,
+    "weight": 20.2
   },
   {
     "id": 282,
@@ -7823,7 +8828,11 @@
     },
     "family": "FAMILY_RALTS",
     "parentPokemonId": "KIRLIA",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.05,
+    "fleeRate": 0.05,
+    "height": 1.6,
+    "weight": 48.4
   },
   {
     "id": 283,
@@ -7853,7 +8862,11 @@
         "evolution": "MASQUERAIN",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.2,
+    "height": 0.51,
+    "weight": 1.7
   },
   {
     "id": 284,
@@ -7878,7 +8891,11 @@
     },
     "family": "FAMILY_SURSKIT",
     "parentPokemonId": "SURSKIT",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.2,
+    "fleeRate": 0.07,
+    "height": 0.79,
+    "weight": 3.6
   },
   {
     "id": 285,
@@ -7908,7 +8925,11 @@
         "evolution": "BRELOOM",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.2,
+    "height": 0.41,
+    "weight": 4.5
   },
   {
     "id": 286,
@@ -7933,7 +8954,11 @@
     },
     "family": "FAMILY_SHROOMISH",
     "parentPokemonId": "SHROOMISH",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.07,
+    "height": 1.19,
+    "weight": 39.2
   },
   {
     "id": 287,
@@ -7962,7 +8987,11 @@
         "evolution": "VIGOROTH",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.4,
+    "fleeRate": 0.09,
+    "height": 0.79,
+    "weight": 24
   },
   {
     "id": 288,
@@ -7993,7 +9022,11 @@
         "evolution": "SLAKING",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.1,
+    "fleeRate": 0.06,
+    "height": 1.4,
+    "weight": 46.5
   },
   {
     "id": 289,
@@ -8017,7 +9050,11 @@
     },
     "family": "FAMILY_SLAKOTH",
     "parentPokemonId": "VIGOROTH",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.05,
+    "fleeRate": 0.05,
+    "height": 2.01,
+    "weight": 130.5
   },
   {
     "id": 290,
@@ -8051,7 +9088,11 @@
         "evolution": "SHEDINJA",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.2,
+    "fleeRate": 0.1,
+    "height": 0.51,
+    "weight": 5.5
   },
   {
     "id": 291,
@@ -8076,7 +9117,11 @@
     },
     "family": "FAMILY_NINCADA",
     "parentPokemonId": "NINCADA",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.1,
+    "fleeRate": 0.07,
+    "height": 0.79,
+    "weight": 12
   },
   {
     "id": 292,
@@ -8101,7 +9146,11 @@
     },
     "family": "FAMILY_NINCADA",
     "parentPokemonId": "NINCADA",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.05,
+    "fleeRate": 0.05,
+    "height": 0.79,
+    "weight": 1.2
   },
   {
     "id": 293,
@@ -8131,7 +9180,11 @@
         "evolution": "LOUDRED",
         "candyCost": 12
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.2,
+    "height": 0.61,
+    "weight": 16.3
   },
   {
     "id": 294,
@@ -8162,7 +9215,11 @@
         "evolution": "EXPLOUD",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.25,
+    "fleeRate": 0.09,
+    "height": 0.99,
+    "weight": 40.5
   },
   {
     "id": 295,
@@ -8187,7 +9244,11 @@
     },
     "family": "FAMILY_WHISMUR",
     "parentPokemonId": "LOUDRED",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.125,
+    "fleeRate": 0.06,
+    "height": 1.5,
+    "weight": 84
   },
   {
     "id": 296,
@@ -8217,7 +9278,11 @@
         "evolution": "HARIYAMA",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.99,
+    "weight": 86.4
   },
   {
     "id": 297,
@@ -8242,7 +9307,11 @@
     },
     "family": "FAMILY_MAKUHITA",
     "parentPokemonId": "MAKUHITA",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 2.31,
+    "weight": 253.8
   },
   {
     "id": 298,
@@ -8272,7 +9341,11 @@
         "evolution": "MARILL",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.1,
+    "fleeRate": 0.04,
+    "height": 0.2,
+    "weight": 2
   },
   {
     "id": 299,
@@ -8296,7 +9369,11 @@
       "defense": 236
     },
     "family": "FAMILY_NOSEPASS",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.09,
+    "height": 0.99,
+    "weight": 97
   },
   {
     "id": 300,
@@ -8326,7 +9403,11 @@
         "evolution": "DELCATTY",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.61,
+    "weight": 11
   },
   {
     "id": 301,
@@ -8351,7 +9432,11 @@
     },
     "family": "FAMILY_SKITTY",
     "parentPokemonId": "SKITTY",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1.09,
+    "weight": 32.6
   },
   {
     "id": 302,
@@ -8375,7 +9460,11 @@
       "defense": 141
     },
     "family": "FAMILY_SABLEYE",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.2,
+    "fleeRate": 0.07,
+    "height": 0.51,
+    "weight": 11
   },
   {
     "id": 303,
@@ -8399,7 +9488,11 @@
       "defense": 155
     },
     "family": "FAMILY_MAWILE",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.5,
+    "fleeRate": 0.09,
+    "height": 0.61,
+    "weight": 11.5
   },
   {
     "id": 304,
@@ -8429,7 +9522,11 @@
         "evolution": "LAIRON",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.2,
+    "height": 0.41,
+    "weight": 60
   },
   {
     "id": 305,
@@ -8460,7 +9557,11 @@
         "evolution": "AGGRON",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.25,
+    "fleeRate": 0.09,
+    "height": 0.89,
+    "weight": 120
   },
   {
     "id": 306,
@@ -8485,7 +9586,11 @@
     },
     "family": "FAMILY_ARON",
     "parentPokemonId": "LAIRON",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.125,
+    "fleeRate": 0.06,
+    "height": 2.11,
+    "weight": 360
   },
   {
     "id": 307,
@@ -8515,7 +9620,11 @@
         "evolution": "MEDICHAM",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.61,
+    "weight": 11.2
   },
   {
     "id": 308,
@@ -8540,7 +9649,11 @@
     },
     "family": "FAMILY_MEDITITE",
     "parentPokemonId": "MEDITITE",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1.3,
+    "weight": 31.5
   },
   {
     "id": 309,
@@ -8570,7 +9683,11 @@
         "evolution": "MANECTRIC",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.61,
+    "weight": 15.2
   },
   {
     "id": 310,
@@ -8595,7 +9712,11 @@
     },
     "family": "FAMILY_ELECTRIKE",
     "parentPokemonId": "ELECTRIKE",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1.5,
+    "weight": 40.2
   },
   {
     "id": 311,
@@ -8619,7 +9740,11 @@
       "defense": 147
     },
     "family": "FAMILY_PLUSLE",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.3,
+    "fleeRate": 0.09,
+    "height": 0.41,
+    "weight": 4.2
   },
   {
     "id": 312,
@@ -8643,7 +9768,11 @@
       "defense": 167
     },
     "family": "FAMILY_MINUN",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.3,
+    "fleeRate": 0.09,
+    "height": 0.41,
+    "weight": 4.2
   },
   {
     "id": 313,
@@ -8667,7 +9796,11 @@
       "defense": 171
     },
     "family": "FAMILY_VOLBEAT",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.3,
+    "fleeRate": 0.09,
+    "height": 0.71,
+    "weight": 17.7
   },
   {
     "id": 314,
@@ -8691,7 +9824,11 @@
       "defense": 171
     },
     "family": "FAMILY_ILLUMISE",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.3,
+    "fleeRate": 0.09,
+    "height": 0.61,
+    "weight": 17.7
   },
   {
     "id": 315,
@@ -8715,7 +9852,11 @@
       "defense": 148
     },
     "family": "FAMILY_ROSELIA",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.3,
+    "fleeRate": 0.09,
+    "height": 0.3,
+    "weight": 2
   },
   {
     "id": 316,
@@ -8745,7 +9886,11 @@
         "evolution": "SWALOT",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.41,
+    "weight": 10.3
   },
   {
     "id": 317,
@@ -8770,7 +9915,11 @@
     },
     "family": "FAMILY_GULPIN",
     "parentPokemonId": "GULPIN",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1.7,
+    "weight": 80
   },
   {
     "id": 318,
@@ -8800,7 +9949,11 @@
         "evolution": "SHARPEDO",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.79,
+    "weight": 20.8
   },
   {
     "id": 319,
@@ -8825,7 +9978,11 @@
     },
     "family": "FAMILY_CARVANHA",
     "parentPokemonId": "CARVANHA",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1.8,
+    "weight": 88.8
   },
   {
     "id": 320,
@@ -8855,7 +10012,11 @@
         "evolution": "WAILORD",
         "candyCost": 400
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 2.01,
+    "weight": 130
   },
   {
     "id": 321,
@@ -8880,7 +10041,11 @@
     },
     "family": "FAMILY_WAILMER",
     "parentPokemonId": "WAILMER",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 14.5,
+    "weight": 398
   },
   {
     "id": 322,
@@ -8910,7 +10075,11 @@
         "evolution": "CAMERUPT",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.71,
+    "weight": 24
   },
   {
     "id": 323,
@@ -8935,7 +10104,11 @@
     },
     "family": "FAMILY_NUMEL",
     "parentPokemonId": "NUMEL",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1.91,
+    "weight": 220
   },
   {
     "id": 324,
@@ -8959,7 +10132,11 @@
       "defense": 234
     },
     "family": "FAMILY_TORKOAL",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.3,
+    "fleeRate": 0.09,
+    "height": 0.51,
+    "weight": 80.4
   },
   {
     "id": 325,
@@ -8989,7 +10166,11 @@
         "evolution": "GRUMPIG",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.71,
+    "weight": 30.6
   },
   {
     "id": 326,
@@ -9014,7 +10195,11 @@
     },
     "family": "FAMILY_SPOINK",
     "parentPokemonId": "SPOINK",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 0.89,
+    "weight": 71.5
   },
   {
     "id": 327,
@@ -9038,7 +10223,11 @@
       "defense": 116
     },
     "family": "FAMILY_SPINDA",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.3,
+    "fleeRate": 0.09,
+    "height": 1.09,
+    "weight": 5
   },
   {
     "id": 328,
@@ -9068,7 +10257,11 @@
         "evolution": "VIBRAVA",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.4,
+    "fleeRate": 0.09,
+    "height": 0.71,
+    "weight": 15
   },
   {
     "id": 329,
@@ -9099,7 +10292,11 @@
         "evolution": "FLYGON",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.1,
+    "fleeRate": 0.06,
+    "height": 1.09,
+    "weight": 15.3
   },
   {
     "id": 330,
@@ -9124,7 +10321,11 @@
     },
     "family": "FAMILY_TRAPINCH",
     "parentPokemonId": "VIBRAVA",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.05,
+    "fleeRate": 0.05,
+    "height": 2.01,
+    "weight": 82
   },
   {
     "id": 331,
@@ -9154,7 +10355,11 @@
         "evolution": "CACTURNE",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.41,
+    "weight": 51.3
   },
   {
     "id": 332,
@@ -9179,7 +10384,11 @@
     },
     "family": "FAMILY_CACNEA",
     "parentPokemonId": "CACNEA",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1.3,
+    "weight": 77.4
   },
   {
     "id": 333,
@@ -9209,7 +10418,11 @@
         "evolution": "ALTARIA",
         "candyCost": 400
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.41,
+    "weight": 1.2
   },
   {
     "id": 334,
@@ -9234,7 +10447,11 @@
     },
     "family": "FAMILY_SWABLU",
     "parentPokemonId": "SWABLU",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1.09,
+    "weight": 20.6
   },
   {
     "id": 335,
@@ -9258,7 +10475,11 @@
       "defense": 124
     },
     "family": "FAMILY_ZANGOOSE",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.3,
+    "fleeRate": 0.09,
+    "height": 1.3,
+    "weight": 40.3
   },
   {
     "id": 336,
@@ -9282,7 +10503,11 @@
       "defense": 118
     },
     "family": "FAMILY_SEVIPER",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.3,
+    "fleeRate": 0.09,
+    "height": 2.69,
+    "weight": 52.5
   },
   {
     "id": 337,
@@ -9306,7 +10531,11 @@
       "defense": 163
     },
     "family": "FAMILY_LUNATONE",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.3,
+    "fleeRate": 0.09,
+    "height": 0.99,
+    "weight": 168
   },
   {
     "id": 338,
@@ -9330,7 +10559,11 @@
       "defense": 163
     },
     "family": "FAMILY_SOLROCK",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.3,
+    "fleeRate": 0.09,
+    "height": 1.19,
+    "weight": 154
   },
   {
     "id": 339,
@@ -9360,7 +10593,11 @@
         "evolution": "WHISCASH",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.41,
+    "weight": 1.9
   },
   {
     "id": 340,
@@ -9385,7 +10622,11 @@
     },
     "family": "FAMILY_BARBOACH",
     "parentPokemonId": "BARBOACH",
-    "kmBuddyDistance": 1
+    "kmBuddyDistance": 1,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 0.89,
+    "weight": 23.6
   },
   {
     "id": 341,
@@ -9415,7 +10656,11 @@
         "evolution": "CRAWDAUNT",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.61,
+    "weight": 11.5
   },
   {
     "id": 342,
@@ -9440,7 +10685,11 @@
     },
     "family": "FAMILY_CORPHISH",
     "parentPokemonId": "CORPHISH",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1.09,
+    "weight": 32.8
   },
   {
     "id": 343,
@@ -9470,7 +10719,11 @@
         "evolution": "CLAYDOL",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.51,
+    "weight": 21.5
   },
   {
     "id": 344,
@@ -9495,7 +10748,11 @@
     },
     "family": "FAMILY_BALTOY",
     "parentPokemonId": "BALTOY",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1.5,
+    "weight": 108
   },
   {
     "id": 345,
@@ -9525,7 +10782,11 @@
         "evolution": "CRADILY",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.99,
+    "weight": 23.8
   },
   {
     "id": 346,
@@ -9550,7 +10811,11 @@
     },
     "family": "FAMILY_LILEEP",
     "parentPokemonId": "LILEEP",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1.5,
+    "weight": 60.4
   },
   {
     "id": 347,
@@ -9580,7 +10845,11 @@
         "evolution": "ARMALDO",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.71,
+    "weight": 12.5
   },
   {
     "id": 348,
@@ -9605,7 +10874,11 @@
     },
     "family": "FAMILY_ANORITH",
     "parentPokemonId": "ANORITH",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1.5,
+    "weight": 68.2
   },
   {
     "id": 349,
@@ -9634,7 +10907,11 @@
         "candyCost": 100,
         "kmBuddyDistanceRequirement": 20
       }
-    ]
+    ],
+    "captureRate": 0.7,
+    "fleeRate": 0.15,
+    "height": 0.61,
+    "weight": 7.4
   },
   {
     "id": 350,
@@ -9659,7 +10936,11 @@
     },
     "family": "FAMILY_FEEBAS",
     "parentPokemonId": "FEEBAS",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.1,
+    "fleeRate": 0.07,
+    "height": 6.2,
+    "weight": 162
   },
   {
     "id": 351,
@@ -9682,7 +10963,11 @@
       "defense": 139
     },
     "family": "FAMILY_CASTFORM",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.3,
+    "fleeRate": 0.1,
+    "height": 0.3,
+    "weight": 0.8
   },
   {
     "id": 352,
@@ -9705,7 +10990,11 @@
       "defense": 139
     },
     "family": "FAMILY_CASTFORM",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.3,
+    "fleeRate": 0.1,
+    "height": 0.3,
+    "weight": 0.8
   },
   {
     "id": 353,
@@ -9728,7 +11017,11 @@
       "defense": 139
     },
     "family": "FAMILY_CASTFORM",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.3,
+    "fleeRate": 0.1,
+    "height": 0.3,
+    "weight": 0.8
   },
   {
     "id": 354,
@@ -9751,7 +11044,11 @@
       "defense": 139
     },
     "family": "FAMILY_CASTFORM",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.3,
+    "fleeRate": 0.1,
+    "height": 0.3,
+    "weight": 0.8
   },
   {
     "id": 355,
@@ -9774,7 +11071,11 @@
       "defense": 139
     },
     "family": "FAMILY_CASTFORM",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.3,
+    "fleeRate": 0.1,
+    "height": 0.3,
+    "weight": 0.8
   },
   {
     "id": 356,
@@ -9801,7 +11102,11 @@
       "defense": 212
     },
     "family": "FAMILY_KECLEON",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.3,
+    "fleeRate": 0.1,
+    "height": 0.99,
+    "weight": 22
   },
   {
     "id": 357,
@@ -9831,7 +11136,11 @@
         "evolution": "BANETTE",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.4,
+    "fleeRate": 0.1,
+    "height": 0.61,
+    "weight": 2.3
   },
   {
     "id": 358,
@@ -9856,7 +11165,11 @@
     },
     "family": "FAMILY_SHUPPET",
     "parentPokemonId": "SHUPPET",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.07,
+    "height": 1.09,
+    "weight": 12.5
   },
   {
     "id": 359,
@@ -9886,7 +11199,11 @@
         "evolution": "DUSCLOPS",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.4,
+    "fleeRate": 0.1,
+    "height": 0.79,
+    "weight": 15
   },
   {
     "id": 360,
@@ -9911,7 +11228,11 @@
     },
     "family": "FAMILY_DUSKULL",
     "parentPokemonId": "DUSKULL",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.07,
+    "height": 1.6,
+    "weight": 30.6
   },
   {
     "id": 361,
@@ -9935,7 +11256,11 @@
       "defense": 165
     },
     "family": "FAMILY_TROPIUS",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.3,
+    "fleeRate": 0.1,
+    "height": 2.01,
+    "weight": 100
   },
   {
     "id": 362,
@@ -9959,7 +11284,11 @@
       "defense": 174
     },
     "family": "FAMILY_CHIMECHO",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.3,
+    "fleeRate": 0.1,
+    "height": 0.61,
+    "weight": 1
   },
   {
     "id": 363,
@@ -9983,7 +11312,11 @@
       "defense": 120
     },
     "family": "FAMILY_ABSOL",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 1.19,
+    "weight": 47
   },
   {
     "id": 364,
@@ -10011,7 +11344,11 @@
         "evolution": "WOBBUFFET",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.3,
+    "fleeRate": 0.1,
+    "height": 0.61,
+    "weight": 14
   },
   {
     "id": 365,
@@ -10041,7 +11378,11 @@
         "evolution": "GLALIE",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.71,
+    "weight": 16.8
   },
   {
     "id": 366,
@@ -10066,7 +11407,11 @@
     },
     "family": "FAMILY_SNORUNT",
     "parentPokemonId": "SNORUNT",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1.5,
+    "weight": 256.5
   },
   {
     "id": 367,
@@ -10096,7 +11441,11 @@
         "evolution": "SEALEO",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.79,
+    "weight": 39.5
   },
   {
     "id": 368,
@@ -10127,7 +11476,11 @@
         "evolution": "WALREIN",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.25,
+    "fleeRate": 0.07,
+    "height": 1.09,
+    "weight": 87.6
   },
   {
     "id": 369,
@@ -10152,7 +11505,11 @@
     },
     "family": "FAMILY_SPHEAL",
     "parentPokemonId": "SEALEO",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.125,
+    "fleeRate": 0.05,
+    "height": 1.4,
+    "weight": 150.6
   },
   {
     "id": 370,
@@ -10185,7 +11542,11 @@
         "evolution": "GOREBYSS",
         "candyCost": 50
       }
-    ]
+    ],
+    "captureRate": 0.5,
+    "fleeRate": 0.1,
+    "height": 0.41,
+    "weight": 52.5
   },
   {
     "id": 371,
@@ -10210,7 +11571,11 @@
     },
     "family": "FAMILY_CLAMPERL",
     "parentPokemonId": "CLAMPERL",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1.7,
+    "weight": 27
   },
   {
     "id": 372,
@@ -10235,7 +11600,11 @@
     },
     "family": "FAMILY_CLAMPERL",
     "parentPokemonId": "CLAMPERL",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.2,
+    "fleeRate": 0.06,
+    "height": 1.8,
+    "weight": 22.6
   },
   {
     "id": 373,
@@ -10259,7 +11628,11 @@
       "defense": 234
     },
     "family": "FAMILY_RELICANTH",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.9,
+    "fleeRate": 0.01,
+    "height": 0.99,
+    "weight": 23.4
   },
   {
     "id": 374,
@@ -10283,7 +11656,11 @@
       "defense": 134
     },
     "family": "FAMILY_LUVDISC",
-    "kmBuddyDistance": 3
+    "kmBuddyDistance": 3,
+    "captureRate": 0.3,
+    "fleeRate": 0.1,
+    "height": 0.61,
+    "weight": 8.7
   },
   {
     "id": 375,
@@ -10313,7 +11690,11 @@
         "evolution": "SHELGON",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.4,
+    "fleeRate": 0.09,
+    "height": 0.61,
+    "weight": 42.1
   },
   {
     "id": 376,
@@ -10344,7 +11725,11 @@
         "evolution": "SALAMENCE",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.1,
+    "fleeRate": 0.06,
+    "height": 1.09,
+    "weight": 110.5
   },
   {
     "id": 377,
@@ -10369,7 +11754,11 @@
     },
     "family": "FAMILY_BAGON",
     "parentPokemonId": "SHELGON",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.05,
+    "fleeRate": 0.05,
+    "height": 1.5,
+    "weight": 102.6
   },
   {
     "id": 378,
@@ -10396,7 +11785,11 @@
         "evolution": "METANG",
         "candyCost": 25
       }
-    ]
+    ],
+    "captureRate": 0.4,
+    "fleeRate": 0.09,
+    "height": 0.61,
+    "weight": 95.2
   },
   {
     "id": 379,
@@ -10427,7 +11820,11 @@
         "evolution": "METAGROSS",
         "candyCost": 100
       }
-    ]
+    ],
+    "captureRate": 0.1,
+    "fleeRate": 0.06,
+    "height": 1.19,
+    "weight": 202.5
   },
   {
     "id": 380,
@@ -10452,7 +11849,11 @@
     },
     "family": "FAMILY_BELDUM",
     "parentPokemonId": "METANG",
-    "kmBuddyDistance": 5
+    "kmBuddyDistance": 5,
+    "captureRate": 0.05,
+    "fleeRate": 0.05,
+    "height": 1.6,
+    "weight": 550
   },
   {
     "id": 381,
@@ -10476,7 +11877,11 @@
       "defense": 356
     },
     "family": "FAMILY_REGIROCK",
-    "kmBuddyDistance": 20
+    "kmBuddyDistance": 20,
+    "captureRate": 0.02,
+    "fleeRate": 0.01,
+    "height": 1.7,
+    "weight": 230
   },
   {
     "id": 382,
@@ -10500,7 +11905,11 @@
       "defense": 356
     },
     "family": "FAMILY_REGICE",
-    "kmBuddyDistance": 20
+    "kmBuddyDistance": 20,
+    "captureRate": 0.02,
+    "fleeRate": 0.01,
+    "height": 1.8,
+    "weight": 175
   },
   {
     "id": 383,
@@ -10524,7 +11933,11 @@
       "defense": 285
     },
     "family": "FAMILY_REGISTEEL",
-    "kmBuddyDistance": 20
+    "kmBuddyDistance": 20,
+    "captureRate": 0.02,
+    "fleeRate": 0.01,
+    "height": 1.91,
+    "weight": 205
   },
   {
     "id": 384,
@@ -10548,7 +11961,11 @@
       "defense": 268
     },
     "family": "FAMILY_LATIAS",
-    "kmBuddyDistance": 20
+    "kmBuddyDistance": 20,
+    "captureRate": 0.02,
+    "fleeRate": 0.01,
+    "height": 1.4,
+    "weight": 40
   },
   {
     "id": 385,
@@ -10572,7 +11989,11 @@
       "defense": 228
     },
     "family": "FAMILY_LATIOS",
-    "kmBuddyDistance": 20
+    "kmBuddyDistance": 20,
+    "captureRate": 0.02,
+    "fleeRate": 0.01,
+    "height": 2.01,
+    "weight": 60
   },
   {
     "id": 386,
@@ -10595,7 +12016,11 @@
       "defense": 251
     },
     "family": "FAMILY_KYOGRE",
-    "kmBuddyDistance": 20
+    "kmBuddyDistance": 20,
+    "captureRate": 0.02,
+    "fleeRate": 0.01,
+    "height": 4.5,
+    "weight": 352
   },
   {
     "id": 387,
@@ -10619,7 +12044,11 @@
       "defense": 251
     },
     "family": "FAMILY_GROUDON",
-    "kmBuddyDistance": 20
+    "kmBuddyDistance": 20,
+    "captureRate": 0.02,
+    "fleeRate": 0.01,
+    "height": 3.51,
+    "weight": 950
   },
   {
     "id": 388,
@@ -10643,7 +12072,11 @@
       "defense": 170
     },
     "family": "FAMILY_RAYQUAZA",
-    "kmBuddyDistance": 20
+    "kmBuddyDistance": 20,
+    "captureRate": 0.02,
+    "fleeRate": 0.01,
+    "height": 7.01,
+    "weight": 206.5
   },
   {
     "id": 389,
@@ -10667,7 +12100,11 @@
       "defense": 210
     },
     "family": "FAMILY_JIRACHI",
-    "kmBuddyDistance": 20
+    "kmBuddyDistance": 20,
+    "captureRate": 0.02,
+    "fleeRate": 0.01,
+    "height": 0.3,
+    "weight": 1.1
   },
   {
     "id": 390,
@@ -10691,7 +12128,11 @@
       "defense": 1
     },
     "family": "FAMILY_DEOXYS",
-    "kmBuddyDistance": 20
+    "kmBuddyDistance": 20,
+    "captureRate": 0.02,
+    "fleeRate": 0.01,
+    "height": 1.7,
+    "weight": 60.8
   },
   {
     "id": 391,
@@ -10715,7 +12156,11 @@
       "defense": 1
     },
     "family": "FAMILY_DEOXYS",
-    "kmBuddyDistance": 20
+    "kmBuddyDistance": 20,
+    "captureRate": 0.02,
+    "fleeRate": 0.01,
+    "height": 1.7,
+    "weight": 60.8
   },
   {
     "id": 392,
@@ -10739,7 +12184,11 @@
       "defense": 1
     },
     "family": "FAMILY_DEOXYS",
-    "kmBuddyDistance": 20
+    "kmBuddyDistance": 20,
+    "captureRate": 0.02,
+    "fleeRate": 0.01,
+    "height": 1.7,
+    "weight": 60.8
   },
   {
     "id": 393,
@@ -10763,7 +12212,11 @@
       "defense": 1
     },
     "family": "FAMILY_DEOXYS",
-    "kmBuddyDistance": 20
+    "kmBuddyDistance": 20,
+    "captureRate": 0.02,
+    "fleeRate": 0.01,
+    "height": 1.7,
+    "weight": 60.8
   },
   {
     "id": 394,
@@ -10787,6 +12240,10 @@
       "defense": 1
     },
     "family": "FAMILY_DEOXYS",
-    "kmBuddyDistance": 20
+    "kmBuddyDistance": 20,
+    "captureRate": 0.02,
+    "fleeRate": 0.01,
+    "height": 1.7,
+    "weight": 60.8
   }
 ]
