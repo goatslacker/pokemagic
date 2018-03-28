@@ -18,17 +18,17 @@ const simulateBattle = require('pokemagic/simulateBattle');
 const attacker = {
   iv: 0xfff,
   lvl: 40,
-  name: 'exeggutor',
-  move1: 'COUNTER_FAST',
-  move2: 'DYNAMIC_PUNCH',
+  name: 'machamp',
+  move1: 'counter',
+  move2: 'dynamic punch',
 };
 
 const defender = {
   iv: 0xfff,
   lvl: 40,
-  name: 'gyarados',
-  move1: 'WATERFALL_FAST',
-  move2: 'HYDRO_PUMP',
+  name: 'tyranitar',
+  move1: 'bite',
+  move2: 'crunch',
 };
 
 const options = {

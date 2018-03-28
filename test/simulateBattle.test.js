@@ -9,15 +9,15 @@ test(t => {
       iv: 0xfff,
       lvl: 40,
       name: 'exeggutor',
-      move1: 'BULLET_SEED_FAST',
-      move2: 'SOLAR_BEAM',
+      move1: 'bullet seed',
+      move2: 'solar beam',
     },
     {
       iv: 0xfff,
       lvl: 40,
       name: 'gyarados',
-      move1: 'WATERFALL_FAST',
-      move2: 'HYDRO_PUMP',
+      move1: 'waterfall',
+      move2: 'hydro pump',
     },
     {}
   );
