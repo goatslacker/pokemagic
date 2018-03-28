@@ -8,16 +8,16 @@ test(t => {
     {
       iv: 0xfff,
       lvl: 40,
+      name: 'exeggutor',
       move1: 'BULLET_SEED_FAST',
       move2: 'SOLAR_BEAM',
-      pokemon: findPokemon('exeggutor'),
     },
     {
       iv: 0xfff,
       lvl: 40,
+      name: 'gyarados',
       move1: 'WATERFALL_FAST',
       move2: 'HYDRO_PUMP',
-      pokemon: findPokemon('gyarados'),
     },
     {}
   );
