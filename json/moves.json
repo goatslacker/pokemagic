@@ -1676,5 +1676,50 @@
     "Energy": 20,
     "DamageWindowStartMs": 1100,
     "DamageWindowEndMs": 1300
+  },
+  "WEATHER_BALL_FIRE": {
+    "Name": "WEATHER_BALL_FIRE",
+    "Type": "FIRE",
+    "Power": 60,
+    "DurationMs": 1600,
+    "Energy": -33,
+    "DamageWindowStartMs": 1350,
+    "DamageWindowEndMs": 1600
+  },
+  "WEATHER_BALL_ICE": {
+    "Name": "WEATHER_BALL_ICE",
+    "Type": "ICE",
+    "Power": 60,
+    "DurationMs": 1600,
+    "Energy": -33,
+    "DamageWindowStartMs": 1350,
+    "DamageWindowEndMs": 1600
+  },
+  "WEATHER_BALL_ROCK": {
+    "Name": "WEATHER_BALL_ROCK",
+    "Type": "ROCK",
+    "Power": 60,
+    "DurationMs": 1600,
+    "Energy": -33,
+    "DamageWindowStartMs": 1350,
+    "DamageWindowEndMs": 1600
+  },
+  "WEATHER_BALL_WATER": {
+    "Name": "WEATHER_BALL_WATER",
+    "Type": "WATER",
+    "Power": 60,
+    "DurationMs": 1600,
+    "Energy": -33,
+    "DamageWindowStartMs": 1350,
+    "DamageWindowEndMs": 1600
+  },
+  "FRENZY_PLANT": {
+    "Name": "FRENZY_PLANT",
+    "Type": "GRASS",
+    "Power": 100,
+    "DurationMs": 2600,
+    "Energy": -50,
+    "DamageWindowStartMs": 2145,
+    "DamageWindowEndMs": 2550
   }
 }

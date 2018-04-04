@@ -4760,17 +4760,57 @@
     "type2": null,
     "moves": {
       "quick": [
-        "POUND_FAST"
+        "POUND_FAST",
+        "STEEL_WING_FAST",
+        "CHARGE_BEAM_FAST",
+        "SHADOW_CLAW_FAST",
+        "VOLT_SWITCH_FAST",
+        "STRUGGLE_BUG_FAST",
+        "FROST_BREATH_FAST",
+        "DRAGON_TAIL_FAST",
+        "INFESTATION_FAST",
+        "POISON_JAB_FAST",
+        "ROCK_SMASH_FAST",
+        "SNARL_FAST",
+        "CUT_FAST",
+        "WATERFALL_FAST"
       ],
       "charge": [
-        "BLIZZARD",
-        "EARTHQUAKE",
         "PSYCHIC",
-        "FOCUS_BLAST",
-        "THUNDER",
-        "FIRE_BLAST",
+        "ANCIENT_POWER",
+        "DRAGON_CLAW",
+        "PSYSHOCK",
+        "ICE_BEAM",
+        "BLIZZARD",
+        "HYPER_BEAM",
         "SOLAR_BEAM",
-        "HYPER_BEAM"
+        "THUNDERBOLT",
+        "THUNDER",
+        "PSYCHIC",
+        "ANCIENT_POWER",
+        "DRAGON_CLAW",
+        "PSYSHOCK",
+        "ICE_BEAM",
+        "BLIZZARD",
+        "HYPER_BEAM",
+        "SOLAR_BEAM",
+        "THUNDERBOLT",
+        "THUNDER",
+        "FLAME_CHARGE",
+        "LOW_SWEEP",
+        "OVERHEAT",
+        "FOCUS_BLAST",
+        "ENERGY_BALL",
+        "STONE_EDGE",
+        "GYRO_BALL",
+        "BULLDOZE",
+        "ROCK_SLIDE",
+        "GRASS_KNOT",
+        "FLASH_CANNON",
+        "WILD_CHARGE",
+        "DARK_PULSE",
+        "DAZZLING_GLEAM",
+        "SURF"
       ]
     },
     "stats": {
@@ -4780,7 +4820,7 @@
     },
     "family": "FAMILY_MEW",
     "kmBuddyDistance": 20,
-    "fleeRate": 0.1,
+    "captureRate": 100,
     "height": 0.4,
     "weight": 4
   },
@@ -11951,7 +11991,7 @@
       ],
       "charge": [
         "PSYCHIC",
-        "DRAGON_CLAW",
+        "OUTRAGE",
         "THUNDER"
       ]
     },
