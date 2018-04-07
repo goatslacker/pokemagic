@@ -7,6 +7,11 @@ function type(t) {
   return t ? t.replace('POKEMON_TYPE_', '') : null;
 }
 
+function dedupe(name, moves) {
+  if (name !== 'MEW') return moves;
+  return Array.from(new Set(moves));
+}
+
 GameMaster.then(data => {
   const Pokemon = data.itemTemplates
     .filter(x => x.hasOwnProperty('pokemonSettings'))
@@ -16,8 +21,8 @@ GameMaster.then(data => {
       type1: type(pokemonSettings.type),
       type2: type(pokemonSettings.type2),
       moves: {
-        quick: pokemonSettings.quickMoves,
-        charge: pokemonSettings.cinematicMoves,
+        quick: dedupe(pokemonSettings.pokemonId, pokemonSettings.quickMoves),
+        charge: dedupe(pokemonSettings.pokemonId, pokemonSettings.cinematicMoves),
       },
       stats: {
         stamina: pokemonSettings.stats.baseStamina,
