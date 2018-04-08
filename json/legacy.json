@@ -165,9 +165,6 @@
   "KOFFING": [
     "ACID_FAST"
   ],
-  "KYOGRE": [
-    "DRAGON_TAIL_FAST"
-  ],
   "LAPRAS": [
     "ICE_SHARD_FAST",
     "DRAGON_PULSE",
@@ -198,16 +195,8 @@
   "MEOWTH": [
     "BODY_SLAM"
   ],
-  "MEW": [
-    "HURRICANE",
-    "DRAGON_PULSE"
-  ],
   "MILOTIC": [
     "WATER_GUN_FAST"
-  ],
-  "MOLTRES": [
-    "EMBER_FAST",
-    "FLAMETHROWER"
   ],
   "MUK": [
     "ACID_FAST",
@@ -326,9 +315,6 @@
   "STARYU": [
     "QUICK_ATTACK_FAST"
   ],
-  "SUICUNE": [
-    "HIDDEN_POWER_FAST"
-  ],
   "TANGELA": [
     "POWER_WHIP"
   ],
@@ -351,10 +337,6 @@
   ],
   "WEEZING": [
     "ACID_FAST"
-  ],
-  "ZAPDOS": [
-    "THUNDER_SHOCK_FAST",
-    "DISCHARGE"
   ],
   "ZUBAT": [
     "SLUDGE_BOMB"
