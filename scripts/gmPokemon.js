@@ -22,7 +22,10 @@ GameMaster.then(data => {
       type2: type(pokemonSettings.type2),
       moves: {
         quick: dedupe(pokemonSettings.pokemonId, pokemonSettings.quickMoves),
-        charge: dedupe(pokemonSettings.pokemonId, pokemonSettings.cinematicMoves),
+        charge: dedupe(
+          pokemonSettings.pokemonId,
+          pokemonSettings.cinematicMoves
+        ),
       },
       stats: {
         stamina: pokemonSettings.stats.baseStamina,

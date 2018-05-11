@@ -16,5 +16,5 @@ test(t => {
 
 test(t => {
   const point = breakpoint('pikachu', 'flygon');
-  t.is(point.atk[0].table.length, 1)
+  t.is(point.atk[0].table.length, 1);
 });
