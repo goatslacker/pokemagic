@@ -24,6 +24,7 @@
     "EMBER_FAST",
     "WING_ATTACK_FAST",
     "FLAMETHROWER"
+    "BLAST_BURN",
   ],
   "CHARMELEON": [
     "SCRATCH_FAST"

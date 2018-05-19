@@ -1721,5 +1721,23 @@
     "Energy": -50,
     "DamageWindowStartMs": 2145,
     "DamageWindowEndMs": 2550
+  },
+  "SMACK_DOWN_FAST": {
+    "Name": "SMACK_DOWN_FAST",
+    "Type": "ROCK",
+    "Power": 12,
+    "DurationMs": 900,
+    "Energy": 7,
+    "DamageWindowStartMs": 500,
+    "DamageWindowEndMs": 800
+  },
+  "BLAST_BURN": {
+    "Name": "BLAST_BURN",
+    "Type": "FIRE",
+    "Power": 110,
+    "DurationMs": 3300,
+    "Energy": -50,
+    "DamageWindowStartMs": 2750,
+    "DamageWindowEndMs": 3200
   }
 }
